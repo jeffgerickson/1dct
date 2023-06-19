@@ -7,7 +7,30 @@
 #
 # Run "make clean" to delete converted files
 
-# Convert all files in this directory that have a .md suffix
+
+#
+#  New stuff; use distinct variable names
+#
+MD_FILES = $(wildcard md/*.md)
+PDF_FILES = $(patsubst md/%.md,pdf/%.pdf,$(MD_FILES))
+HTML_FILES = $(patsubst md/%.md,html/%.html,$(MD_FILES))
+OUTPUT_FILES = $HTML_FILES $PDF_FILES
+
+html/%.html: md/%.md
+	echo $@ "into" $<
+
+pdf/%.pdf: md/%.md
+	echo $@ "into" $<
+
+.PHONY: newall newhtml newpdf
+
+newall: html pdf
+newhtml : $(HTML_DOCS)
+newpdf : $(PDF_DOCS)
+
+
+
+# Convert all files in the md subirectory that have a .md suffix
 SOURCE_DOCS := $(wildcard *.md)
 
 # I’d really prefer to keep outputs in their own subdirectories, but this is fine for now.
@@ -23,6 +46,8 @@ OUTPUT_DOCS=\
 HTML_DOCS=$(SOURCE_DOCS:.md=.html)
 LATEX_DOCS=$(SOURCE_DOCS:.md=.tex)
 PDF_DOCS=$(SOURCE_DOCS:.md=.pdf)
+
+
 
 RM=/bin/rm
 
