@@ -1,0 +1,899 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>11-straight-line-planar</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="straight-line-planar-mapsbeta"><span
+class="header-section-number">1</span> Straight-line Planar Maps<span
+class="math inline">\(^\beta\)</span></h1>
+<p>So far we have not assumed that planar embeddings are in any way
+well-behaved geometrically; edges can be embedded as arbitrarily
+pathological paths. It is not hard to prove using a compactness argument
+(Similar to the simplicial approximation theorem for homotopy) that
+every planar graph has a <em>piecewise-linear</em> planar embedding,
+where every edge is embedded as a simple polygonal path.</p>
+<p>But in fact, every <em>simple</em> planar graph has a
+<em>straight-line</em> embedding, where every edge is represented by a
+single straight line segment. More strongly, any planar
+<em>embedding</em> is equivalent to (meaning it has the same rotation
+system as) a straight-line embedding. This result was first proved
+(indirectly) by Steinitz (1916), and then independently rediscovered by
+Wagner (1936), [Cairns (1944)], Fáry (1948), Stein (1951), Stojaković
+(1959), and Tutte (1960), so of course it’s usually called “Fáry’s
+theorem”.</p>
+<p>Non-simple planar graphs do not have straight-line embeddings; in any
+such embedding, parallel edges would coincide and loops would degenerate
+to points. But every planar map can be transformed into a simple map by
+subdividing loops into cycles of length <span
+class="math inline">\(3\)</span> and parallel edges into paths of length
+<span class="math inline">\(2\)</span>. It (finally!) follows that any
+generic planar curve with <span class="math inline">\(n\)</span>
+vertices is equivalent to a planar <em>polygon</em> with at most <span
+class="math inline">\(3n\)</span> vertices.</p>
+<p>The existence of straight-line maps for simple planar graphs finally
+gives us the converse of Euler’s theorem:.</p>
+<ul>
+<li>Every rotation system with <span class="math inline">\(n\)</span>
+vertices, <span class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces is the rotation system of a
+planar map <strong>if and only if</strong> <span
+class="math inline">\(n-m+f = 2\)</span>.</li>
+<li>A signed Gauss code with <span class="math inline">\(n\)</span>
+symbols describes a planar curve <strong>if and only if</strong> it
+induces <span class="math inline">\(n+2\)</span> faces.</li>
+</ul>
+<p>Moreover, all of the proofs described in this note are constructive;
+in particular, they all imply linear-time algorithms to construct
+straight-line embeddings from a given planar rotation system.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given a planar rotation system for a planar graph <span
+class="math inline">\(G\)</span> with <span
+class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(m\)</span> edges, we can compute an equivalent
+piecewise-linear embedding (or an equivalent straight-line embedding if
+<span class="math inline">\(G\)</span> is simple) in <span
+class="math inline">\(O(n+m)\)</span> time.</em>
+</dd>
+</dl>
+<h2 data-number="1.1" id="simple-triangulations"><span
+class="header-section-number">1.1</span> Simple triangulations</h2>
+<p>Throughout this note, we’ll consider the special case of <em>simple
+triangulations</em>: simple planar maps in which every face is bounded
+by three edges.</p>
+<dl>
+<dt><strong>Triangulation Lemma (Fáry 1948):</strong></dt>
+<dd>
+<em>Every simple planar map can be extended to a simple triangulation by
+adding edges between existing vertices.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix a simple planar map <span class="math inline">\(\Sigma\)</span> with
+a non-triangular face <span class="math inline">\(f\)</span>, and let
+<span class="math inline">\(w,x,y,z\)</span> be any four consecutive
+vertices on the boundary of <span class="math inline">\(f\)</span>. I
+claim that we can add at least one new edge <span
+class="math inline">\(wy\)</span> or <span
+class="math inline">\(xz\)</span> inside <span
+class="math inline">\(f\)</span> without creating any parallel edges.
+The lemma follows form this claim by induction on the quantity <span
+class="math inline">\(\sum_f (\deg(f)-3)\)</span>.
+</dd>
+<dd>
+<p>For ease of presentation, assume <span
+class="math inline">\(f\)</span> is bounded. Suppose <span
+class="math inline">\(\Sigma\)</span> contains an edge between <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(y\)</span>, necessarily outside <span
+class="math inline">\(f\)</span>. The vertices <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(y\)</span> subdivide the boundary of <span
+class="math inline">\(f\)</span> into two paths, one through <span
+class="math inline">\(x\)</span> and the other through <span
+class="math inline">\(z\)</span>. Adding the edge <span
+class="math inline">\(wy\)</span> to those paths creates two cycles.
+Without loss of generality, <span class="math inline">\(x\)</span> lies
+in the interior of the cycle <span class="math inline">\(C\)</span> that
+passes through <span class="math inline">\(z\)</span>; as shown in
+Figure 1.</p>
+</dd>
+<dd>
+<p>Now suppose for the sake of argument that <span
+class="math inline">\(\Sigma\)</span> also contains an edge <span
+class="math inline">\(xz\)</span>, again necessarily outside <span
+class="math inline">\(f\)</span>. This edge passes through the exterior
+of <span class="math inline">\(C\)</span> near <span
+class="math inline">\(z\)</span>, but it also passes through the
+interior of <span class="math inline">\(C\)</span> near <span
+class="math inline">\(x\)</span>. So the Jordan Curve Theorem implies
+that <span class="math inline">\(xz\)</span> intersects <span
+class="math inline">\(C\)</span>, contradicting the definition of
+embedding. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<figure>
+<img src="Fig/face-diagonal.png" style="width:25.0%"
+alt="Proof of the triangulation lemma." />
+<figcaption aria-hidden="true">Proof of the triangulation
+lemma.</figcaption>
+</figure>
+<p>To compute a straight-line map <span
+class="math inline">\(\overline\Sigma\)</span> equivalent to an
+arbitrary simple planar map <span class="math inline">\(\Sigma\)</span>,
+it suffices to add edges to <span class="math inline">\(\Sigma\)</span>
+to obtain a simple planar triangulation <span
+class="math inline">\(T\)</span>, compute a straight-line map <span
+class="math inline">\(\overline{T}\)</span> equivalent to <span
+class="math inline">\(T\)</span>, and then delete the (straightened)
+added edges.</p>
+<p>In the following sections, I’ll describe three different
+constructions of straight-line triangulations equivalent to a given
+triangulation <span class="math inline">\(T\)</span>.</p>
+<h2 data-number="1.2" id="inner-induction-hole-filling"><span
+class="header-section-number">1.2</span> Inner Induction (Hole
+Filling)</h2>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Every simple planar triangulation with more than <span
+class="math inline">\(3\)</span> vertices has an interior vertex with
+degree at most <span class="math inline">\(5\)</span>.</em>
+</dd>
+</dl>
+<!--
+**Proof (Euler):**
+: Let $T$ be a simple planar triangulation with $n>3$ vertices.  Every vertex of $T$ has degree at least $3$; otherwise, either $T$ is not simple or $T$ has a face with degree greater than $3$.  Euler’s formula implies that $T$ has exactly $3n-6$ edges, so the _average_ vertex degree is just less than $6$.  On the other hand, if $T$ has $k$ vertices with degree less than $6$, then $T$ has _at least_ $3n - 3k/2$ edges.  The inequality $3n-3k/2 \le 3n-6$  implies $k\ge 4$.  We conclude that $T$ has at least four vertices with degree less than $6$, at least one of which is an interior vertex. -->
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(T\)</span> be a simple planar
+triangulation with <span class="math inline">\(n&gt;3\)</span> vertices.
+Every vertex of <span class="math inline">\(T\)</span> has degree at
+least <span class="math inline">\(3\)</span>; otherwise, either <span
+class="math inline">\(T\)</span> is not simple or <span
+class="math inline">\(T\)</span> has a face with degree greater than
+<span class="math inline">\(3\)</span>. Assign angle <span
+class="math inline">\(\angle c = 1/3\)</span> to every corner of <span
+class="math inline">\(T\)</span>, so that every face <span
+class="math inline">\(f\)</span> has discrete curvature <span
+class="math inline">\(\kappa(f) = 0\)</span>. Then each vertex <span
+class="math inline">\(v\)</span> has curvature <span
+class="math inline">\(\kappa(v) = 1 - \deg(v)/6 \le 1/2\)</span>; in
+particular, a vertex has positive curvature if and only if its degree is
+at most <span class="math inline">\(5\)</span>. The combinatorial
+Gauss-Bonnet theorem implies that <span class="math inline">\(\sum_v
+\kappa(v) = 2\)</span>, so <span class="math inline">\(T\)</span> must
+have at least four vertices with positive curvature. At least one of
+these is an interior vertex.
+</dd>
+</dl>
+<p>A simple polygon <span class="math inline">\(P\)</span> is
+<em>star-shaped</em> if there is at least one interior point <span
+class="math inline">\(q\)</span> such that for each vertex <span
+class="math inline">\(p\)</span> of <span
+class="math inline">\(P\)</span>, the segment <span
+class="math inline">\(pq\)</span> does not cross any edge of <span
+class="math inline">\(P\)</span>. The set of all such points <span
+class="math inline">\(q\)</span> is called the <em>kernel</em> of <span
+class="math inline">\(P\)</span>.</p>
+<dl>
+<dt><strong>Lemma (Cairns 1944, Stojaković 1959):</strong></dt>
+<dd>
+<em>Every simple polygon with at most <span
+class="math inline">\(5\)</span> vertices is star-shaped.</em>
+</dd>
+<dt><strong>Proof (sketch):</strong></dt>
+<dd>
+Every convex polygon is trivially star-shaped. Every simple
+quadrilateral has at most one reflex vertex; every simple pentagon has
+at most two reflex vertices, which are either adjacent or not. In every
+case, we can verify by exhaustive case analysis that the kernel is
+non-empty; see the figure below.
+</dd>
+</dl>
+<figure>
+<img src="Fig/vertex-links.png" style="width:75.0%"
+alt="Every simple polygon with at most five vertices is star-shaped" />
+<figcaption aria-hidden="true">Every simple polygon with at most five
+vertices is star-shaped</figcaption>
+</figure>
+<dl>
+<dt><strong>Straight-Line Triangulation Theorem:</strong></dt>
+<dd>
+<em>Every simple planar triangulation is equivalent to a straight-line
+triangulation.</em>
+</dd>
+<dt><strong>Proof (Stojaković 1959):</strong></dt>
+<dd>
+We argue by induction on the number of vertices. Let <span
+class="math inline">\(T\)</span> be any simple planar triangulation. If
+<span class="math inline">\(T\)</span> has only <span
+class="math inline">\(3\)</span> vertices, then <span
+class="math inline">\(T\)</span> is clearly equivalent to any
+(geometric) triangle <span class="math inline">\(\overline{T}\)</span>.
+So assume otherwise.
+</dd>
+<dd>
+<p>Let <span class="math inline">\(v\)</span> be any interior vertex of
+<span class="math inline">\(T\)</span> with degree at most <span
+class="math inline">\(5\)</span>. Deleting <span
+class="math inline">\(v\)</span> creates a face <span
+class="math inline">\(f\)</span> with degree <span
+class="math inline">\(\deg(v)\)</span>. We extend <span
+class="math inline">\(T\setminus v\)</span> to a simple triangulation
+<span class="math inline">\(T’\)</span> by adding <span
+class="math inline">\(\deg(v)-3\)</span> diagonals inside <span
+class="math inline">\(f\)</span>, following the Triangulation Lemma. The
+induction hypothesis implies that <span
+class="math inline">\(T’\)</span> is equivalent to a straight-line
+triangulation <span class="math inline">\(\overline{T}’\)</span>.
+Deleting the diagonals yields a simple planar map <span
+class="math inline">\(\overline{T\setminus v}\)</span> equivalent to
+<span class="math inline">\(T\setminus v\)</span>. The face <span
+class="math inline">\(\overline{f}\)</span> of <span
+class="math inline">\(\overline{T\setminus v}\)</span> corresponding to
+<span class="math inline">\(f\)</span> is a simple polygon with <span
+class="math inline">\(\deg(v)\le 5\)</span> vertices. Inserting a vertex
+<span class="math inline">\(\overline{v}\)</span> in the kernel of <span
+class="math inline">\(\overline{f}\)</span> and connecting <span
+class="math inline">\(\overline{v}\)</span> to every vertex of <span
+class="math inline">\(\overline{f}\)</span> yields a straight-line
+triangulation <span class="math inline">\(\overline{T}\)</span>
+equivalent to <span class="math inline">\(T\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<!-- ## Variations on a Theme
+
+### Separating Triangles (Fáry)
+
+Fáry avoids using the Triangulation Lemma in the induction step as follows:
+
+**Proof (Fáry):**
+: After removing _any_ interior vertex $v$, triangulate the resulting face $f$ by joining _any_ vertex $w$ to all others.  Equivalently, choose any two bounded faces $uvw$ and $vwx$ that share an edge $vw$, and contracting $vw$ to a new vertex $v’$.  This contraction creates parallel pairs of edges $uv’$ and $v’w$; delete one edge from each pair.
+
+: If the resulting map $\Sigma’$ is not simple, the original triangulation $T$ has a nontrivial _separating triangle_ $tvw$.  Let $T^+$ be the subgraph of $T$ obtained by deleting all vertices inside $tvw$, and let $T^-$ be the subgraph obtained by deleting all vertices outside $tvw$.  We can recursively construct straight-line triangulations $\overline{T^+}$ and $\overline{T^-}$ equivalent to $T^+$ and $T^-$.  Affinely mapping $\overline{T^-}$ into face $\overline{tvw}$ of $\overline{T^+}$ gives us a straight-line triangulation $\overline{T}$ equivalent to $T$.
+
+: Recursion inside the inner triangulation $T^-$ implies that it is always possible to choose an edge $vw$ whose contraction yields a simple triangulation.  So we can proceed as follows:
+
+: Choose any interior vertex $v$.  Find a neighbor $w$ of $v$ that is adjacent to only two other neighbors of $v$.  Delete $v$ and connect $w$ to all of $v$’s other neighbors, to obtain a map $\Sigma’$.  Recursively compute a straight-line map $\overline\Sigma’$.  Delete the edges from $\overline{w}$ to the other neighbors of $v$; let $f$ be the resulting $\deg(v)$-gonal face.  The kernel of $f$ includes vertex $\overline{w}$ and therefore has nonempty intersection with the interior of $f$.  Add a point $\overline{v}$ in the interior of the kernel, and Bob’s your uncle!
+
+
+## Convex Polyhedral Embeddings (Stein)
+
+Stein actually proves a stronger claim, establishing necessary and sufficient conditions for embeddings with convex faces.  A planar map is _weakly convex_ if the boundary of each face, including the outer face, is a convex polygon, possibly with collinear edges.  In particular, every edge of a weakly convex map is a straight line segment.  Every weakly convex planar map satisfies two topological conditions:
+
+- The boundary of every face is a simple cycle.
+- The intersection of any two facial cycles is connected: either empty, a single vertex, or a simple path.
+
+Any planar map satisfying these two conditions is called _weakly polyhedral_.
+
+**Weakly Convex Embedding Theorem (Stein):** _For every weakly polyhedral planar embedding, there is an equivalent weakly convex polyhedral embedding._
+
+
+**Proof [¡¡BROKEN!!]:**
+: Let $\Sigma$ be a weakly polyhedral embedding.  If the underlying graph of $\Sigma$ is the complete graph $K_4$---the simplest graph with a polyhedral embedding---finding an equivalent convex embedding is straightforward, so assume otherwise.  There are two cases to consider:
+
+: Suppose $\Sigma$ has a vertex $v$ with degree $2$.  Let $u$ and $w$ be the neighbors of $v$.  The contracted map $\Sigma / uv$ is still weakly polyhedral.  So  the induction hypothesis implies that there is a convex embedding $\overline{\Sigma'}$ equivalent to $\Sigma / uv$.  We can obtain a convex embedding $\overline{\Sigma}$ equivalent to $\Sigma$ by adding a vertex $\overline{v}$ on the edge $\overline{uw}$ in $\overline{\Sigma'}$.
+
+: On the other hand, suppose every vertex in $\Sigma$ has degree at least $3$. I claim that there is an interior edge $e$ such that $\Sigma \setminus e$ is weakly polyhedral.
+
+: Deleting any interior edge $e$ merges the faces $f$ and $g$ on either side of $e$  into a single face $f\cup g$.  Suppose this new face has disconnected intersection with some other face $h$; equivalently, the union $f\cup g\cup h$ is not simply connected.  Then there is a closed curve $\gamma$ that starts at an endpoint of $e$, then passes through $f$ to some vertex in $f \cap h$, then passes through $h$ to some vertex in $g\cap h$, and finally passes through $g$ back to its starting endpoint of $e$.  The interior of $\gamma$ contains at least one face of $\Sigma$.
+
+: Deleting $uv$ merges the two shores of $u\mathord\to v$ into a new face $f$.  The the inductive hypothesis implies that there is an equivalent convex embedding $\overline{\Sigma \setminus uv}$.  We can obtain a convex embedding $\overline{\Sigma}$ equivalent to $\Sigma$ by adding the line segment $\overline{uv}$ through the convex face $\overline{f}$ in $\overline{\Sigma'}$.  $\qquad\square$
+
+
+![Two weakly convex embeddings of the cube graph obtained by Stein's algorithm.](Fig/cube-convex){ width=40% }
+
+With a bit more effort, Stein's argument can be extended to show that every _strictly_ polyhedral embedding (where two faces intersect in at most one edge) is equivalent to a _strictly_ convex embedding (where no two edges of any face are collinear).  But we'll see a more interesting proof of that fact in the next lecture.
+-->
+<h2 data-number="1.3" id="outer-induction-canonical-ordering"><span
+class="header-section-number">1.3</span> Outer Induction (Canonical
+Ordering)</h2>
+<p>Here is a second inductive proof of the Straight-Line Triangulation
+Theorem that does <em>not</em> rely on Euler’s formula, roughly
+following an argument of de Fraysseix, Pach, and Pollack (1988). This
+proof is close in spirit to early flawed inductive proofs of Euler’s
+formula, including Euler’s own flawed proof.</p>
+<p>We actually prove the following stronger claim: Let <span
+class="math inline">\(\Sigma\)</span> be any simple planar map whose
+interior faces are triangles and whose outer face is bounded by a simple
+cycle of length <span class="math inline">\(h\ge 3\)</span>. Let <span
+class="math inline">\(v_1, v_2, \dots, v_h\)</span> be the vertices of
+the outer face of <span class="math inline">\(\Sigma\)</span> in
+counterclockwise order. Let <span class="math inline">\(P\)</span> be
+any convex polygon with vertices <span class="math inline">\(p_1, p_2,
+\dots, p_h\)</span> in counterclockwise order. Then there is a
+straight-line planar map <span
+class="math inline">\(\overline{\Sigma}\)</span> that is equivalent to
+<span class="math inline">\(\Sigma\)</span>, whose outer face is <span
+class="math inline">\(P\)</span>, such that each outer vertex <span
+class="math inline">\(v_i\)</span> corresponds to the polygon vertex
+<span class="math inline">\(p_i\)</span>.</p>
+<p>The proof proceeds by induction on the number of vertices of <span
+class="math inline">\(\Sigma\)</span>. If <span
+class="math inline">\(\Sigma\)</span> is a single triangle, the claim is
+trivial, so assume otherwise. There are two nontrivial cases to
+consider: Either <span class="math inline">\(v_1\)</span> and <span
+class="math inline">\(v_{h-1}\)</span> are the only neighbors of <span
+class="math inline">\(v_h\)</span> on the outer face, or <span
+class="math inline">\(v_h\)</span> has another neighbor <span
+class="math inline">\(v_j\)</span> on the outer face.</p>
+<dl>
+<dt><strong>Case 1: Only two neighbors on the outer face.</strong></dt>
+<dd>
+<p>In this case, we recursively compute a straight-line planar map
+equivalent to <span class="math inline">\(\Sigma\setminus v_h\)</span>
+and then embed the edges incident to <span
+class="math inline">\(v_h\)</span> as line segments.</p>
+</dd>
+<dd>
+<p>Specifically, let <span class="math inline">\(w_1, w_2, \dots,
+w_d\)</span> be the neighbors of <span
+class="math inline">\(v_h\)</span>, indexed in order around <span
+class="math inline">\(v_h\)</span> so that <span
+class="math inline">\(w_1 = v_{h-1}\)</span> and <span
+class="math inline">\(w_d = v_1\)</span>. The vertices <span
+class="math inline">\(w_2, \dots, w_{d-1}\)</span> all lie in the
+complement of the outer face, and <span
+class="math inline">\(\Sigma\)</span> contains the edge <span
+class="math inline">\(w_i w_{i+1}\)</span> for every index <span
+class="math inline">\(i\)</span>. It follows that the outer face of the
+submap <span class="math inline">\(\Sigma’ = \Sigma\setminus
+v_h\)</span> is bounded by a simple cycle with vertices <span
+class="math inline">\(v_1, v_2, \dots, v_{h-1}=w_1, w_2, \dots,
+w_d=v_1\)</span>. Every bounded face of <span
+class="math inline">\(\Sigma’\)</span> is also a bounded face of <span
+class="math inline">\(\Sigma\)</span> and thus has degree <span
+class="math inline">\(3\)</span>.</p>
+</dd>
+<dd>
+<p>Now let <span class="math inline">\(\alpha\)</span> be a convex arc
+from <span class="math inline">\(p_1\)</span> to <span
+class="math inline">\(p_{h-1}\)</span> inside the triangle <span
+class="math inline">\(p_1 p_h p_{h-1}\)</span>. (For example, <span
+class="math inline">\(\alpha\)</span> could be a circular arc tangent to
+<span class="math inline">\(p_1 p_h\)</span> at <span
+class="math inline">\(p_1\)</span> and tangent to <span
+class="math inline">\(p_h p_{h-1}\)</span> at <span
+class="math inline">\(p_{h-1}\)</span>.) Place <span
+class="math inline">\(d\)</span> evenly spaced points <span
+class="math inline">\(q_1, q_2, q_3, \dots, q_d\)</span> along <span
+class="math inline">\(\alpha\)</span>, with <span
+class="math inline">\(q_1 = p_{h-1}\)</span> and <span
+class="math inline">\(q_d = p_1\)</span>. Finally, let <span
+class="math inline">\(P&#39;\)</span> be the convex polygon obtained by
+replacing the edges <span class="math inline">\(p_{h-1}p_h\)</span> and
+<span class="math inline">\(p_hp_1\)</span> with the polygonal chain
+<span class="math inline">\(q_1 q_2 \dots q_d\)</span>.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/straight-embedding-1.png" style="width:45.0%"
+alt="Case 1: Remove vertex v_h and recurse" />
+<figcaption aria-hidden="true">Case 1: Remove vertex <span
+class="math inline">\(v_h\)</span> and recurse</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The inductive hypothesis implies that there is a straight-line
+embedding <span class="math inline">\(\overline{\Sigma’}\)</span>
+equivalent to <span class="math inline">\(\Sigma’\)</span> with outer
+face <span class="math inline">\(P&#39;\)</span>, that maps each vertex
+<span class="math inline">\(v_i\)</span> (with <span
+class="math inline">\(i\ne h\)</span>) to the corresponding point <span
+class="math inline">\(p_i\)</span> and each vertex <span
+class="math inline">\(w_i\)</span> to the corresponding point <span
+class="math inline">\(q_i\)</span>. Adding the edges <span
+class="math inline">\(p_h q_i\)</span> gives us a straight-line map
+<span class="math inline">\(\overline{\Sigma}\)</span> equivalent to
+<span class="math inline">\(\Sigma\)</span> with outer face <span
+class="math inline">\(P\)</span> and the required vertex
+correspondences.</p>
+</dd>
+<dt><strong>Case 2: More than two neighbors on the outer
+face.</strong></dt>
+<dd>
+<p>Now suppose <span class="math inline">\(v_h\)</span> is adjacent to
+some vertex <span class="math inline">\(v_j\)</span> on the outer face
+besides <span class="math inline">\(v_1\)</span> and <span
+class="math inline">\(v_{h-1}\)</span>. In this case, we split <span
+class="math inline">\(\Sigma\)</span> into two submaps along the edge
+<span class="math inline">\(v_h v_j\)</span>, split the polygon <span
+class="math inline">\(P\)</span> into two smaller polygons along the
+diagonal <span class="math inline">\(p_hp_j\)</span>, and recursively
+embed each fragment of <span class="math inline">\(\Sigma\)</span> into
+the corresponding fragment of <span
+class="math inline">\(P\)</span>.</p>
+</dd>
+<dd>
+<p>Specifically, let <span class="math inline">\(\Sigma^\sharp\)</span>
+be the submap of <span class="math inline">\(\Sigma\)</span> obtained by
+deleting every vertex outside the simple cycle <span
+class="math inline">\((v_h, v_1, v_2, \dots, v_j, v_h)\)</span>. (The
+outside of this cycle is well-defined by the Jordan Curve Theorem.)
+Similarly, let <span class="math inline">\(\Sigma^\flat\)</span> be the
+submap of <span class="math inline">\(\Sigma\)</span> obtained by
+deleting every vertex outside the simple cycle <span
+class="math inline">\((v_h, v_j, v_{j-1}, \dots, v_{h-1}, v_h)\)</span>.
+Both <span class="math inline">\(\Sigma^\flat\)</span> and <span
+class="math inline">\(\Sigma^\sharp\)</span> satisfy the conditions of
+our claim.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/straight-embedding-2.png" style="width:45.0%"
+alt="Case 2: Split along the diagonal and recurse twice" />
+<figcaption aria-hidden="true">Case 2: Split along the diagonal and
+recurse twice</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The line segment <span class="math inline">\(p_hp_j\)</span>
+partitions the polygon <span class="math inline">\(P\)</span> into two
+smaller convex polygons <span class="math inline">\(P^\flat\)</span> and
+<span class="math inline">\(P^\sharp\)</span>. The induction hypothesis
+give us straight-line embeddings <span
+class="math inline">\(\overline{\Sigma^\flat}\)</span> and <span
+class="math inline">\(\overline{\Sigma^\sharp}\)</span>, respectively
+equivalent to <span class="math inline">\(\Sigma^\flat\)</span> and
+<span class="math inline">\(\Sigma^\sharp\)</span>, with respective
+outer faces bounded by <span class="math inline">\(P^\flat\)</span> and
+<span class="math inline">\(P^\sharp\)</span>, mapping each vertex <span
+class="math inline">\(v_i\)</span> to the corresponding point <span
+class="math inline">\(p_i\)</span>. In particular, in both straight-line
+embeddings, the the line segment <span
+class="math inline">\(p_hp_j\)</span> corresponds to the edge <span
+class="math inline">\(v_hv_j\)</span>. Combining the straight-line
+embeddings <span class="math inline">\(\overline{\Sigma^\flat}\)</span>
+and <span class="math inline">\(\overline{\Sigma^\sharp}\)</span> along
+<span class="math inline">\(p_hp_j\)</span> gives us the required
+straight-line embedding <span
+class="math inline">\(\overline{\Sigma}\)</span>.</p>
+</dd>
+</dl>
+<p>The second case is actually redundant. A simple recursive argument,
+similar to the proof that every polygon triangulation has two ears,
+implies that there are at least two non-adjacent vertices on the outer
+face with exactly two neighbors on the outer face. It follows that the
+vertices of <span class="math inline">\(\Sigma\)</span> can be ordered
+<span class="math inline">\(v_1, v_2, \dots, v_n\)</span>, so that after
+deleting any prefix <span class="math inline">\(v_1, v_2, \dots,
+v_i\)</span> where <span class="math inline">\(i\le n-3\)</span>, the
+outer face of the remaining subgraph is bounded by a simple cycle, and
+the next vertex <span class="math inline">\(v_{i+1}\)</span> lies on the
+outer face. This sequence of vertices is called a <em>canonical
+ordering</em> (or a <em>vertex-shelling order</em>) for <span
+class="math inline">\(\Sigma\)</span></p>
+<h2 data-number="1.4" id="schnyder-woods"><span
+class="header-section-number">1.4</span> Schnyder Woods</h2>
+<p>In 1989, Walter Schnyder discovered a significant refinement of the
+previous proof, which implies that any <span
+class="math inline">\(n\)</span>-vertex planar graph has a straight-line
+embedding whose vertices lie on an <span
+class="math inline">\((n-1)\times (n-1)\)</span> integer grid. Again, we
+consider only simple planar <em>triangulations</em>, where all faces
+have degree <span class="math inline">\(3\)</span>, including the outer
+face.</p>
+<p>Let <span class="math inline">\(T\)</span> be a simple planar
+triangulation with <span class="math inline">\(n\)</span> vertices.
+Schnyder defined two different ways to annotate features of <span
+class="math inline">\(T\)</span> with the colors red, green, and blue.
+The first of these is a <em>Schnyder coloring</em>, which colors the
+interior corners subject to two conditions:</p>
+<ul>
+<li>The corners of each face are colored red, green, and blue in
+counterclockwise order.</li>
+<li>The corners around each internal vertex are colored red, then green,
+then blue in counterclockwise order. In particular, each internal vertex
+is incident to at least one corner of each color.</li>
+</ul>
+<figure>
+<img src="Fig/Schnyder-coloring.png" style="width:40.0%"
+alt="A Schnyder coloring of a simple triangulation" />
+<figcaption aria-hidden="true">A Schnyder coloring of a simple
+triangulation</figcaption>
+</figure>
+<p>A Schnyder coloring can be constructed in linear time as follows.
+Color the outer vertices of <span class="math inline">\(T\)</span> red,
+green, and blue in counterclockwise order. If <span
+class="math inline">\(T\)</span> has a single bounded face, its three
+corners inherit the colors of the incident vertices. Otherwise, choose
+an arbitrary edge from a boundary vertex <span
+class="math inline">\(u\)</span> to an interior vertex <span
+class="math inline">\(v\)</span>. There are two cases to consider.</p>
+<ul>
+<li><p>Suppose <span class="math inline">\(v\)</span> has exactly two
+common neighbors with <span class="math inline">\(u\)</span>. The
+contraction <span class="math inline">\(T/uv\)</span> has two pairs of
+parallel edges; deleting one edge in each pair yields a smaller
+triangulation <span class="math inline">\(T’\)</span>. Recursively
+compute a Schnyder coloring for <span class="math inline">\(T’\)</span>,
+and transfer the corner colors back to <span
+class="math inline">\(T\)</span>. Finally, there is only one way to
+consistently color the faces of <span class="math inline">\(T\)</span>
+on either side of <span class="math inline">\(uv\)</span>; specifically,
+the corners incident to the boundary vertex <span
+class="math inline">\(u\)</span> inherit <span
+class="math inline">\(u\)</span>’s color.</p></li>
+<li><p>If <span class="math inline">\(v\)</span> has at least three
+common neighbors with <span class="math inline">\(u\)</span>, there must
+be a triangle <span class="math inline">\(uvw\)</span> in <span
+class="math inline">\(T\)</span> containing at least one vertex in its
+interior. In this case, we recursively compute Schnyder colorings of the
+subgraphs of <span class="math inline">\(G\)</span> inside <span
+class="math inline">\(uvw\)</span> and outside <span
+class="math inline">\(uvw\)</span>. In both recursive subproblems the
+boundary vertex <span class="math inline">\(u\)</span> retains its
+originally assigned color, so that the resulting Schnyder colorings are
+compatible.</p></li>
+</ul>
+<p>In fact, the second case is unnecessary. By expanding the recursion
+from the second case, we see that the entire construction is carried out
+by a sequence of contractions; equivalently, an easy induction argument
+implies that at least one edge from each boundary vertex can be
+contracted immediately. The Schnyder coloring in the figure above was
+computed by contacting the interior vertices toward the top (green)
+vertex in the order indicated by the vertex labels.</p>
+<figure>
+<img src="Fig/Schnyder-contraction.png" style="width:55.0%"
+alt="Recursively computing a Schnyder coloring" />
+<figcaption aria-hidden="true">Recursively computing a Schnyder
+coloring</figcaption>
+</figure>
+<p>The second annotation, called a <em>Schnyder wood</em>, assigns a
+direction and a color to every internal edge of <span
+class="math inline">\(T\)</span>. Every internal edge in <span
+class="math inline">\(T\)</span> is incident to corners with all three
+colors, with one color appearing twice at one endpoint. Schnyder orients
+each internal edge <span class="math inline">\(e\)</span> toward the
+endpoint with the same color twice, and assigns the repeated color to
+the edge. The resulting coloring and orientation has the following
+useful properties:</p>
+<ul>
+<li>Each boundary vertex has only incoming internal edges, all with the
+same color as the vertex itself.</li>
+<li>Every internal vertex has exactly one outgoing edge of each
+color.</li>
+<li>At every internal vertex, incident edges appear in counterclockwise
+order as follows: one outgoing red, all incoming blue, one outgoing
+green, all incoming red, one outgoing blue, all incoming green.</li>
+</ul>
+<figure>
+<img src="Fig/Schnyder-wood.png" style="width:40.0%"
+alt="The Schnyder wood constructed from the coloring in Figure 5" />
+<figcaption aria-hidden="true">The Schnyder wood constructed from the
+coloring in Figure 5</figcaption>
+</figure>
+<p>We can also construct Schnyder woods directly using a sequence of
+edge contractions, just as we constructed Schnyder colorings. Expanding
+an edge introduces one vertex and three edges; we orient the new edges
+away from the new vertex, and assign them the only colors consistent
+with the properties listed above. Conversely, <em>every</em> Schnyder
+wood can be constructed using this algorithm, contracting toward any of
+the outer vertices.</p>
+<figure>
+<img src="Fig/Schnyder-edge-contraction.png" style="width:55.0%"
+alt="Recursively computing a Schnyder wood" />
+<figcaption aria-hidden="true">Recursively computing a Schnyder
+wood</figcaption>
+</figure>
+<p>Given any Schnyder wood, we can define an equivalent Schnyder
+coloring as follows. For any interior corner, if the two edges are both
+leaving the corner vertex, assign the third color to the corner;
+otherwise, assign the color of the incoming edge(s) to the corner.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>In any Schnyder wood, the edges of each color induce a spanning tree
+of the internal vertices, rooted at the boundary vertex with that
+color.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Without loss of generality, assume the Schnyder wood is constructed by
+repeatedly contracting to the green boundary vertex. Each interior
+vertex has exactly one outgoing edge of each color, either leading to
+another interior vertex or the boundary vertex of that color.
+</dd>
+<dd>
+<p>Number the interior vertices by the order in which they are
+contracted to the green boundary vertex, as shown in the figures. Label
+the green boundary vertex <span class="math inline">\(0\)</span> and the
+other two boundary vertices <span class="math inline">\(\infty\)</span>.
+Call an edge <span class="math inline">\(v\mathord\to w\)</span>
+<em>increasing</em> if the label of <span
+class="math inline">\(w\)</span> is larger than the label of <span
+class="math inline">\(w\)</span> and <em>decreasing</em> otherwise.
+Every green edge is decreasing, and every red and blue edge is
+increasing. Thus, none of the red, green, or blue subgraphs contains a
+cycle; starting from any interior node, following edges of any fixed
+color leads to the outer vertex of that color. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>Hey, look, we have yet another proof of Euler’s formula!</p>
+<dl>
+<dt><strong>Euler’s formula:</strong></dt>
+<dd>
+<em>For any planar map with <span class="math inline">\(n\)</span>
+vertices, <span class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces, we have <span
+class="math inline">\(n-m+f=2\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+It suffices to prove the theorem for simple planar triangulations. If
+<span class="math inline">\(\Sigma\)</span> is not a simple map, we can
+make it simple by splitting each edge into a path of three edges, by
+introducing two new vertices; the resulting simple graph has <span
+class="math inline">\(n+2m\)</span> vertices, <span
+class="math inline">\(3m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. Similarly, if any face of <span
+class="math inline">\(\Sigma\)</span> has degree greater than~<span
+class="math inline">\(3\)</span>, it must contain a path between two
+non-adjacent vertices; adding this path to the embedding yields a new
+planar map with <span class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m+1\)</span> edges, and <span
+class="math inline">\(f+1\)</span> faces.
+</dd>
+<dd>
+<p>Consider any Schnyder wood of a simple planar triangulation <span
+class="math inline">\(T\)</span> with <span
+class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces (including the outer face). The
+edges of each color define a rooted tree with <span
+class="math inline">\(n-2\)</span> vertices, and therefore <span
+class="math inline">\(n-3\)</span> edges, and every interior
+edgesbelongs to exactly one such tree. It immediately follows that <span
+class="math inline">\(m = 3(n-3)+3 = 3n-6\)</span>. Finally, because
+every face is a triangle, we have <span class="math inline">\(2m = 3f =
+6n-12\)</span>, so <span class="math inline">\(f = 2n-4\)</span>. We
+conclude that <span class="math inline">\(n-m+f = n - (3n-6) + (2n-4) =
+2\)</span>. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="1.5" id="grid-embedding"><span
+class="header-section-number">1.5</span> Grid embedding</h2>
+<p>Now we assign integer coordinates to every interior vertex <span
+class="math inline">\(v\)</span> as follows. There is a unique path of
+red edges, a unique path of green edges, and a unique path of blue edges
+from <span class="math inline">\(v\)</span> to the boundary. These three
+paths partition the triangulation into three regions, which we color
+red, green, and blue as shown below. Each region contains its clockwise
+bounding path—for example, the green region includes the blue path,
+including the blue boundary vertex—but not <span
+class="math inline">\(v\)</span> itself.</p>
+<p>For purposes of defining these regions when <span
+class="math inline">\(v\)</span> is a boundary vertex, we orient the
+boundary edges clockwise and color each edge according to its head.
+Thus, if <span class="math inline">\(r,g,b\)</span> are the red, green,
+and blue boundary vertices, the green region of <span
+class="math inline">\(g\)</span> contains every vertex except <span
+class="math inline">\(g\)</span> and <span
+class="math inline">\(r\)</span>, the red region of <span
+class="math inline">\(g\)</span> contains only <span
+class="math inline">\(r\)</span>, and the blue region of <span
+class="math inline">\(g\)</span> is empty.</p>
+<p>For each vertex <span class="math inline">\(v\)</span>, let <span
+class="math inline">\(r(v)\)</span>, <span
+class="math inline">\(g(v)\)</span>, <span
+class="math inline">\(b(v)\)</span> respectively denote the number of
+vertices in the red, green, and blue regions of <span
+class="math inline">\(v\)</span>. By definition, we have <span
+class="math inline">\(r(v) + g(v) + b(v) = n-1\)</span> for every vertex
+<span class="math inline">\(v\)</span>.</p>
+<figure>
+<img src="Fig/Schnyder-regions.png" style="width:45.0%"
+alt="Schnyder regions for an interior vertex with coordinates (r,g,b) = (2,7,4)." />
+<figcaption aria-hidden="true">Schnyder regions for an interior vertex
+with coordinates <span class="math inline">\((r,g,b) =
+(2,7,4)\)</span>.</figcaption>
+</figure>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Schnyder’s coordinates <span class="math inline">\((r(v), g(v),
+b(v))\)</span> satisfy the following conditions:</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>For every red edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) &lt; r(w)\)</span>
+and <span class="math inline">\(g(v) \ge g(w)\)</span> and <span
+class="math inline">\(b(v) &gt; b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="a">
+<li><em>For every green edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) &gt; r(w)\)</span>
+and <span class="math inline">\(g(v) &lt; g(w)\)</span> and <span
+class="math inline">\(b(v) \ge b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="3" type="a">
+<li><em>For every blue edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) \ge r(w)\)</span>
+and <span class="math inline">\(g(v) &gt; g(w)\)</span> and <span
+class="math inline">\(b(v) &lt; b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="4" type="a">
+<li><em>For every triangle <span class="math inline">\({uvw}\)</span>
+whose corners at <span class="math inline">\(u\)</span>, <span
+class="math inline">\(v\)</span>, and <span
+class="math inline">\(w\)</span> are respectively red, green, and blue,
+we have <span class="math inline">\(r(u) \ge r(v) &gt; r(w)\)</span> and
+<span class="math inline">\(g(v) \ge g(w) &gt; g(u)\)</span> and <span
+class="math inline">\(b(w) \ge b(u) &gt; b(v)\)</span>.</em></li>
+</ol>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix an arbitrary reference vertex <span
+class="math inline">\(v\)</span>, Color <span
+class="math inline">\(v\)</span> black, and color the other <span
+class="math inline">\(n-1\)</span> vertices according to the region that
+contains it. When we move the reference vertex from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(w\)</span> along a green edge <span
+class="math inline">\(v\mathord\to w\)</span>, <span
+class="math inline">\(v\)</span> changes from black to green, <span
+class="math inline">\(w\)</span> changes from red to black, every green
+vertex remains green, and no vertex changes from red to blue or vice
+versa. (Some red or blue vertices might become green, and the set of
+blue vertices might remain unchanged.) Part (b) now follows immediately;
+parts (a) and (c) follow from similar arguments.
+</dd>
+<dd>
+<p>Finally, part (d) follows by straightforward case analysis. Up to a
+choice of colors, there are only two cases to consider: either the edges
+of <span class="math inline">\(uvw\)</span> have distinct colors (and
+therefore define a directed cycle), or two of the three edges have the
+same color (so the edges do not define a directed cycle). <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Any planar embedding of a simple planar graph with <span
+class="math inline">\(n\)</span> vertices is equivalent to a
+straight-line embedding with vertices on the <span
+class="math inline">\((n-1)\times (n-1)\)</span> integer grid.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+As usual, it suffices to consider only simple triangulations. Let <span
+class="math inline">\(T\)</span> be a simple planar triangulation with
+<span class="math inline">\(n\)</span> vertices. Fix an arbitrary
+Schnyder coloring of <span class="math inline">\(T\)</span>, and thus an
+arbitrary Schnyder wood.
+</dd>
+<dd>
+<p>Assign each vertex <span class="math inline">\(v\)</span> of <span
+class="math inline">\(T\)</span> the integer coordinates <span
+class="math inline">\((g(v), b(v))\)</span>. Let <span
+class="math inline">\(uvw\)</span> be an arbitrary triangle whose
+corners at <span class="math inline">\(u\)</span>, <span
+class="math inline">\(v\)</span>, and <span
+class="math inline">\(w\)</span> are respectively colored red, green,
+and blue by the Schnyder coloring. The orientation of the new embedding
+of <span class="math inline">\(uvw\)</span> is given by the sign of the
+determinant <span class="math display">\[
+\left|\begin{matrix}
+    1 &amp; g(u) &amp; b(u) \\
+    1 &amp; g(v) &amp; b(v) \\
+    1 &amp; g(w) &amp; b(w)
+\end{matrix}\right|
+~=~
+\big(g(v)-g(u)\big)\big(b(w)-b(u)\big) -
+\big(g(w)-g(u)\big)\big(b(v)-b(u)\big).
+\]</span> The previous lemma implies that this expression is positive,
+which implies that the triangle is oriented counterclockwise. Because
+every triangle is oriented consistently, no two triangles in the
+embedding can overlap, and therefore no pair of edges can intersect.
+(The signed area of the outer triangle is equal to the sum of the signed
+areas of the interior triangles; if two triangles overlapped, the sum of
+the areas of the interior triangles would be strictly larger than the
+unsigned area of the outer triangle!) All vertex coordinates are
+integers between <span class="math inline">\(0\)</span> and <span
+class="math inline">\(n-2\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The following figure shows the resulting embedding for our example
+graph. Instead of embedding on the square grid, I’m using a grid of
+equilateral triangles, assigning each vertex <span
+class="math inline">\(v\)</span> <em>barycentric</em> coordinates <span
+class="math inline">\((r(v), g(v), b(v))\)</span>.</p>
+<figure>
+<img src="Fig/Schnyder-grid.png" style="width:45.0%"
+alt="Schnyder’s barycentric grid embedding." />
+<figcaption aria-hidden="true">Schnyder’s barycentric grid
+embedding.</figcaption>
+</figure>
+<h2 data-number="1.6" id="references"><span
+class="header-section-number">1.6</span> References</h2>
+<p>Eventually….</p>
+<h2 data-number="1.7" id="not-appearing"><span
+class="header-section-number">1.7</span> Not Appearing</h2>
+<ul>
+<li>Looser grid embedding from canonical ordering or Schnyder face
+counts</li>
+<li>Schnyder woods for more general planar graphs (Felsner et al.)</li>
+<li>Weighted Schnyder embeddings</li>
+<li>Morphing between equivalent straight-line embeddings (better via
+Tutte)</li>
+<li>Convex polyhedral embeddings (Stein, better via Tutte)</li>
+<li>Steinitz’s theorem (better via Tutte)</li>
+<li>Distributive lattice of 3-orientations (maybe later)</li>
+<li>Koebe-Andreev circle packing (maybe later)</li>
+</ul>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

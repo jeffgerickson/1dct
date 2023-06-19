@@ -1,0 +1,639 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>05-shortest-homotopic</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="shortest-homotopic-pathsbeta"><span
+class="header-section-number">1</span> Shortest (Homotopic) Paths<span
+class="math inline">\(^\beta\)</span></h1>
+<p>In this lecture, we’ll consider a problem that combines both geometry
+and topology that arises in VLSI design (or at least <em>did</em> arise
+in VLSI design in the 1980s). Suppose we have an environment <span
+class="math inline">\(X\)</span> that can be modeled as a <em>polygon
+with holes</em>; this is the area bounded between a simple outer polygon
+<span class="math inline">\(P_0\)</span> and several disjoint simple
+polygons or “holes” <span class="math inline">\(P_1, P_2, \dots,
+P_h\)</span>, each of which lies in the interior of <span
+class="math inline">\(P_0\)</span>. (Yes, previously we used “polygon”
+to refer to the boundary, and now we’re using “polygon with holes” to
+refer to the area. Welcome to mathematical jargon.)</p>
+<p>We are also given a polygonal path <span
+class="math inline">\(\pi\)</span> in the interior of <span
+class="math inline">\(X\)</span>. Recall that two <em>paths</em> are
+homotopic if one can be continuously deformed to the other within <span
+class="math inline">\(X\)</span> while keeping both endpoints fixed at
+all times. Our problem is to find the shortest path (that is, the path
+of minimum Euclidean length) that is homotopic in <span
+class="math inline">\(X\)</span> to the given path <span
+class="math inline">\(\pi\)</span>.</p>
+<p>Although we could reduce to our earlier notion of homotopy by using
+the vertices of <span class="math inline">\(X\)</span> as point
+obstacles, the pictures will be nicer (and the algorithms arguably
+simpler) if we use <span class="math inline">\(X\)</span> itself as our
+underlying space. Our earlier formal definition of homotopy extends
+directly to this setting: A homotopy between two paths <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> in <span
+class="math inline">\(X\)</span> is a continuous function <span
+class="math inline">\(h\colon[0,1]\times[0,1]\to X\)</span> such that
+the restrictions <span class="math inline">\(h(\cdot,0)\)</span> and
+<span class="math inline">\(h(\cdot,1)\)</span> are constant functions,
+and the restrictions <span class="math inline">\(h(0,\cdot)\)</span> and
+<span class="math inline">\(h(1, \cdot)\)</span> are the paths <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>, respectively.</p>
+<p>Throughout this section, <span class="math inline">\(n\)</span>
+denotes the number of vertices of the environment <span
+class="math inline">\(X\)</span>, and <span
+class="math inline">\(k\)</span> denotes the number of vertices in the
+input path <span class="math inline">\(\pi\)</span>. (Yes, this is
+reversed from the previous lecture.) Let <span
+class="math inline">\(s\)</span> (“source”) and <span
+class="math inline">\(t\)</span> (“target”) denote the first and last
+vertices of <span class="math inline">\(\pi\)</span>.</p>
+<h2 data-number="1.1" id="shortest-paths-in-simple-polygons"><span
+class="header-section-number">1.1</span> Shortest Paths in Simple
+Polygons</h2>
+<p>Let’s start with the topologically trivial case where <span
+class="math inline">\(X\)</span> is the interior of a simple polygon
+with no holes. A strengthening of the Jordan Curve Theorem due to
+Schönflies implies that <span class="math inline">\(X\)</span> is
+homeomorphic to an open circular disk. It follows that any two paths in
+<span class="math inline">\(X\)</span> with the same endpoints are
+homotopic. Thus, we are now looking for the globally shortest path in
+<span class="math inline">\(X\)</span> between the endpoints of <span
+class="math inline">\(\pi\)</span>.</p>
+<p>The shortest path between two points <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span> in a simple polygon <span
+class="math inline">\(P\)</span> is a polygonal chain, whose interior
+vertices lie at concave vertices of <span
+class="math inline">\(P\)</span>. Imagine a taut rubber band between
+<span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>; the rubber band will be straight
+everywhere, except at concave corners that it must wrap around.</p>
+<figure>
+<img src="Fig/polygon-shortest-path.png" style="width:50.0%"
+alt="The shortest path between two points in a simple polygon" />
+<figcaption aria-hidden="true">The shortest path between two points in a
+simple polygon</figcaption>
+</figure>
+<p>I’ll describe an algorithm for this special case <em>as through</em>
+the topology of the problem were non-trivial; in particular, even though
+the output depends only on the endpoints of the input path <span
+class="math inline">\(\pi\)</span>, I will still use the entire input
+path to guide the algorithm.</p>
+<h2 data-number="1.2" id="triangulations-and-dual-graphs"><span
+class="header-section-number">1.2</span> Triangulations and Dual
+Graphs</h2>
+<p>The first step of our shortest-path algorithm is to triangulate the
+polygon <span class="math inline">\(X\)</span>. We saw an algorithm in
+the first lecture that computes a frugal triangulation of <span
+class="math inline">\(X\)</span> in <span class="math inline">\(O(n\log
+n)\)</span> time.</p>
+<p>The <em>(weak) dual graph</em> of a polygon triangulation has a
+vertex for each triangle and an edge for each diagonal; two vertices are
+connected by an edge in the dual graph if and only if the corresponding
+triangles share a diagonal. We can draw the dual graph by placing each
+vertex at the centroid of its triangle, and drawing each edge as a
+polygonal path through the midpoint of the corresponding diagonal.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>The dual graph of any frugal triangulation of a polygon without
+holes is a tree.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Suppose to the contrary that the dual graph contains a cycle <span
+class="math inline">\(C\)</span>. The image of <span
+class="math inline">\(C\)</span> in our drawing is a simple polygon,
+which I’ll also call <span class="math inline">\(C\)</span> (at the risk
+of confusing the reader). Any diagonal <span
+class="math inline">\(d\)</span> whose dual edge is in <span
+class="math inline">\(C\)</span> crosses <span
+class="math inline">\(C\)</span> exactly once at the midpoint of <span
+class="math inline">\(d\)</span>. It follows that one endpoint of <span
+class="math inline">\(d\)</span> is inside <span
+class="math inline">\(C\)</span> and the other endpoint is outside. So
+the Jordan curve theorem implies that the polygon <span
+class="math inline">\(X\)</span> intersects <span
+class="math inline">\(C\)</span>. But that’s impossible, because <span
+class="math inline">\(X\)</span> does not intersect the dual graph.
+</dd>
+</dl>
+<figure>
+<img src="Fig/polygon-triangulation-dual.png" style="width:50.0%"
+alt="The dual graph of a polygon triangulation" />
+<figcaption aria-hidden="true">The dual graph of a polygon
+triangulation</figcaption>
+</figure>
+<h2 data-number="1.3" id="crossing-sequences"><span
+class="header-section-number">1.3</span> Crossing Sequences</h2>
+<p>Next we apply the same strategy that we previously used to test
+contractibility. We compute the <em>crossing sequence</em> of <span
+class="math inline">\(\pi\)</span> and then <em>reduce</em> it as much
+as possible. (Two paths are homotopic if and only if they have identical
+reduced crossing sequences.) In this setting, the crossing sequence is
+the sequence of diagonals crossed by <span
+class="math inline">\(\pi\)</span>, in order along <span
+class="math inline">\(\pi\)</span>.</p>
+<figure>
+<img src="Fig/polygon-triangulation-path.png" style="width:50.0%"
+alt="A path with crossing sequence ABCDDDEFHLKJJKLMNUUTSRQPPQQOOQRSTUVWWWXYYXXYZ" />
+<figcaption aria-hidden="true">A path with crossing sequence
+<code>ABCDDDEFHLKJJKLMNUUTSRQPPQQOOQRSTUVWWWXYYXXYZ</code></figcaption>
+</figure>
+<p>In our earlier homotopy-testing algorithm, we also recorded the
+<em>sign</em> of each crossing, but that information is actually
+redundant in our current setting. Recall from our proof of the polygon
+triangulation theorem that any interior diagonal partitions the interior
+of a polygon into two disjoint subsets. Thus, if <span
+class="math inline">\(\pi\)</span> crosses the same diagonal multiple
+times, those crossings must alternate between positive and negative. It
+also follows that we can reduce the crossing sequence by removing
+arbitrary adjacent pairs of <em>equal</em> symbols; for any such pair,
+the corresponding crossings have opposite signs. For example, the
+crossing sequence
+<code>ABCDDDEFHLKJJKLMNUUTSRQPPQQOOQRSTUVWWWXYYXXYZ</code> of the path
+in the previous figure reduces to <code>ABCDEFHMNUVWXYZ</code>.</p>
+<p>We can compute the crossing sequence of <span
+class="math inline">\(\pi\)</span> in <span class="math inline">\(O(n +
+k + x)\)</span> time, where <span class="math inline">\(x =
+O(kn)\)</span> is the length of the crossing sequence. Specifically, we
+find the triangle containing <span class="math inline">\(s\)</span> by
+brute force; then we can repeatedly find the next crossing (if any)
+along the current edge of <span class="math inline">\(\pi\)</span> in
+<span class="math inline">\(O(1)\)</span> time. Finally, we can reduce
+the crossing sequence in <span class="math inline">\(O(x)\)</span> time
+using left-greedy cancellation.</p>
+<p>(The reduced crossing sequence of <span
+class="math inline">\(\pi\)</span> contains precisely the edge labels
+that appear an odd number of times in the unreduced crossing sequence;
+moreover, these labels appear in the same order as their first (or last)
+occurrences in the unreduced crossing sequence.)</p>
+<h2 data-number="1.4" id="sleeves"><span
+class="header-section-number">1.4</span> Sleeves</h2>
+<p>Let <span class="math inline">\(\bar{x}\)</span> denote the length of
+the reduced crossing sequence. The reduced crossing sequence defines a
+sequence of <span class="math inline">\(\bar{x}+1\)</span> triangles in
+the triangulation of <span class="math inline">\(X\)</span>, starting
+with the triangle containing the first vertex <span
+class="math inline">\(\pi_0\)</span> of <span
+class="math inline">\(\pi\)</span>, and ending with the triangle
+containing the last vertex <span class="math inline">\(\pi_k\)</span> of
+<span class="math inline">\(\pi\)</span>. The union of these triangles
+is called the <em>sleeve</em> of the reduced crossing sequence.</p>
+<figure>
+<img src="Fig/polygon-sleeve.png" style="width:50.0%"
+alt="The sleeve of the reduced crossing sequence ABCDEFHMNUVWXYZ" />
+<figcaption aria-hidden="true">The sleeve of the reduced crossing
+sequence <code>ABCDEFHMNUVWXYZ</code></figcaption>
+</figure>
+<p>Any path <span class="math inline">\(\alpha\)</span> in <span
+class="math inline">\(X\)</span> from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> that leaves the sleeve must cross a
+diagonal <span class="math inline">\(d\)</span> on the boundary of the
+sleeve. The endpoints <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> lie in the same component of <span
+class="math inline">\(X\setminus d\)</span>, so the path must cross
+<span class="math inline">\(d\)</span> and even number of times. Let
+<span class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span> be the first and last intersection
+points along <span class="math inline">\(\alpha\)</span>. The line
+segment <span class="math inline">\(pq\)</span> is shorter than the
+subpath of <span class="math inline">\(\alpha\)</span> from <span
+class="math inline">\(p\)</span> to <span
+class="math inline">\(q\)</span>, so <span
+class="math inline">\(\alpha\)</span> cannot be a shortest path.</p>
+<p>Alternatively, the crossing sequence describes a walk in the dual
+graph of the triangulation, starting at the vertex dual to the triangle
+containing <span class="math inline">\(s\)</span>. Reducing the crossing
+sequence removes <em>spurs</em> from this walk—subpaths that consist of
+the same edge twice in a row, necessarily in opposite directions. Thus,
+the <em>reduced</em> crossing sequence describes a <em>shortest</em>
+walk—in fact, the unique simple path between its endpoints—in the dual
+graph. This path is also the dual graph of the induced triangulation of
+the sleeve.</p>
+<p>Note that we do not actually need to <em>construct</em> the sleeve;
+the sequence of diagonals that the funnel crosses is exactly the reduced
+crossing sequence of <span class="math inline">\(\pi\)</span>.</p>
+<h2 data-number="1.5" id="growing-funnels"><span
+class="header-section-number">1.5</span> Growing Funnels</h2>
+<p>To compute the actual shortest path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>, we use an algorithm independently
+discovered by Tompa (1981), Chazelle (1982), Lee and Preparata (1984),
+and Leiserson and Maley (1985). (My presentation most closely follows
+Lee and Preparata’s.) The <em>funnel</em> of any diagonal <span
+class="math inline">\(d\)</span> of the sleeve is the union of the
+shortest paths the from the source point <span
+class="math inline">\(s\)</span> to all points on <span
+class="math inline">\(e\)</span>.</p>
+<p>The funnel consists of a polygonal path, called the <em>tail</em>,
+from <span class="math inline">\(s\)</span> to a point a called the
+<em>apex</em>, plus a simple polygon called the <em>fan</em>. The tail
+may be empty, in which case <span class="math inline">\(s\)</span> is
+the apex. The fan is bounded by the diagonal <span
+class="math inline">\(d\)</span> and two concave chains joining the apex
+to the endpoints of <span class="math inline">\(d\)</span>. The shortest
+path from <span class="math inline">\(s\)</span> to either endpoint of
+<span class="math inline">\(d\)</span> consists of the tail plus one of
+the concave chains bounding the fan. Extending the edges of the concave
+chains to infinite rays defines a series of <em>wedges</em>, which
+subdivide both the fan and the triangle just beyond <span
+class="math inline">\(d\)</span>.</p>
+<figure>
+<img src="Fig/funnel.png" style="width:50.0%" alt="A typical funnel" />
+<figcaption aria-hidden="true">A typical funnel</figcaption>
+</figure>
+<p>Beginning with a single triangle joining <span
+class="math inline">\(s\)</span> to the first edge in the reduced
+crossing sequence, we extend the funnel through the entire sleeve one
+diagonal at a time. Each diagonal in the sleeve shares one endpoint with
+the previous diagonal; suppose we are extending the funnel from diagonal
+<span class="math inline">\(pq\)</span> to diagonal <span
+class="math inline">\(qr\)</span>. Let <span
+class="math inline">\(o\)</span> be the predecessor of <span
+class="math inline">\(p\)</span> on the shortest path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(p\)</span>.</p>
+<p>There are two cases to consider, depending on whether <span
+class="math inline">\(q\)</span> and <span
+class="math inline">\(r\)</span> lie on the same sides of the line
+through <span class="math inline">\(o\)</span> and <span
+class="math inline">\(p\)</span> or on opposite sides. We can actually
+detect this case in <span class="math inline">\(O(1)\)</span> time with
+a single orientation test.</p>
+<ul>
+<li>If <span class="math inline">\(q\)</span> and <span
+class="math inline">\(r\)</span> lie on opposite sides of line <span
+class="math inline">\(op\)</span>, then the new endpoint <span
+class="math inline">\(r\)</span> does not lie inside any wedge of the
+current fan. We can detect this case in <span
+class="math inline">\(O(1)\)</span> time with a single orientation test,
+and then extend the tunnel in <span class="math inline">\(O(1)\)</span>
+time by inserting <span class="math inline">\(r\)</span> as a new fan
+vertex.</li>
+</ul>
+<figure>
+<img src="Fig/funnel-expand.png" style="width:85.0%"
+alt="Growing the funnel" />
+<figcaption aria-hidden="true">Growing the funnel</figcaption>
+</figure>
+<ul>
+<li>If <span class="math inline">\(q\)</span> and <span
+class="math inline">\(r\)</span> lie on the same side of line <span
+class="math inline">\(op\)</span>, we <em>contract</em> the funnel,
+intuitively by moving <span class="math inline">\(p\)</span>
+continuously along the boundary edge <span
+class="math inline">\(pr\)</span>. Each time the moving point crosses
+the boundary of a wedge, we remove a vertex from the fan. If the removed
+vertex is the apex, the next vertex on that side of the fan (on the
+shortest path from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(r\)</span>) becomes the new apex. We can detect
+whether the moving point will cross any wedge boundary in <span
+class="math inline">\(O(1)\)</span> time using our standard orientation
+test. Thus, the total time in this case is <span
+class="math inline">\(O(\delta + 1)\)</span>, where <span
+class="math inline">\(\delta\)</span> is the number of vertices deleted
+from the fan. The total number of deleted vertices cannot exceed the
+total number of previously inserted vertices, so the <em>amortized</em>
+time for this case is also <span
+class="math inline">\(O(1)\)</span>.</li>
+</ul>
+<figure>
+<img src="Fig/funnel-contract.png" style="width:95.0%"
+alt="Shrinking the funnel" />
+<figcaption aria-hidden="true">Shrinking the funnel</figcaption>
+</figure>
+<p>Let <span class="math inline">\(yz\)</span> be the last diagonal in
+the reduced crossing sequence. To end the algorithm, we treat the line
+segment <span class="math inline">\(tz\)</span> as another diagonal and
+extend the funnel one more time. The shortest path homotopic to <span
+class="math inline">\(\pi\)</span> then consists of the tail of the
+funnel plus the concave chain of the fan containing <span
+class="math inline">\(t\)</span>; we can extract this shortest path in
+<span class="math inline">\(O(1)\)</span> time per edge.</p>
+<p>Summing up, we spend <span class="math inline">\(O(n\log n)\)</span>
+time triangulating <span class="math inline">\(X\)</span>, then <span
+class="math inline">\(O(k+x) = O(nk)\)</span> time computing the
+crossing sequence of <span class="math inline">\(\pi\)</span>, then
+<span class="math inline">\(O(x) = O(nk)\)</span> time reducing the
+crossing sequence, <span class="math inline">\(O(\bar{x}) =
+O(nk)\)</span> time growing the funnel, and finally <span
+class="math inline">\(O(\bar{x}) = O(nk)\)</span> extracting the
+shortest path from the final funnel.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given a polygonal path <span class="math inline">\(\pi\)</span> in a
+simple polygon <span class="math inline">\(X\)</span> <strong>without
+holes</strong>, we can compute the shortest path in <span
+class="math inline">\(X\)</span> homotopic to <span
+class="math inline">\(\pi\)</span> in <span
+class="math inline">\(O(n\log n + nk)\)</span> time.</em>
+</dd>
+</dl>
+<h2 data-number="1.6" id="polygons-with-holes"><span
+class="header-section-number">1.6</span> Polygons with Holes</h2>
+<p>Now let’s consider the more general case where <span
+class="math inline">\(X\)</span> has one or more holes. Perhaps
+surprisingly, the previous algorithm needs <em>no modifications
+whatsoever</em> to compute the shortest path homotopic to <span
+class="math inline">\(\pi\)</span> in <span
+class="math inline">\(O(n\log n + nk)\)</span> time.</p>
+<ul>
+<li><p>Triangulate <span class="math inline">\(X\)</span> in <span
+class="math inline">\(O(n\log n)\)</span> time using the algorithm
+described in the first lecture. First build a trapezoidal decomposition
+using a sweep-line algorithm (such as Bentley-Ottmann). Then insert
+diagonals inside every boring trapezoid in <span
+class="math inline">\(O(n)\)</span> time, partitioning <span
+class="math inline">\(X\)</span> into monotone mountains. Finally,
+triangulate these monotone mountains in <span
+class="math inline">\(O(n)\)</span> total time.</p></li>
+<li><p>Compute the crossing sequence of <span
+class="math inline">\(\pi\)</span> with respect to this triangulation in
+<span class="math inline">\(O(n + k + x)\)</span> time, where <span
+class="math inline">\(x\)</span> is the number of crossings. Locate the
+triangle containing <span class="math inline">\(s\)</span> in <span
+class="math inline">\(O(n)\)</span> time by brute force, then repeatedly
+find the next crossing (if any) along the current edge in <span
+class="math inline">\(O(1)\)</span> time.</p></li>
+<li><p>Reduce the resulting crossing sequence in <span
+class="math inline">\(O(x)\)</span> time using the left-greedy reduction
+algorithm.</p></li>
+<li><p>Extend the funnel through the sleeve of the reduced crossing
+sequence in <span class="math inline">\(O(\bar{x}) = O(nk)\)</span> time
+using the standard funnel algorithm.</p></li>
+<li><p>Finally, extract the shortest homotopic path from the final
+funnel in <span class="math inline">\(O(1)\)</span> time per
+edge.</p></li>
+</ul>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given a polygonal path <span class="math inline">\(\pi\)</span> in a
+simple polygon <span class="math inline">\(X\)</span> <strong>with
+holes</strong>, we can compute the shortest path in <span
+class="math inline">\(X\)</span> homotopic to <span
+class="math inline">\(\pi\)</span> in <span
+class="math inline">\(O(n\log n + nk)\)</span> time.</em>
+</dd>
+</dl>
+<p>Same algorithm, same running time, same everything. This strikes many
+people as counterintuitive. After all, the sleeve can runs through the
+same triangle multiple times, and the funnel can self-intersect; why
+doesn’t this cause any problems?</p>
+<p>One way to answer this question is that <em>the algorithm doesn’t
+look for self-intersections, so it’s behavior can’t be affected by
+them</em>. Or said differently: <em>the algorithm only makes local
+decisions, but self-intersection is a global property</em>. Every branch
+in our algorithm is based on either a comparison between two <span
+class="math inline">\(x\)</span>-coordinates or an orientation test on
+some triple of points. As far as the algorithm is concerned, every time
+the funnel enters a triangle, it is entering that triangle for the very
+first time, or equivalently, it is entering a <em>new copy</em> of that
+triangle. So the sleeve of the reduced crossing sequence, while not
+being <em>geometrically</em> a triangulated simple polygon, is still
+<em>topologically</em> a triangulated simple polygon: a collection of
+triangles glued together along common edges into a topological disk.</p>
+<figure>
+<img src="Fig/coversleeve.png" style="width:50.0%"
+alt="The sleeve of a reduced path in a polygon with holes" />
+<figcaption aria-hidden="true">The sleeve of a reduced path in a polygon
+with holes</figcaption>
+</figure>
+<p>There is a reasonable analogy here with classical graph traversal
+algorithms: depth-first search, breadth-first search, and their more
+complex descendants. All of these algorithms maintain a set of vertices;
+at each iteration, each algorithm pulls one vertex <span
+class="math inline">\(v\)</span> out of this set, <em>marks</em> that
+vertex, and then puts the <em>unmarked</em> neighbors of <span
+class="math inline">\(v\)</span> into the set. Without the marking
+logic, unless the input graph is a tree, these algorithms will visit at
+least one vertex infinitely many times, each time treating it as a
+brand-new vertex.</p>
+<p>In fact, even the original shortest-path algorithm does not actually
+require the environment <span class="math inline">\(X\)</span> to be a
+simple polygon. We only require that (1) <span
+class="math inline">\(X\)</span> is assembled from <em>any</em> set of
+Euclidean triangles by identifying disjoint pairs of equal-length edges,
+(2) all triangle vertices are on the boundary of <span
+class="math inline">\(X\)</span>, and (3) the dual graph of the
+triangulation is a tree (equivalently, <span
+class="math inline">\(X\)</span> is homeomorphic to a disk in the
+plane). More generally, the shortest-homotopic-path algorithm applies to
+any triangulated space satisfying conditions (1) and (2); these spaces
+can reasonably be called <em>boundary-triangulated flat surfaces</em>.
+For example, without modification, our algorithm can compute shortest
+homotopic paths on a triangulated Möbius band.</p>
+<figure>
+<img src="Fig/Mobius-band.png" style="width:70.0%"
+alt="A flat Möbius band assembled from nine Euclidean triangles" />
+<figcaption aria-hidden="true">A flat Möbius band assembled from nine
+Euclidean triangles</figcaption>
+</figure>
+<h2 data-number="1.7" id="the-universal-cover"><span
+class="header-section-number">1.7</span> The Universal Cover</h2>
+<p>Another explanation that may be more familiar to topologists is that
+our algorithm is effectively exploring the <em>universal cover</em> of
+the input polygon. Informally, the universal cover (of <em>universal
+covering space</em>) of <span class="math inline">\(X\)</span> is the
+infinite topological space constructed by a breadth-first search of
+<span class="math inline">\(X\)</span> <em>without memory</em>.</p>
+<p>We can define the universal cover more constructively in terms of a
+triangulation of <span class="math inline">\(X\)</span> as follows. Fix
+a starting point <span class="math inline">\(s\)</span>. For every
+reduced crossing sequence <span class="math inline">\(w\)</span> of a
+path starting at <span class="math inline">\(s\)</span>, let <span
+class="math inline">\(\Delta_w\)</span> denote <em>an independent
+copy</em> of the triangle containing the final point in that path. For
+example, <span class="math inline">\(\Delta_\varepsilon\)</span> is a
+copy of the triangle containing <span class="math inline">\(s\)</span>.
+Two triangles <span class="math inline">\(\Delta_w\)</span> and <span
+class="math inline">\(\Delta_x\)</span> are <em>neighbors</em> if <span
+class="math inline">\(x = wd\)</span> for some diagonal <span
+class="math inline">\(d\)</span>; glue every such pair together along
+their copies of <span class="math inline">\(d\)</span>. For example, if
+<span class="math inline">\(w =\)</span> <code>ABCB</code> and <span
+class="math inline">\(x =\)</span> <code>ABCBD</code>, then we would
+identify the copies of edge <code>D</code> in <span
+class="math inline">\(\Delta_w\)</span> and <span
+class="math inline">\(\Delta_x\)</span>. We call each triangle <span
+class="math inline">\(\Delta_w\)</span> a <em>lift</em> of the
+corresponding triangle in the triangulation of <span
+class="math inline">\(X\)</span>, and we call the original triangle a
+<em>projection</em> of <span
+class="math inline">\(\Delta_w\)</span>.</p>
+<p><strong><em>Figure! Polygonal annulus to infinite polygonal parking
+garage?</em></strong></p>
+<p>The dual graph of the universal cover of <span
+class="math inline">\(X\)</span>—or equivalently, the universal cover of
+the dual graph of <span class="math inline">\(X\)</span>—has a vertex
+for every possible reduced crossing sequence (of a path starting at
+<span class="math inline">\(s\)</span>), and an edge between two reduced
+crossing sequences if they differ by exactly one crossing. Unless the
+input polygon <span class="math inline">\(X\)</span> has no holes, the
+universal cover of the dual graph is an infinite tree. The crossing
+sequence describes a walk from some vertex <span
+class="math inline">\(\hat{s}\)</span> to another vertex <span
+class="math inline">\(\hat{t}\)</span> in this infinite tree; removing
+all spurs computes the <em>unique</em> path in that tree between <span
+class="math inline">\(\hat{s}\)</span> and <span
+class="math inline">\(\hat{t}\)</span>.</p>
+<p><strong><em>Figure?</em></strong></p>
+<h2 data-number="1.8" id="covering-spaces"><span
+class="header-section-number">1.8</span> Covering Spaces</h2>
+<p>The universal cover is an example of a <em>covering space</em>. We
+will see several other examples of covering spaces in this course, so
+let me start here with some formal definitions.</p>
+<p>A <em>covering map</em> is a continuous surjective function <span
+class="math inline">\(p\colon \widehat{X}\to X\)</span>, such that every
+point <span class="math inline">\(x\in X\)</span> has an open
+neighborhood <span class="math inline">\(U\)</span> whose preimage <span
+class="math inline">\(p^{-1}(U)\)</span> is the disjoint union of open
+sets <span class="math inline">\(\bigsqcup_{i\in I} U_i\)</span>, such
+that the restriction of the function <span
+class="math inline">\(p\)</span> to each open set <span
+class="math inline">\(U_i\)</span> is a homeomorphism to <span
+class="math inline">\(U\)</span>. The open sets <span
+class="math inline">\(U_i\)</span> are sometimes called <em>sheets</em>
+over <span class="math inline">\(U\)</span>. If there is a covering map
+from <span class="math inline">\(\widehat{X}\)</span> to <span
+class="math inline">\(X\)</span>, we call <span
+class="math inline">\(\widehat{X}\)</span> a <em>covering space</em> of
+<span class="math inline">\(X\)</span>. By convention, we require
+covering spaces to be connected.</p>
+<p>The <em>universal</em> covering space <span
+class="math inline">\(\widetilde{X}\)</span> can be defined in several
+different ways:</p>
+<ul>
+<li><p><span class="math inline">\(\widetilde{X}\)</span> is the unique
+covering space of <span class="math inline">\(X\)</span> that also
+covers every covering space of <span
+class="math inline">\(X\)</span>.</p></li>
+<li><p><span class="math inline">\(\widetilde{X}\)</span> is the unique
+<em>simply-connected</em> covering space of <span
+class="math inline">\(X\)</span>. (Recall that a space is <em>simply
+connected</em> if every closed curve in that space is
+contractible.)</p></li>
+<li><p><span class="math inline">\(\widetilde{X}\)</span> is the space
+of all <em>homotopy classes</em> of paths from some fixed basepoint
+<span class="math inline">\(s\in X\)</span>: <span
+class="math display">\[
+  \widetilde{X} := \big\{ [\pi] \bigm| \pi\colon [0,1]\to X \text{~and~}
+\pi(0) = s \big\}
+\]</span> The covering map <span class="math inline">\(p\colon
+\widetilde{X}\to X\)</span> maps each homotopy class <span
+class="math inline">\([\pi]\)</span> of paths to their common final
+endpoint <span class="math inline">\(\pi(1)\)</span>.</p></li>
+</ul>
+<p>In our construction by gluing labeled triangles, the covering map
+sends each triangle <span class="math inline">\(\Delta_w\)</span> to the
+corresponding triangle in the triangulation of <span
+class="math inline">\(X\)</span>.</p>
+<p><strong><em>Concrete examples?</em></strong></p>
+<h2 data-number="1.9" id="dotsand-the-aptly-named-yadda-yadda"><span
+class="header-section-number">1.9</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda Yadda</h2>
+<ul>
+<li>Technicalities for point obstacles</li>
+<li>Bundling homotopic subpaths</li>
+<li>Minimum-link (homotopic) paths</li>
+<li>Thick non-crossing paths</li>
+<li>Shortest non-crossing walks / wire routing</li>
+</ul>
+<h2 data-number="1.10" id="references"><span
+class="header-section-number">1.10</span> References</h2>
+<ol type="1">
+<li><p>Bernard Chazelle. <a
+href="https://doi.org/10.1109/SFCS.1982.58">A theorem on polygon cutting
+with applications.</a> <em>Proc. 23rd Ann. IEEE Symp. Found. Comput.
+Sci.</em>, 339–349, 1982. The funnel algorithm.</p></li>
+<li><p>Shaodi Gao, Mark Jerrum, Michael Kaufmann, Kurt Mehlhorn, and
+Wolfgang Rülling. <a href="https://doi.org/10.1145/73393.73433">On
+continuous homotopic one layer routing</a>. <em>Proc. 4th Ann. Symp.
+Comput. Geom.</em>, 15 392–402, 1988.</p></li>
+<li><p>John Hershberger and Jack Snoeyink. <a
+href="https://doi.org/10.1016/0925-7721(94)90010-8">Computing minimum
+length paths of a given homotopy class</a>. <em>Comput. Geom. Theory
+Appl.</em> 4:63–98, 1994.</p></li>
+<li><p>Der-Tsai Lee and Franco P. Preparata. <a
+href="https://doi.org/10.1002/net.3230140304">Euclidean shortest paths
+in the presence of rectilinear barriers</a>. <em>Networks</em>
+14:393–410, 1984. The funnel algorithm.</p></li>
+<li><p>Charles E. Leiserson and F. Miller Maley. <a
+href="https://doi.org/10.1145/22145.22153">Algorithms for routing and
+testing routability of planar VLSI layouts</a>. <em>Proc. 17th Ann. ACM
+Symp. Theory Comput.</em>, 69–78, 1985. The funnel algorithm.</p></li>
+<li><p>Martin Tompa. <a
+href="https://doi.org/10.1016/0022-0000(81)90010-6">An optimal solution
+to a wire-routing problem</a>. <em>J. Comput. System Sci.</em>
+23:127–150, 1981. The funnel algorithm.</p></li>
+</ol>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

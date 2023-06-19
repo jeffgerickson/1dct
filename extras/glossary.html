@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>glossary</title>
+  <style>
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="technical-glossary">Technical Glossary</h1>
+<h2 id="topology">Topology</h2>
+<h3 id="the-line">The Line</h3>
+<ul>
+<li><p>The <em>line</em> <span class="math inline">\(\mathbb{R}\)</span>
+is the set of all real numbers.</p></li>
+<li><p>There are several types of <em>intervals</em> on the real
+line:</p>
+<ul>
+<li><em>Bounded open</em> interval <span class="math inline">\((a,b) :=
+\{x \mid a &lt; x &lt; b\}\)</span>.</li>
+<li><em>Bounded closed</em> interval <span class="math inline">\((a,b)
+:= \{x \mid a\le x \le b\}\)</span>.</li>
+<li><em>Bounded half-open</em> intervals <span
+class="math inline">\((a,b] := \{x \mid a &lt; x \le b\}\)</span> and
+<span class="math inline">\([a,b) := \{x \mid a \le x &lt;
+b\}\)</span>.</li>
+<li><em>Open half-lines</em> <span class="math inline">\((a,\infty) :=
+\{x \mid a &lt; x\}\)</span> and <span class="math inline">\((-\infty,b)
+:= \{x \mid x &lt; b\}\)</span>.</li>
+<li><em>Closed half-lines</em> <span class="math inline">\([a,\infty) :=
+\{x \mid a \le x\}\)</span> and <span class="math inline">\((-\infty,b]
+:= \{x \mid x \le b\}\)</span>.</li>
+<li>The empty set <span class="math inline">\(\varnothing = (a,
+a)\)</span> for any <span class="math inline">\(a\in
+\mathbb{R}\)</span>.</li>
+<li>The entire real line <span class="math inline">\(\mathbb{R} =
+(-\infty, \infty)\)</span>.</li>
+</ul></li>
+<li><p>A subset <span class="math inline">\(X\subseteq
+\mathbb{R}\)</span> is <em>open</em> if, for every point <span
+class="math inline">\(x\in X\)</span>, there are real numbers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> such that <span
+class="math inline">\(x\in (a,b)\subseteq X\)</span>. More concisely: A
+subset of <span class="math inline">\(\mathbb{R}\)</span> is open if and
+only if it is the union of bounded open intervals. The empty set,
+bounded open intervals, open halflines, and the entire real line are
+open.</p></li>
+<li><p>A subset <span class="math inline">\(X\subseteq
+\mathbb{R}\)</span> is <em>closed</em> if and only if its complement
+<span class="math inline">\(\mathbb{R}\setminus X\)</span> is open. The
+empty set, bounded closed intervals, closed halflines, and the entire
+real line are closed. <strong>Closed does <em>not</em> mean “not
+open”!</strong></p></li>
+<li><p>A subset <span class="math inline">\(X\subseteq
+\mathbb{R}\)</span> is <em>bounded</em> if it is a subset of a bounded
+interval.</p></li>
+<li><p>A subset <span class="math inline">\(X\subseteq
+\mathbb{R}\)</span> is <em>compact</em> if it is both closed and
+bounded.</p></li>
+</ul>
+<h3 id="the-plane">The Plane</h3>
+<ul>
+<li><p>The <em>plane</em> <span class="math inline">\(\mathbb{R}^2 =
+\mathbb{R}\times\mathbb{R}\)</span> is the set of all ordered pairs of
+real numbers,</p></li>
+<li><p>An <em>open box</em> is the Cartesian product of two open
+intervals.</p></li>
+<li><p>An <em>open disk</em> is the interior of any circle.</p></li>
+<li><p>A subset of the plane is <em>open</em> if it is the union of open
+boxes, or equivalently, the union of open disks.</p></li>
+</ul>
+<h3 id="topological-spaces">Topological Spaces</h3>
+<ul>
+<li>A <em>topological space</em> is a set <span
+class="math inline">\(X\)</span> together with a set <span
+class="math inline">\(\mathcal{U}\)</span> of subsets of <span
+class="math inline">\(X\)</span>, called the <em>open subsets</em> of
+<span class="math inline">\(X\)</span>, satisfying two conditions:
+<ul>
+<li>The union of any subset of <span
+class="math inline">\(\mathcal{U}\)</span> is an element of <span
+class="math inline">\(\mathcal{U}\)</span>. That is, unions of open sets
+are open.</li>
+<li>The intersection of any <em>finite</em> subset of <span
+class="math inline">\(\mathcal{U}\)</span> is an element of <span
+class="math inline">\(\mathcal{U}\)</span>. That is, <em>finite</em>
+intersections of open sets are open.</li>
+</ul></li>
+<li>A subset <span class="math inline">\(Y\)</span> of a topological
+space <span class="math inline">\(X\)</span> is <em>closed</em> if its
+complement <span class="math inline">\(X\setminus Y\)</span> is open.
+<strong>Closed does not mean “not open”!</strong>
+<ul>
+<li>The intersection of any collection of closed sets is closed.</li>
+<li>The union of any <em>finite</em> collection of closed sets is
+closed.</li>
+</ul></li>
+<li>Let <span class="math inline">\(Y\)</span> be any subset of a
+topological space <span class="math inline">\(X\)</span>.
+<ul>
+<li>The <em>interior</em> <span class="math inline">\(Y^\circ\)</span>
+of <span class="math inline">\(Y\)</span> is the union of all open
+subsets of <span class="math inline">\(Y\)</span>.</li>
+<li>The <em>closure</em> <span class="math inline">\(Y^\bullet\)</span>
+of <span class="math inline">\(Y\)</span> is the intersection of all
+closed subsets of <span class="math inline">\(Y\)</span>.</li>
+<li>The <em>boundary</em> <span class="math inline">\(\partial
+Y\)</span> is <span class="math inline">\(Y^\bullet \setminus
+Y^\circ\)</span>. (Beware: This word is overloaded!)</li>
+</ul></li>
+<li>A <em>cover</em> of <span class="math inline">\(X\)</span> is a
+collection of subsets of <span class="math inline">\(X\)</span> whose
+union is <span class="math inline">\(X\)</span>.
+<ul>
+<li>An <em>open cover</em> of <span class="math inline">\(X\)</span> is
+a cover by open subsets of <span class="math inline">\(X\)</span>.</li>
+<li>A <em>finite cover</em> of <span class="math inline">\(X\)</span> is
+a cover by a finite number of subsets of <span
+class="math inline">\(X\)</span>.</li>
+<li>If <span class="math inline">\(\mathcal{C}\)</span> is a cover of
+<span class="math inline">\(X\)</span>, a <em>subcover</em> of <span
+class="math inline">\(\mathcal{C}\)</span> is any subset of <span
+class="math inline">\(\mathcal{C}\)</span> that is also a cover of <span
+class="math inline">\(X\)</span>.</li>
+<li><strong>Caveat lector:</strong> The word “cover” is also used as a
+synonym for “covering space”!</li>
+</ul></li>
+<li>A topological space <span class="math inline">\(X\)</span> is
+<em>compact</em> if every open cover of <span
+class="math inline">\(X\)</span> has a finite subcover.
+<ul>
+<li>Bolzano-Weirstrauß: The two definitions of a compact subset of <span
+class="math inline">\(\mathbb{R}\)</span> agree.</li>
+</ul></li>
+</ul>
+<h3 id="building-new-spaces">Building new spaces</h3>
+<p>Let <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> be topological spaces.</p>
+<ul>
+<li><p>A <strong>subspace</strong> of <span
+class="math inline">\(X\)</span> is a subset <span
+class="math inline">\(Z \subseteq X\)</span> equipped with the
+<strong>subset topology</strong>: A subset <span
+class="math inline">\(U\subseteq Z\)</span> is open if and only if <span
+class="math inline">\(U = V\cap Z\)</span> for some open subset <span
+class="math inline">\(V\subseteq X\)</span>.</p></li>
+<li><p>product space / topology</p></li>
+<li><p>Let <span class="math inline">\(\sim\)</span> be any equivalence
+relation over <span class="math inline">\(X\)</span>. The
+<strong>quotient space</strong> <span
+class="math inline">\(X/\sim\)</span> is the set of equivalence classes
+<span class="math inline">\(\{[x]_\sim \mid x\in X\}\)</span> equipped
+with the <strong>quotient topology</strong>: A subset <span
+class="math inline">\(Z\subseteq X/\sim\)</span> is open if and only if
+<span class="math inline">\(\{ x\in X \mid [x]\in U \}\)</span> is an
+open subset of <span class="math inline">\(X\)</span>.</p>
+<ul>
+<li>For any subspace <span class="math inline">\(Z\subseteq X\)</span>,
+let <span class="math inline">\(\sim_Z\)</span> be the equivalence
+relation where <span class="math inline">\(x\sim_Z y\)</span> if and
+only if <span class="math inline">\(x=y\)</span> or (<span
+class="math inline">\(x\in Z\)</span> and <span
+class="math inline">\(y\in Z\)</span>). Then <span
+class="math inline">\(X/Z\)</span> is another name for the quotient
+space <span class="math inline">\(X/\sim_Z\)</span>.</li>
+</ul></li>
+<li><p>metric space / topology</p></li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Plane
+<ul>
+<li>Product topology</li>
+<li>Metric topology</li>
+</ul></li>
+<li>The <em>circle</em> <span class="math inline">\(S^1\)</span> can be
+defined in several equivalent ways (up to homeomorphism):
+<ul>
+<li>Subset: <span class="math inline">\(S^1 = \{(x,y)\in \mathbb{R}^2
+\mid x^2 + y^2 = 1\}\)</span>.</li>
+<li>Quotient: <span class="math inline">\([0,1] / (0\sim 1)\)</span> or
+<span class="math inline">\(\mathbb{R} / \mathbb{Z}\)</span></li>
+</ul></li>
+<li>Disk
+<ul>
+<li>Subset:</li>
+<li>Product:</li>
+</ul></li>
+<li>Sphere
+<ul>
+<li>Subset:</li>
+<li>Quotient:</li>
+</ul></li>
+</ul>
+<h3 id="functions">Functions</h3>
+<p>Fix arbitrary topological spaces <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>.</p>
+<ul>
+<li><p>A function <span class="math inline">\(f\colon X\to Y\)</span> is
+<strong>continuous</strong> if the preimage <span
+class="math inline">\(f^{-1}(Z)\)</span> of any open subset <span
+class="math inline">\(Z\subseteq Y\)</span> is an open subset of <span
+class="math inline">\(X\)</span>. Continuous functions are sometimes
+(unfortunately) called <em>maps</em>.</p></li>
+<li><p>A function <span class="math inline">\(f\colon X\to Y\)</span> is
+a <strong>homeomorphism</strong> if <span
+class="math inline">\(f\)</span> is a continuous bijection, and its
+inverse <span class="math inline">\(f^{-1}\colon Y\to X\)</span> is also
+continuous.</p>
+<ul>
+<li>Spaces <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> are <em>homeomorphic</em> if there is a
+homeomorphism from <span class="math inline">\(X\)</span> to <span
+class="math inline">\(Y\)</span>.</li>
+</ul></li>
+</ul>
+<h2 id="paths-cycles-and-connectivity">Paths, Cycles, and
+Connectivity</h2>
+<p>Fix an arbitrary topological space <span
+class="math inline">\(X\)</span>.</p>
+<ul>
+<li><p>A <em>path</em> in <span class="math inline">\(X\)</span> is a
+continuous function from the interval <span
+class="math inline">\([0,1]\)</span> to <span
+class="math inline">\(X\)</span>.</p></li>
+<li><p>A <em>cycle</em> in <span class="math inline">\(X\)</span> is a
+continuous function from the circle <span
+class="math inline">\(S^1\)</span> to <span
+class="math inline">\(X\)</span>.</p></li>
+<li><p>A path or cycle is <em>simple</em> if it is injective.</p></li>
+<li><p>A topological space <span class="math inline">\(X\)</span> is
+<em>disconnected</em> if it the union of two disjoint non-empty open
+sets, and <em>connected</em> otherwise.</p>
+<ul>
+<li>Maximal connected subspaces of <span
+class="math inline">\(X\)</span> are called the <em>components</em> of
+<span class="math inline">\(X\)</span>.</li>
+</ul></li>
+<li><p>Two points <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> in a topological space <span
+class="math inline">\(X\)</span> are <em>path-connected</em> if there is
+a path in <span class="math inline">\(X\)</span> from <span
+class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span>.</p>
+<ul>
+<li>Path-connectivity is an equivalence relation, whose equivalence
+classes are called the <em>path-components</em> of <span
+class="math inline">\(X\)</span></li>
+<li><span class="math inline">\(X\)</span> is path connected if it has
+exactly one path-component.</li>
+<li>Every path-connected space is connected, but not vice versa.</li>
+<li>Every connected open subset of <span
+class="math inline">\(\mathbb{R}^2\)</span> is path-connected.</li>
+</ul></li>
+</ul>
+<h2 id="geometry">Geometry</h2>
+<h2 id="algorithms-and-data-structures">Algorithms and Data
+Structures</h2>
+</body>
+</html>

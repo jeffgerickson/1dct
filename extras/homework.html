@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>One-Dimensional Computational Topology Exercises</title>
+  <style>
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">One-Dimensional Computational Topology Exercises</h1>
+<p class="author">Jeff Erickson</p>
+</header>
+<p><strong>About These Exercises</strong></p>
+<p>These exercises are meant entirely for your own practice,
+understanding, and potentially future research. I will not ask you to
+submit solutions. I strongly encouraged everyone to discuss these
+problems (and any related questions that you come up with) on the course
+discussion forum.</p>
+<p>Problems that I’m sure are open are labeled <strong>(!!)</strong>.
+Problems that I don’t know how to solve, but that I’m not confident are
+open, are labeled <em>(?)</em>. Labeled problems may or may not be
+difficult or interesting. Some exercises stray outside recent class
+material, either into the future or outside the class entirely; feel
+free to ask for clarification on Ed Discussion.</p>
+<p>Some “open” problems on topics we haven’t covered yet may have been
+solved since the last time I taught this class. I’ll update relevant
+problems as the semester progresses.</p>
+<hr />
+<h1 id="polygons">Polygons</h1>
+<h2 id="infinite-polygonal-chains">Infinite polygonal chains</h2>
+<p>Somewhat counterintuitively, the Jordan curve theorem does not extend
+to <em>open</em> curves of the form <span
+class="math inline">\(\pi\colon \mathbb{R}\to\mathbb{R}^2\)</span>, even
+when those curves are piecewise-linear. Let’s define an <em>infinite
+polygonal chain</em> to be an open curve that passes through an infinite
+sequence of points <span class="math inline">\(\dots, p_{-2}, p_{-2},
+p_0, p_1, p_2, \dots\)</span>, where for each index <span
+class="math inline">\(i\)</span>, the subpath from <span
+class="math inline">\(p_{i-1}\)</span> to <span
+class="math inline">\(p_i\)</span> is the straight line segment <span
+class="math inline">\(p_{i-1}p_i\)</span>. As usual, an open curve is
+<em>simple</em> if (as a function) it is injective.</p>
+<ol type="a">
+<li><p>Describe a simple infinite polygonal chain <span
+class="math inline">\(P\)</span> such that <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> is connected.
+Give explicit coordinates for each vertex <span
+class="math inline">\(p_i\)</span> as a function of its index <span
+class="math inline">\(i\)</span>.</p></li>
+<li><p>Describe a simple infinite polygonal chain <span
+class="math inline">\(P\)</span> such that <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> has two
+components. (This should be easy.)</p></li>
+<li><p>Describe a simple infinite polygonal chain <span
+class="math inline">\(P\)</span> such that <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> has three
+components.</p></li>
+<li><p>Describe a simple infinite polygonal chain <span
+class="math inline">\(P\)</span> such that <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> has four
+components.</p></li>
+<li><p>(?) Prove that the complement <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> of any simple
+infinite polygonal chain has at most four components.</p></li>
+<li><p>Call an infinite polygonal chain <em>sane</em> if every vertex
+<span class="math inline">\(p_i\)</span> has coordinates between <span
+class="math inline">\(-U\)</span> and <span
+class="math inline">\(U\)</span>, and every edge <span
+class="math inline">\(p_ip_{i+1}\)</span> has length between <span
+class="math inline">\(1\)</span> and <span
+class="math inline">\(U\)</span>, for some real number <span
+class="math inline">\(U\gg 1\)</span>. (The precise value of <span
+class="math inline">\(U\)</span> isn’t important; what <em>is</em>
+important is that <span class="math inline">\(U\)</span> is finite.)
+Describe <em>sane</em> simple infinite polygonal chains <span
+class="math inline">\(P_1\)</span>, <span
+class="math inline">\(P_2\)</span>, and <span
+class="math inline">\(P_3\)</span> such that for each index <span
+class="math inline">\(i\)</span>, the complement <span
+class="math inline">\(\mathbb{R}^2\setminus P_i\)</span> has <span
+class="math inline">\(i\)</span> components.</p></li>
+<li><p>(?) Prove that the complement <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> of any
+<em>sane</em> simple infinite polygonal chain has at most three
+components.</p></li>
+</ol>
+<hr />
+<h2 id="variations-on-polygon-triangulation">Variations on polygon
+triangulation</h2>
+<p>In class we saw a proof, originally due to Dehn and Lennes, that the
+interior of any simple polygon in the plane can be frugally triangulated
+by adding interior diagonals. The proof relies on the Jordan curve
+theorem. In this problem we consider several extensions of the polygon
+triangulation theorem to spaces where the Jordan curve theorem does not
+hold.</p>
+<ol type="a">
+<li><p>Let <span class="math inline">\(P\)</span> be a simple polygon
+that lies entirely in the interior of the unit square <span
+class="math inline">\(\square = [0,1]^2\)</span>. Prove that the area
+between <span class="math inline">\(\square\)</span> and <span
+class="math inline">\(P\)</span> can be triangulated. Every vertex of
+the triangulation must be a vertex of either <span
+class="math inline">\(P\)</span> or <span
+class="math inline">\(\square\)</span>.</p></li>
+<li><p>More generally, let <span class="math inline">\(P_0, P_1, P_2,
+\dots, P_k\)</span> be pairwise-disjoint simple polygons such that the
+interior of <span class="math inline">\(P_0\)</span> contains all the
+other polygons, but otherwise the interiors are disjoint. Prove that the
+area between <span class="math inline">\(P_0\)</span> and the other
+polygons <span class="math inline">\(P_i\)</span> (usually called a
+<em>polygon with holes</em>) can be triangulated using only line
+segments between the vertices of the various polygons.</p></li>
+<li><p>A <em>spherical polygon</em> is a circular sequence of points
+connected by great-circle arcs on the sphere. A spherical polygon is
+<em>simple</em> if it does not self-intersect. The Jordan curve theorem
+implies that any spherical polygon <span
+class="math inline">\(P\)</span> divides the sphere into two components,
+<em>both</em> of which are bounded. Prove that it is possible to
+triangulate <em>both</em> of these components using great-circle arcs
+between vertices of <span class="math inline">\(P\)</span>.</p></li>
+<li><p>The <em>infinite cylinder</em> is the product <span
+class="math inline">\(S^1 \times\mathbb{R}\)</span> of the circle and a
+line. Prove that any geodesic polygon on the infinite cylinder can be
+triangulated.</p></li>
+<li><p>Prove that any geodesic polygon on the projective plane <span
+class="math inline">\(S^2 / \sim\)</span> can be triangulated.</p></li>
+<li><p>Prove that any geodesic polygon on the flat square torus <span
+class="math inline">\(S^1\times S^1\)</span> can be
+triangulated.</p></li>
+</ol>
+<hr />
+<h2 id="compatible-triangulations">Compatible triangulations</h2>
+<p>For any simple polygons <span class="math inline">\(P\)</span> and
+<span class="math inline">\(Q\)</span>, the Dehn-Schönflies theorem
+implies that there is a homeomorphism <span class="math inline">\(\phi
+\colon \mathbb{R}^2 \to \mathbb{R}^2\)</span> such that <span
+class="math inline">\(\phi(P) = Q\)</span>. Moreover, if <span
+class="math inline">\(P\)</span> has <span
+class="math inline">\(n\)</span> vertices <span
+class="math inline">\(p_1,p_2,\dots,p_n\)</span> and <span
+class="math inline">\(Q\)</span> has <span
+class="math inline">\(n\)</span> vertices <span
+class="math inline">\(q_1,q_2,\dots,q_n\)</span>, we can further require
+that <span class="math inline">\(\phi(p_i) = q_i\)</span> for every
+index <span class="math inline">\(i\)</span>. This exercise asks you to
+construct such a homeomorphism explicitly.</p>
+<p>Let <span class="math inline">\(\Box\)</span> be a square that is
+large enough to comfortably contain both <span
+class="math inline">\(P\)</span> and <span
+class="math inline">\(Q\)</span>. We say that a triangulation <span
+class="math inline">\(T\)</span> of <span
+class="math inline">\(\Box\)</span> <em>supports</em> <span
+class="math inline">\(P\)</span> if every vertex of <span
+class="math inline">\(P\)</span> is a vertex of <span
+class="math inline">\(T\)</span> and every edge of <span
+class="math inline">\(P\)</span> is the union of edges of <span
+class="math inline">\(T\)</span>. (Unlike the previous problem, vertices
+of <span class="math inline">\(T\)</span> are not required to be
+vertices of <span class="math inline">\(P\)</span> or <span
+class="math inline">\(\Box\)</span>.) Two triangulations <span
+class="math inline">\(T_P\)</span> and <span
+class="math inline">\(T_Q\)</span> of <span
+class="math inline">\(\Box\)</span> with labeled vertices are
+<em>compatible</em> with <span class="math inline">\(P\)</span> and
+<span class="math inline">\(Q\)</span> if they satisfy the following
+conditions:</p>
+<ul>
+<li><p><span class="math inline">\(T_P\)</span> and <span
+class="math inline">\(T_Q\)</span> are isomorphic as labeled planar
+maps. That is, the vertex labeling induces bijections between the
+vertices, edges, and faces of <span class="math inline">\(T_P\)</span>
+and the vertices, edges, and faces of <span
+class="math inline">\(T_Q\)</span>, respectively.</p></li>
+<li><p>Corresponding vertices on the boundary of <span
+class="math inline">\(\Box\)</span> have the same coordinates in both
+triangulations.</p></li>
+<li><p><span class="math inline">\(T_P\)</span> supports <span
+class="math inline">\(P\)</span>, and <span
+class="math inline">\(T_Q\)</span> supports <span
+class="math inline">\(Q\)</span>.</p></li>
+<li><p>The vertex labeling also induces bijections between the vertices,
+edges, and interior faces of <span class="math inline">\(P\)</span> and
+the vertices, edges, and interior faces of <span
+class="math inline">\(Q\)</span>, respectively. In particular, for any
+index <span class="math inline">\(i\)</span>, vertices <span
+class="math inline">\(p_i\)</span> and <span
+class="math inline">\(q_i\)</span> have the same label in <span
+class="math inline">\(T_P\)</span> and <span
+class="math inline">\(T_Q\)</span>, respectively.</p></li>
+</ul>
+<figure>
+<img src="Fig/compatible-triangulations.png" style="width:60.0%"
+alt="Compatible labeled triangulations of two simple polygons" />
+<figcaption aria-hidden="true">Compatible labeled triangulations of two
+simple polygons</figcaption>
+</figure>
+<ol type="a">
+<li><p>Describe an algorithm to compute compatible triangulations for
+two given <span class="math inline">\(n\)</span>-gons with at most <span
+class="math inline">\(O(n^2)\)</span> vertices. (This implies a
+piecewise-linear homeomorphism <span
+class="math inline">\(\phi\colon\mathbb{R}^2\to\mathbb{R}^2\)</span>
+with complexity at most <span class="math inline">\(O(n^2)\)</span> that
+is the identity outside the bounding box <span
+class="math inline">\(\Box\)</span>.)</p></li>
+<li><p>Prove that the <span class="math inline">\(O(n^2)\)</span> upper
+bound cannot be improved in the worst case.</p></li>
+<li><p><em>(?)</em> Describe an efficient algorithm to determine if two
+simple <span class="math inline">\(n\)</span>-gons have compatible
+triangulations with exactly <span class="math inline">\(n+4\)</span>
+vertices, namely, the vertices of the polygon plus the vertices of the
+bounding box <span class="math inline">\(\Box\)</span>. <em>(I’m
+reasonably confident that this problem can be solved in polynomial
+time.)</em></p></li>
+<li><p><strong>(!!)</strong> Prove that computing compatible
+triangulations with the minimum number of vertices is NP-hard.</p></li>
+<li><p><strong>(!!)</strong> Describe an algorithm that either computes
+triangulations of the flat square torus that are compatible with two
+given geodesic polygons <span class="math inline">\(P\)</span> and <span
+class="math inline">\(Q\)</span>, or correctly reports that no such
+triangulation exists. (A compatible triangulation exists if and only if
+<span class="math inline">\(P\)</span> and <span
+class="math inline">\(Q\)</span> are either both contractible or both
+essential.) How many vertices are required in the worst case?</p></li>
+</ol>
+<p>It may be easier to start by considering compatible triangulations
+only of the interiors of the polygons, as described by Aronov, Seidel,
+and Souvaine [<a
+href="https://doi.org/10.1016/0925-7721(93)90028-5"><em>CGTA</em>
+1993</a>]. A similar problem for arbitrary point sets was previously
+considered by Saalfeld [<a
+href="https://doi.org/10.1145/41958.41979">SOCG 1989</a>]. Lubiw and
+Mondal [<a
+href="https://www.cs.usask.ca/faculty/dmondal/Papers/DMpscompCCCG.pdf">CCCG
+2017</a>, <a
+href="https://doi.org/10.1016/j.tcs.2020.06.014"><em>TCS</em> 2020</a>]
+recently proved that finding compatible triangulations for two polygons
+<em>with holes</em> with a minimum number of vertices is NP-hard.</p>
+<hr />
+<h2 id="winding-numbers">Winding numbers</h2>
+<p>The lecture notes offer two different definitions of the winding
+number of a polygon <span class="math inline">\(P\)</span> around a
+point <span class="math inline">\(o\)</span>:</p>
+<ul>
+<li>The sum of the signed angles at <span
+class="math inline">\(o\)</span> subtended by the edges of <span
+class="math inline">\(P\)</span></li>
+<li>The number of positive crossings, minus the number of negative
+crossings, of edges of <span class="math inline">\(P\)</span> by an
+arbitrary ray leaving <span class="math inline">\(o\)</span>.</li>
+</ul>
+<p>Prove that these two definitions are in fact equivalent. <em>(Hint:
+Triangulate <span class="math inline">\(P\)</span>.)</em></p>
+<hr />
+<h2 id="fast-and-loose-with-more-fingers">Fast and Loose with more
+fingers</h2>
+<p>Tired of the simple centuries-old game of Fast and Loose that
+everyone already knows, con artists Tenn and Peller are trying to
+develop more complex variants.</p>
+<ol type="a">
+<li><p>In their first variant, they plan to place the chain on the table
+so that it forms <em>three</em> loops, and then invite the mark to put
+fingers into <em>two</em> of them. The mark wins if the chain is held
+fast to the table by their two fingers. Placing fingers in all three
+loops must hold the chain fast to the table. Describe how Tenn and
+Peller can always win. Equivalently, describe a closed curve <span
+class="math inline">\(C\)</span> in the plane and three points <span
+class="math inline">\(p,q,r\)</span> such that <span
+class="math inline">\(C\)</span> is contractible in <span
+class="math inline">\(\mathbb{R}^2\setminus\{p,q\}\)</span> and in <span
+class="math inline">\(\mathbb{R}^2\setminus\{p,r\}\)</span> and in <span
+class="math inline">\(\mathbb{R}^2\setminus\{q,r\}\)</span>, but
+<em>not</em> contractible in <span
+class="math inline">\(\mathbb{R}^2\setminus\{p,q,r\}\)</span>. How long
+is the crossing sequence of your curve?</p></li>
+<li><p>In the harder variant, they place the chain so that it forms
+<span class="math inline">\(n\)</span> loops, and then invite a crowd of
+marks to place fingers into any <span class="math inline">\(n-1\)</span>
+of them. Equivalently, they want to want to design a curve that is
+non-contractible in the plane minus <span
+class="math inline">\(n\)</span> points, but that becomes contractible
+if we ignore <em>any one</em> of those <span
+class="math inline">\(n\)</span> points. The crossing sequence of your
+curve should be a small polynomial in <span
+class="math inline">\(n\)</span>.</p></li>
+</ol>
+<p>See <a href="https://arxiv.org/abs/1203.3602">“Picture-Hanging
+Puzzles”</a> by Demaine et al. [<a
+href="https://link.springer.com/article/10.1007%2Fs00224-013-9501-0"><em>TCS</em>
+2013</a>] for a different framing of this problem. For a more formal
+treatment, see Gartside and Greenwood [<a
+href="https://eudml.org/doc/282667"><em>Fund. Math.</em> 2007</a>].</p>
+<hr />
+<h2 id="polygon-homotopy">Polygon homotopy</h2>
+<p>Fix an arbitrary point <span class="math inline">\(o\)</span> in the
+plane, called the <em>origin</em>. Let <span
+class="math inline">\(P\)</span> be a polygon in the <em>punctured</em>
+plane <span class="math inline">\(\mathbb{R}^2\setminus \{o\}\)</span>
+with vertices <span class="math inline">\(p_0, p_1, \dots,
+p_{n-1}\)</span>. A <em>vertex move</em> on <span
+class="math inline">\(P\)</span> replaces an arbitrary vertex <span
+class="math inline">\(p_i\)</span> with a new point <span
+class="math inline">\(q_i\)</span>. This vertex move is <em>safe</em> if
+it preserves the widing number of the polygon around the original, that
+is, neither of the triangles <span class="math inline">\(\triangle p_i
+q_i p_{i-1}\)</span> and <span class="math inline">\(\triangle p_i q_i
+p_{i+1}\)</span> contains <span class="math inline">\(o\)</span>. (All
+index arithmetic is modulo <span class="math inline">\(n\)</span>.) A
+sequence of safe vertex moves describes a homotopy between two polygons
+with the same number of vertices and the same winding number around the
+origin.</p>
+<ol type="a">
+<li>Let <span class="math inline">\(n\)</span> be an arbitrary odd
+integer. Let <span class="math inline">\(P\)</span> be a regular star
+polygon with <span class="math inline">\(n\)</span> vertices spaced
+evenly around the unit circle, with winding number <span
+class="math inline">\(\lfloor n/2 \rfloor\)</span> around the origin, as
+shown below. Describe how to rotate <span
+class="math inline">\(P\)</span> around the origin by half a circle
+using <span class="math inline">\(O(n)\)</span> safe triangle
+moves.</li>
+</ol>
+<figure>
+<img src="Fig/rotate-star.png" style="width:60.0%"
+alt="Rotating a star polygon" />
+<figcaption aria-hidden="true">Rotating a star polygon</figcaption>
+</figure>
+<ol start="2" type="a">
+<li><p>Let <span class="math inline">\(P\)</span> and <span
+class="math inline">\(Q\)</span> be two <em>arbitrary</em> polygons in
+<span class="math inline">\(\mathbb{R}^2\setminus \{o\}\)</span> with
+the same number of vertices <span class="math inline">\(n\)</span> and
+the same winding numer around the origin. Describe how to transform
+<span class="math inline">\(P\)</span> into <span
+class="math inline">\(Q\)</span> using <span
+class="math inline">\(O(n)\)</span> safe vertex moves. <em>[Hint: Aim
+for a canonical polygon with the correct winding number; the star
+polygon in part (a) may not be the best candidate.]</em></p></li>
+<li><p><strong>(!!)</strong> Now let <span
+class="math inline">\(O\)</span> be a finite set of <em>obstacle</em>
+points in the plane, and let <span class="math inline">\(P\)</span> and
+<span class="math inline">\(Q\)</span> be <em>homotopic</em> polygons in
+<span class="math inline">\(\mathbb{R}^2\setminus O\)</span> with the
+same number of vertices. How many safe triangle moves are necessary and
+sufficient to transform <span class="math inline">\(P\)</span> into
+<span class="math inline">\(Q\)</span> in the worst case? (Even the case
+<span class="math inline">\(k=2\)</span> appears to be open.)</p></li>
+<li><p><strong>(!!)</strong> Finally, let <span
+class="math inline">\(P\)</span> and <span
+class="math inline">\(Q\)</span> be two <em>arbitrary</em> polygons in
+<span class="math inline">\(\mathbb{R}^2\)</span> with the same number
+of vertices <span class="math inline">\(n\)</span> and the same
+<em>rotation</em> number. Now call a vertex move <em>dull</em> if it
+preserves the rotation number of the polygon; that is, as vertex <span
+class="math inline">\(p_i\)</span> moves, the angle <span
+class="math inline">\(\angle p_{i-1} p_i p_{i+1}\)</span> is never zero.
+(Mnemonically, the corner is never sharp.) Is it always possible to
+transform <span class="math inline">\(P\)</span> into <span
+class="math inline">\(Q\)</span> using <span
+class="math inline">\(O(n)\)</span> dull vertex moves?</p></li>
+</ol>
+<hr />
+<h1 id="generic-curves">Generic Curves</h1>
+<h2 id="a-few-open-problems">A few open problems</h2>
+<ol type="a">
+<li><p><strong>(!!)</strong> Describe an efficient algorithm to generate
+a random curve (up to isotopy) with a given number of vertices, drawn
+uniformly from the set of isotopy classes. Existing algorithms either
+require exponential time or don’t even approximate the uniform
+distribution well.</p>
+<ul>
+<li>It is easy to generate Gauss codes uniformly at random, but most
+Gauss codes are non-planar.</li>
+<li>We can generate 4-regular plane graphs uniformly at random [Tutte
+1964 and many others], but most such graphs are not unicursal.</li>
+<li>We can generate curves uniformly at random <em>in the limit</em>
+using a Markov chain whose steps are homotopy moves [Chapman Rechnitzer
+2018], but the convergence rate of this Markov chain is unknown.</li>
+</ul></li>
+<li><p><strong>(!!)</strong> In class we saw an algorithm of Steinitz to
+simplify an arbitrary generic planar curve with <span
+class="math inline">\(n\)</span> vertices using <span
+class="math inline">\(O(n^2)\)</span> homotopy moves. Moreover,
+Steinitz’s homotopy is <em>monotone</em>, meaning the number of vertices
+of the evolving curve never increases. Chang and Erickson described an
+algorithm that uses only <span class="math inline">\(O(n^{3/2})\)</span>
+homotopy moves, but these can include <span class="math inline">\(0\to
+2\)</span> moves; they also proved a matching worst-case <span
+class="math inline">\(\Omega(n^{3/2})\)</span> lower bound.</p>
+<p>Can every curve be <em>monotonically</em> simplified using a
+sub-quadratic number of homotopy moves? Or is there a quadratic lower
+bound? (There <em>is</em> a quadratic lower bound if the homotopy is
+require to avoid even a single obstacle point.)</p></li>
+<li><p><strong>(!!)</strong> In class we saw a efficient algorithm,
+morally due to Gauss, Nagy, and Dehn, to determine whether a given
+unsigned Gauss code describes a curve in the plane; Tarjan and
+Rosenstiehl improved the running time of this algorithm to <span
+class="math inline">\(O(n)\)</span>.</p>
+<p>Is there a polynomial-time algorithm to recognize unsigned Gauss
+codes of curves on more complex surfaces? Even the special case of the
+torus is open.</p>
+<ul>
+<li><p>Exponential time is easy: Try all possible signings of the given
+Gauss code. Several characterizations are known, but all of them lead to
+exponential-time algorithms.</p></li>
+<li><p>It may be easier to recognize Gauss codes of codes with special
+topological properties, such as null-homologous curves, contractible
+curves, curves in minimal position, or curves homotopic to a simple
+curve. As far as I know all these variants are open.</p></li>
+<li><p>More ambitiously, how quickly can we determine the minimum-genus
+surface that supports a closed curve with a given unsigned Gauss code?
+Neither an efficient algorithm nor an NP-hardness result is
+known.</p></li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="multicurves-from-gauss-paragraphs">Multicurves from Gauss
+paragraphs</h2>
+<p>Let <span class="math inline">\(\Gamma = \{\gamma_1, \gamma_2, \dots,
+\gamma_k\}\)</span> be a set of generic closed curves that intersect
+each other only pairwise, transversely, and away from their vertices; we
+call any such set a <em>(generic) multicurve</em>. For simplicity,
+assume that every curve <span class="math inline">\(\gamma_i\)</span> is
+either non-simple or intersects another curve <span
+class="math inline">\(\gamma_j\)</span>. Then the image of <span
+class="math inline">\(\Gamma\)</span> is a 4-regular plane graph, which
+may be disconnected. Conversely, every 4-regular plane graph is the
+image of a family of planar curves.</p>
+<p>A <em>Gauss paragraph</em> of <span
+class="math inline">\(\Gamma\)</span> is a sequence of <span
+class="math inline">\(k\)</span> strings, obtained by uniquely labeling
+the vertices of <span class="math inline">\(\Gamma\)</span>, and then
+listing the vertices in order along each curve <span
+class="math inline">\(\gamma_i\)</span> in an arbitrary direction,
+starting at an arbitrary basepoint, considering the curves in arbitrary
+order.</p>
+<figure>
+<img src="Fig/Gauss-paragraph.png" style="width:35.0%"
+alt="A connected multicurve with Gauss paragraph acfe•jgfbadgi•iebcdhhj" />
+<figcaption aria-hidden="true">A connected multicurve with Gauss
+paragraph <code>acfe•jgfbadgi•iebcdhhj</code></figcaption>
+</figure>
+<p>Now let’s go the other direction. A Gauss paragraph is any set of
+non-empty strings in which any symbol appears exactly twice or not at
+all. Each Gauss paragraph <span class="math inline">\(X\)</span> defines
+a 4-regular undirected graph <span class="math inline">\(G(X)\)</span>
+whose vertices are the characters in <span
+class="math inline">\(X\)</span> and whose edges correspond to adjacent
+character pairs. If <span class="math inline">\(X\)</span> is the Gauss
+paragraph of a family of planar curves, then <span
+class="math inline">\(G(X)\)</span> is the image graph of that
+family.</p>
+<ol type="a">
+<li><p>Prove that if <span class="math inline">\(X\)</span> is the Gauss
+paragraph of a family of planar curves, then the edges of <span
+class="math inline">\(G(X)\)</span> can be directed so that every vertex
+has in-degree <span class="math inline">\(2\)</span> and out-degree
+<span class="math inline">\(2\)</span>. (Consider self-intersection
+points of one curve and intersection points of two curves
+separately.)</p></li>
+<li><p>Describe a linear-time algorithm that either directs the edges of
+<span class="math inline">\(G(X)\)</span> as described in part (a) or
+correctly reports that no such orientation exists, given the Gauss
+paragraph <span class="math inline">\(X\)</span> as input.</p></li>
+<li><p>Prove that <span class="math inline">\(X\)</span> is the Gauss
+paragraph of a generic family of planar curves if and only if <span
+class="math inline">\(G(X)\)</span> has a planar embedding such that
+every component has a non-self-crossing Euler tour.</p></li>
+<li><p>Sketch a linear-time algorithm to decide whether a given sequence
+of strings is the Gauss paragraph of a generic family of planar curves.
+(Just describe the necessary modifications to the algorithm for single
+curves.)</p></li>
+</ol>
+<hr />
+<h2 id="simplifying-polygons-by-vertex-moves">Simplifying polygons by
+vertex moves</h2>
+<p>Let <span class="math inline">\(P\)</span> be an arbitrary polygon
+with <span class="math inline">\(n\)</span> vertices; for simplicity,
+assume no three vertices in <span class="math inline">\(P\)</span> are
+collinear. The <em>image graph</em> <span
+class="math inline">\(G(P)\)</span> is a planar straight-line graph
+whose nodes are the vertices of <span class="math inline">\(P\)</span>
+and the intersection points of edges of <span
+class="math inline">\(P\)</span>. Let <span
+class="math inline">\(N\)</span> denote the number of nodes in the image
+graph <span class="math inline">\(G(P)\)</span>. Trivially, <span
+class="math inline">\(n\le N\le \binom{n}{2}\)</span>.</p>
+<p>We can easily reduce <span class="math inline">\(P\)</span> to a
+triangle by repeated <em>vertex deletion</em>: replace some pair of
+edges <span class="math inline">\(p_{i-1} p_i p_{i+1}\)</span> with a
+single edge <span class="math inline">\(p_{i-1}p_{i+1}\)</span>,
+deleting the shared vertex <span class="math inline">\(p_i\)</span>.
+Define the <em>cost</em> of deleting vertex <span
+class="math inline">\(p_i\)</span> to be the number of nodes of <span
+class="math inline">\(G(P)\)</span> that lie in the triangle <span
+class="math inline">\(\triangle p_{i-1}p_ip_{i+1}\)</span>,
+<em>except</em> for the three vertices <span
+class="math inline">\(p_{i-1}\)</span>, <span
+class="math inline">\(p_i\)</span>, and <span
+class="math inline">\(p_{i+1}\)</span>. For example, if <span
+class="math inline">\(P\)</span> is convex, every vertex deletion has
+cost zero.</p>
+<figure>
+<img src="Fig/vertex-move.png" style="width:25.0%"
+alt="A vertex deletion with cost 22" />
+<figcaption aria-hidden="true">A vertex deletion with cost <span
+class="math inline">\(22\)</span></figcaption>
+</figure>
+<ol type="a">
+<li><p>Prove that any vertex deletion with cost <span
+class="math inline">\(k\)</span> can be transformed into a sequence of
+<span class="math inline">\(O(k)\)</span> homotopy moves (<span
+class="math inline">\(1\leftrightarrow 0\)</span>, <span
+class="math inline">\(2\leftrightarrow 0\)</span>, or <span
+class="math inline">\(3\to 3\)</span>), by treating the polygon as a
+generic curve. (Watch out for spurs!) This is the motivation for my
+definition of cost.</p></li>
+<li><p>Trivially, every vertex deletion has cost <span
+class="math inline">\(O(n^2)\)</span>, and therefore any sequence of
+<span class="math inline">\(n-3\)</span> vertex deletions has total cost
+<span class="math inline">\(O(n^3)\)</span>. Prove that this <span
+class="math inline">\(O(n^3)\)</span> bound is tight in the worst case.
+(See problem 1.5!)</p></li>
+<li><p>Prove that if <span class="math inline">\(P\)</span> is simple,
+there is a sequence of <span class="math inline">\(n-3\)</span> vertex
+deletions with total cost <span
+class="math inline">\(0\)</span>.</p></li>
+<li><p>Prove that any polygon <span class="math inline">\(P\)</span> can
+be reduced to a triangle by a sequence of <span
+class="math inline">\(n-3\)</span> vertex deletions with cost <span
+class="math inline">\(O(N^2)\)</span>. (A vertex deletion can actually
+increase <span class="math inline">\(N\)</span>.)</p></li>
+<li><p><strong>(!!)</strong> Prove or disprove: There is a sequence of
+<span class="math inline">\(n-3\)</span> vertex deletions with total
+cost <span class="math inline">\(O(N^{3/2})\)</span>. Your proof of part
+(b) implies a worst-case <span
+class="math inline">\(\Omega(N^{3/2})\)</span> lower bound.</p></li>
+</ol>
+<hr />
+<h2 id="squidsort">Squidsort</h2>
+<p><strong>(!!)</strong> Let <span class="math inline">\(s, p_1, p_2,
+\dots, p_n\)</span> be disjoint points in the plane. A <strong>proper
+squid</strong> is a collection of paths <span
+class="math inline">\(\pi_1, \pi_2, \dots, \pi_n\)</span>, where each
+path <span class="math inline">\(\pi_i\)</span> connects <span
+class="math inline">\(s\)</span> with the corresponding point <span
+class="math inline">\(p_i\)</span>, such that (1) the paths are simple
+and disjoint (except at <span class="math inline">\(s\)</span>), and (2)
+the paths are incident to <span class="math inline">\(s\)</span> in
+counterclockwise order <span class="math inline">\(\pi_1, \pi_2, \dots,
+\pi_n\)</span>.</p>
+<p>A <strong>squid</strong> is a collection of paths from <span
+class="math inline">\(s\)</span> to the points <span
+class="math inline">\(p_i\)</span> that can be perturbed by an
+arbitrarily small distance into a proper squid.</p>
+<figure>
+<img src="Fig/squidsort.png" style="width:95.0%"
+alt="Two homotopic five-armed proper squids" />
+<figcaption aria-hidden="true">Two homotopic five-armed proper
+squids</figcaption>
+</figure>
+<p>Either describe an algorithm for the following problem, or prove that
+it is NP-hard (or worse): Given points <span class="math inline">\(s,
+p_1, p_2, \dots, p_n\)</span>, find the minimum-length squid connecting
+those points. The minimum-length squid consists entirely of polygonal
+paths through the obstacle points <span
+class="math inline">\(p_j\)</span>.</p>
+<p>I know how to solve this problem in exponential time. We can compute
+the minimum-length squid in a given <em>homotopy</em> class in
+polynomial time using the funnel algorithm; the hard part of the problem
+is finding the right homotopy class.</p>
+<p>The problem is open even when all <span
+class="math inline">\(n+1\)</span> points lie on a line.</p>
+<hr />
+<h1 id="planar-maps">Planar Maps</h1>
+<h2 id="platonic-solids-are-not-the-only-regular-polyhedra.">Platonic
+solids are not the only regular polyhedra.</h2>
+<p><em>Polyhedra</em> are natural three-dimensional generalization of
+polygons, but they are surprisingly difficult to define precisely. In
+particular, formally defining <em>regular</em> polyhedra is remarkably
+subtle. It has been common knowledge for <em>millennia</em> that the
+five Platonic solids — tetrahedron, cube, octahedron, dodecahedron, and
+icosahedron — are the only regular polyhedra; we can find a proof in
+Euclid’s <em>Elements</em> (Book XIII, Proposition 18). But is that
+actually correct?</p>
+<p>Here is one attempt at a reasonable definition. Let <span
+class="math inline">\(\Sigma = (V, E, F)\)</span> be a <strong>finite
+planar</strong> map with vertices <span
+class="math inline">\(V\)</span>, edges <span
+class="math inline">\(E\)</span>, and faces <span
+class="math inline">\(F\)</span>. A <em>polyhedral realization</em> of
+<span class="math inline">\(\Sigma\)</span> is a function assigning
+coordinates to vertices so that (1) the endpoints of each edge map to
+distinct points, and (2) the vertices of each face (including the outer
+face) map to coplanar points. Informally, <span
+class="math inline">\(\pi\)</span> maps each edge of <span
+class="math inline">\(\Sigma\)</span> to a line segment and each face of
+<span class="math inline">\(\Sigma\)</span> to a polygon in some plane
+in <span class="math inline">\(\mathbb{R}^3\)</span>. A
+<em>polyhedron</em> is a polyhedral realization of a finite planar map.
+We call the images of <span class="math inline">\(V\)</span>, <span
+class="math inline">\(E\)</span>, and <span
+class="math inline">\(F\)</span> the vertices, edges, and faces of the
+polyhedron.</p>
+<p>Just like polygons, polyhedra are not required <em>by definition</em>
+to be simple. In particular, polyhedra can have overlapping features,
+including coincident vertices, collinear intersecting edges, and
+coplanar intersecting faces. However, for purposes of this exercise, I’m
+requiring polyhedra to be images of <em>finite planar</em> maps.</p>
+<p>A <em>flag</em> in a planar map or a polyhedron is any triple <span
+class="math inline">\((v,e,f)\)</span>, where <span
+class="math inline">\(v\)</span> is an endpoint of edge <span
+class="math inline">\(e\)</span> and <span
+class="math inline">\(e\)</span> is an edge of face <span
+class="math inline">\(f\)</span>. A planar map is <em>regular</em> if it
+has a flag-transitive automorphism group. That is, for any two flags
+<span class="math inline">\((v,e,f)\)</span> and <span
+class="math inline">\((v&#39;,e&#39;,f&#39;)\)</span>, there is an
+bijection <span
+class="math inline">\(\alpha\colon\Sigma\to\Sigma\)</span> such that
+<span class="math inline">\(\alpha(v) = v&#39;\)</span> and <span
+class="math inline">\(\alpha(e)=e&#39;\)</span> and <span
+class="math inline">\(\alpha(f) = f&#39;\)</span>. Finally, a polyhedron
+is regular if, for any two flags, there is a rotation or reflection of
+<span class="math inline">\(\mathbb{R}^3\)</span> that maps one flag to
+the other. In particular, the underlying planar map of any regular
+polyhedron is regular.</p>
+<ol type="a">
+<li><p>Give a complete list of all finite regular planar maps.</p></li>
+<li><p>Give a complete list of all regular polyhedra. (Hint: There are
+more than five.)</p></li>
+<li><p><strong>(!!)</strong> Suppose we remove the word “planar” from
+the definition of polyhedron. Give a complete list of all regular
+polyhedra under this more general definition.</p></li>
+<li><p><strong>(!!!)</strong> Suppose we remove the word “finite” from
+the definition of polyhedron (but we keep “planar”). Give a complete
+list of all regular polyhedra under this more general
+definition.</p></li>
+<li><p><strong>(!!!!)</strong> Suppose we remove both “finite” and
+“planar” from the definition of polyhedron. Give a complete list of all
+regular polyhedra under this more general definition.</p></li>
+</ol>
+<hr />
+<h2 id="easy-consequences-of-eulers-formula">Easy consequences of
+Euler’s formula</h2>
+<p>Prove the following facts about planar graphs and maps with <span
+class="math inline">\(n\)</span> vertices.</p>
+<ol type="a">
+<li>Every <em>simple</em> planar graph has a vertex of degree at most
+5.</li>
+<li>Every <em>simple</em> planar graph has at most <span
+class="math inline">\(3n - 6\)</span> edges.</li>
+<li>Every simple planar <em>bipartite</em> graph has at most <span
+class="math inline">\(2n - 4\)</span> edges.</li>
+<li>Every planar map has either a vertex of degree at most 3 or a face
+of degree at most 3.</li>
+<li>Every planar graph has an independent set of size <span
+class="math inline">\(\Omega(n)\)</span> in which every vertex has
+degree <span class="math inline">\(O(1)\)</span>.</li>
+</ol>
+<hr />
+<h2 id="curves-as-closed-walks">Curves as closed walks</h2>
+<p>So far we’ve seen two simple representations of closed curves in the
+plane: polygons (specified by vertex coordinates) and generic curves
+(specified by signed Gauss codes or rotation systems). Another natural
+representation is as closed walks in embedded graphs.</p>
+<p>Let <span class="math inline">\(\Sigma\)</span> be a fixed
+combinatorial planar map, called the <em>scaffold</em>, represented by a
+rotation system and a choice of outer face. Recall that a closed walk in
+<span class="math inline">\(\Sigma\)</span> is a circular sequence of
+darts <span class="math inline">\(W = (d_0, d_1, \dots, d_\ell)\)</span>
+such that <span class="math inline">\(\textsf{head}(d_i) =
+\textsf{tail}(d_{(i+1)\bmod \ell})\)</span> for every index <span
+class="math inline">\(i\)</span>.</p>
+<ol type="a">
+<li><p>Describe a fast algorithm to compute an <em>Alexander
+numbering</em> for a given closed walk <span
+class="math inline">\(W\)</span> in <span
+class="math inline">\(\Sigma\)</span>. For each face <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(\Sigma\)</span>, your algorithm should compute the
+winding number of <span class="math inline">\(W\)</span> around and
+point in <span class="math inline">\(f\)</span>. (Why are winding
+numbers independent of the geometry of <span
+class="math inline">\(\Sigma\)</span>?)</p></li>
+<li><p>A <em>spur</em> in a closed walk is an adjacent pair of darts
+<span class="math inline">\(d_i,d_{i+1}\)</span> such that <span
+class="math inline">\(d_{i+1} = \textsf{rev}(d_i)\)</span>. Describe an
+algorithm to compute the <em>rotation number</em> of a spur-free closed
+walk in <span class="math inline">\(\Sigma\)</span>. (Why is the
+rotation number independent of the geometry of <span
+class="math inline">\(\Sigma\)</span>?)</p></li>
+<li><p>Suppose several bounded faces <span class="math inline">\(f_1,
+\dots, f_h\)</span> of <span class="math inline">\(\Sigma\)</span> are
+specified as <em>holes</em>. Describe an algorithm to decide whether two
+closed walks <span class="math inline">\(W\)</span> and <span
+class="math inline">\(W’\)</span> in <span
+class="math inline">\(\Sigma\)</span> are homotopic in <span
+class="math inline">\(\mathbb{R}^2 \setminus (f_1\cup \cdots \cup
+f_h)\)</span>.</p></li>
+</ol>
+<p>None of your algorithms should compute an actual geometric embedding
+of <span class="math inline">\(\Sigma\)</span>; instead, they should
+work directly with the rotation system.</p>
+<hr />
+<h2 id="degree-bounds">Degree bounds</h2>
+<p>When we think about algorithms for planar graphs, it is often useful
+to make assumptions about the degrees of vertices and/or the degrees of
+faces. Let <span class="math inline">\(\Sigma\)</span> be a simple
+undirected planar map with weighted edges.</p>
+<ul>
+<li><p>We can assume without loss of generality that every <em>face</em>
+of <span class="math inline">\(\Sigma\)</span> has degree <span
+class="math inline">\(3\)</span>, by inserting diagonals into any
+higher-degree face. Moreover, we can preserve shortest-path distances by
+giving these new edges infinite weight (length), and we can preserve
+maximum flow values by giving the new edges weight (capacity)
+zero.</p></li>
+<li><p>On the other hand, we can assume without loss of generality that
+every <em>vertex</em> of <span class="math inline">\(\Sigma\)</span> has
+degree 3, by expanding each higher-degree vertex into a tree of degree-3
+vertices (or equivalently, by triangulating faces in the dual graph
+<span class="math inline">\(\Sigma^*\)</span>). Moreover, we can
+preserve shortest-path distances by giving these new edges weight
+(length) zero, and we can preserve maximum flow values by giving the new
+edges infinite weight (capacity).</p></li>
+</ul>
+<figure>
+<img src="Fig/primal-dual-degree.png" style="width:75.0%"
+alt="Primal and dual degree reduction" />
+<figcaption aria-hidden="true">Primal and dual degree
+reduction</figcaption>
+</figure>
+<p>Unfortunately, triangulating faces increases vertex degrees, and
+expanding vertices increases face degrees; these two assumptions seem to
+cancel each other out. What if we need <em>both</em> vertices
+<em>and</em> faces to have small degree?</p>
+<p>Prove that for some constants <span
+class="math inline">\(\Delta\)</span>, <span
+class="math inline">\(\Delta^*\)</span>, and <span
+class="math inline">\(c\)</span>, any simple <span
+class="math inline">\(n\)</span>-vertex planar graph <span
+class="math inline">\(\Sigma\)</span> can be modified by inserting and
+expanding edges into a new simple planar map <span
+class="math inline">\(\tilde\Sigma\)</span> with at most <span
+class="math inline">\(cn\)</span> vertices, such that each vertex of
+<span class="math inline">\(\tilde\Sigma\)</span> has degree at most
+<span class="math inline">\(\Delta\)</span> and each face of <span
+class="math inline">\(\tilde\Sigma\)</span> has degree at most <span
+class="math inline">\(\Delta^*\)</span>. Try to keep the product <span
+class="math inline">\(\Delta\cdot\Delta^*\cdot c\)</span> as small as
+possible.</p>
+<p>More simply: <strong>Argue that without loss of generality, planar
+maps have <em>both</em> bounded vertex degrees <em>and</em> bounded face
+degrees.</strong></p>
+<hr />
+<h2 id="directed-duality">Directed duality</h2>
+<p>The duality between planar maps extends to embeddings of
+<em>directed</em> planar graphs as well. A directed graph still has two
+darts for every edge, but now one dart is marked as “really there”; the
+other is used for navigation, but nothing else. Duality extends to
+directed graphs by following the darts; the dual of any directed edge
+<span class="math inline">\(u\mathord\to v\)</span> is the directed edge
+<span class="math inline">\(\mathsf{right}(u\mathord\to
+v)^*\mathord\to\mathsf{left}(u\mathord\to v)^*\)</span>.</p>
+<p>We call a vertex <span class="math inline">\(v\)</span> in a directed
+planar map <em>regular</em> if its cycle of incident edges consists of a
+single interval of incoming edges followed by a single interval of
+outgoing edges. We call <span class="math inline">\(v\)</span> a
+<em>saddle</em> if <span class="math inline">\(v\)</span> is incident to
+four edges that are directed into <span
+class="math inline">\(v\)</span>, out of <span
+class="math inline">\(v\)</span>, into <span
+class="math inline">\(v\)</span>, and out of <span
+class="math inline">\(v\)</span> in cyclic order around <span
+class="math inline">\(v\)</span>.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<figure>
+<img src="Fig/saddles.png" style="width:75.0%"
+alt="From left to right: A source, a sink, a regular vertex, and two saddles" />
+<figcaption aria-hidden="true">From left to right: A source, a sink, a
+regular vertex, and two saddles</figcaption>
+</figure>
+<ol type="a">
+<li><p>Prove that a planar graph <span class="math inline">\(G\)</span>
+is strongly connected if and only if its dual graph <span
+class="math inline">\(G^*\)</span> (with respect to <em>any</em> planar
+embedding) is acyclic.</p></li>
+<li><p>Let <span class="math inline">\(G\)</span> be a directed acyclic
+planar graph with a unique source <span class="math inline">\(s\)</span>
+and a unique sink <span class="math inline">\(t\)</span>. Prove that in
+<em>every</em> planar embedding of <span
+class="math inline">\(G\)</span>, every vertex except <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span> is regular.</p></li>
+<li><p>Let <span class="math inline">\(G\)</span> be a (weakly)
+connected directed acyclic planar graph with <span
+class="math inline">\(k\)</span> sources and <span
+class="math inline">\(\ell\)</span> sinks. Prove that every planar
+embedding of <span class="math inline">\(G\)</span> contains at most
+<span class="math inline">\(k+\ell-2\)</span> saddle vertices.</p></li>
+</ol>
+<hr />
+<h2 id="directed-tutte-embeddings">Directed Tutte embeddings</h2>
+<p>Our proof of the Tutte spring-embedding theorem assumed that every
+stress coefficient <span class="math inline">\(\lambda_{u\mathord\to
+v}\)</span> is positive. But in fact, the theorem extends fairly easily
+to the setting where some stress coefficients are zero. Zero-weight
+darts allow us to model <em>directed</em> planar graphs, by identifying
+directed edges with positive-weight darts. (We still keep the
+zero-weight darts in our graph data structure for navigational
+purposes.) A drawing/embedding of a directed graph is a
+drawing/embedding of its underlying undirected graph; each directed edge
+corresponds to an orientation of the corresponding undirected edge
+path.</p>
+<p>Find the weakest condition you can for planar graphs with
+non-negative dart coefficients that implies that the Tutte drawing is a
+strictly convex embedding. For example, “simple 3-connected planar graph
+with all positive stress coefficients” is sufficient, but stronger than
+necessary.</p>
+<p>As a starting point, consider planar graphs in which every stress
+coefficient is either <span class="math inline">\(0\)</span> or <span
+class="math inline">\(1\)</span>. Equivalently, consider Tutte drawings
+of directed planar graphs, where every interior vertex is positioned at
+the center of mass of its <em>in</em>-neighbors.</p>
+<hr />
+<h2 id="parallel-universe-parametric-mssp">Parallel-universe parametric
+MSSP</h2>
+<p>The <em>transshipment</em> problem is the uncapacitated special case
+of the minimum-cost flow problem. A transshipment network consists of a
+directed graph <span class="math inline">\(G\)</span>, a
+<em>balance</em> <span class="math inline">\(b(v)\)</span> for each
+vertex <span class="math inline">\(v\)</span>, and a <em>cost</em> <span
+class="math inline">\(\$(e)\)</span> for each directed edge <span
+class="math inline">\(e\)</span>. The vertex balances must sum to zero;
+positive balances are interpreted as demand, and negative balances as
+supply.</p>
+<p>A feasible flow in a transshipment network <span
+class="math inline">\((G, b, \$)\)</span> assigns a non-negative real
+value <span class="math inline">\(f(e)\)</span> to each directed edge
+<span class="math inline">\(e\)</span>, such that <span
+class="math inline">\(\sum_u f(u\mathord\to v) - \sum_w f(v\mathord\to
+w) = b(v)\)</span> at every vertex <span
+class="math inline">\(v\)</span>; that is, the total net flow into <span
+class="math inline">\(v\)</span> must equal the balance of <span
+class="math inline">\(v\)</span>. The goal of the transshipment problem
+is to compute a feasible flow <span class="math inline">\(f\)</span>
+with minimum total cost <span class="math inline">\(\$(f) = \sum_e
+\$(e)\cdot f(e)\)</span>.</p>
+<p>Every transshipment network has a minimum-cost flow that is supported
+on a spanning tree <span class="math inline">\(T\)</span>, meaning <span
+class="math inline">\(f(e)\)</span> for every non-tree edge <span
+class="math inline">\(e\)</span>. (More generally, every basic feasible
+solution to the transshipment linear program is a feasible flow
+supported on a spanning tree.) We can always symbolically perturb the
+edge costs so that the minimum-cost flow is unique.</p>
+<p>The single-source shortest-path problem is the special case of
+transshipment where the source vertex <span
+class="math inline">\(s\)</span> has balance <span
+class="math inline">\(1-n\)</span>, every other vertex has balance <span
+class="math inline">\(1\)</span>, and the cost of an edge is its length.
+The transshipment tree <span class="math inline">\(T\)</span> is just
+the shortest path tree rooted at <span class="math inline">\(s\)</span>;
+if <span class="math inline">\(u\)</span> is the parent of <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(T\)</span>, then <span
+class="math inline">\(f(u\mathord\to v)\)</span> is equal to the number
+of descendants of <span class="math inline">\(v\)</span> (including
+<span class="math inline">\(v\)</span> itself).</p>
+<p>Now consider the following alternative strategy for the
+multiple-source shortest path problem. Let <span
+class="math inline">\(s_1, s_2, \dots, s_k\)</span> be the vertices on
+the outer face of the input planar map <span
+class="math inline">\(\Sigma\)</span>. For each index <span
+class="math inline">\(i\)</span>, let <span
+class="math inline">\(T_i\)</span> denote the transshipment tree for
+this network when <span class="math inline">\(b(s_i) = 1-n\)</span> and
+<span class="math inline">\(b(v)=1\)</span> for all <span
+class="math inline">\(v\ne s_i\)</span>. We begin by computing <span
+class="math inline">\(T_1\)</span> from scratch (using Dijkstra’s
+algorithm, for example). Then in the <span
+class="math inline">\(i\)</span>th phase, we transform <span
+class="math inline">\(T_i\)</span> into <span
+class="math inline">\(T_{i+1}\)</span> by linearly interpolating the
+balances and maintaining a transhipment tree. That is, we maintain the
+transshipment tree <span class="math inline">\(T_\lambda\)</span> for
+the balances <span class="math display">\[
+    b_\lambda(v) =
+    \begin{cases}
+        1 - n + n\lambda &amp; \text{if $v = s_i$} \\
+        1 - n\lambda &amp; \text{if $v = s_{i+1}$} \\
+        1 &amp; \text{otherwise}
+    \end{cases}
+\]</span> as the parameter <span class="math inline">\(\lambda\)</span>
+continuously increases from <span class="math inline">\(0\)</span> to
+<span class="math inline">\(1\)</span>. Just as in the
+parametric-shortest-path formulation, the transshipment tree changes at
+discrete times by pivots: An edge pivots out when its flow value drops
+to zero, and the minimum-cost edge that reconnects the tree pivots
+in.</p>
+<p>Prove that over the entire algorithm, each directed edge pivots into
+the transshipment tree at most once and out of the transshipment tree at
+most once. (Hint: Argue that the sequence of pivots is <em>almost</em>
+identical to the sequence of parametric shortest-path tree pivots!)</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Every vertex in the Nagy graph of a generic plane curve
+is a saddle.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>

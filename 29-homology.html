@@ -1,0 +1,723 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>29-homology</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="systems-of-cycles-and-homologyalpha"><span
+class="header-section-number">1</span> Systems of Cycles and
+Homology<span class="math inline">\(^\alpha\)</span></h1>
+<p><em>Homology</em> is a natural equivalence relation between cycles,
+similar to but both simpler and coarser than homotopy; where homotopy
+treats cycles as <em>sequences</em> of darts, homology treats cycles as
+<em>sets of edges</em> (or more generally, <em>linear combinations</em>
+of darts). Homology can be defined with respect to any “coefficient
+ring”, but to keep the presentation simple, I’ll describe only the
+simplest special case (<span
+class="math inline">\(\mathbb{Z}_2\)</span>-homology) in this section,
+and return to a slightly more complicated special case (<span
+class="math inline">\(\mathbb{R}\)</span>-homology) in a later note.</p>
+<h2 data-number="1.1" id="cycles-and-boundaries"><span
+class="header-section-number">1.1</span> Cycles and Boundaries</h2>
+<p>Fix a surface map <span class="math inline">\(\Sigma =
+(V,E,F)\)</span> with Euler genus <span
+class="math inline">\(\bar{g}\)</span>.</p>
+<p><span class="math inline">\(\mathbb{Z}_2\)</span>-homology is an
+equivalence relation between certain <em>subgraphs</em> of <span
+class="math inline">\(\Sigma\)</span>, formally represented as subsets
+of <span class="math inline">\(E\)</span>.</p>
+<p>An <em>even subgraph</em> of <span
+class="math inline">\(\Sigma\)</span> is a subgraph <span
+class="math inline">\(H\)</span> such that <span
+class="math inline">\(\deg_H(v)\)</span> is even for every vertex <span
+class="math inline">\(v\in V(\Sigma)\)</span>. The empty subgraph is an
+even subgraph, as is every simple cycle. Every even subgraph is the
+union (or symmetric difference) of simple edge-disjoint cycles.</p>
+<p>For every edge <span class="math inline">\(e\not\in T\)</span>, let
+<span class="math inline">\(\textsf{cycle}_T(e)\)</span> denote the
+unique simple undirected cycle in the graph <span
+class="math inline">\(T+e\)</span>; we call <span
+class="math inline">\(\textsf{cycle}_T(e)\)</span> a <em>fundamental
+cycle</em> with respect to <span class="math inline">\(T\)</span>. Let
+<span class="math inline">\(\mathcal{C} = \{ \textsf{cycle}_T(e) \mid
+e\in L \}\)</span>. The set <span
+class="math inline">\(\mathcal{C}\)</span> is called a <em>system of
+cycles</em> for the map <span class="math inline">\(\Sigma\)</span>.</p>
+<p><strong>Fundamental Cycle Lemma:</strong> <em>Let <span
+class="math inline">\(T\)</span> be an arbitrary spanning tree of an
+arbitrary graph <span class="math inline">\(G\)</span> (sic). For every
+even subgraph <span class="math inline">\(H\)</span> of <span
+class="math inline">\(G\)</span>, we have <span class="math display">\[H
+= \bigoplus_{e\in H\setminus T} \textsf{cycle}_T(e).\]</span> Thus, even
+subgraphs are symmetric differences of fundamental cycles.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(H\)</span> be an arbitrary even subgraph
+of <span class="math inline">\(G\)</span>, and let <span
+class="math inline">\(H’ = \bigoplus_{e\in H\setminus T}
+\textsf{cycle}_T(e)\)</span>. The symmetric difference of any two even
+subgraphs is even, so <span class="math inline">\(H\oplus H’\)</span> is
+an even subgraph and therefore the union of edge-disjoint cycles. On the
+other hand, <span class="math inline">\(H\oplus H’\)</span> is a
+subgraph of <span class="math inline">\(T\)</span> and therefore
+acyclic. We conclude that <span class="math inline">\(H\oplus
+H’\)</span> is empty, or equivalently, <span class="math inline">\(H =
+H’\)</span>. <span class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p>Mnemonically, any even subgraph can be <em>named</em> by listing its
+edges in <span class="math inline">\(C\cup L\)</span>.</p>
+<p>Let <span class="math inline">\(Z\)</span> be a subset of the faces
+of <span class="math inline">\(\Sigma\)</span>. The <em>boundary</em> of
+<span class="math inline">\(Z\)</span>, denoted <span
+class="math inline">\(\partial Z\)</span>, is the subgraph of <span
+class="math inline">\(\Sigma\)</span> containing every edge that is
+incident to both a face in <span class="math inline">\(Z\)</span> and a
+face in <span class="math inline">\(F\setminus Z\)</span>. A
+<em>boundary subgraph</em> is any subgraph that is the boundary of a
+subset of faces. Every boundary subgraph is an even subgraph.
+Conversely, if <span class="math inline">\(\Sigma\)</span> is a planar
+map, the Jordan curve theorem implies that every even subgraph is a
+boundary subgraph, but this equivalence does not extend to more complex
+surfaces.</p>
+<p><strong>Fundamental Boundary Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. For every boundary subgraph <span
+class="math inline">\(B\)</span> of <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math display">\[B = \bigoplus_{e\in B\cap C}
+\textsf{bdry}_C(e).\]</span> Thus, boundary subgraphs are symmetric
+differences of fundamental boundaries.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+We mirror the proof of the Fundamental Cycle lemma. Let <span
+class="math inline">\(B\)</span> be any boundary subgraph, and let <span
+class="math inline">\(B’ = \bigoplus_{e\in B\cap C}
+\textsf{bdry}_C(e)\)</span>. The boundary space is closed under
+symmetric difference, so <span class="math inline">\(B’\oplus B\)</span>
+is a boundary subgraph. On the other hand, <span
+class="math inline">\(B\oplus B’\)</span> has no edges in <span
+class="math inline">\(C\)</span>, so <span class="math inline">\(B\oplus
+B’\)</span> is a subgraph of the cut graph <span
+class="math inline">\(T\cup L\)</span>. We conclude that <span
+class="math inline">\(B\oplus B’\)</span> is empty, or equivalently,
+<span class="math inline">\(B = B’\)</span>. <span
+class="math inline">\(\qquad\square\)</span>.
+</dd>
+</dl>
+<p>Mnemonically, any boundary subgraph can be <em>named</em> by listing
+its edges in <span class="math inline">\(C\)</span>.</p>
+<h2 data-number="1.2" id="homology"><span
+class="header-section-number">1.2</span> Homology</h2>
+<p>Finally, two subgraphs <span class="math inline">\(A\)</span> and
+<span class="math inline">\(B\)</span> of <span
+class="math inline">\(\Sigma\)</span> are <em>(<span
+class="math inline">\(\mathbb{Z}_2\)</span>)-homologous</em> if their
+symmetric difference <span class="math inline">\(A\oplus B\)</span> is a
+boundary subgraph of <span class="math inline">\(\Sigma\)</span>. For
+example, every boundary subgraph is homologous with the empty subgraph,
+which is why boundary subgraphs are also called <em>null-homologous</em>
+subgraphs. Straightforward definition-chasing implies that (<span
+class="math inline">\(\mathbb{Z}_2\)</span>)-homology is an equivalence
+relation, whose equivalence classes are obviously called <em>(<span
+class="math inline">\(\mathbb{Z}_2\)</span>)-homology classes</em>. We
+usually omit “<span class="math inline">\(\mathbb{Z}_2\)</span>” if the
+type of homology is clear from context.</p>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. The only boundary subgraph of the
+cut graph <span class="math inline">\(T\cup L\)</span> is the empty
+graph.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(H\)</span> be a non-empty cut graph in
+<span class="math inline">\(\Sigma\)</span>; <span
+class="math inline">\(H\)</span> must be the boundary of a non-empty
+proper subset <span class="math inline">\(Z\)</span> of the faces in
+<span class="math inline">\(\Sigma\)</span>. Consider the fundamental
+domain <span class="math inline">\(\Delta = \Sigma
+\mathbin{\backslash\!\!\backslash} (T\cup L)\)</span>. Because both
+<span class="math inline">\(Z\)</span> and its complement are non-empty,
+some interior edge <span class="math inline">\(e\)</span> of <span
+class="math inline">\(\Delta\)</span> separates a face in <span
+class="math inline">\(Z\)</span> from a face not in <span
+class="math inline">\(Z\)</span>. But the interior edges of <span
+class="math inline">\(\Delta\)</span> are precisely the edges in <span
+class="math inline">\(C\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. Every even subgraph in <span
+class="math inline">\(\Sigma\)</span> is homologous with an even
+subgraph of the cut graph <span class="math inline">\(T\cup
+L\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+It suffices to prove that every edge <span class="math inline">\(e\in
+C\)</span> is homologous with a subgraph of <span
+class="math inline">\(T\cup L\)</span> that has even degree everywhere
+except the endpoints of <span class="math inline">\(e\)</span>.
+</dd>
+<dd>
+<p>Consider the fundamental domain <span class="math inline">\(\Delta =
+\Sigma \mathbin{\backslash\!\!\backslash} (T\cup L)\)</span>. Every edge
+<span class="math inline">\(e \in C\)</span> appears in <span
+class="math inline">\(\Delta\)</span> as a boundary-to-boundary chord,
+which partitions the faces of <span
+class="math inline">\(\Delta\)</span> into two disjoint subsets <span
+class="math inline">\(Y\sqcup Z\)</span>. (Recall that no edge in <span
+class="math inline">\(C\)</span> can be an isthmus!) Every face of <span
+class="math inline">\(\Delta\)</span> is a face of the original map
+<span class="math inline">\(\Sigma\)</span> and vice versa; let <span
+class="math inline">\(\beta\)</span> denote the boundary of <span
+class="math inline">\(Y\)</span> (or equivalently, the boundary of <span
+class="math inline">\(Z\)</span>) in <span
+class="math inline">\(\Sigma\)</span>. Because <span
+class="math inline">\(\beta\)</span> is a boundary subgraph in <span
+class="math inline">\(\Sigma\)</span>, <span
+class="math inline">\(e\)</span> is homologous with <span
+class="math inline">\(\beta\oplus e\)</span>. Finally, every edge in
+<span class="math inline">\(\beta \oplus e\)</span> is an edge in the
+cut graph <span class="math inline">\(T\cup L\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. Every subgraph of <span
+class="math inline">\(\Sigma\)</span> is homologous with a symmetric
+difference of cycles in <span
+class="math inline">\(\mathcal{C}\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+By the previous lemma, it suffices to consider only even subgraphs of
+the cur graph <span class="math inline">\(T\cup L\)</span>. Every even
+subgraph of <span class="math inline">\(T\cup L\)</span> is the
+symmetric difference of simple cycles in <span
+class="math inline">\(T\cup L\)</span>. The simple cycles in <span
+class="math inline">\(T\cup L\)</span> are precisely the cycles in <span
+class="math inline">\(\mathcal{C}\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Homology Basis Theorem:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. For every even subgraph <span
+class="math inline">\(H\)</span> of <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math display">\[
+    H =
+    \left(\bigoplus_{i\in \smash{I(H)}} \textsf{cycle}_T(\ell_i)\right)
+        \oplus
+    \left(\bigoplus_{e\in H\cap C} \textsf{bdry}_T(e)\right)
+\]</span> for some subset <span class="math inline">\(I(H) \subseteq
+\{1,2,\dots,\bar{g}\}\)</span>. Thus, every even subgraph is homologous
+with the symmetric difference of a <strong>unique</strong> subset of
+cycles in <span class="math inline">\(\mathcal{C}\)</span>, which is
+nonempty if and only if <span class="math inline">\(H\)</span> is a
+boundary subgraph.</em></p>
+<p>The Homology Basis Theorem immediately implies an algorithm to decide
+if two even subgraphs <span class="math inline">\(H\)</span> and <span
+class="math inline">\(H’\)</span> are homologous: Compute their
+canonical decompositions into fundamental cycles and boundaries, with
+respect to the same tree-cotree decomposition, and then compare the
+index sets <span class="math inline">\(I(H)\)</span> and <span
+class="math inline">\(I’(H)\)</span>. A careful implementation of this
+algorithm runs in <span class="math inline">\(O(\bar{g} n)\)</span>
+time; details are left as an exercise (because we’re about to describe
+simpler algorithms).</p>
+<h2 data-number="1.3" id="relax-its-just-linear-algebra"><span
+class="header-section-number">1.3</span> Relax, it’s just linear
+algebra!</h2>
+<p>Unlike our earlier characterization of homotopy, our characterization
+of homology is unique; every even subgraph is homologous with the
+symmetric difference of <em>exactly one</em> subset of cycles in <span
+class="math inline">\(\mathcal{C}\)</span>. The easiest way to prove
+this fact is to observe that subgraphs, even subgraphs, boundary
+subgraphs, and homology classes all define vector spaces over the finite
+field <span class="math inline">\(\mathbb{Z}_2 = (\{0,1\}, \oplus,
+\cdot)\)</span>. In particular, homology can be viewed as a linear map
+between vector spaces.</p>
+<p>Subgraphs (subsets of <span class="math inline">\(E\)</span>)
+comprise the <strong><em>edge space</em></strong> (or <em>first chain
+space</em>) <span class="math inline">\(C_1(\Sigma) =
+\mathbb{Z}_2^{|E|}\)</span>. The (indicator vectors of) individual edges
+in <span class="math inline">\(\Sigma\)</span> comprise a basis of the
+edge space.</p>
+<p>Even subgraphs of <span class="math inline">\(\Sigma\)</span>
+comprise a subspace of <span class="math inline">\(C_1(\Sigma)\)</span>
+called the <strong><em>cycle space</em></strong> <span
+class="math inline">\(Z_1(\Sigma)\)</span>. The Fundamental Cycle Lemma
+implies that the fundamental cycles <span
+class="math inline">\(\textsf{cycle}_T(e)\)</span>, for all <span
+class="math inline">\(e\not\in T\)</span>, define a basis for the cycle
+space. The number of fundamental cycles is equal to the number of edges
+not in <span class="math inline">\(T\)</span>, which is <span
+class="math inline">\(|E|-(|V|-1)\)</span>. Thus, <span
+class="math inline">\(Z_1(\Sigma) = \mathbb{Z}_2^{|E| - |V| +
+1}\)</span>.</p>
+<p>Boundary subgraphs of <span class="math inline">\(\Sigma\)</span>
+comprise a subspace of <span class="math inline">\(Z_1(\Sigma)\)</span>
+called the <strong><em>boundary space</em></strong> <span
+class="math inline">\(B_1(\Sigma)\)</span>. The Fundamental Boundary
+lemma implies that the fundamental boundaries <span
+class="math inline">\(\textsf{bdry}_C(e)\)</span>, for all <span
+class="math inline">\(e\in C\)</span>, define a basis for the boundary
+space. The number of fundamental boundaries is equal to the number of
+edges of <span class="math inline">\(C\)</span>, which is <span
+class="math inline">\(|F|-1\)</span>. Thus, <span
+class="math inline">\(B_1(\Sigma) = \mathbb{Z}_2^{|F| - 1}\)</span>.</p>
+<p>Finally, the set of homology classes of even subgraphs of <span
+class="math inline">\(\Sigma\)</span> comprise the <strong><em>(first)
+homology space</em></strong>, which is the quotient space <span
+class="math display">\[
+    \begin{aligned}
+    H_1(\Sigma)
+    &amp;~:=~ Z_1(\Sigma) / B_1(\Sigma) \\
+    &amp;~=~ \mathbb{Z}_2^{|E| - |V| + 1} \big/ \mathbb{Z}_2^{|F| - 1}
+\\
+    &amp;~\cong~ \mathbb{Z}_2^{|E| - (|V|-1) - (|F|-1)} \\
+    &amp;~=~ \mathbb{Z}_2^{|E| - |T| - |C|}
+    ~=~ \mathbb{Z}_2^{|L|}
+    ~=~ \mathbb{Z}_2^{\bar{g}}.
+    \end{aligned}
+\]</span> (Hey look, we proved Euler’s formula again!) The Homology
+Basis Theorem implies that homology classes of fundamental cycles <span
+class="math inline">\(\textsf{cycle}_T(e)\)</span>, for all <span
+class="math inline">\(e\in L\)</span>, define a basis for the homology
+space. In particular, there are exactly <span
+class="math inline">\(2^{\bar{g}}\)</span> distinct homology
+classes.</p>
+<h2 data-number="1.4" id="crossing-numbers"><span
+class="header-section-number">1.4</span> Crossing Numbers</h2>
+<p>Another way to characterize the homology class of an even subgraph
+<span class="math inline">\(H\)</span> is to determine which cycles in a
+system of cycles <em>cross</em> <span class="math inline">\(H\)</span>.
+The definition of “cross” is rather subtle, but mirrors the intuition of
+transverse intersection.</p>
+<p>Consider two distinct simple cycles <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>, and let <span
+class="math inline">\(\pi\)</span> be one of the components of the
+intersection <span class="math inline">\(\alpha\cap\beta\)</span>.
+(Because <span class="math inline">\(\alpha\ne\beta\)</span>, the
+intersection <span class="math inline">\(\pi\)</span> must be either a
+single vertex of a common subpath.) We call <span
+class="math inline">\(\pi\)</span> a <em>crossing</em> between <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> (or we say that <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> <em>cross</em> at <span
+class="math inline">\(\pi\)</span>) if, after contracting the path <span
+class="math inline">\(\pi\)</span> to a point <span
+class="math inline">\(p\)</span>, the contracted curves <span
+class="math inline">\(\alpha / \pi\)</span> and <span
+class="math inline">\(\beta / \pi\)</span> intersect transversely at
+<span class="math inline">\(p\)</span>.</p>
+<p>Equivalently, <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> cross at <span
+class="math inline">\(\pi\)</span> if, no matter how we perturb the two
+curves within a small neighborhood of <span
+class="math inline">\(\pi\)</span>, the two perturbed curves <span
+class="math inline">\(\tilde\alpha\)</span> and <span
+class="math inline">\(\tilde\beta\)</span> intersect. By convention, no
+two-sided cycle crosses itself (because we can perturb two copies of a
+two-sided cycle so that they are disjoint), but every one-sided cycle
+crosses itself once (because we cannot).</p>
+<p>For any simple cycles <span class="math inline">\(\alpha\)</span> and
+<span class="math inline">\(\beta\)</span>, the <em>crossing number</em>
+<span class="math inline">\(\mathsf{cr}(\alpha,\beta)\)</span> is the
+number of crossings between <span class="math inline">\(\alpha\)</span>
+and <span class="math inline">\(\beta\)</span>, modulo 2. In particular,
+<span class="math inline">\(\textsf{cr}(\alpha, \alpha) = 0\)</span> if
+for every two-sided cycle <span class="math inline">\(\alpha\)</span>,
+and <span class="math inline">\(\textsf{cr}(\beta, \beta) = 1\)</span>
+for every one-sided cycle <span
+class="math inline">\(\beta\)</span>.</p>
+<p>We can extend this definition of crossing number to even subgraphs by
+linearity: <span class="math inline">\(\textsf{cr}(\alpha\oplus\beta,
+\gamma) = \textsf{cr}(\alpha,\gamma) \oplus
+\textsf{cr}(\beta,\gamma)\)</span>. Although one can express any even
+subgraph as a symmetric difference of cycles in many different ways,
+crossing numbers are the same for every such decomposition.</p>
+<p>For any face <span class="math inline">\(f\)</span> and any cycle
+<span class="math inline">\(\gamma\)</span>, we have <span
+class="math inline">\(\textsf{cr}(\partial f, \gamma) = 0\)</span>. It
+follows by linearity that if either <span
+class="math inline">\(\gamma\)</span> or <span
+class="math inline">\(\delta\)</span> is a boundary subgraph, then <span
+class="math inline">\(\textsf{cr}(\delta,\gamma) = 0\)</span>. More
+generally, it follows that crossing numbers are a <em>homology
+invariant</em>: if <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> are homologous even subgraphs, then
+<span class="math inline">\(\textsf{cr}(\alpha, \gamma) =
+\textsf{cr}(\beta, \gamma)\)</span> for every cycle <span
+class="math inline">\(\gamma\)</span>, because <span
+class="math inline">\(\alpha\oplus\beta\)</span> is the symmetric
+difference of face boundaries.</p>
+<p><strong>Lemma:</strong> <em>For any even subgraphs <span
+class="math inline">\(H\)</span> and <span
+class="math inline">\(H’\)</span>, if <span
+class="math inline">\(\textsf{cr}(H,H’) = 1\)</span>, then neither <span
+class="math inline">\(H\)</span> nor <span
+class="math inline">\(H’\)</span> is a boundary subgraph.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+If (say) <span class="math inline">\(H\)</span> is a boundary subgraph,
+then <span class="math inline">\(H\)</span> is the symmetric difference
+of face boundaries, and therefore <span
+class="math inline">\(\textsf{cr}(H, H’) = 0\)</span> by linearity.
+<span class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\(\sigma\)</span> be a simple cycle and let <span
+class="math inline">\(\mathcal{C} = \{ \gamma_1, \gamma_2, \dots,
+\gamma_{\bar{g}} \}\)</span> be a system of cycles in a surface map
+<span class="math inline">\(\Sigma\)</span>. Then <span
+class="math inline">\(\sigma\)</span> is boundary cycle if and only if
+<span class="math inline">\(\mathsf{cr}(\sigma, \gamma_i) = 0\)</span>
+for every cycle <span class="math inline">\(\gamma_i\in
+\mathcal{C}\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+If <span class="math inline">\(\sigma\)</span> is a boundary cycle,
+homology invariance immediately implies <span
+class="math inline">\(\textsf{cr}(\sigma, \gamma_i) =
+\textsf{cr}(\varnothing, \gamma_i) = 0\)</span>.
+</dd>
+<dd>
+<p>Suppose on the other hand that <span
+class="math inline">\(\sigma\)</span> is not a boundary cycle. Then by
+definition the sliced surface <span class="math inline">\(\Sigma
+\mathbin{\backslash\!\!\backslash} \sigma\)</span> is connected. Let
+<span class="math inline">\(v\)</span> be a vertex of <span
+class="math inline">\(\sigma\)</span>, and let <span
+class="math inline">\(\pi\)</span> be any path from <span
+class="math inline">\(v^+\)</span> to <span
+class="math inline">\(v^-\)</span> in <span class="math inline">\(\Sigma
+\mathbin{\backslash\!\!\backslash} \sigma\)</span>. This path <span
+class="math inline">\(\pi\)</span> appears in <span
+class="math inline">\(\Sigma\)</span> as a closed walk that crosses
+<span class="math inline">\(\sigma\)</span> exactly once, so <span
+class="math inline">\(\textsf{cr}(\pi,\sigma) = 1\)</span>. It follows
+from the previous lemma that <span class="math inline">\(\pi\)</span> is
+not a boundary cycle. Thus, by the Homology Basis theorem, <span
+class="math inline">\(\pi\)</span> is homologous with <span
+class="math inline">\(\bigoplus_{i\in I} \gamma_i\)</span> for some
+non-empty subset <span class="math inline">\(I \subseteq \{
+1,2,\dots,\bar{g} \}\)</span>. Finally, homology invariance implies
+<span class="math inline">\(\textsf{cr}(\pi, \sigma) = \bigoplus_{i\in
+I} \textsf{cr}(\gamma_i, \sigma) = 1\)</span>, so we must have <span
+class="math inline">\(\textsf{cr}(\gamma_i, \sigma) = 1\)</span> for an
+odd number of indices <span class="math inline">\(i\in I\)</span>, and
+therefore for at least one such index. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p><strong>Corollary:</strong> <em>Let <span
+class="math inline">\(\mathcal{C}\)</span> be a system of cycles in a
+surface map <span class="math inline">\(\Sigma\)</span>. An even
+subgraph <span class="math inline">\(H\)</span> of <span
+class="math inline">\(\Sigma\)</span> is a boundary subgraph if and only
+if <span class="math inline">\(\mathsf{cr}(H, \gamma_i) = 0\)</span> for
+every cycle <span class="math inline">\(\gamma_i\in
+\mathcal{C}\)</span>. Two even subgraphs <span
+class="math inline">\(H\)</span> and <span
+class="math inline">\(H’\)</span> of <span
+class="math inline">\(\Sigma\)</span> are homologous if and only if
+<span class="math inline">\(\mathsf{cr}(H, \gamma_i) = \mathsf{cr}(H’,
+\gamma_i)\)</span> for every cycle <span
+class="math inline">\(\gamma_i\in \mathcal{C}\)</span>.</em></p>
+<h2 data-number="1.5" id="systems-of-cocycles-and-cohomology"><span
+class="header-section-number">1.5</span> Systems of Cocycles and
+Cohomology</h2>
+<p>Cohomology is the dual of homology. While homology is an equivalence
+relation between subgraphs of maps, cohomology is an equivalence
+relation between subgraphs of <em>dual</em> maps. In fact, it’s the
+<em>dual</em> equivalence relation between subgraphs of dual maps. Two
+subgraphs <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> of <span
+class="math inline">\(\Sigma\)</span> are <em>cohomologous</em> if and
+only if the corresponding dual subgraphs <span
+class="math inline">\(A^*\)</span> and <span
+class="math inline">\(B^*\)</span> of <span
+class="math inline">\(\Sigma^*\)</span> are homologous.</p>
+<p>I’ll adopt the convenient convention of adding the prefix “co” to
+indicate the dual of a structure in the dual map. Mnemonically, a
+cosnarfle in <span class="math inline">\(\Sigma\)</span> is the dual of
+snarfle in <span class="math inline">\(\Sigma^*\)</span>.</p>
+<ul>
+<li>We’ve already defined a <em>spanning co-tree</em> of <span
+class="math inline">\(\Sigma\)</span> is a subset of edges whose
+corresponding dual edges comprise a spanning tree of <span
+class="math inline">\(\Sigma^*\)</span>. Less formally, a spanning
+cotree of <span class="math inline">\(\Sigma\)</span> is the dual of a
+spanning tree of <span class="math inline">\(\Sigma^*\)</span>.</li>
+<li>A <em>cocycle</em> in <span class="math inline">\(\Sigma\)</span> is
+the dual of a cycle in <span class="math inline">\(\Sigma^*\)</span>.
+(In planar graphs, every cocycle is a minimal edge cut, but that
+equivalence does not extend to more complex surfaces.)</li>
+<li>A <em>co-even subgraph</em> of <span
+class="math inline">\(\Sigma\)</span> is the dual of an even subgraph of
+<span class="math inline">\(\Sigma^*\)</span>. That is, a subgraph <span
+class="math inline">\(H\)</span> of <span
+class="math inline">\(\Sigma\)</span> is co-even if every face of <span
+class="math inline">\(\Sigma\)</span> has an even number of incidences
+with <span class="math inline">\(H\)</span>. No edge in a co-even
+subgraph is a loop, because loops are co-isthmuses.</li>
+<li>The <em>coboundary</em> if a subset <span
+class="math inline">\(X\)</span> of vertices of <span
+class="math inline">\(\Sigma\)</span>, denoted <span
+class="math inline">\(\delta X\)</span>, is the dual of the boundary of
+the corresponding subset <span class="math inline">\(X^*\)</span> of
+faces of <span class="math inline">\(\Sigma^*\)</span> . That is, <span
+class="math inline">\(\delta X\)</span> is the subset of edges with one
+endpoint in <span class="math inline">\(X\)</span> and one endpoint not
+in <span class="math inline">\(X\)</span>. A <em>coboundary</em>
+subgraph is the coboundary of some subset of vertices. Every coboundary
+subgraph is co-even.</li>
+<li>Finally, two co-even subgraphs are cohomologous if their symmetric
+difference is a coboundary subgraph.</li>
+</ul>
+<p>As usual, fix a tree-cotree decomposition <span
+class="math inline">\((T,L,C)\)</span> of a surface map <span
+class="math inline">\(\Sigma\)</span>. For every edge <span
+class="math inline">\(e\in T\cup L\)</span>, let <span
+class="math inline">\(\textsf{cocycle}_C(e)\)</span> denote the subgraph
+of <span class="math inline">\(\Sigma\)</span> dual to the fundamental
+cycle <span class="math inline">\(\textsf{cycle}_{c^*}(e^*)\)</span> in
+the dual map <span class="math inline">\(\Sigma^*\)</span>. Finally, let
+<span class="math inline">\(\mathcal{K} = \{ \textsf{cocycle}_C(e) \mid
+e\in T \}\)</span>. The following lemmas follow immediately from our
+earlier characterization of homology.</p>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. Every co-even subgraph of <span
+class="math inline">\(\Sigma\)</span> a symmetric difference of
+fundamental cocycles <span
+class="math inline">\(\textsf{cocycle}_C(e)\)</span> where <span
+class="math inline">\(e\not\in C\)</span>.</em></p>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. Every co-even subgraph of <span
+class="math inline">\(\Sigma\)</span> is cohomologous with a co-even
+subgraph of the cocut graph <span class="math inline">\(C\cup
+L\)</span>.</em></p>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\((T,L,C)\)</span> be an arbitrary tree-cotree
+decomposition of a surface map <span
+class="math inline">\(\Sigma\)</span>. Every co-even subgraph of <span
+class="math inline">\(\Sigma\)</span> is cohomologous with a symmetric
+difference of cocycles in <span
+class="math inline">\(\mathcal{K}\)</span>.</em></p>
+<h2 data-number="1.6" id="homology-signatures"><span
+class="header-section-number">1.6</span> Homology Signatures</h2>
+<p>More importantly, however, cohomology offers us a
+<strong>CO</strong>nvenient method to efficiently
+<strong>CO</strong>mpute homology classes of even subgraphs of the
+primal map <span class="math inline">\(\Sigma\)</span>, by assigning a
+<strong>CO</strong>ordinate system to the first homology space. Index
+the leftover edges in <span class="math inline">\(L\)</span> as <span
+class="math inline">\(\ell_1, \ell_2, \dots, \ell_{\bar{g}}\)</span>.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> For every edge <span
+class="math inline">\(e\)</span> in <span
+class="math inline">\(\Sigma\)</span>, the <em>homology signature <span
+class="math inline">\([e]\)</span></em> is the <span
+class="math inline">\(\bar{g}\)</span>-bit vector indicating which
+cocycles in <span class="math inline">\(\mathcal{K}\)</span> contain
+<span class="math inline">\(e\)</span>. Specifically: <span
+class="math display">\[
+    [e]_i = 1 \iff e \in  \textsf{cocycle}_C(\ell_i).
+\]</span> Finally, the homology signature <span
+class="math inline">\([H]\)</span> of any subgraph <span
+class="math inline">\(H\)</span> is the bitwise exclusive-or of the
+homology signatures of its edges.</p>
+<p>The function <span class="math inline">\(H \mapsto [H]\)</span> is a
+<em>linear</em> function from the cycle space <span
+class="math inline">\(Z_1(\Sigma)\)</span> to the vector space <span
+class="math inline">\(\mathbb{Z}_2^{\bar{g}}\)</span> of homology
+signatures. In particular:</p>
+<p><strong>Linearity Lemma:</strong> <em>For any two even subgraphs
+<span class="math inline">\(H\)</span> and <span
+class="math inline">\(H’\)</span> of <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math inline">\([H \oplus H’] = [H]\oplus [H’]\)</span>.</em></p>
+<p><strong>Basis Lemma:</strong> <em>For all indices <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(j\)</span>, we have <span
+class="math inline">\([\textsf{cycle}_T(\ell_i)]_j = 1\)</span> if and
+only if <span class="math inline">\(i=j\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The only edge in any fundamental <span
+class="math inline">\(\textsf{cycle}_T(e)\)</span> that is <em>not</em>
+in <span class="math inline">\(T\)</span> is the determining edge <span
+class="math inline">\(e\)</span>. Similarly, the only edge in any
+fundamental <span class="math inline">\(\textsf{cocycle}_C(e)\)</span>
+that is <em>not</em> in <span class="math inline">\(C\)</span> is the
+determining edge <span class="math inline">\(e\)</span>. Thus, <span
+class="math inline">\(\textsf{cycle}_T(ell_i) \cap
+\textsf{cocycle}_C(\ell_j) = \varnothing\)</span> whenever <span
+class="math inline">\(i\ne j\)</span>, and <span
+class="math inline">\(\textsf{cycle}_T(\ell_i) \cap
+\textsf{cocycle}_C(\ell_i) = \ell_i\)</span> for every index <span
+class="math inline">\(i\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Theorem:</strong> <em>Two even subgraphs <span
+class="math inline">\(H\)</span> and <span
+class="math inline">\(H’\)</span> of <span
+class="math inline">\(\Sigma\)</span> are homologous if and only if
+<span class="math inline">\([H] = [H’]\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+By the Linearity Lemma, it suffices to prove that an even subgraph <span
+class="math inline">\(H\)</span> is a boundary subgraph if and only if
+<span class="math inline">\([H] = 0\)</span>.
+</dd>
+<dd>
+<p>Let <span class="math inline">\(f\)</span> be any face of <span
+class="math inline">\(\Sigma\)</span>, and let <span
+class="math inline">\(\lambda\)</span> be any cocycle in <span
+class="math inline">\(\Sigma\)</span>. The boundary of <span
+class="math inline">\(f\)</span> either contains no edges of <span
+class="math inline">\(\lambda\)</span> or exactly two edges of <span
+class="math inline">\(\lambda\)</span>, depending on whether the dual
+cycle <span class="math inline">\(\lambda^*\)</span> contains the dual
+vertex <span class="math inline">\(f^*\)</span>. It follows that <span
+class="math inline">\([\partial f] = 0\)</span> for every face <span
+class="math inline">\(f\)</span>. The Linearity Lemma implies that <span
+class="math inline">\([H] = 0\)</span> for every boundary subgraph <span
+class="math inline">\(H\)</span>.</p>
+</dd>
+<dd>
+<p>Conversely, suppose <span class="math inline">\(H\)</span> is not
+null-homologous. Then we can write <span class="math display">\[
+H =
+\left(\bigoplus_{i\in I} \textsf{cycle}_T(\ell_i)\right)
+    \oplus
+\left(\bigoplus_{e\in H\cap C} \textsf{bdry}_T(e)\right)
+\]</span> for some nonempty subset <span
+class="math inline">\(I\subseteq\{1, 2, \dots, \bar{g}\}\)</span>. The
+Linearity and Basis lemmas imply that <span class="math display">\[
+[H]
+=
+\left(\bigoplus_{i\in I} [\textsf{cycle}_T(\ell_i)]\right)
+\]</span> and therefore <span class="math inline">\([H]_i = 1\)</span>
+if and only if <span class="math inline">\(i\in I\)</span>. Because
+<span class="math inline">\(I\)</span> is non-empty, <span
+class="math inline">\([H]\ne 0\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="1.7" id="separating-cycles"><span
+class="header-section-number">1.7</span> Separating Cycles</h2>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\(\gamma\)</span> be a simple cycle in a surface map
+<span class="math inline">\(\Sigma\)</span>. The sliced map <span
+class="math inline">\(\Sigma \mathbin{\backslash\!\!\backslash}
+\gamma\)</span> is disconnected if and only if <span
+class="math inline">\([\gamma]=0\)</span></em></p>
+<h2 data-number="1.8" id="references"><span
+class="header-section-number">1.8</span> References</h2>
+<h2 data-number="1.9" id="aptly-named-sir"><span
+class="header-section-number">1.9</span> Aptly Named Sir</h2>
+<ul>
+<li>Pants decompositions (except possibly in passing)</li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Here I’m using <span class="math inline">\(\ell\)</span>
+as a mnemonic for “leftover edge” instead of “loop”. We have a lot of
+other <span class="math inline">\(e\)</span>’s flying around, so I don’t
+want to use <span class="math inline">\(e_i\)</span> to denote the <span
+class="math inline">\(i\)</span>th edge in <span
+class="math inline">\(L\)</span>.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

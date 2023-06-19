@@ -1,0 +1,608 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>21-faster-minimum-cut</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1"
+id="faster-minimum-cuts-fr-dijkstraalpha"><span
+class="header-section-number">1</span> Faster Minimum Cuts
+(FR-Dijkstra)<span class="math inline">\(^\alpha\)</span></h1>
+<h2 data-number="1.1" id="monge-heaps"><span
+class="header-section-number">1.1</span> Monge Heaps</h2>
+<p>Recall that a two-dimensional array <span
+class="math inline">\(M\)</span> is <em>Monge</em> if the inequality
+<span class="math inline">\(M[i,j] + M[i’,j’] \le M[i’,j] +
+M[i,j’]\)</span> holds for all indices <span
+class="math inline">\(i&lt;i’\)</span> and <span
+class="math inline">\(j&lt;j’\)</span>. Any array where the columns are
+constant is Monge, and the sum of any two Monge arrays is Monge.</p>
+<p>Suppose we are given a <span class="math inline">\(k\times k\)</span>
+Monge array <span class="math inline">\(D\)</span>, and we are
+<em>promised</em> that there is a <span
+class="math inline">\(k\)</span>-dimensional vector <span
+class="math inline">\(c\)</span>. Then no matter what values <span
+class="math inline">\(c\)</span> contains, the array <span
+class="math inline">\(M\)</span> defined by <span
+class="math inline">\(M[i,j] = D[i,j] + c[j]\)</span> is Monge.</p>
+<p>A <em>Monge heap</em> is a data structure that allows us to extract
+information from the array <span class="math inline">\(M\)</span> as the
+coefficients of <span class="math inline">\(c\)</span> are revealed.
+Specifically, a Monge heap supports the following three operations:</p>
+<ul>
+<li><span class="math inline">\(\textsf{Reveal}(j, x)\)</span>: Declare
+that <span class="math inline">\(c[j] = x\)</span>, thereby revealing
+the <span class="math inline">\(j\)</span>th column of <span
+class="math inline">\(M\)</span>.</li>
+<li><span class="math inline">\(\textsf{FindMin}()\)</span>: Return the
+smallest visible element in <span class="math inline">\(M\)</span>. We
+are guaranteed that this element is the smallest element in its row of
+<span class="math inline">\(M\)</span>, not just the smallest
+<em>visible</em> element of that row.</li>
+<li><span class="math inline">\(\textsf{Hide}(i)\)</span>: Hide the row
+<span class="math inline">\(i\)</span> of <span
+class="math inline">\(M\)</span>, which must contain the smallest
+visible element of <span class="math inline">\(M\)</span> (which is also
+the smallest element of its row of <span
+class="math inline">\(M\)</span>)</li>
+</ul>
+<p>Over the lifetime of the data structure, we will <span
+class="math inline">\(\textsf{Reveal}\)</span> at most <span
+class="math inline">\(k\)</span> columns and <span
+class="math inline">\(\textsf{Hide}\)</span> at most <span
+class="math inline">\(k\)</span> rows.</p>
+<p>An element of <span class="math inline">\(M\)</span> is
+<em>visible</em> if its column has been <span
+class="math inline">\(\textsf{Reveal}\)</span>ed but its row has not
+been <span class="math inline">\(\textsf{Hid}\)</span>d<span
+class="math inline">\(\textsf{e}\)</span>n. We call an element of <span
+class="math inline">\(M\)</span> <em>active</em> if it is the smallest
+visible element in a visible row. Each visible column of <span
+class="math inline">\(M\)</span> contains zero or more contiguous
+intervals of <span class="math inline">\(M\)</span>, which we call
+<em>active intervals</em>. Each active interval is specified by a triple
+of indices <span class="math inline">\((j, i_{\min},
+i_{\max})\)</span>.</p>
+<figure>
+<img src="Fig/Monge-heap.png" style="width:85.0%"
+alt="Operations on a Monge heap, initially with four visible columns and no hidden rows." />
+<figcaption aria-hidden="true">Operations on a Monge heap, initially
+with four visible columns and no hidden rows.</figcaption>
+</figure>
+<p>A Monge heap consists of three component data structures (described
+in more detail below):</p>
+<ul>
+<li>A priority queue storing all live intervals within the visible
+columns of <span class="math inline">\(M\)</span></li>
+<li>A balanced binary search tree storing the live intervals in
+lexicographic order</li>
+<li>A range-minimum query structure for each column of <span
+class="math inline">\(D\)</span> (sic)</li>
+</ul>
+<p>These data structures support each <span
+class="math inline">\(\textsf{Reveal}\)</span> in <span
+class="math inline">\(O(\log k)\)</span> amortized time, <span
+class="math inline">\(\textsf{FindMin}\)</span> in <span
+class="math inline">\(O(1)\)</span> time, and <span
+class="math inline">\(\textsf{Hide}\)</span> in <span
+class="math inline">\(O(\log k)\)</span> time. Over the lifetime of the
+data structure, we call each of these operations at most <span
+class="math inline">\(k\)</span> times, thereby finding the minimum
+elements in some subset of the rows of <span
+class="math inline">\(M\)</span> in <span class="math inline">\(O(k\log
+k)\)</span> time. (This is slower than the <span
+class="math inline">\(O(k)\)</span> running time of SMAWK, but that
+algorithm requires the entire array <span
+class="math inline">\(M\)</span> to be visible from the beginning.)</p>
+<h3 data-number="1.1.1" id="the-main-priority-queue"><span
+class="header-section-number">1.1.1</span> The main priority queue</h3>
+<p>At all times, the submatrix (or minor) of visible elements in <span
+class="math inline">\(M\)</span> is Monge. This implies that the minimum
+<em>visible</em> elements in the <em>visible</em> rows of <span
+class="math inline">\(M\)</span> are <em>monotone</em>: The index of the
+row minimum is a non-decreasing function of the row index. More
+explicitly: For any indices <span class="math inline">\(i&lt;i’\)</span>
+of visible rows, if <span class="math inline">\(M[i,j]\)</span> is the
+minimum (visible) element of row <span class="math inline">\(i\)</span>,
+and <span class="math inline">\(M[i’,j’]\)</span> is the minimum
+(visible) element of row <span class="math inline">\(i’\)</span>, then
+<span class="math inline">\(j\le j’\)</span>.</p>
+<p>Thus, each visible column <span class="math inline">\(j\)</span> of
+<span class="math inline">\(M\)</span> contains the smallest elements of
+a interval of visible rows, which may be broken into smaller intervals
+by hidden rows. Each <em>live interval</em> can be described by a triple
+of indices <span class="math inline">\((j, i_{\min}, i_{\max})\)</span>,
+indicating that <span class="math inline">\(M[i,j]\)</span> is the
+minimum element in every row <span class="math inline">\(i\)</span> such
+that <span class="math inline">\(i_{\min}\le i\le i_{\max}\)</span>, and
+moreover none of those rows has been hidden. The live intervals
+partition the visible rows of <span class="math inline">\(M\)</span>, so
+there are at most <span class="math inline">\(k\)</span> of them at any
+time.</p>
+<p>We maintain the live intervals <span class="math inline">\((j,
+i_{\min}, i_{\max})\)</span> in a priority queue, implemented as a
+standard binary min-heap, where the priority of any interval is its
+smallest element. In particular, the smallest visible element in <span
+class="math inline">\(M\)</span> is the priority of the live interval at
+the root of the heap, so we can support <span
+class="math inline">\(\textsf{FindMin}\)</span> in <span
+class="math inline">\(O(1)\)</span> time.</p>
+<h3 data-number="1.1.2" id="range-minimum-queries"><span
+class="header-section-number">1.1.2</span> Range-minimum queries</h3>
+<p>The smallest element in any live interval <span
+class="math inline">\((j, i_{\min}, i_{\max})\)</span> depends only on
+the known Monge matrix <span class="math inline">\(D\)</span>. To
+compute these minimum elements quickly, we preprocess each column <span
+class="math inline">\(D[\cdot, j]\)</span> into a data structure that
+supports <em>range-minimum queries</em> of the following form:</p>
+<ul>
+<li><span class="math inline">\(\textsf{RMQ}(j, i_{\min},
+i_{\max})\)</span>: Return the index <span
+class="math inline">\(i_{\min}\le i\le i_{\max}\)</span> that minimizes
+<span class="math inline">\(D[i,j]\)</span>.</li>
+</ul>
+<p>The range-minimum data structure consists of a static balanced binary
+search tree with <span class="math inline">\(k\)</span> leaves. The
+<span class="math inline">\(i\)</span>th leaf stores <span
+class="math inline">\(D[i,j]\)</span>, and every internal node stores
+the minimum value of its two children, along with the index of the leaf
+storing that value. This data structure is constructed once at the start
+of the algorithm, in <span class="math inline">\(O(k)\)</span> time, and
+it answers any range-minimum query in <span class="math inline">\(O(\log
+k)\)</span> time.</p>
+<p>Whenever we <span class="math inline">\(\textsf{Insert}\)</span> a
+new live interval <span class="math inline">\((j, i_{\min},
+i_{\max})\)</span> into the priority queue, we perform a range-minimum
+query to determine the priority of that interval. Thus, the overall
+<span class="math inline">\(\textsf{Insert}\)</span>ion time is <span
+class="math inline">\(O(\log k)\)</span>. The other priority queue
+operations <span class="math inline">\(\textsf{ExtractMin}\)</span> and
+<span class="math inline">\(\textsf{Delete}\)</span> also take <span
+class="math inline">\(O(\log k)\)</span> time.</p>
+<h3 data-number="1.1.3" id="revealing-a-column"><span
+class="header-section-number">1.1.3</span> Revealing a column</h3>
+<p><span class="math inline">\(\textsf{Reveal}(j, x)\)</span> is
+implemented in <span class="math inline">\(O(\log k)\)</span> amortized
+time as follows:</p>
+<ul>
+<li><p>Find the live intervals <span class="math inline">\(I^- = (j^-,
+i_{\min}^-, i_{\min}^-)\)</span> and <span class="math inline">\(I^+ =
+(j^+, i_{\min}^+, i_{\min}^+)\)</span> immediately before and after
+<span class="math inline">\((j, \cdot, \cdot)\)</span> in lexicographic
+order, in <span class="math inline">\(O(\log k)\)</span> time, by
+querying the balanced binary search tree.</p></li>
+<li><p>While <span class="math inline">\(M[i_{\min}^-, j] &lt;
+M[i_{\min}^-, j^-]\)</span>, replace <span
+class="math inline">\(I^-\)</span> with its predecessor in lexicographic
+order. Then binary search for the smallest index <span
+class="math inline">\(i_{\min}\)</span> such that <span
+class="math inline">\(M[i_{\min}, j] &lt; M[i_{\min},
+j^-]\)</span>.</p></li>
+<li><p>While <span class="math inline">\(M[i_{\min}^+, j] &lt;
+M[i_{\min}^+, j^+]\)</span>, replace <span
+class="math inline">\(I^+\)</span> with its successor in lexicographic
+order. Then binary search for the smallest index <span
+class="math inline">\(i_{\max}\)</span> such that <span
+class="math inline">\(M[i_{\max}, j] &lt; M[i_{\min},
+j^+]\)</span>.</p></li>
+<li><p>Delete any live intervals <span class="math inline">\((j^\pm,
+\cdot, \cdot)\)</span> that overlap <span class="math inline">\((j,
+i_{\min}, i_{\max})\)</span> from the priority queue.</p></li>
+<li><p>Insert the new live intervals <span class="math inline">\((j,
+i_{\min}, i_{\max})\)</span>, <span class="math inline">\((j^-, \cdot,
+i_{\min}-1)\)</span>, and <span class="math inline">\((j^+, i_{\max}+1,
+\cdot)\)</span> into the priority queue.</p></li>
+</ul>
+<p>To obtain the claimed <span class="math inline">\(O(\log k)\)</span>
+amortized time bound, we charge the time to delete any interval from the
+priority queue to its earlier insertion. The requirement that we only
+<span class="math inline">\(\textsf{Hide}\)</span> rows when their
+minimum elements are visible implies that there is exactly one live
+interval in the <span class="math inline">\(\textsf{Reveal}\)</span>ed
+column.</p>
+<h3 data-number="1.1.4" id="hiding-a-row"><span
+class="header-section-number">1.1.4</span> Hiding a row</h3>
+<p>Finally, <span class="math inline">\(\textsf{Hide}(i)\)</span> is
+implemented in <span class="math inline">\(O(\log k)\)</span> time as
+follows:</p>
+<ul>
+<li><p>Extract the live interval <span class="math inline">\((j,
+i_{\min}, i_{\max})\)</span> from the root of the priority queue.
+Because row <span class="math inline">\(i\)</span> contains the smallest
+visible element in <span class="math inline">\(M\)</span>, that smallest
+element is <span class="math inline">\(M[i,j]\)</span> and <span
+class="math inline">\(i_{\min}\le i\le i_{\max}\)</span>.</p></li>
+<li><p>Find the smallest element <span
+class="math inline">\(M[i,j]\)</span> in that interval using a
+range-minimum query.</p></li>
+<li><p>Insert the live intervals <span class="math inline">\((j,
+i_{\min}, i-1)\)</span> and <span class="math inline">\((j, i+1,
+i_{\max})\)</span> into the priority queue.</p></li>
+</ul>
+<h2 data-number="1.2" id="monge-structure-of-nice-r-divisions"><span
+class="header-section-number">1.2</span> Monge structure of nice <span
+class="math inline">\(r\)</span>-divisions</h2>
+<p>Suppose we are given a planar map <span
+class="math inline">\(\Sigma\)</span> (called <span
+class="math inline">\(\Delta\)</span> in the previous lecture) with
+non-negatively weighted edges. Recall that a nice <span
+class="math inline">\(r\)</span>-division partitions <span
+class="math inline">\(S\)</span> into <span
+class="math inline">\(O(n/r)\)</span> <em>pieces</em>, each with <span
+class="math inline">\(O(r)\)</span> vertices and <span
+class="math inline">\(O(\sqrt{r})\)</span> boundary vertices, and each
+with the topology of a disk with <span
+class="math inline">\(O(1)\)</span> holes.</p>
+<p>Let <span class="math inline">\(D\)</span> denote the array of
+boundary-to-boundary distances for a single piece <span
+class="math inline">\(R\)</span> of this <span
+class="math inline">\(r\)</span>-division. I claim that we can represent
+<span class="math inline">\(D\)</span> using a small number of Monge
+arrays. We need to consider two types of boundary-to-boundary distances,
+depending on whether the two vertices lie on the same hole of <span
+class="math inline">\(R\)</span> or on different holes.</p>
+<p>First, consider two holes in <span class="math inline">\(R\)</span>,
+with boundaries <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>. Think of <span
+class="math inline">\(R\)</span> as a map on the annulus, with boundary
+cycles <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>. Let <span
+class="math inline">\(\pi\)</span> be the shortest path from any vertex
+<span class="math inline">\(a_1 \in \alpha\)</span> to any vertex <span
+class="math inline">\(b_1\in \beta\)</span>. For any vertices <span
+class="math inline">\(a_i\in \alpha\)</span> and <span
+class="math inline">\(b_j\in \beta\)</span>, the shortest path in <span
+class="math inline">\(R\)</span> from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> either does not cross <span
+class="math inline">\(\pi\)</span> at all, crosses <span
+class="math inline">\(\pi\)</span> positively once, or crosses <span
+class="math inline">\(\pi\)</span> negatively once. Let <span
+class="math inline">\(\Delta = R\setminus\!\!\setminus \pi\)</span>, and
+let <span class="math inline">\(\Delta^2\)</span> be the map obtained by
+gluing two copies of <span class="math inline">\(\Delta\)</span>
+together along <span class="math inline">\(\pi\)</span>, as shown in the
+figure below. Then we have <span class="math display">\[
+    \textsf{dist}_R(a_i, b_j) =
+    \min\left\{
+        \begin{gathered}
+            \textsf{dist}_\Delta(a_i, b_j) \\[0.25ex]
+            \textsf{dist}_{\Delta^2}(a_i^+, b_j^-) \\
+            \textsf{dist}_{\Delta^2}(a_i^-, b_j^+)
+        \end{gathered}
+    \right\}
+\]</span> where <span class="math inline">\(v^+\)</span> and <span
+class="math inline">\(v^-\)</span> denote the two copies of vertex <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(\Delta^2\)</span>. Thus, the array <span
+class="math inline">\(D(\alpha,\beta)\)</span> of pairwise distances
+between vertices of <span class="math inline">\(\alpha\)</span> and
+vertices of <span class="math inline">\(\beta\)</span> is the
+element-wise minimum of three Monge arrays.</p>
+<figure>
+<img src="Fig/shortest-path-annulus.png" style="width:60.0%"
+alt="Three types of boundary-to-boundary shortest paths in an annulus." />
+<figcaption aria-hidden="true">Three types of boundary-to-boundary
+shortest paths in an annulus.</figcaption>
+</figure>
+<p>Next consider a single hole in <span class="math inline">\(R\)</span>
+with boundary <span class="math inline">\(\alpha\)</span>; by
+construction <span class="math inline">\(\alpha\)</span> has at most
+<span class="math inline">\(O(\sqrt{r})\)</span> vertices. As we saw two
+lectures ago, the array <span class="math inline">\(D(\alpha)\)</span>
+of pairwise distances in <span class="math inline">\(R\)</span> between
+vertices in <span class="math inline">\(\alpha\)</span> is
+<em>almost</em> Monge. Instead of splitting this array into
+<em>partial</em> Monge arrays, we recursively partition it into <span
+class="math inline">\(O(\sqrt{r})\)</span> square Monge subarrays.
+Specifically, the upper right and lower left quadrants of <span
+class="math inline">\(D(\alpha)\)</span> are both Monge, and we
+recursively subdivide the lower left and upper right quadrants. Every
+row or column of <span class="math inline">\(D(\alpha)\)</span>
+intersects at most <span class="math inline">\(O(\log r)\)</span> of
+these square subarrays. The total perimeter of these Monge arrays is
+<span class="math inline">\(O(\sqrt{r} \log r)\)</span>.</p>
+<figure>
+<img src="Fig/quadtree-Monge.png" style="width:25.0%"
+alt="Recursive partition of a circular Monge array into square Monge subarrays." />
+<figcaption aria-hidden="true">Recursive partition of a circular Monge
+array into square Monge subarrays.</figcaption>
+</figure>
+<p>Putting these two cases together, we can represent the
+boundary-to-boundary distances within each piece <span
+class="math inline">\(R\)</span> using <span
+class="math inline">\(O(\sqrt{r})\)</span> Monge arrays, with total area
+<span class="math inline">\(O(r)\)</span> and total perimeter <span
+class="math inline">\(O(\sqrt{r}\log r)\)</span>. Altogether there are
+<span class="math inline">\(O(n/\sqrt{r})\)</span> Monge arrays
+associated with the entire <span
+class="math inline">\(r\)</span>-division, with total area <span
+class="math inline">\(O(n)\)</span> and total perimeter <span
+class="math inline">\(O((n/\sqrt{r})\log r)\)</span>.</p>
+<p>Finally, suppose we associate a Monge heap with every Monge array in
+every piece of our <span class="math inline">\(r\)</span>-division. Then
+the total number of <span class="math inline">\(\textsf{Reveal}\)</span>
+and <span class="math inline">\(\textsf{Hide}\)</span> operations we can
+perform is <span class="math inline">\(O((n/\sqrt{r})\log r)\)</span>,
+and each of those operations takes <span class="math inline">\(O(\log
+r)\)</span> amortized time. Thus, the total time spent constructing and
+maintaining all Monge heaps, over their entire lifetimes, over the
+entire <span class="math inline">\(r\)</span>-division, is <span
+class="math inline">\(O((n/\sqrt{r}) \log^2 r)\)</span>.</p>
+<h2 data-number="1.3" id="fr-dijkstra"><span
+class="header-section-number">1.3</span> FR-Dijkstra</h2>
+<p>Fakcharoenphol and Rao implement their improvement to Dijkstra’s
+algorithm as follows. We begin by computing a nice <span
+class="math inline">\(r\)</span>-division for <span
+class="math inline">\(\Sigma\)</span> and the dense-distance graph for
+that <span class="math inline">\(r\)</span>-division in <span
+class="math inline">\(O(n\log r)\)</span> time, for some value of <span
+class="math inline">\(r\)</span> to be determined later.</p>
+<p>The query phase of FR-Dijkstra solves the single-source shortest path
+problem in the dense distance graph: Given a boundary vertex <span
+class="math inline">\(s\)</span> in our <span
+class="math inline">\(r\)</span>-division, compute the shortest-path
+distance to every other boundary vertex in the <span
+class="math inline">\(r\)</span>-division. The algorithm mirrors the
+Dijkstra’s algorithm, but using a nested collection of heaps instead of
+a standard priority queue:</p>
+<ul>
+<li><p><span class="math inline">\(O(\sqrt{r})\)</span> Monge heaps for
+each piece of the <span class="math inline">\(r\)</span>-division, once
+for each Monge array in the decomposition described above.</p></li>
+<li><p>A standard priority queue, called a <em>piece heap</em>, for each
+piece of the <span class="math inline">\(r\)</span>-division, containing
+the minimum elements of every Monge heap associated with that piece. We
+automatically update the piece heap whenever the minimum element of a
+Monge heap changes.</p></li>
+<li><p>A standard priority queue, called the <em>global heap</em>,
+containing the minimum elements of the piece heaps. We automatically
+update the global heap whenever the minimum element of a piece heap
+changes.</p></li>
+</ul>
+<p>To begin the algorithm, we initialize all the component heaps to
+empty, call <span class="math inline">\(\textsf{Reveal}(s, 0)\)</span>
+and <span class="math inline">\(\textsf{Hide}(s)\)</span> inside every
+Monge heap containing the source vertex <span
+class="math inline">\(s\)</span>. In alter iterations, whenever we
+extract the next closest vertex <span class="math inline">\(v\)</span>
+from the global priority queue, we call <span
+class="math inline">\(\textsf{Reveal}(v, \textsf{dist}(v))\)</span> and
+<span class="math inline">\(\textsf{Hide}(v)\)</span> in every Monge
+heap containing vertex <span class="math inline">\(v\)</span>. By
+induction, the vertex at the top of the global heap is always the
+closest boundary vertex beyond the current Dijkstra wavefront.</p>
+<p>The running time of the algorithm is dominated by the time spent
+maintain the three different levels of heaps.</p>
+<ul>
+<li><p>As we argued above, the total time spent managing all Monge heaps
+is <span class="math inline">\(O((n/\sqrt{r}) \log^2
+r)\)</span>.</p></li>
+<li><p>For each piece <span class="math inline">\(R\)</span>, we perform
+<span class="math inline">\(O(\log r)\)</span> operations in <span
+class="math inline">\(R\)</span>’s piece heap for each boundary vertex
+of <span class="math inline">\(R\)</span>. Thus, the number of
+piece-heap operations across the entire <span
+class="math inline">\(r\)</span>-division is <span
+class="math inline">\(O((n/\sqrt{r}) \log r)\)</span>; each piece-heap
+operation takes <span class="math inline">\(O(\log r)\)</span>
+time.</p></li>
+<li><p>Finally, each iteration of Dijkstra’s algorithm removes one
+vertex <span class="math inline">\(v\)</span> from the global heap and
+performs at most one deletion and one inserti on for each piece
+containing <span class="math inline">\(v\)</span>. Said differently, for
+each piece <span class="math inline">\(R\)</span>, we perform <span
+class="math inline">\(O(1)\)</span> global-heap operations for boundary
+vertex of <span class="math inline">\(R\)</span>. So the total number of
+global-heap operations is <span
+class="math inline">\(O(n/\sqrt{r})\)</span>; each global-heap operation
+takes <span class="math inline">\(O(\log n)\)</span> time.</p></li>
+</ul>
+<p>Thus, the overall running time of the query phase of FR-Dijkstra is
+<span class="math inline">\(O((n/\sqrt{r})(\log^2r + \log n))\)</span>.
+(The final <span class="math inline">\(\log n\)</span> term can be
+eliminated with more effort.)</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>After <span class="math inline">\(O(n\log r)\)</span> preprocessing
+time, we can compute the shortest-path distance between any two vertices
+in a dense distance graph in <span
+class="math inline">\(O((n/\sqrt{r})(\log^2r + \log n))\)</span>
+time.</em>
+</dd>
+</dl>
+<h2 data-number="1.4" id="back-to-minimum-cut"><span
+class="header-section-number">1.4</span> Back to minimum cut</h2>
+<p>In the previous lecture, we reduced computing minimum <span
+class="math inline">\((s,t)\)</span>-cuts to the following problem.
+Given a planar map <span class="math inline">\(\Sigma\)</span> with
+non-negatively weighted weighted edges, and vertices <span
+class="math inline">\(s_0, s_1, \dots, s_k, t_k, \dots, t_1,
+t_0\)</span> in cyclic order on the outer face, compute the shortest
+path distance <span class="math inline">\(\textsf{dist}(s_i,
+t_i)\)</span> for every index <span class="math inline">\(i\)</span>.
+Reif’s algorithm solves this problem in <span
+class="math inline">\(O(n\log k)\)</span> time by computing the
+<em>median</em> shortest path <span class="math inline">\(\pi_m\)</span>
+from <span class="math inline">\(s_m\)</span> to <span
+class="math inline">\(t_m\)</span>, where <span
+class="math inline">\(m=\lfloor k/2 \rfloor\)</span>, and then recursing
+on both sides of the sliced map <span class="math inline">\(\Sigma
+\backslash\!\!\backslash \pi_m\)</span>.</p>
+<p>The more efficient algorithm of Italiano et al. follows Reif’s
+divide-and-conquer strategy, in three phases.</p>
+<ul>
+<li><p>In the <em>initialization</em> phase, we construct a nice <span
+class="math inline">\(r\)</span>-division of <span
+class="math inline">\(\Sigma\)</span>, construct its dense distance
+graph by running MSSP in each piece, and initialize the range-minimum
+trees needed to support FR-Dijkstra. This phase runs in <span
+class="math inline">\(O(n\log r)\)</span> time.</p></li>
+<li><p>Let <span class="math inline">\(\lambda = \lfloor \log_2 k
+\rfloor\)</span>. In the <em>coarse</em> divide-and-conquer phase, we
+compute shortest paths from <span
+class="math inline">\(s_{i\lambda}\)</span> to <span
+class="math inline">\(t_{i\lambda}\)</span> for all indices <span
+class="math inline">\(0\le i\le \lfloor i/\lambda \rfloor\)</span>,
+using Reif’s divide-and-conquer strategy, using FR-Dijkstra to compute
+each shortest path.</p></li>
+<li><p>Finally, in the <em>fine</em> divide-and-conquer phase, we run
+Reif’s algorithm within each of the <span
+class="math inline">\(O(k/\lambda)\)</span> slabs left by the previous
+phase, using the linear-time shortest path algorithm to compute each
+shortest path. Since each slab has only <span
+class="math inline">\(\lambda = O(\log k)\)</span> terminal pairs on its
+boundary, the total time for this phase is <span
+class="math inline">\(O(n\log\log k)\)</span>.</p></li>
+</ul>
+<p>Crudely, the coarse divide-and-conquer phase stops after <span
+class="math inline">\(O(\log(k/\lambda)) = O(\log n)\)</span> levels of
+recursion, and the total time spent at each level is <span
+class="math inline">\(O((n/\sqrt{r})(\log^2r + \log n))\)</span> time at
+each level. It follows that the overall time for this phase is <span
+class="math inline">\(O((n/\sqrt{r})(\log^2r + \log n)\log k) =
+O((n/\sqrt{r})\log^3 n)\)</span>, and thus the overall running time of
+the overall algorithm is <span class="math display">\[
+    O\left(n\log r + \frac{n}{\sqrt{r}}\log^3 n + n\log \log k\right).
+\]</span> Setting <span class="math inline">\(r = \log^6 n\)</span>
+gives us a final running time of <span class="math inline">\(O(n\log\log
+n)\)</span>. (With more effort, this time bound can be reduced to <span
+class="math inline">\(O(n\log\log k)\)</span>.)</p>
+<h3 data-number="1.4.1" id="technical-details"><span
+class="header-section-number">1.4.1</span> Technical Details</h3>
+<p>The previous high-level description and analysis overlooks several
+technical details which are crucial for the efficiency of the algorithm.
+Here I’ll give only a brief sketch of the most significant outstanding
+issues and how to resolve them.</p>
+<p>Arguably the most significant detail is that the pieces of the <span
+class="math inline">\(r\)</span>-division do not respect the slab
+boundaries. The the running time of the query phase of FR-Dijkstra
+within any slab depends on the <em>total</em> size of all pieces that
+intersect that slab, and a single piece could intersect several (or even
+<em>all</em>) slabs at any level of recursion. To avoid blowing up the
+running time, we must slice pieces (and their underlying collections of
+Monge arrays) along the shortest paths we compute. <strong>This can be
+done.</strong></p>
+<p>Just as in Reif’s algorithm, we stop the course recursion early
+whenever any vertex of the dense-distance graph appears on both the
+“floor” and “ceiling” paths of a slab. All <span
+class="math inline">\(s_i\)</span>-to-<span
+class="math inline">\(t_i\)</span> distances through that slab will be
+computed in <span class="math inline">\(O(n)\)</span> time in the fine
+phase of the algorithm. If we ignore these <em>collapsed</em> slabs,
+then at every level of recursion, each boundary vertex appears in at
+most two slabs, so the sum over all sub-pieces of the number of boundary
+nodes in that sub-piece is in fact <span
+class="math inline">\(O(n/\sqrt{r})\)</span>.</p>
+<p>Another important technical detail is that after the coarse phase
+ends, we need to translate the shortest paths in the dense-distance
+graph into explicit shortest paths in <span
+class="math inline">\(\Sigma\)</span>. In particular, we need to
+translate each boundary-to-boundary <em>distance</em> within a single
+piece, as computed by MSSP, into an explicit boundary-to-boundary
+<em>path</em>. If we record the execution of the MSSP algorithm as a
+persistent data structure, we can extract the last edge of the shortest
+path from any boundary node <span class="math inline">\(s\)</span> to
+any internal node <span class="math inline">\(v\)</span> in <span
+class="math inline">\(O(\log\log\deg(v))\)</span> time. Thus, a shortest
+path consisting of <span class="math inline">\(\ell\)</span> edges can
+be extracted in <span class="math inline">\(O(\ell\log\log n)\)</span>
+time. If we assume (as Italiano et al. do) that</p>
+<p>These <span class="math inline">\(O(k/\log k)\)</span> shortest paths
+in <span class="math inline">\(\Sigma\)</span> can overlap; in the worst
+case, the sum of their complexities is <span
+class="math inline">\(\Omega(nk/\log k)\)</span>. The union of these
+<span class="math inline">\(O(k/\log k)\)</span> shortest paths is a
+forest <span class="math inline">\(F\)</span>; Italiano et al. describe
+how to compute <span class="math inline">\(F\)</span> in <span
+class="math inline">\(O(n\log\log n)\)</span> time.</p>
+<p>Finally, at the beginning of the fine phase of the algorithm, suppose
+the floor <span class="math inline">\(\alpha\)</span> and ceiling <span
+class="math inline">\(\beta\)</span> of some slab coincide. We can
+compute the endpoints <span class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> of the shared path <span
+class="math inline">\(\alpha\cap\beta\)</span> by performing
+least-common-ancestor queries in the forest <span
+class="math inline">\(F\)</span>. Then every <span
+class="math inline">\(s_i\)</span>-to-<span
+class="math inline">\(t_i\)</span> shortest path in that slab consists
+of the shortest path from <span class="math inline">\(s_i\)</span> to
+<span class="math inline">\(x\)</span>, the unique path in <span
+class="math inline">\(F\)</span> from <span
+class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span>, and the shortest path from <span
+class="math inline">\(y\)</span> to <span
+class="math inline">\(t_i\)</span>. Thus, we can compute all <span
+class="math inline">\(s_i\)</span>-to-<span
+class="math inline">\(t_i\)</span> distances in that slab in linear
+time, by computing shortest path trees at <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span>.</p>
+<h2 data-number="1.5" id="aptly-named-sir-not"><span
+class="header-section-number">1.5</span> Aptly Named Sir Not</h2>
+<ul>
+<li>Faster global minimum cuts (dual to shortest weighted cycle)</li>
+</ul>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

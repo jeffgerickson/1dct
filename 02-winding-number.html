@@ -1,0 +1,776 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>02-winding-number</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="winding-numbersbeta"><span
+class="header-section-number">1</span> Winding Numbers<span
+class="math inline">\(^\beta\)</span></h1>
+<h2 data-number="1.1"
+id="let-me-not-be-pent-up-sir-i-will-fast-being-loose."><span
+class="header-section-number">1.1</span> Let me not be pent up, sir; I
+will fast, being loose.</h2>
+<p><em>Fast and Loose</em> is the name of a family of magic tricks (or
+con games) performed with ropes, chains, and belts that have been
+practiced since at least the 14th century; the con game is mentioned in
+three different Shakespeare plays. In one such trick, now sometimes
+called the <em>Endless Chain</em>, the con artist arranges a closed loop
+of chain into a doubled figure-8, and then asks the mark to put their
+finger on the table inside one of the loops. The con artist them pulls
+the chain along the table. If the chain catches on the mark’s finger,
+then the chain is <em>fast</em> and the mark wins; if the con artist can
+pull the chain completely off the table, the chain is <em>loose</em> and
+the mark loses.</p>
+<p>The con artist shows the mark that there are two different ways for
+the loops to fall. (Notice how the chain crosses itself in the lower
+corners.) Because the chain is bright and shiny and bumpy, it’s
+impossible for the mark to tell which way the chain is actually
+arranged, but because these are the only possibilities, the mark should
+have a 50-50 chance of winning. Right? <em>Riiiight?</em></p>
+<figure>
+<img src="Fig/fast-and-loose.png" style="width:65.0%"
+alt="Two arrangements of the Endless Chain" />
+<figcaption aria-hidden="true">Two arrangements of the Endless
+Chain</figcaption>
+</figure>
+<p>Oh, you sweet summer child. Of course not! As soon as the mark places
+money <em>on the barrelhead</em>, the con artist wins every time. The
+con artists was lying; there is a third arrangement of the chain that is
+<em>always</em> loose, no matter where the mark puts their finger.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<figure>
+<img src="Fig/fast-and-loose-cheat.png" style="width:30.0%"
+alt="The actual arrangement of the Endless Chain" />
+<figcaption aria-hidden="true">The actual arrangement of the Endless
+Chain</figcaption>
+</figure>
+<h2 data-number="1.2" id="shoelaces-and-signed-areas"><span
+class="header-section-number">1.2</span> Shoelaces and Signed Areas</h2>
+<p><strong><em>Swap this section and next? This is historical order, but
+the narrative is a bit clunky.</em></strong></p>
+<p>Before discussing the mathematical reasons you just lost all your
+money, let’s consider a basic computational geometry problem: How
+quickly can we compute the area enclosed by a given polygon <span
+class="math inline">\(P\)</span>?</p>
+<p>A particularly simple algorithm was described by Albrecht Meister in
+1785. In principle, we can calculate the area of <span
+class="math inline">\(P\)</span> by cutting <span
+class="math inline">\(P\)</span> into disjoint triangles and then
+summing the triangle areas, each of which can can compute in <span
+class="math inline">\(O(1)\)</span> time, but it would be more than a
+century before anyone knew how to cut polygons into triangles. Meister’s
+insight was to consider the <em>signed</em> areas of
+<em>overlapping</em> oriented triangles.</p>
+<p>The signed area of a triangle depends not only on its vertex
+coordinates, but on the orientation of its three vertices. By
+convention, counterclockwise triangles have positive signed area, and
+clockwise triangles have negative signed area. Recall that a triple of
+points <span class="math inline">\((q,r,s)\)</span> is oriented
+counterclockwise or clockwise if and only if the following determinant
+is positive or negative, respectively: <span class="math display">\[
+    \Delta(q,r,s) =
+    \det
+    \begin{bmatrix}
+        1 &amp; q.x &amp; q.y \\
+        1 &amp; r.x &amp; r.y \\
+        1 &amp; s.x &amp; s.y
+    \end{bmatrix}
+    = (r.x - q.x)(s.y - q.y) - (r.y - q.y)(s.x - q.x).
+\]</span> The <em>signed area</em> of the triangle <span
+class="math inline">\(\triangle qrs\)</span> is <span
+class="math inline">\(\frac{1}{2} \Delta(q,r,s)\)</span>.</p>
+<p>Let <span class="math inline">\(o\)</span> be an <em>arbitrary</em>
+point in the plane. Meister observed that the <em>signed</em> area of
+any <em>oriented</em> polygon <span class="math inline">\(P\)</span> is
+the sum of the signed areas of the triangles determined by <span
+class="math inline">\(o\)</span> and the edges of <span
+class="math inline">\(P\)</span>: <span class="math display">\[
+    \textsf{area}(P) =
+    \frac{1}{2}
+        \sum_{i=0}^{n-1}
+        \Delta(o, p_i, p_{i+1})
+\]</span> (To simplify notation, I’ll omit “<span
+class="math inline">\({}\bmod n\)</span>” from all index arithmetic.) In
+particular, if we take <span class="math inline">\(o\)</span> to be the
+origin <span class="math inline">\((0,0)\)</span>, we have <span
+class="math display">\[
+    \textsf{area}(P)
+    ~=~
+    \frac{1}{2}
+        \sum_{i=0}^{n-1}
+        (x_i \cdot y_{i+1} - y_i \cdot x_{i+1})
+    ~=~
+    \frac{1}{2}
+        \sum_{i=0}^{n-1}
+        \det
+            \begin{bmatrix}
+                x_i &amp; y_i \\
+                x_{i+1} &amp; y_{i+1} \\
+            \end{bmatrix}
+\]</span> where <span class="math inline">\(p_i = (x_i,y_i)\)</span> for
+each index <span class="math inline">\(i\)</span>. This expression of
+Meister’s algorithm is commonly known as the <em>shoelace formula</em>,
+because the pattern of multiplications resembles the usual method for
+threading shoelaces: <span class="math display">\[
+    \begin{bmatrix}
+        x_0 &amp;&amp; x_1 &amp;&amp; x_2 &amp;&amp; x_3 &amp;&amp;
+\dots  \\[-1ex]
+        &amp;\times&amp; &amp;\times&amp; &amp;\times&amp;
+&amp;\times&amp; \\[-1ex]
+        y_0 &amp;&amp; y_1 &amp;&amp; y_2 &amp;&amp; y_3 &amp;&amp;
+\dots
+    \end{bmatrix}
+\]</span></p>
+<p>Proving that that the shoelace algorithm correctly computes areas is
+straightforward. First, we can prove that the formula is correct for
+<em>triangles</em>, either by verifying<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> the
+algebraic identity <span class="math display">\[
+    \Delta(q,r,s) = \Delta(o,q,r) + \Delta(o,r,s) + \Delta(o,s,q)
+\]</span> or by geometric case analysis, as suggested by the figure
+below. Areas outside the triangle are either counted once positively and
+once negatively, or not counted at all; areas inside the triangle are
+counted exactly once, with the correct sign.</p>
+<figure>
+<img src="Fig/shoelace-triangles.png" style="width:75.0%"
+alt="Lacing a triangle: Add the green (counterclockwise) triangles and subtract the pink (clockwise) triangles." />
+<figcaption aria-hidden="true">Lacing a triangle: Add the green
+(counterclockwise) triangles and subtract the pink (clockwise)
+triangles.</figcaption>
+</figure>
+<p>Then to prove the shoelace formula correct for any larger polygon
+<span class="math inline">\(P\)</span>, we can sum the signed areas of
+all triangles in any frugal triangulation of <span
+class="math inline">\(P\)</span> and observe that the terms involving
+diagonals of the triangulation cancel out. As expected, the resulting
+signed area is positive if <span class="math inline">\(P\)</span> is
+oriented counterclockwise (that is, with the interior on the left) and
+negative if <span class="math inline">\(P\)</span> is oriented
+clockwise.</p>
+<p>Meister actually used his shoelace formula to define the signed areas
+of an <em>arbitrary</em> polygon, even if that polygon is not simple.
+Here it’s somewhat less clear that the formula is <em>correct</em> for
+non-convex polygons, but we can verify two facts that suggest that it is
+at least <em>sensible</em>. First, the resulting signed area is still
+independent of the choice of point <span
+class="math inline">\(o\)</span>. Second, the formula counts the area of
+each component of <span class="math inline">\(\mathbb{R}^2\setminus
+P\)</span> some integer number of times; in particular, the (infinite)
+area of the unbounded region is not counted at all. The resulting
+assignment of integers to the components of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> is called the
+<em>Alexander numbering</em> of <span
+class="math inline">\(P\)</span>.</p>
+<figure>
+<img src="Fig/Meister-nonsimple-polygon.png" style="width:30.0%"
+alt="Computing the signed area of a polygon, from Meister (1785)" />
+<figcaption aria-hidden="true">Computing the signed area of a polygon,
+from Meister (1785)</figcaption>
+</figure>
+<figure>
+<img src="Fig/Meister-polygon-shoelace.png" style="width:30.0%"
+alt="One positive triangle and one negative triangle for Meister’s polygon" />
+<figcaption aria-hidden="true">One positive triangle and one negative
+triangle for Meister’s polygon</figcaption>
+</figure>
+<figure>
+<img src="Fig/Meister-polygon-winding.png" style="width:30.0%"
+alt="The Alexander numbering of Meister’s polygon" />
+<figcaption aria-hidden="true">The Alexander numbering of Meister’s
+polygon</figcaption>
+</figure>
+<figure>
+<img src="Fig/Mobius-Alexander-Numbering.png" style="width:30.0%"
+alt="Another Alexander numbering, from Möbius (1865)" />
+<figcaption aria-hidden="true">Another Alexander numbering, from Möbius
+(1865)</figcaption>
+</figure>
+<h2 data-number="1.3" id="winding-numbers"><span
+class="header-section-number">1.3</span> Winding numbers</h2>
+<p>The <em>winding number</em> of a polygon <span
+class="math inline">\(P\)</span> around a point <span
+class="math inline">\(o\)</span> is intuitively (and not surprisingly)
+the number of times that <span class="math inline">\(P\)</span> winds
+counterclockwise around <span class="math inline">\(o\)</span>. For
+example, if <span class="math inline">\(P\)</span> is a <em>simple</em>
+polygon, its winding number around any exterior point is zero, and its
+winding number around any interior point is either <span
+class="math inline">\(+1\)</span> or <span
+class="math inline">\(-1\)</span>, depending on how the polygon is
+oriented. If the polygon winds <em>clockwise</em> around <span
+class="math inline">\(o\)</span>, the winding number is negative.
+Crucially, the winding number is only well defined if the polygon does
+not <em>contain</em> the point <span
+class="math inline">\(o\)</span>.</p>
+<p>We can define the winding number more formally as follows. Let <span
+class="math inline">\(p_0, p_1, \dots, p_{n-1}\)</span> denote the
+vertices of <span class="math inline">\(P\)</span> in order. For each
+index <span class="math inline">\(i\)</span>, let <span
+class="math inline">\(\theta_i\)</span> denote the interior angle at
+<span class="math inline">\(o\)</span> in the triangle <span
+class="math inline">\(\triangle p_i o p_{i+1}\)</span>, with positive
+sign if <span class="math inline">\((o, p_i, p_{i+1})\)</span> is
+oriented counterclockwise, and with negative sign if <span
+class="math inline">\((o, p_i, p_{i+1})\)</span> is oriented clockwise.
+Assuming angles are measured in <em>circles</em>,<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> the
+winding number of <span class="math inline">\(P\)</span> around <span
+class="math inline">\(o\)</span> is the sum <span
+class="math inline">\(\sum_i \theta_i\)</span>.</p>
+<figure>
+<img src="Fig/winding-number.png" style="width:40.0%"
+alt="Winding number as a sum of angles, after Meister" />
+<figcaption aria-hidden="true">Winding number as a sum of angles, after
+Meister</figcaption>
+</figure>
+<p>Actually computing the winding number according to this definition
+requires inverse trigonometric functions, square roots, and other
+numerical madness. Fortunately, there is an equivalent definition that
+builds on our ray-shooting test from the previous lecture. Let <span
+class="math inline">\(R\)</span> be a vertical ray shooting upward from
+<span class="math inline">\(o\)</span>. We distinguish two types of
+crossings between the <span class="math inline">\(R\)</span> and the
+polygon, depending on the orientation of the crossed edges.
+Specifically, if the crossed edge is directed from right to left, we
+have a <em>positive</em> crossing; otherwise, we have a
+<em>negative</em> crossing. Equivalently, when <span
+class="math inline">\(R\)</span> crosses an edge <span
+class="math inline">\(p_ip_{i+1}\)</span>, the sign of the crossing is
+the sign of the determinant <span class="math inline">\(\Delta(o, p_i,
+p_{i+1})\)</span>.</p>
+<figure>
+<img src="Fig/ray-crossings.png" style="width:50.0%"
+alt="A positive crossing (left) and a negative crossing (right)" />
+<figcaption aria-hidden="true">A positive crossing (left) and a negative
+crossing (right)</figcaption>
+</figure>
+<p>I’ll leave the equivalence of these two definitions as an exercise.
+(Hint: prove equivalence for triangles, and then look at Meister’s
+figure again!)</p>
+<p>Here is the ray-shooting algorithm in (pseudo)Python. Any
+similarities with the point-in-polygon algorithm from the previous
+lecture are purely intentional.</p>
+<pre><code>def windingNumber(P, o):
+    wind = 0
+    n = size(P)
+    for i in range(n):
+        p = P[i]
+        q = P[(i+1)%n]
+        Delta = (p.x - o.x)*(q.y - o.y) - (p.y - o.y)*(q.x - o.x)
+        if p.x &lt;= o.x &lt; q.x &amp;&amp; Delta &gt; 0:
+            wind += 1
+        elif q.x &lt;= o.x &lt; p.x &amp;&amp; Delta &lt; 0:
+            wind -= 1
+    return wind</code></pre>
+<p>Winding numbers has a third useful interpretation, which we’ve
+already seen in this lecture. Case analysis similar to our proof of
+Lemma <span class="math inline">\(\le 2\)</span> from the previous
+lecture implies that if <span class="math inline">\(o\)</span> and <span
+class="math inline">\(o’\)</span> are two points in the same component
+of <span class="math inline">\(\mathbb{R}^2\setminus P\)</span>, then
+<span class="math inline">\(P\)</span> has the same winding number
+around both points. Moreover, if <span class="math inline">\(o\)</span>
+and <span class="math inline">\(o’\)</span> are in components of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> that share a
+segment of some polygon edge <span class="math inline">\(e\)</span> on
+their boundary, then the winding numbers around <span
+class="math inline">\(o\)</span> and <span
+class="math inline">\(o’\)</span> differ by <span
+class="math inline">\(1\)</span>, with the higher winding number to the
+left of <span class="math inline">\(e\)</span>.</p>
+<p>This assignment of winding numbers to the components of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> is identical to
+the Alexander numbering of <span class="math inline">\(P\)</span> that
+we defined earlier. That is, the winding number of <span
+class="math inline">\(P\)</span> around any point <span
+class="math inline">\(q \not\in P\)</span> is precisely the number of
+times that the area around <span class="math inline">\(q\)</span> is
+counted by the shoelace formula. Thus, the signed area of any polygon
+<span class="math inline">\(P\)</span> can expressed in terms of winding
+numbers as <span class="math display">\[
+    \textsf{area}(P) = \sum_c \textsf{wind}(P, c) \cdot \textsf{area}(c)
+\]</span> where the sum is over the components of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span>.</p>
+<figure>
+<img src="Fig/Meister-winding.png" style="width:40.0%"
+alt="Another non-simple polygon from Meister, with winding numbers indicated by shading (1785)" />
+<figcaption aria-hidden="true">Another non-simple polygon from Meister,
+with winding numbers indicated by shading (1785)</figcaption>
+</figure>
+<h2 data-number="1.4" id="homotopy"><span
+class="header-section-number">1.4</span> Homotopy</h2>
+<p>Now let’s go back to the Endless Chain. A bit of case analysis should
+convince you—or should at least <em>strongly suggest</em>—that in all
+three configurations, the chain is loose around your finger if and only
+if the winding number of the Chain around your finger is zero.</p>
+<figure>
+<img src="Fig/fast-and-loose-winding.png" style="width:95.0%"
+alt="Winding numbers of the Endless Chain around various points" />
+<figcaption aria-hidden="true">Winding numbers of the Endless Chain
+around various points</figcaption>
+</figure>
+<p>But in the actual game, we aren’t dealing with a single fixed closed
+curve. The con man grabs one side of the chain and pulls, causing the
+chain to move continuously across the barrelhead and around your finger,
+until it either gets stuck Fast or pulls Loose. Instead of thinking
+about how a fixed polygon wraps with a changing point, we need a way to
+reason about how a <em>continuously changing</em> curve wraps around a
+<em>fixed</em> point.</p>
+<p>A <em>homotopy</em> between two closed curves is a continuous
+deformation—a morph—from one curve to the other. Homotopies can be
+defined between curves in any topological space, but for purposes of
+illustration, let’s restrict ourselves to curves in the punctured plane
+<span class="math inline">\(\mathbb{R}^2\setminus o\)</span>, where
+<span class="math inline">\(o\)</span> is an arbitrary point called the
+<em>obstacle</em>. (In Fast and Loose, the obstacle is your finger.)
+Without loss of generality, I will assume that <span
+class="math inline">\(o\)</span> is actually the origin <span
+class="math inline">\((0,0)\)</span>.</p>
+<p>Formally, a <em>homotopy</em> between two closed curves in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span> is a continuous
+function <span class="math inline">\(h\colon [0,1]\times S^1\to
+\mathbb{R}^2\setminus o\)</span>, such that <span
+class="math inline">\(h(0, \cdot)\)</span> and <span
+class="math inline">\(h(1, \cdot)\)</span> are the initial and final
+closed curves, respectively. For each <span
+class="math inline">\(0&lt;t&lt;1\)</span>, the function <span
+class="math inline">\(h(t, \cdot)\)</span> is the intermediate closed
+curve at “time” <span class="math inline">\(t\)</span>. Crucially, none
+of these intermediate curves touches the obstacle point <span
+class="math inline">\(o\)</span>.</p>
+<p>Two closed curves in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span> are
+<em>homotopic</em>, or in the same <em>homotopy class</em>, if there is
+a homotopy from one to the other in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span>. Homotopy is an
+equivalence relation.</p>
+<p>A closed curve is <em>contractible</em> in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span> if it is
+homotopic to a single point (or more formally, to a constant curve).</p>
+<!--
+We also need a definition of homotopy between _paths_; this is a little more subtle.  Let $\pi\colon [0,1]\to \mathbb{R}^2\setminus o$ and $\sigma\colon[0,1]\to \mathbb{R}^2\setminus o$ be two paths in the punctured plane with the same endpoints: $\pi(0)=\sigma(0)$ and $\pi(1)=\sigma(1)$.  A _path homotopy_ from $\pi$ to $\sigma$ is a continuous function $h\colon [0,1]\times[0,1]\to \mathbb{R}^2\setminus o$ that satisfies four conditions:
+
+* $H(0, t) = \pi(t)$ for all $t$
+* $H(1, t) = \sigma(t)$ for all $t$
+* $H(s, 0) = \pi(0) = \sigma(0)$ for all $s$
+* $H(s, 1) = \pi(1) = \sigma(1)$ for all $s$
+
+Intuitively, you should think of a path homotopy as a continuous deformation of one path into the other, keeping the endpoints fixed at all times.  Again, for each $0<s<1$, the function $h(t, \cdot)$ is the intermediate path at “time” $s$, and none of these intermediate paths touches the obstacle point $o$.
+
+I’ll typically use the word “homotopy” for both free homotopy and path homotopy, in the hope that the precise type is clear from context.
+-->
+<h2 data-number="1.5" id="vertex-moves"><span
+class="header-section-number">1.5</span> Vertex moves</h2>
+<p>Similar to the definition of “connected”, the definition of
+“homotopy” allows intermediate curves to be arbitrarily wild closed
+curves even if the initial and final curves are polygons.</p>
+<p>Fortunately, there is a general principle that allows us to “tame”
+homotopies between tame curves like polygons, by decomposing them into a
+sequence of elementary <em>moves</em>. (This principle is similar to the
+observation that any closed curve can be approximated by a sequence of
+line segments, otherwise known as a polygon.)</p>
+<p>Let <span class="math inline">\(P\)</span> be any polygon. A
+<em>vertex move</em> translates exactly one point <span
+class="math inline">\(p\)</span> of <span
+class="math inline">\(P\)</span> along a straight line from its current
+location to a new location <span class="math inline">\(p’\)</span>,
+yielding a new polygon <span class="math inline">\(P’\)</span>. As the
+point <span class="math inline">\(p\)</span> moves, the edges incident
+to <span class="math inline">\(p\)</span> pivot around their other
+endpoints. Typically the moving point <span
+class="math inline">\(p\)</span> is a vertex of the initial polygon
+<span class="math inline">\(P\)</span> and the final point <span
+class="math inline">\(p’\)</span> is a vertex of the final polygon <span
+class="math inline">\(P’\)</span>, but neither of these restrictions is
+required by the definition. We are allowed to freely introduce new
+vertices in the middle of edges, or freely delete “flat” vertices
+between two collinear edges.</p>
+<figure>
+<img src="Fig/one-vertex-move.png" style="width:50.0%"
+alt="A vertex move." />
+<figcaption aria-hidden="true">A vertex move.</figcaption>
+</figure>
+<p>Now suppose the polygon <span class="math inline">\(P\)</span> lives
+in the punctured place <span class="math inline">\(\mathbb{R}^2\setminus
+o\)</span>. Let <span class="math inline">\(p, q, r\)</span> be three
+consecutive vertices of <span class="math inline">\(P\)</span>. The
+vertex move <span class="math inline">\(q\mapsto q’\)</span> is
+<em>safe</em> if neither of the triangles <span
+class="math inline">\(\triangle p q q’\)</span> or <span
+class="math inline">\(\triangle q q’ r\)</span>. contains the obstacle
+point <span class="math inline">\(o\)</span>. Equivalently, during a
+safe vertex move, the continuously changing polygon never touches <span
+class="math inline">\(o\)</span>.</p>
+<figure>
+<img src="Fig/safe-vertex-move.png" style="width:80.0%"
+alt="An unsafe vertex move and a safe vertex move." />
+<figcaption aria-hidden="true">An unsafe vertex move and a safe vertex
+move.</figcaption>
+</figure>
+<p>It follows that every safe vertex move is a homotopy in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span>. We can build up
+more complex homotopies by concatenating several safe vertex moves. In
+fact, <em>any</em> sequence of safe vertex moves describes a homotopy in
+<span class="math inline">\(\mathbb{R}^2\setminus o\)</span>.</p>
+<h2 data-number="1.6"
+id="polygon-homotopies-are-sequences-of-vertex-moves"><span
+class="header-section-number">1.6</span> Polygon homotopies are
+sequences of vertex moves</h2>
+<p>Unfortunately, the converse of this observation is false; not every
+homotopy is a sequence of vertex moves. Consider, for example, a simple
+translation or rotation of the entire polygon! Nevertheless, every
+homotopy can be <em>approximated</em> by a sequence of safe vertex
+moves.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+If two polygons in <span class="math inline">\(\mathbb{R}^2\setminus
+o\)</span> are homotopic, then they are homotopic by a sequence of safe
+vertex moves.
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix a homotopy <span class="math inline">\(h\colon [0,1]\times S^1 \to
+\mathbb{R}^2\setminus o\)</span> between two polygons <span
+class="math inline">\(P_0 = h(0,\cdot)\)</span> and <span
+class="math inline">\(P_1 = h(1,\cdot)\)</span>.
+</dd>
+<dd>
+<p>For any parameters <span class="math inline">\(t\)</span> and <span
+class="math inline">\(\theta\)</span>, let <span
+class="math inline">\(d(t, \theta)\)</span> be the Euclidean distance
+from <span class="math inline">\(h(t, \theta)\)</span> to the origin
+<span class="math inline">\(o\)</span>, and let <span
+class="math inline">\(\varepsilon = \min_{t,\theta}
+d(t,\theta)\)</span>. Because the cylinder <span
+class="math inline">\([0,1]\times S^1\)</span> is compact, this minimum
+is well-defined and positive.</p>
+</dd>
+<dd>
+<p>We subdivide the cylinder <span class="math inline">\([0,1]\times
+S^1\)</span> into triangles as follows. First, cut the cylinder into a
+grid of <span class="math inline">\(\delta\times\delta\)</span> squares
+<span class="math inline">\(\square(i,j) = [i\delta, (i+1)\delta] \times
+[j\delta, (j+1)\delta \bmod 1]\)</span>, where <span
+class="math inline">\(\delta&gt;0\)</span> is chosen so that the
+diameter of <span class="math inline">\(h(\square(i,j))\)</span> is at
+most <span class="math inline">\(\varepsilon/2\)</span>. (The existence
+of <span class="math inline">\(\delta\)</span> is guaranteed by
+continuity.) Then further subdivide each grid square into two right
+isosceles triangles, as shown in the figure below. Without loss of
+generality, assume each vertex of <span
+class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> the image of some vertex on the
+boundary of the resulting triangle mesh <span
+class="math inline">\(\Delta\)</span>.</p>
+</dd>
+<dd>
+<p>The homotopy <span class="math inline">\(h\)</span> maps any cycle in
+this mesh to a closed curve, which consists of <span
+class="math inline">\(O(1/\delta)\)</span> curve segments, each with
+diameter at most <span class="math inline">\(\varepsilon/2\)</span>, and
+each with distance at least <span
+class="math inline">\(\varepsilon\)</span> from <span
+class="math inline">\(o\)</span>. Define a new homotopy <span
+class="math inline">\(h’ \colon [0,1]\times S^1 \to
+\mathbb{R}^2\setminus o\)</span> that agrees with <span
+class="math inline">\(h\)</span> at every grid vertex and linearly
+interpolates within each grid triangle. Changing from <span
+class="math inline">\(h\)</span> to <span
+class="math inline">\(h’\)</span> changes the image of any grid cycle by
+replacing each short curve segment with a straight line segment.</p>
+</dd>
+<dd>
+
+</dd>
+<dd>
+<p>We can easily construct a sequence of <span class="math inline">\(1 +
+2/\delta^2\)</span> cycles in <span
+class="math inline">\(\Delta\)</span> that starts with one boundary
+<span class="math inline">\(0\times S^1\)</span> and ends with the other
+boundary <span class="math inline">\(1\times S^1\)</span>, such that the
+symmetric difference between two adjacent cycles is the boundary of one
+triangle in <span class="math inline">\(\Delta\)</span>. Two adjacent
+cycles in this sequence are shown on the right in the following
+fugure.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/cylinder-grid.png" style="width:60.0%"
+alt="A grid on the unit cylinder." />
+<figcaption aria-hidden="true">A grid on the unit cylinder.</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The piecewise-linear homotopy <span class="math inline">\(h’\)</span>
+maps any two adjacent cycles in this sequence to a pair of polygons
+<span class="math inline">\(P_t\)</span> and <span
+class="math inline">\(P_{t+1}\)</span> that differ by a single vertex
+move. Every vertex of each intermediate polygon has distance at least
+<span class="math inline">\(\varepsilon\)</span> from the origin, each
+edge has length at most <span
+class="math inline">\(\varepsilon/2\)</span>, and each vertex move
+translates its vertex a distance of at most <span
+class="math inline">\(\varepsilon/2\)</span>. It follows that every
+vertex move in this sequence is safe.</p>
+</dd>
+<dd>
+<p>We conclude that <span class="math inline">\(P_0\)</span> can be
+transformed into <span class="math inline">\(P_1\)</span> by a sequence
+of <span class="math inline">\(1 + 2/\delta^2\)</span> safe vertex
+moves.</p>
+</dd>
+</dl>
+<p>This lemma is a special case of a more general <em>simplicial
+approximation theorem</em>, which intuitively states that any continuous
+map between <em>nice</em> topological spaces (formally, geometric
+simplicial complexes) can be approximated by a <em>nice</em> continuous
+map (formally, simplicial maps between finite subdivisions of the
+original complexes); moreover, the original map can be continuously
+deformed to its approximation.</p>
+<h2 data-number="1.7" id="homotopy-invariant"><span
+class="header-section-number">1.7</span> Homotopy Invariant</h2>
+<p>Winding numbers are our first example of a <em>topological
+invariant</em>, and specifically a <em>complete homotopy</em> invariant.
+A topological invariant is any property of objects or spaces that is
+unchanged by some form of topological equivalence. One simple example is
+the number of components of a subset of the plane; another standard
+example is the <em>genus</em> of a surface. A <em>homotopy</em>
+invariant is any property that is preserved by homotopy; a homotopy
+invariant is <em>complete</em> if it takes on different values for two
+objects that are not homotopic.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+Two polygons are homotopic in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span> if and only if
+they have the same winding number around the origin <span
+class="math inline">\(o\)</span>. Thus, winding number is a complete
+homotopy invariant for polygons in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span>.
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix two polygons <span class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> in <span
+class="math inline">\(\mathbb{R}^2\setminus o\)</span>. If these two
+polygons are homotopic, then by the previous lemma, they are connected
+by a sequence of safe triangle moves. A safe triangle move does not
+change the winding number of a polygon around the origin. Thus, by
+induction, <span class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> have the same winding number.
+</dd>
+<dd>
+<p>To prove the converse, I’ll describe a sequence of safe triangle
+moves that transforms any polygon <span class="math inline">\(P\)</span>
+into a <em>canonical</em> polygon <span
+class="math inline">\(\Diamond^w\)</span> with the same winding number
+<span class="math inline">\(w\)</span> around the origin. (The notation
+<span class="math inline">\(\Diamond^w\)</span> will make sense later,
+honest.) Thus, if <span class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> have the same winding number <span
+class="math inline">\(w\)</span>, we can deform <span
+class="math inline">\(P_0\)</span> into <span
+class="math inline">\(P_1\)</span> by concatenating the move sequence
+that takes <span class="math inline">\(P_0\)</span> to <span
+class="math inline">\(\lozenge^w\)</span> and the reverse of the move
+sequence that takes <span class="math inline">\(P_1\)</span> to <span
+class="math inline">\(\lozenge^w\)</span>.</p>
+</dd>
+<dd>
+<p>Our homotopy consists of several stages. First let’s consider the
+case where the winding number of <span class="math inline">\(P\)</span>
+around <span class="math inline">\(0\)</span> is not zero.</p>
+</dd>
+<dd>
+<ul>
+<li>Let <span class="math inline">\(p_i\)</span> be any vertex of <span
+class="math inline">\(P\)</span>, and let <span
+class="math inline">\(p_{i-1}\)</span> and <span
+class="math inline">\(p_{i+1}\)</span> be the next and previous
+vertices. We call <span class="math inline">\(q\)</span>
+<em>redundant</em> if the triangle <span class="math inline">\(\triangle
+p_{i-1}p_ip_{i+1}\)</span> does not contain the origin. In particular,
+if the triples <span class="math inline">\((o,p_{i-1},p_i)\)</span> and
+<span class="math inline">\((o,p_i,p_{i+1})\)</span> have opposite
+orientations, one clockwise and the other counterclockwise, then <span
+class="math inline">\(p_i\)</span> is redundant. In the first phase of
+our homotopy, we repeatedly remove redundant vertices, by moving each
+redundant vertex <span class="math inline">\(q\)</span> to one of its
+neighbors, until none are left. The resulting polygon <span
+class="math inline">\(P&#39;\)</span> is <em>angularly monotone</em>:
+every triple <span class="math inline">\((o,p_i,p_{i+1})\)</span> has
+the same orientation.</li>
+</ul>
+</dd>
+<dd>
+<figure>
+<img src="Fig/winding-canonize-redundant.png" style="width:95.0%"
+alt="Removing three redundant vertices" />
+<figcaption aria-hidden="true">Removing three redundant
+vertices</figcaption>
+</figure>
+</dd>
+<dd>
+<ul>
+<li>Next, we subdivide <span class="math inline">\(P&#39;\)</span> by
+adding vertices at its intersections with rays pointing up, down, left,
+and right from the origin <span class="math inline">\(o\)</span>. After
+this subdivision, any vertex that is <em>not</em> on one of these rays
+is redundant. So in the second phase of the homotopy, we remove all
+non-ray vertices using safe vertex moves. The resulting polygon <span
+class="math inline">\(P&#39;&#39;\)</span> is still angularly
+monotone.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>Finally, we move each vertex so that is distance from the origin is
+<span class="math inline">\(1\)</span>; each of these vertex moves is
+safe. The resulting polygon <span
+class="math inline">\(\Diamond^w\)</span> has vertices only at the
+points <span class="math inline">\((0,1)\)</span>, <span
+class="math inline">\((1,0)\)</span>, <span
+class="math inline">\((0,-1)\)</span>, and <span
+class="math inline">\((-1,0)\)</span>; the polygon winds around this
+diamond <span class="math inline">\(|w|\)</span> times, counterclockwise
+if <span class="math inline">\(w&gt;0\)</span> and clockwise if <span
+class="math inline">\(w&lt;0\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<figure>
+<img src="Fig/winding-canonize.png" style="width:95.0%"
+alt="Making an angularly monotone polygon canonical" />
+<figcaption aria-hidden="true">Making an angularly monotone polygon
+canonical</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The special case where <span class="math inline">\(P\)</span> has
+winding number <span class="math inline">\(0\)</span> is even simpler.
+The first phase (removing redundant vertices) actually reduces <span
+class="math inline">\(P\)</span> to a single point; we can then
+translate this point to <span class="math inline">\(\diamond^0 =
+(1,0)\)</span> using one more safe vertex move.</p>
+</dd>
+</dl>
+<p>This theorem immediately implies a linear-time algorithm to decide if
+two polygons are homotopic in the punctured plane: Count positive and
+negative crossings between each polygon and an arbitrary ray from the
+origin.</p>
+<h2 data-number="1.8"
+id="and-the-aptly-named-sir-not-appearing-in-this-film"><span
+class="header-section-number">1.8</span> …and the Aptly Named Sir Not
+Appearing in This Film</h2>
+<ul>
+<li>rotation number = total turning angle = smiles <span
+class="math inline">\(-\)</span> frowns</li>
+<li>regular homotopy = vertex moves without spurs</li>
+<li>rotation number is a regular homotopy invariant</li>
+<li>complex root finding / fundamental theorem of algebra</li>
+<li>signed volumes of self-intersecting polyhedra (hic utres
+unilaterales nascuntur)</li>
+</ul>
+<h2 data-number="1.9" id="references"><span
+class="header-section-number">1.9</span> References</h2>
+<ol type="1">
+<li><p>James W. Alexander. Topological invariants of knots and links.
+<em>Trans. Amer. Math. Soc.</em> 30(2):275–306, 1928. The reason we call
+it “Alexander numbering”.</p></li>
+<li><p>Brian Brushwood. <a
+href="https://www.youtube.com/watch?v=1-zL3_F0lHw">Fast and Loose.</a>
+YouTube, October 19, 2015.</p></li>
+<li><p>Brian Brushwood. <a
+href="https://www.youtube.com/watch?v=NlKuKi1l78c">Pricking the
+Garter.</a>. YouTube, June 26, 2017.</p></li>
+<li><p>Albrecht Ludwig Friedrich Meister. Generalia de genesi figurarum
+planarum, et independentibus earum affectionibus. <em>Novi Commentarii
+Soc. Reg. Scient. Gott.</em> 1:144–180 + 9 plates, 1769/1770. Presented
+January 6, 1770. The shoelace formula.</p></li>
+<li><p>August F. Möbius. Über der Bestimmung des Inhaltes eines
+Polyëders. <em>Ber. Sächs. Akad. Wiss. Leipzig, Math.-Phys. Kl.</em>
+17:31–68, 1865. <em>Gesammelte Werke</em> 2:473–512, Liepzig, 1886. An
+earlier appearance of Alexander numbering.</p></li>
+</ol>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There is another completely different “Fast and Loose”
+con game, also known as called “Pricking the Garter”, that’s usually
+performed with a belt. It’s less self-working, less mathematically
+interesting (despite <em>seeming</em> to invoke the Jordan curve
+theorem) , and less <em>shiny</em> than the Endless Chain.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Hint: cofactor expansion<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This is, of course, the only <em>correct</em> way to
+measure angles, as opposed to radians or degrees or some other heresy.<a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

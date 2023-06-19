@@ -1,0 +1,1139 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>10-planar-tree-cotree</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="tree-cotree-decompositionsbeta"><span
+class="header-section-number">1</span> Tree-Cotree Decompositions<span
+class="math inline">\(^\beta\)</span></h1>
+<h2 data-number="1.1" id="important-graph-definitions-yawn"><span
+class="header-section-number">1.1</span> Important graph definitions
+(yawn)</h2>
+<p>We need to establish definitions for a few important structures in
+graphs. Most of these are likely already familiar; I recommend using
+this list as later reference rather than reading it as text.
+<strong><em>Move to end of previous note?</em></strong></p>
+<dl>
+<dt><strong>walk</strong>:</dt>
+<dd>
+A sequence <span class="math inline">\(\langle s, d_1, d_2, \dots, d_k,
+t \rangle\)</span> where <span class="math inline">\(s\)</span> and
+<span class="math inline">\(t\)</span> are vertices and each <span
+class="math inline">\(d_i\)</span> is a dart, such that <span
+class="math inline">\(\textsf{tail}(d_1) = s\)</span> and <span
+class="math inline">\(\textsf{head}(d_1) = t\)</span> and <span
+class="math inline">\(\textsf{head}(d_i) =
+\textsf{tail}(d_{i+1})\)</span> for each index <span
+class="math inline">\(i\)</span>
+</dd>
+<dt><strong>length of a walk</strong>:</dt>
+<dd>
+The number of darts in the walk. The walk <span
+class="math inline">\(\langle s, d_1, \dots, d_k, t \rangle\)</span> has
+length <span class="math inline">\(k\)</span>.
+</dd>
+<dt><strong>trivial walk</strong>:</dt>
+<dd>
+A walk <span class="math inline">\(\langle s, s \rangle\)</span> with
+length <span class="math inline">\(0\)</span>.
+</dd>
+<dt><strong>closed walk</strong>:</dt>
+<dd>
+A walk <span class="math inline">\(\langle s, d_2, \dots, d_k, t
+\rangle\)</span> such that <span class="math inline">\(s = t\)</span>.
+</dd>
+<dt><strong>open walk</strong>:</dt>
+<dd>
+A walk that is either trivial or not closed
+</dd>
+<dt><strong>walk from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span></strong>:</dt>
+<dd>
+A walk with specified initial vertex <span
+class="math inline">\(s\)</span> and final vertex <span
+class="math inline">\(t\)</span>
+</dd>
+<dt><strong><span class="math inline">\(s\)</span> can reach <span
+class="math inline">\(t\)</span></strong>:</dt>
+<dd>
+There is a walk from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>. This is an equivalence relation.
+</dd>
+<dt><strong>component</strong>:</dt>
+<dd>
+An equivalence class for “can reach”
+</dd>
+<dt><strong>connected graph</strong>:</dt>
+<dd>
+A graph with exactly one component
+</dd>
+<dt><strong>simple walk</strong>:</dt>
+<dd>
+A walk <span class="math inline">\(\langle s, d_1, \dots, d_k, t
+\rangle\)</span> such that each vertex is the head of at most one dart
+<span class="math inline">\(d_i\)</span>.
+</dd>
+<dt><strong>path</strong>:</dt>
+<dd>
+A simple open walk, or the subgraph induced by a simple open walk
+</dd>
+<dt><strong>even subgraph</strong>:</dt>
+<dd>
+A subgraph in which every vertex has even degree.
+</dd>
+<dt><strong>cycle</strong>:</dt>
+<dd>
+A simple non-trivial closed walk, or the subgraph induced by such a
+walk. A minimal non-empty even subgraph.
+</dd>
+<dt><strong>loop</strong>:</dt>
+<dd>
+A cycle with length <span class="math inline">\(1\)</span>, or an edge
+whose endpoints coincide.
+</dd>
+<dt><strong>cut</strong>:</dt>
+<dd>
+A partition of the vertices <span class="math inline">\(V\)</span> into
+two non-empty subsets <span class="math inline">\(S\)</span> and <span
+class="math inline">\(V\setminus S\)</span>
+</dd>
+<dt><strong>edge cut</strong>:</dt>
+<dd>
+All edges with one endpoint in <span class="math inline">\(S\)</span>
+and the other in <span class="math inline">\(V\setminus S\)</span>, for
+some subset <span class="math inline">\(S\subseteq V\)</span>
+</dd>
+<dt><strong>bond</strong>:</dt>
+<dd>
+A minimal nonempty edge cut
+</dd>
+<dt><strong>bridge</strong>:</dt>
+<dd>
+An edge cut containing a single edge; that is, a single edge whose
+deletion disconnects the graph
+</dd>
+<dt><strong>acyclic graph</strong>:</dt>
+<dd>
+A graph containing no cycles
+</dd>
+</dl>
+<h2 data-number="1.2" id="deletion-and-contraction"><span
+class="header-section-number">1.2</span> Deletion and Contraction</h2>
+<p>Let’s begin by discussing two operations for modifying abstract
+graphs. Let <span class="math inline">\(G\)</span> be an arbitrary
+connected (but <em>not</em> necessarily planar) abstract graph with
+<span class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(m\)</span> edges.</p>
+<p><em>Deleting</em> an edge <span class="math inline">\(e\)</span> from
+G yields a smaller graph <span class="math inline">\(G \setminus
+e\)</span> with <span class="math inline">\(n\)</span> vertices and
+<span class="math inline">\(m-1\)</span> edges. We also write <span
+class="math inline">\(G \setminus v\)</span> to denote the graph
+obtained from <span class="math inline">\(G\)</span> by deleting a
+vertex <span class="math inline">\(v\)</span> and all its incident
+edges. Deleting a bridge disconnects the graph.</p>
+<p>Symmetrically, if <span class="math inline">\(e\)</span> is not a
+loop, then <em>contracting</em> <span class="math inline">\(e\)</span>
+merges the endpoints of <span class="math inline">\(e\)</span> into a
+single vertex and destroys the edge, yielding a smaller graph <span
+class="math inline">\(G \mathbin/ e\)</span> with <span
+class="math inline">\(n - 1\)</span> vertices and <span
+class="math inline">\(m-1\)</span> edges. Contracting a loop is simply
+forbidden by definition. Contracting a loop is not (yet) defined. If
+<span class="math inline">\(G\)</span> contains edges parallel to <span
+class="math inline">\(e\)</span>, those edges survive in <span
+class="math inline">\(G \mathbin/ e\)</span> as loops.</p>
+<figure>
+<img src="Fig/contract-delete.png" style="width:95.0%"
+alt="Contraction and deletion." />
+<figcaption aria-hidden="true">Contraction and deletion.</figcaption>
+</figure>
+<p>A <em>subgraph</em> of a graph <span class="math inline">\(G\)</span>
+is another graph obtained from <span class="math inline">\(G\)</span> by
+deleting edges and isolated vertices; a <em>proper</em> subgraph of
+<span class="math inline">\(G\)</span> is any subgraph other than <span
+class="math inline">\(G\)</span> itself. (We often equate subgraphs of
+<span class="math inline">\(G\)</span> with subsets of the edges of
+<span class="math inline">\(G\)</span>.) Deleting any subset of edges
+<span class="math inline">\(E’ \subseteq E\)</span> <em>that does not
+contain a bond</em> yields a connected proper subgraph <span
+class="math inline">\(G \setminus E’\)</span>.</p>
+<p>Symmetrically, contracting any subset of edges <span
+class="math inline">\(E’ \subseteq E\)</span> <em>that does not contain
+a cycle</em> yields a <em>proper minor</em> <span
+class="math inline">\(G \mathbin/ E’\)</span>. A minor of <span
+class="math inline">\(G\)</span> is any graph obtained from a subgraph
+of <span class="math inline">\(G\)</span> by contracting edges; a
+<em>proper</em> minor of <span class="math inline">\(G\)</span> is any
+minor other than <span class="math inline">\(G\)</span> itself.</p>
+<p>The inverse of deletion is called <em>insertion</em>, and the inverse
+of contraction is called <em>expansion</em>. If <span
+class="math inline">\(G\)</span> is a (proper) subgraph of another graph
+<span class="math inline">\(H\)</span>, then <span
+class="math inline">\(H\)</span> is a <em>(proper) supergraph</em> of
+<span class="math inline">\(G\)</span>; similarly, if <span
+class="math inline">\(G\)</span> is a (proper) minor of <span
+class="math inline">\(H\)</span>, then <span
+class="math inline">\(H\)</span> is a <em>(proper) major</em> of <span
+class="math inline">\(G\)</span>.</p>
+<h2 data-number="1.3" id="spanning-trees"><span
+class="header-section-number">1.3</span> Spanning trees</h2>
+<p>A <em>spanning tree</em> of a graph <span
+class="math inline">\(G\)</span> is a connected, acyclic subgraph of
+<span class="math inline">\(G\)</span> (more more succinctly, a
+<em>subtree</em> of <span class="math inline">\(G\)</span>) that
+includes every vertex of <span class="math inline">\(G\)</span>. We
+leave the following lemma as an exercise for the reader.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Let <span class="math inline">\(G\)</span> be a connected graph, and
+let <span class="math inline">\(e\)</span> be an edge of <span
+class="math inline">\(G\)</span>.</em>
+</dd>
+<dd>
+<ul>
+<li><em>If <span class="math inline">\(e\)</span> is a loop, then every
+spanning tree of <span class="math inline">\(G\)</span> excludes <span
+class="math inline">\(e\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>If <span class="math inline">\(e\)</span> is not a loop, then
+for any spanning tree <span class="math inline">\(T\)</span> of <span
+class="math inline">\(G\mathbin/e\)</span>, the subgraph <span
+class="math inline">\(T\cup e\)</span> is a spanning tree of <span
+class="math inline">\(G\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>If <span class="math inline">\(e\)</span> is a bridge, then
+every spanning tree of <span class="math inline">\(G\)</span> includes
+<span class="math inline">\(e\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>If <span class="math inline">\(e\)</span> is not a bridge, then
+every spanning tree of <span class="math inline">\(G \setminus
+e\)</span> is also a spanning tree of <span
+class="math inline">\(G\)</span>.</em></li>
+</ul>
+</dd>
+</dl>
+<p>This lemma immediately suggests the following general strategy to
+compute a spanning tree of any connected graph: For each edge <span
+class="math inline">\(e\)</span>, either contract <span
+class="math inline">\(e\)</span> or delete <span
+class="math inline">\(e\)</span>. Loops must be deleted and bridges must
+be contracted; otherwise, the decision to contract or delete is
+arbitrary. (It is impossible for an edge to be both a bridge and a
+loop!) The previous lemma implies by induction that the set of
+contracted edges is a spanning tree of <span
+class="math inline">\(G\)</span>, regardless of the order that edges are
+visited, or which non-loop non-bridge edges are deleted or
+contracted.</p>
+<figure>
+<img src="Fig/spanning-tree.png" style="width:95.0%"
+alt="Building a spanning tree by contraction and deletion." />
+<figcaption aria-hidden="true">Building a spanning tree by contraction
+and deletion.</figcaption>
+</figure>
+<p>In practice, algorithms that compute spanning trees do not
+<em>actually</em> contract or delete edges; rather, they simply label
+the edges as either belonging to the spanning tree or not. In this
+context, the previous lemma can be rewritten as follows:</p>
+<dl>
+<dt><strong>Spanning Tree Lemma:</strong></dt>
+<dd>
+<em>Let <span class="math inline">\(G\)</span> be a connected
+graph.</em>
+</dd>
+<dd>
+<ul>
+<li><em>Each spanning tree of <span class="math inline">\(G\)</span>
+excludes at least one edge from each cycle in <span
+class="math inline">\(G\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>For every edge e of every cycle of <span
+class="math inline">\(G\)</span>, there is a spanning tree of <span
+class="math inline">\(G\)</span> that excludes <span
+class="math inline">\(e\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>Every spanning tree of <span class="math inline">\(G\)</span>
+includes at least one edge from each bond in <span
+class="math inline">\(G\)</span>.</em></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><em>For every edge <span class="math inline">\(e\)</span> of every
+bond of <span class="math inline">\(G\)</span>, there is a spanning tree
+of <span class="math inline">\(G\)</span> that includes <span
+class="math inline">\(e\)</span>.</em></li>
+</ul>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>If the edges of a connected graph <span
+class="math inline">\(G\)</span> are arbitrarily colored red or blue, so
+that each cycle in <span class="math inline">\(G\)</span> has at least
+one red edge and each bond in <span class="math inline">\(G\)</span> has
+at least one blue edge, then the subgraph of blue edges is a spanning
+tree of <span class="math inline">\(G\)</span>.</em>
+</dd>
+</dl>
+<p>Given a connected graph with <span class="math inline">\(n\)</span>
+vertices and <span class="math inline">\(m\)</span> edges, we can
+compute a spanning tree in <span class="math inline">\(O(n+m)\)</span>
+time using any number of graph traversal algorithms, the most common of
+which are <em>depth-first search</em> and <em>breadth-first search</em>.
+These algorithms can be seen as variants of the red-blue coloring
+algorithm, where the order in which edges are colored (or equivalently,
+the choice of edges to delete or contract) is determined on the fly as
+the algorithm explores the graph.</p>
+<h2 data-number="1.4" id="deletion-and-contraction-in-planar-maps"><span
+class="header-section-number">1.4</span> Deletion and Contraction in
+Planar Maps</h2>
+<p>Contraction and deletion play complementary roles in planar maps. For
+example, contracting any (non-loop) edge identifies its two endpoints;
+deleting any (non-bridge) edge merges its two shores. This resemblance
+is not merely incidental; in fact, contraction and deletion are
+<em>dual</em> operations. Contracting an edge in any map <span
+class="math inline">\(\Sigma\)</span> is equivalent to deleting the
+corresponding edge in <span class="math inline">\(\Sigma^*\)</span> and
+vice versa.</p>
+<p>Hopefully this duality is intuitively clear, but we can make it
+formally trivial by describing how deletion and contraction are
+<em>implemented</em> in planar maps. Let <span
+class="math inline">\(\textsf{succ}\)</span> denote the successor
+permutation of a planar map <span class="math inline">\(\Sigma\)</span>,
+and let <span class="math inline">\(\textsf{succ}^* = \textsf{rev}\circ
+\textsf{succ}\)</span> denote its dual successor permutation, which is
+also the successor permutation of the dual map <span
+class="math inline">\(\Sigma^*\)</span>. Fix an arbitrary edge <span
+class="math inline">\(e\)</span> of <span
+class="math inline">\(\Sigma\)</span>.</p>
+<dl>
+<dt><strong>Deletion:</strong></dt>
+<dd>
+Suppose <span class="math inline">\(e\)</span> is not a bridge. Then
+<span class="math inline">\(\Sigma \setminus e\)</span> is a planar map
+that contains every dart in <span class="math inline">\(\Sigma\)</span>
+except <span class="math inline">\(e^+\)</span> and <span
+class="math inline">\(e^-\)</span>. Let <span
+class="math inline">\(\textsf{succ}\setminus e\)</span> and <span
+class="math inline">\(\textsf{succ}^*\setminus e\)</span> denote the
+induced primal and dual successor permutations of <span
+class="math inline">\(\Sigma\setminus e\)</span>. Then for any dart
+<span class="math inline">\(d\)</span> in <span
+class="math inline">\(\Sigma\setminus e\)</span>, we have <span
+class="math display">\[
+(\textsf{succ}\setminus e)(d) = \begin{cases}
+    \textsf{succ}(\textsf{succ}(\textsf{succ}(d)))
+        &amp; \text{if $\textsf{succ}(d) \in e$ and
+                    $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
+    \textsf{succ}(\textsf{succ}(d))
+        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+    \textsf{succ}(d) &amp; \text{otherwise.}
+\end{cases}
+\]</span> The first case occurs when <span
+class="math inline">\(e\)</span> is an empty loop based at the head of
+<span class="math inline">\(d\)</span>. See the figure below. In other
+words, to find the successor of <span class="math inline">\(d\)</span>
+in <span class="math inline">\(\Sigma \setminus e\)</span>, we
+repeatedly follow successor pointers until we reach a dart that is not
+in the deleted edge <span class="math inline">\(e\)</span>.
+</dd>
+<dd>
+<p>It follows that the dual successor permutation changes as follows:
+<span class="math display">\[
+(\textsf{succ}^*\setminus e)(d) = \begin{cases}
+    \textsf{succ}^*(\textsf{succ}(\textsf{succ}(d)))
+        &amp; \text{if $\textsf{succ}(d) \in e$ and
+                    $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
+    \textsf{succ}^*(\textsf{succ}(d))
+        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+    \textsf{succ}^*(d) &amp; \text{otherwise.}
+\end{cases}
+\]</span></p>
+</dd>
+</dl>
+<figure>
+<img src="Fig/delete-cases.png" style="width:45.0%"
+alt="Deleting an edge: Default case and empty loop" />
+<figcaption aria-hidden="true">Deleting an edge: Default case and empty
+loop</figcaption>
+</figure>
+<dl>
+<dt><strong>Contraction:</strong></dt>
+<dd>
+Suppose <span class="math inline">\(e\)</span> is not a loop. Then <span
+class="math inline">\(\Sigma \mathbin/ e\)</span> is a planar map that
+contains every dart in <span class="math inline">\(\Sigma\)</span>
+except <span class="math inline">\(e^+\)</span> and <span
+class="math inline">\(e^-\)</span>. Let <span
+class="math inline">\(\textsf{succ} \mathbin/ e\)</span> and <span
+class="math inline">\(\textsf{succ}^* \mathbin/ e\)</span> respectively
+denote the induced primal and dual successor permutations of <span
+class="math inline">\(\Sigma \mathbin/ e\)</span>. Then for any dart
+<span class="math inline">\(d\)</span> of <span
+class="math inline">\(\Sigma \mathbin/ e\)</span>, we have <span
+class="math display">\[
+(\textsf{succ}^*\mathbin/ e)(d) = \begin{cases}
+    \textsf{succ}^*(\textsf{succ}^*(\textsf{succ}^*(d)))
+        &amp; \text{if $\textsf{succ}^*(d) \in e$ and
+                    $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
+    \textsf{succ}^*(\textsf{succ}^*(d))
+        &amp; \text{if $\textsf{succ}^*(d) \in e$,}\\
+    \textsf{succ}^*(d) &amp; \text{otherwise.}
+\end{cases}
+\]</span> The first case occurs when one endpoint of <span
+class="math inline">\(e\)</span> has degree <span
+class="math inline">\(1\)</span> and the head of <span
+class="math inline">\(d\)</span> is the other endpoint of <span
+class="math inline">\(e\)</span>. See the figure below. In other words,
+to find the <em>dual</em> successor of <span
+class="math inline">\(d\)</span> in <span
+class="math inline">\(\Sigma\mathbin/e\)</span>, we chase <em>dual</em>
+successor pointers until we reach a dart that is not in the contracted
+edge <span class="math inline">\(e\)</span>.
+</dd>
+<dd>
+<p>It follows that the primal successor permutation changes as follows:
+<span class="math display">\[
+(\textsf{succ} \mathbin/ e)(d) = \begin{cases}
+    \textsf{succ}(\textsf{succ}^*(\textsf{succ}^*(d)))
+        &amp; \text{if $\textsf{succ}(d) \in e$ and
+                    $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
+    \textsf{succ}(\textsf{succ}^*(d))
+        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+    \textsf{succ}(d) &amp; \text{otherwise.}
+\end{cases}
+\]</span></p>
+</dd>
+</dl>
+<figure>
+<img src="Fig/contract-cases.png" style="width:45.0%"
+alt="Contracting an edge: Default case and leaf" />
+<figcaption aria-hidden="true">Contracting an edge: Default case and
+leaf</figcaption>
+</figure>
+<p>Both of these formulas are trivially correct when we either delete or
+contract the only edge in a one-edge map, because the resulting trivial
+map has no darts. Assuming standard data structures, any edge can be
+contracted or deleted in <span class="math inline">\(O(1)\)</span>
+time.</p>
+<p>The following lemma is now purely mechanical.</p>
+<dl>
+<dt><strong>Lemma (contraction <span
+class="math inline">\(\leftrightharpoons\)</span>
+deletion):</strong></dt>
+<dd>
+<em>Fix a planar map <span class="math inline">\(\Sigma\)</span>, and
+let <span class="math inline">\(e\)</span> be any edge in <span
+class="math inline">\(\Sigma\)</span>.</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>If <span class="math inline">\(e\)</span> is not a loop, then
+<span class="math inline">\(e^*\)</span> is not a bridge and <span
+class="math inline">\((\Sigma \mathbin/ e)^* = \Sigma^* \setminus
+e^*\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="a">
+<li><em>If <span class="math inline">\(e\)</span> is not a bridge, then
+<span class="math inline">\(e^*\)</span> is not a loop and <span
+class="math inline">\((\Sigma\setminus e)^* = \Sigma^* \mathbin/
+e^*\)</span>.</em></li>
+</ol>
+</dd>
+</dl>
+<p>If we delete a bridge using the formulas above, the components of
+<span class="math inline">\(G\setminus e\)</span> become embedded
+independently, each on its own plane/sphere; instead of merging two
+faces into one, the deletion breaks one face (on either side of the
+deleted edge) into two. Symmetrically, if we contract a loop using the
+formula above, instead of merging two vertices into one, we split the
+single endpoint of the loop into two, splitting the graph into two
+independent subgraphs, one “inside” the loop and the other
+“outside”.</p>
+<figure>
+<img src="Fig/contract-delete-medial.png" style="width:95.0%"
+alt="Contraction and deletion in a planar map \Sigma both induce smoothing in the medial map \Sigma^\times." />
+<figcaption aria-hidden="true">Contraction and deletion in a planar map
+<span class="math inline">\(\Sigma\)</span> both induce smoothing in the
+medial map <span
+class="math inline">\(\Sigma^\times\)</span>.</figcaption>
+</figure>
+<h2 data-number="1.5" id="tree-cotree-decompositions"><span
+class="header-section-number">1.5</span> Tree-Cotree Decompositions</h2>
+<dl>
+<dt><strong>Lemma (even subgraph <span
+class="math inline">\(\leftrightharpoons\)</span> edge
+cut):</strong></dt>
+<dd>
+<em>Fix a planar map <span class="math inline">\(\Sigma\)</span>. A
+subset <span class="math inline">\(H\)</span> of the edges of <span
+class="math inline">\(\Sigma\)</span> is an even subgraph if and only if
+the corresponding subset <span class="math inline">\(H^*\)</span> of
+edges in <span class="math inline">\(\Sigma^*\)</span> is an edge
+cut.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(H\)</span> be an even subgraph of <span
+class="math inline">\(\Sigma\)</span>. Let <span
+class="math inline">\(C_1, C_2, \dots, C_k\)</span> be edge-disjoint
+cycles in <span class="math inline">\(\Sigma\)</span> whose union is
+<span class="math inline">\(H\)</span>. Color each vertex of <span
+class="math inline">\(\Sigma^*\)</span> black if it lies in the interior
+of an odd number of cycles <span class="math inline">\(C_i\)</span>, and
+white otherwise. Then <span class="math inline">\(H\)</span> is the
+subgraph of edges with one white shore and one black shore. It follows
+that <span class="math inline">\(H^*\)</span> is the subgraph of dual
+edges with one endpoint of each color; in other words, <span
+class="math inline">\(H^*\)</span> is an edge cut in <span
+class="math inline">\(\Sigma^*\)</span>.
+</dd>
+<dd>
+<p>On the other hand, let <span class="math inline">\(H^*\)</span> is an
+edge cut in <span class="math inline">\(\Sigma^*\)</span>. Then it is
+possible to color the vertices of <span
+class="math inline">\(\Sigma^*\)</span> black and white, so that <span
+class="math inline">\(H^*\)</span> is the subset of edges with one white
+endpoint and one black endpoint. The primal subgraph <span
+class="math inline">\(H\)</span> contains precisely the edges of <span
+class="math inline">\(\Sigma\)</span> with one white shore and one black
+shore. Every vertex of <span class="math inline">\(\Sigma\)</span> is
+incident to an even number of such edges. We conclude that <span
+class="math inline">\(H\)</span> is an even subgraph of <span
+class="math inline">\(\Sigma\)</span>.</p>
+</dd>
+<dt><strong>Corollary (cycle <span
+class="math inline">\(\leftrightharpoons\)</span> bond):</strong></dt>
+<dd>
+<em>A subgraph <span class="math inline">\(H\)</span> of a planar map
+<span class="math inline">\(\Sigma\)</span> is a cycle if and only if
+the corresponding subgraph <span class="math inline">\(H^*\)</span> of
+<span class="math inline">\(\Sigma^*\)</span> is a bond.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+A cycle is a minimal non-empty even subgraph; a bond is a minimal
+non-empty edge cut.
+</dd>
+<dd>
+<p>Equivalently, a cycle is a minimal subset of edges that cannot all be
+contracted, and a bond is a minimal subset of edges that cannot all be
+deleted.</p>
+</dd>
+<dt><strong>Corollary (spanning tree <span
+class="math inline">\(\leftrightharpoons\)</span> spanning
+cotree):</strong></dt>
+<dd>
+<em>Fix a planar map <span class="math inline">\(\Sigma = (V, E,
+F)\)</span>, and let <span class="math inline">\(T \sqcup C\)</span> be
+a partition of <span class="math inline">\(E\)</span>. Then <span
+class="math inline">\(T\)</span> defines a spanning tree of <span
+class="math inline">\(\Sigma\)</span> if and only if <span
+class="math inline">\(C^* \subset E^*\)</span> defines a spanning tree
+of <span class="math inline">\(\Sigma^*\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(T\)</span> be an arbitrary spanning tree
+of <span class="math inline">\(G\)</span>, and let <span
+class="math inline">\(C^* = E^*\setminus T^*\)</span> be the
+complementary dual subgraph of <span
+class="math inline">\(\Sigma^*\)</span>. The Spanning Tree Lemma implies
+that every cycle of <span class="math inline">\(\Sigma\)</span> excludes
+at least one edge in <span class="math inline">\(T\)</span>, and every
+bond of <span class="math inline">\(\Sigma\)</span> contains at least
+one edge in <span class="math inline">\(T\)</span>. Cycle-bond duality
+implies that every bond of <span class="math inline">\(\Sigma^*\)</span>
+contains at least one edge in <span class="math inline">\(C^*\)</span>,
+and every cycle of <span class="math inline">\(\Sigma^*\)</span>
+excludes at least one edge in <span class="math inline">\(C^*\)</span>.
+We conclude that <span class="math inline">\(C^*\)</span> is a connected
+acyclic spanning subgraph of <span
+class="math inline">\(\Sigma^*\)</span>, or in other words, a spanning
+tree of <span class="math inline">\(\Sigma^*\)</span>.
+</dd>
+</dl>
+<figure>
+<img src="Fig/planar-tree-cotree.png" style="width:25.0%"
+alt="A tree-cotree decomposition of a planar map and its dual." />
+<figcaption aria-hidden="true">A tree-cotree decomposition of a planar
+map and its dual.</figcaption>
+</figure>
+<p>The partition <span class="math inline">\(T\sqcup C\)</span> of edges
+of a planar map into primal and dual spanning trees is called a
+<em>tree-cotree decomposition</em>. Notice that either the primal
+spanning tree <span class="math inline">\(T\)</span> or the dual
+spanning tree <span class="math inline">\(C^*\)</span> can be chosen
+arbitrarily.</p>
+<p>The duality between cycles and bonds was first proved by Hassler
+Whitney. Whitney also proved the following converse result. An
+<em>algebraic dual</em> of an abstract graph <span
+class="math inline">\(G\)</span> is another abstract graph <span
+class="math inline">\(G^*\)</span> with the same set of edges, such that
+a subset of edges defines a cycle in <span
+class="math inline">\(G\)</span> if and only if the same subset defines
+a bond in <span class="math inline">\(G^*\)</span>.</p>
+<p><strong>Theorem (Whitney (1932)):</strong> <em>A connected abstract
+graph is planar if and only if it has an algebraic dual.</em></p>
+<h2 data-number="1.6" id="eulers-formula"><span
+class="header-section-number">1.6</span> Euler’s Formula</h2>
+<p>Arguably the earliest fundamental result in combinatorial topology is
+a simple formula first <em>published</em> by Leonhard Euler, but
+described in full generality over a century earlier by René Descartes,
+and described for the special case of Platonic solids by Francesco
+Maurolico a century before Descartes. I’ll provide two short proofs
+here, one directly inductive, the other relying on tree-cotree
+decompositions.</p>
+<dl>
+<dt><strong>Euler’s Formula for Planar Maps.</strong></dt>
+<dd>
+<em>For any connected planar map with <span
+class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces, we have <span
+class="math inline">\(n-m+f = 2\)</span>.</em>
+</dd>
+<dt><strong>Proof (by induction):</strong></dt>
+<dd>
+Fix an arbitrary planar map <span class="math inline">\(\Sigma\)</span>
+with <span class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. If <span
+class="math inline">\(\Sigma\)</span> has no edges, it has one vertex
+and one face. Otherwise, let <span class="math inline">\(e\)</span> be
+any edge of<span class="math inline">\(\Sigma\)</span>; there are two
+overlapping cases to consider.
+</dd>
+<dd>
+<ul>
+<li>If <span class="math inline">\(e\)</span> is not a bridge, then
+deleting <span class="math inline">\(e\)</span> yields a planar map
+<span class="math inline">\(\Sigma\setminus e\)</span> with <span
+class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m-1\)</span> edges, and <span
+class="math inline">\(f-1\)</span> faces. The induction hypothesis
+implies that <span class="math inline">\(n-(m-1)+(f-1) =
+2\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If <span class="math inline">\(e\)</span> is not a loop, then
+contracting <span class="math inline">\(e\)</span> yields a planar map
+<span class="math inline">\(\Sigma\mathbin/e\)</span> with <span
+class="math inline">\(n-1\)</span> vertices, <span
+class="math inline">\(m-1\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. The induction hypothesis implies
+that <span class="math inline">\((n-1)-(m-1)+f = 2\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<p>In all cases, we conclude that <span
+class="math inline">\(n-m+f=2\)</span>.</p>
+</dd>
+<dt><strong>Proof (von Staudt 1847):</strong></dt>
+<dd>
+Fix an arbitrary planar map <span class="math inline">\(\Sigma\)</span>
+with <span class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. Let <span
+class="math inline">\(T\)</span> be an arbitrary spanning tree of <span
+class="math inline">\(\Sigma\)</span>. Because <span
+class="math inline">\(T\)</span> has <span
+class="math inline">\(n\)</span> vertices, it also has <span
+class="math inline">\(n-1\)</span> edges. The complementary dual
+subgraph <span class="math inline">\(C^* = (E\setminus T)^*\)</span> is
+a spanning tree of <span class="math inline">\(\Sigma^*\)</span>.
+Because <span class="math inline">\(C^*\)</span> has <span
+class="math inline">\(f\)</span> vertices, it also has <span
+class="math inline">\(f-1\)</span> edges. Every edge in <span
+class="math inline">\(\Sigma\)</span> is either an edge of <span
+class="math inline">\(T\)</span> or the dual of an edge in <span
+class="math inline">\(C^*\)</span>, but not both. We conclude that <span
+class="math inline">\(m = (n-1)+(f-1)\)</span>.
+</dd>
+</dl>
+<p>There are many many other proofs of Euler’s formula. David Eppstein
+has <a href="https://www.ics.uci.edu/~eppstein/junkyard/euler/">a web
+page describing more than twenty of them</a>, but even David’s list is
+incomplete. For example, we can leverage our earlier proof of Euler’s
+formula for planar <em>curves</em>, after establishing a few additional
+definitions.</p>
+<p>Recall that the <em>medial map</em> <span
+class="math inline">\(\Sigma^\times\)</span> of a planar map <span
+class="math inline">\(\Sigma\)</span> is another planar map whose
+vertices correspond to edges of <span
+class="math inline">\(\Sigma\)</span>, whose edges correspond to corners
+of <span class="math inline">\(\Sigma\)</span>, and whose faces
+correspond to vertices and faces of <span
+class="math inline">\(\Sigma\)</span>. Every medial map <span
+class="math inline">\(\Sigma^\times\)</span> is either a simple cycle or
+4-regular, and therefore is the image map of a connected planar
+multicurve. (Steinitz used medial maps (“<span
+class="math inline">\(\Theta\)</span>-Prozeß”) to reduce his eponymous
+theorem about graphs of convex polyhedra to an argument about
+curves.)</p>
+<figure>
+<img src="Fig/derived-maps/medial.png" style="width:40.0%"
+alt="The medial map of a planar map." />
+<figcaption aria-hidden="true">The medial map of a planar
+map.</figcaption>
+</figure>
+<dl>
+<dt><strong>Proof (via medial homotopy):</strong></dt>
+<dd>
+Fix an arbitrary planar map <span class="math inline">\(\Sigma\)</span>
+with <span class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. The medial map <span
+class="math inline">\(\Sigma^\times\)</span> is the image map of a
+connected planar multicurve with <span class="math inline">\(2m\)</span>
+vertices and <span class="math inline">\(n+f\)</span> faces. We already
+proved by induction<a href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> that every connected planar
+multicurve with <span class="math inline">\(N\)</span> vertices has
+exactly <span class="math inline">\(N+2\)</span> faces. We conclude that
+<span class="math inline">\(n+f = 2m+2\)</span>.
+</dd>
+</dl>
+<h2 data-number="1.7" id="the-combinatorial-gauss-bonnet-theorem"><span
+class="header-section-number">1.7</span> The Combinatorial Gauss-Bonnet
+Theorem</h2>
+<p>I’ll close this lecture by proving a powerful reformulation of
+Euler’s formula.</p>
+<p>Suppose we assign a value <span class="math inline">\(\angle
+c\)</span> to each corner <span class="math inline">\(c\)</span> of a
+planar map <span class="math inline">\(\Sigma\)</span>, called the
+<em>exterior angle</em> at <span class="math inline">\(c\)</span>.
+Intuitively, you should think of <span class="math inline">\(\angle
+c\)</span> as the signed angle between the tangent vectors to two darts
+<span class="math inline">\(d\)</span> and <span
+class="math inline">\(\textsf{succ}^*(d)\)</span> at their common
+endpoint <span class="math inline">\(\textsf{head}(d)\)</span>, but in
+fact <span class="math inline">\(\angle c\)</span> can be any real (or
+complex!) number. As usual, we measure angles in units of circles (or
+“turns”), as the gods intended.</p>
+<p>We can then define the <em>combinatorial curvature</em> of a face
+<span class="math inline">\(f\)</span> or a vertex <span
+class="math inline">\(v\)</span>, with respect to this angle assignment,
+as follows: <span class="math display">\[
+    \kappa(f) := 1 - \sum_{c\in f} \angle c
+    \qquad\qquad
+    \kappa(v) := 1 - \frac{1}{2} \deg(v) + \sum_{c\in v} \angle c
+\]</span> Or more formally, equating corners with darts: <span
+class="math display">\[
+    \kappa(f) := 1 - \sum_{d \colon \textsf{left}(d) = f} \angle d
+    \qquad\qquad
+    \kappa(v) := 1 - \sum_{d \colon \textsf{head}(d) = v}
+                            \left(\frac12 - \angle d\right)
+\]</span></p>
+<p>For example, suppose every edge of <span
+class="math inline">\(\Sigma\)</span> is a line segment, and we actually
+measure corner angles geometrically. Then every vertex has curvature
+<span class="math inline">\(0\)</span> (because its interior corner
+angles sum to one circle) and every <em>bounded</em> face of <span
+class="math inline">\(\Sigma\)</span> has curvature <span
+class="math inline">\(0\)</span> (because its total turning angle is
+<span class="math inline">\(1\)</span>). However, the the <em>outer</em>
+face is oriented clockwise instead of counterclockwise, so its total
+turning angle is <span class="math inline">\(-1\)</span>, and thus its
+curvature is <span class="math inline">\(2\)</span>. That <span
+class="math inline">\(2\)</span> is actually the same as the <span
+class="math inline">\(2\)</span> in Euler’s formula.</p>
+<p>Alternatively, suppose <span class="math inline">\(\Sigma\)</span> is
+actually embedded on the <em>unit sphere</em>, every edge is an arc of a
+great circle, and angles are again measured geometrically (between
+tangent vectors). Then every vertex of <span
+class="math inline">\(\Sigma\)</span> has curvature zero, because
+interior angles at any vertex sum to one circle, and a bit of spherical
+trigonometry implies that every face of <span
+class="math inline">\(\Sigma\)</span> has curvature equal to its area
+divided by <span class="math inline">\(2\pi\)</span>. Because the unit
+sphere has surface area <span class="math inline">\(4\pi\)</span>, the
+sum of all the face curvatures is <span
+class="math inline">\(2\)</span>. That <span
+class="math inline">\(2\)</span> is actually the same as the <span
+class="math inline">\(2\)</span> in Euler’s formula! (In fact, this is
+how Lagrange actually proved Euler’s formula for the first time.)</p>
+<dl>
+<dt><strong>The Combinatorial Gauss-Bonnet Theorem:</strong></dt>
+<dd>
+<em>For any planar map <span class="math inline">\(\Sigma = (V, E,
+F)\)</span> and for <strong>any</strong> assignment of angles to the
+corners of <span class="math inline">\(\Sigma\)</span>, we have <span
+class="math inline">\(\sum_{v \in V} \kappa(v) + \sum_{f \in F}
+\kappa(f) = 2\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+We immediately have <span class="math inline">\(\sum_f \kappa(f) = |F| -
+\sum_c \angle c\)</span> and <span class="math inline">\(\sum_v
+\kappa(f) = |V| - |E| + \sum_c \angle c\)</span>, which implies that
+<span class="math inline">\(\sum_v \kappa(v) + \sum_f \kappa(f) = |V| -
+|E| + |F| = 2\)</span> by Euler’s formula. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p>As a final geometric example, suppose <span
+class="math inline">\(\Sigma\)</span> is actually the complex of
+vertices, edges, and faces of a three-dimensional convex polyhedron
+(which is homeomorphic to a sphere), and again, angles are measured
+geometrically. Each face of <span class="math inline">\(\Sigma\)</span>
+is a convex planar polygon, and therefore has curvature zero. The
+interior angles at each vertex of <span
+class="math inline">\(\Sigma\)</span> sum to less than a full circle, so
+every vertex has positive curvature. The Combinatorial Gauss-Bonnet
+Theorem implies that the sum of the vertex curvatures is exactly <span
+class="math inline">\(2\)</span>. In other words, the sum of the
+<em>angle defects</em> at the vertices is two full circles, or eight
+right angles.</p>
+<h2 data-number="1.8" id="historical-digression"><span
+class="header-section-number">1.8</span> Historical Digression</h2>
+<p>Euler’s formula has a long and convoluted history, involving
+unpublished and lost manuscripts, quack medicine, boat wrecks, priority
+battles, bad translations, incorrect proofs, and philosophical arguments
+over the natural of mathematical proof. At the risk of adding to the
+thousands of gallons of ink, seat, and blood that have already been
+spilled over this history, let me briefly mention a few highlights.</p>
+<p>The first known statement of Euler’s formula is in an unpublished
+manuscript <em>Compaginationes solidorum regularium</em> (Combinations
+of regular solids) written by Francesco Maurolico between 1536 and
+1537.</p>
+<blockquote>
+<p><em>Item manifestum est in unoquoque regularium solidorum, numerum
+basium coniunctum cum numero cacuminum conflare numerum, qui binario
+excedit numerum laterum.</em> [It is obvious that in each of the regular
+solids, the number of bases (faces) combined with the number of peaks
+(vertices) is a number that exceeds the number of sides (edges) by
+2.]</p>
+</blockquote>
+<p>Maurolico only considered the five Platonic solids, for which the
+formula follows by direct inspection.</p>
+<p>René Descartes described the angle defect theorem for convex
+polyhedra, and derived Euler’s formula from it, in his unpublished note
+<em>Progymnasmata de solidorum elementis</em> [<em>Exercises in the
+Elements of Solids</em>], written around 1630.</p>
+<blockquote>
+<p><em>Ponam semper pro numero angulorum solidorum <span
+class="math inline">\(\alpha\)</span> &amp; pro numero facirum <span
+class="math inline">\(\varphi\dots\)</span>. Numerus verorum angulorum
+planorum est <span class="math inline">\(2\varphi - 2\alpha -
+4\)</span>.</em> [I always write <span
+class="math inline">\(\alpha\)</span> for the number of solid angles
+(vertices) and <span class="math inline">\(\varphi\)</span> for the
+number of faces<span class="math inline">\(\dots\)</span>. The total
+number of plane angles (corners) is <span class="math inline">\(2\varphi
+- 2\alpha - 4\)</span>.]</p>
+</blockquote>
+<p>It is a matter of surprisingly intense scholarly dispute whether
+Descartes actually stated Euler’s formula, and therefore deserves to
+share credit with Euler, or only came close, and therefore does not.
+Descartes did not express his formula using the syntax <span
+class="math inline">\(V-E+F=2\)</span>, but in my opinion, this is
+entirely a matter of notational emphasis, not content or understanding.
+Elsewhere in <em>Progymnasmata</em>, Descartes observed that the number
+of plane angles is exactly twice the number of edges, and he used the
+numbers of vertices, edges, and faces of the Platonic and several
+Archimedean solids to derive formulas for corresponding figurate
+numbers. Had Descartes actually published his <em>Progymnasmata</em>, I
+believe even Euler (who exhibited surprise that the formula was not
+already known) would have called it “Descartes’ formula”.</p>
+<p>Descartes traveled to Sweden in 1649 at the invitation of
+then-19-year-old Queen Christina. Due to his poor health, Descartes
+normally slept late, but after a few months, the young queen required
+Descartes to give her lessons in philosophy three days a week, lasting
+five hours per day and beginning at 5am. Within a month, Descartes fell
+ill. He refused the treatments offered by the Swedish doctors,
+preferring his own French doctor’s prescription of tobacco-infused wine
+to induce vomiting. The treatment proved ineffective, and Descartes
+eventually died of pneumonia in February 1650.</p>
+<p>After Descartes’ death, his possessions were shipped to his friend
+Claude Clerselier in Paris; upon arrival, a box of manuscripts,
+including the <em>Progymnasmata</em>, fell into the Seine and was not
+recovered for three days. Clerselier rescued Descartes’ manuscripts, and
+after carefully drying them, made them available to other scholars.</p>
+<p>Gottfried Leibniz transcribed several of Descartes’ manuscripts,
+including the <em>Progymnasmata</em>, during a trip to Paris in 1676,
+most likely in an effort to collect evidence against recent charges by
+English mathematicians that his results were merely elaborations of
+Descartes’ ideas. (Isaac Newton charged Leibniz of plagiarizing his
+calculus later that same year.) Descartes’ original manuscript was then
+lost forever. Leibniz’s hand-written copy vanished into his archives
+until 1859, when it was rediscovered by Louis Alexandre Foucher de
+Careil in an uncatalogued pile of Leibniz’s papers.<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+Foucher de Careil published Leibniz’s transcription , but his
+re-transcription introduced several significant errors, rendering it
+essentially useless. An accurate transcription of the finally appeared
+in
+1908.<!--, thanks to the combined efforts of several Cartesian and Leibnizian scholars \cite{a-dse-1908}.  The remarkable story is told in more detail by Federico \cite{f-dpsds-82}, Richeson \cite{r-eg-05}, and (with some creative embellishment) Aczel \cite{a-dsn-05}.--></p>
+<p>Leonhard Euler stated both his eponymous formula and the angle defect
+theorem for convex polyhedra, expressing surprise that neither was
+previously known, in a letter to his friend and colleague Christian
+Goldbach in 1750. Two years later, he proposed an inductive proof to the
+St. Petersberg Academy of Sciences; unfortunately his proof was flawed.
+Similarly flawed inductive proofs were published by Karsten in 1768, by
+Meister in 1785, by L’Huillier in 1811, by Cauchy in 1813, and by
+Grunert in 1827. One of Cauchy’s inductive arguments is presented in
+numerous textbooks as the first correct proof of Euler’s formula, but
+that claim is incorrect for at least three reasons: The argument is not
+original to Cauchy; the argument is not a proof; and a correct proof was
+already known.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p>
+<p>Cauchy argued as follows: Consider a simple planar map <span
+class="math inline">\(\Sigma\)</span> whose bounded faces are all
+triangles and whose outer face is a simple cycle. Let <span
+class="math inline">\(f\)</span> be any face that has at least one edge
+on the outer face. If <span class="math inline">\(f\)</span> shares one
+edge with the outer face, then deleting that edge removes one edge and
+one face. If <span class="math inline">\(f\)</span> shares two edges
+with the outer face, then removing those two edges removes one vertex,
+two edges, and one face. Finally, if all three edges of <span
+class="math inline">\(f\)</span> are boundary edges, the map has only
+one bounded face, so <span class="math inline">\(v=e=3\)</span> and
+<span class="math inline">\(f=2\)</span>.</p>
+<p>Unfortunately, Cauchy (and his predecessors) did not prove that one
+can always choose a face <span class="math inline">\(f\)</span> so that
+the outer boundary is still a simple cycle after <span
+class="math inline">\(f\)</span> is removed. This fact is not hard to
+prove using a second careful induction argument (which I’ll present in
+the next lecture), but neither Euler, nor Karsten, nor Meister, nor
+L’Huillier, nor Cauchy, nor Grunert offered such a proof. Lakatos
+noticed this lacuna in Cauchy’s argument and proposed a proof, but his
+proposed proof was flawed. Most modern presentations of “Cauchy’s”
+“proof”—including Wikipedia’s—either ignore this subtlety entirely, or
+merely <em>state</em> that <span class="math inline">\(f\)</span> must
+be chosen carefully without proving that is always possible.</p>
+<p>The first <em>correct</em> proof of Euler’s formula was given by
+Legendre in 1794. Legendre projects the vertices and edges of the
+polyhedron onto the unit sphere from an arbitrary interior point, and
+then applies the already well-known fact that a spherical triangle with
+interior angles <span class="math inline">\(\alpha\)</span>, <span
+class="math inline">\(\beta\)</span>, and <span
+class="math inline">\(\gamma\)</span> has area <span
+class="math inline">\(\alpha+\beta+\gamma-\pi\)</span>. Suppose the
+original polyhedron has <span class="math inline">\(n\)</span> vertices
+and <span class="math inline">\(f\)</span> facets, all triangles. The
+angles at each vertex of the resulting spherical triangulation sum to
+exactly <span class="math inline">\(2\pi\)</span>; thus, the total area
+of all <span class="math inline">\(f\)</span> spherical triangles is
+<span class="math inline">\(2\pi n - \pi f\)</span>. We immediately
+conclude that <span class="math inline">\(f = 2n-4\)</span>, because the
+surface area of the unit sphere is <span
+class="math inline">\(4\pi\)</span>. The proof for more general
+polyhedra follows by triangulating the faces.
+<!-- Essentially the same proof was later given by Hirsch in 1807, and   l’Huillier described a similar proof based on Euclidean angles in 1811. --></p>
+<p>The first correct <em>combinatorial</em> proof of Euler’s formula is
+Von Staudt’s 1847 tree-cotree proof. Von Staudt’s actual argument is
+remarkably concise, despite being written in mid-19th-century academic
+German, especially in comparison to the earlier inductive arguments:</p>
+<blockquote>
+<p><em>Wenn nämlich der Körper <span class="math inline">\(E\)</span>
+Eckpünkte hat, so sind <span class="math inline">\(E-1\)</span> Kanten,
+von welchen die erste zwei Eckpunkte unter sich, die zweite einen
+derselben mit einem dritten, die dritte einen der drei vorigen mit einem
+vierten u.s.w. verbindet, hinreichend um von jedem Eckpunkte auf jeden
+andern übergehen zu können. Da nun in einem solchen Systeme von Kanten
+keine geschlossene Linie enthalten ist, jede der übrigen (noch freien)
+Kanten aber mit zwei oder mehrern Kanten des Systems eine geschlossene
+Linie bildet, so sind die übrigen Kanten hinreichend aber auch alle
+erforderlich, um durch sie von jeder der <span
+class="math inline">\(F\)</span> Flächen des Korpers auf jede andere
+übergehen zu können, woraus man scldiessen kann, dass die Anzahl der
+übrigen Kanten <span class="math inline">\(F-1\)</span>, mithin die
+Anzahl aller Kanten <span class="math inline">\(E+F-2\)</span> und
+demnach <span class="math inline">\(E+F=K+2\)</span> sey.</em></p>
+</blockquote>
+<blockquote>
+<p>[When a body has <span class="math inline">\(n\)</span> vertices,
+then <span class="math inline">\(n-1\)</span> edges are sufficient—the
+first connecting two vertices, the second connecting one of those with a
+third, the third connecting one of the three rpevious vertices with a
+fourth, and so on—to be able to go from any vertex to any other. Such a
+system of edges does not contain a closed line, but each of the
+remaining edges forms a closed line with two or more edges of the
+system, so the remaining edges are sufficient, but also necessary, to be
+able to go through them from any of the <span
+class="math inline">\(f\)</span> faces of the body to any other. It
+follows that the number of remaining edges if <span
+class="math inline">\(f-1\)</span>; hence the number of all edges is
+<span class="math inline">\(n+f-2\)</span>, and therefore <span
+class="math inline">\(n+f=m+2\)</span>.]</p>
+</blockquote>
+<blockquote>
+<p>[More loosely: When a body has <span class="math inline">\(n\)</span>
+vertices, we can find <span class="math inline">\(n-1\)</span> edges
+that define a spanning tree <span class="math inline">\(T\)</span>.
+Cutting the surface along every edge in <span
+class="math inline">\(T\)</span> leaves the surface connected, but
+additionally cutting any other edge disconnects the surface, so that
+edges not in <span class="math inline">\(T\)</span> are just enough to
+keep the faces of the body connected. It follows that the number of
+remaining edges if <span class="math inline">\(f-1\)</span>, so the
+total number of edges is <span
+class="math inline">\(n+f-2\)</span>.]</p>
+</blockquote>
+<p>All of these proofs were intended to prove Euler’s formula <em>for
+convex polyhedra</em>, although Cauchy’s proof starts by projecting the
+polyhedron to a <em>straight-line</em> planar map. The first proofs that
+directly consider planar maps are due to Cayley and Listing, both
+published in 1861.
+<!-- In fact, both Cayley and Listing allowed their graphs to include isolated closed “edges” with no vertices, and Listing considered much more general “acyclodic spatial complexes” constructed by gluing disks to cycles in graphs.-->
+Cayley’s argument is a prototype for our first inductive proof; he
+observed that the quantity <span class="math inline">\(n-m+f\)</span>
+does not change when one inserts a new vertex in the interior of an edge
+or inserts a new edge in the interior of a face. Listing repeats (and
+generalizes) Cauchy’s argument, using a global counting argument instead
+of induction, but again assuming without proof the existence of a
+shelling order. Both proofs implicitly assume the Jordan curve theorem,
+so even ignoring shelling issues, they technically only apply to
+<em>combinatorial</em> maps.</p>
+<h2 data-number="1.9" id="aptly-named"><span
+class="header-section-number">1.9</span> Aptly Named</h2>
+<ul>
+<li><p>Outerplanar graphs/maps</p></li>
+<li><p>Easy consequences of Euler’s formula:</p>
+<ul>
+<li>Every simple planar graph has a vertex of degree at most <span
+class="math inline">\(5\)</span>.</li>
+<li>Every planar triangulation has <span
+class="math inline">\(3n-6\)</span> edges and <span
+class="math inline">\(2n-4\)</span> faces.</li>
+<li>Every simple planar graph has at most <span
+class="math inline">\(3n-6\)</span> edges.</li>
+<li>Every simple planar bipartite graph has at most <span
+class="math inline">\(2n-4\)</span> edges.</li>
+<li>Every planar map has either a vertex or a face of degree at most
+<span class="math inline">\(3\)</span>.</li>
+<li><span class="math inline">\(K_{3,3}\)</span> and <span
+class="math inline">\(K_5\)</span> are not planar.</li>
+<li>There are only five Platonic solids.</li>
+<li>Every loop-free planar graph is 6-colorable.</li>
+<li>Every planar graph has an independent set of size <span
+class="math inline">\(\Omega(n)\)</span> in which every vertex has
+degree <span class="math inline">\(O(1)\)</span>.</li>
+</ul></li>
+<li><p>Minimum spanning trees:</p>
+<ul>
+<li>Tarjan’s red-blue meta-algorithm</li>
+<li>Borůvka’s algorithm</li>
+<li>Mareš’s algorithm, Matsui’s algorithm</li>
+<li>minimum spanning tree <span
+class="math inline">\(\leftrightharpoons\)</span> maximum spanning
+cotree</li>
+</ul></li>
+<li><p>Equivalence of tree-cotree decompositions and tree-onion
+figures</p></li>
+<li><p>Random (but not uniform!) rooted planar maps via random
+tree-onion figures</p></li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Well, okay, we only proved this formula for
+<em>curves</em>, but extending our inductive proof to multicurves
+requires us to consider only one additional case. Suppose some <span
+class="math inline">\(2\to0\)</span> move disconnects a multicurve <span
+class="math inline">\(\Gamma\)</span> into two smaller connected
+multicurves <span class="math inline">\(\Gamma^\sharp\)</span> and <span
+class="math inline">\(\Gamma^\flat\)</span>. The original map <span
+class="math inline">\(\Gamma\)</span> has <span
+class="math inline">\(n^\sharp + n^\flat + 2\)</span> vertices and <span
+class="math inline">\(f^\sharp + f^\flat\)</span> faces (including the
+deleted bigon and the common outer face), and the induction hypothesis
+implies that <span class="math inline">\(f^\sharp = n^\sharp +
+2\)</span> and <span class="math inline">\(f ^\flat =
+n^\flat+2\)</span>. Later we will see yet another proof of Euler’s
+formula (not on David’s list) based on Schnyder woods.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span class="math inline">\(\dots\)</span> on display in
+the bottom of a locked filing cabinet stuck in a disused lavatory with a
+sign on the door saying ‘Beware of the Leonhard’.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">\(\dots\)</span> and the
+formula isn’t <em>Euler’s</em>.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

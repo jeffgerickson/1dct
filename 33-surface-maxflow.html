@@ -1,0 +1,218 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>33-surface-maxflow</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1"
+id="maximum-flows-in-surface-graphsvarnothing"><span
+class="header-section-number">1</span> Maximum Flows in Surface
+Graphs<span class="math inline">\(^\varnothing\)</span></h1>
+<h2 data-number="1.1" id="real-homology"><span
+class="header-section-number">1.1</span> Real Homology</h2>
+<h2 data-number="1.2" id="homologous-feasible-flows"><span
+class="header-section-number">1.2</span> Homologous Feasible Flows</h2>
+<h2 data-number="1.3" id="shortest-paths-with-negative-edges"><span
+class="header-section-number">1.3</span> Shortest Paths with Negative
+Edges</h2>
+<p><span class="math inline">\(O(n \log^2 n / \log\log n)\)</span> time
+(Real RAM)</p>
+<pre><code>- ***[[[Move to planarization chapter?]]]$$$</code></pre>
+<h2 data-number="1.4" id="ellipsoid-method-sketch"><span
+class="header-section-number">1.4</span> Ellipsoid Method (Sketch)</h2>
+<h2 data-number="1.5" id="summary"><span
+class="header-section-number">1.5</span> Summary</h2>
+<p>To simplify notation, assume <span class="math inline">\(C =
+n^{O(1)}\)</span> and (because off-the-shelf algorithms are faster
+otherwise) <span class="math inline">\(g = o(n^{1/4})\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(\#\)</span> iterations <span
+class="math inline">\(N = O(d \log \Delta)\)</span></p></li>
+<li><p>Dimension <span class="math inline">\(d = O(g)\)</span></p></li>
+<li><p>Aspect ratio <span class="math inline">\(\Delta =
+C^{O(g)}\)</span></p></li>
+<li><p>So <span class="math inline">\(N = O(g^2 \log
+C)\)</span></p></li>
+<li><p>Oracle time <span class="math inline">\(T_s = O(n\log^2
+n)\)</span></p></li>
+<li><p>Iteration time <span class="math inline">\(O(T_s + d^2)\)</span>
+arithmetic operations</p></li>
+<li><p><span class="math inline">\(k\)</span>th iteration requires <span
+class="math inline">\(O(k)\)</span> bits of precision</p></li>
+<li><p>So <span class="math inline">\(k\)</span>th iteration takes <span
+class="math inline">\(O(T_s A(k) + d^2 M(k))\)</span> time</p></li>
+<li><p>Total time is <span class="math inline">\(O(N\,A(N)\,T_s + d^2\,
+N\, M(N))\)</span></p></li>
+<li><p>Real RAM <em>without</em> square roots: <span
+class="math inline">\(A(N) = O(1)\)</span> and <span
+class="math inline">\(M(N) = O(\log\log N)\)</span> (for square roots)
+<span class="math display">\[
+  \begin{aligned}
+      O(N\,A(N)\,T_s + d^2\,N\,M(N))
+      &amp;=
+      O(N\, T_s + d^2\, N \log\log N)
+  \\  &amp;=
+      O(g^2 \log C)\cdot O(n\log^2 n)
+      +
+      O(g^2) \cdot O(g^2 \log C\log\log (g\log C))
+  \\  &amp;=
+      O(g^2 n\log^2 n \log^2 C)
+      +
+      O(g^4 \log C \log\log (g\log C))
+  \\  &amp;=
+      O(g^2 n\log^4 n)
+  \end{aligned}
+\]</span></p></li>
+<li><p>Bit RAM, grade school arithmetic: <span
+class="math inline">\(A(N) = O(N)\)</span> and <span
+class="math inline">\(M(N) = O(N^2)\)</span> <span
+class="math display">\[
+  \begin{aligned}
+      O(N\,A(N)\, T_s + d^2\,N\,M(N))
+      &amp;=
+      O(N^2 T_s + N^3 d^2)
+  \\  &amp;=
+      O(g^4 \log^2 C)\cdot O(n\log^2 n)
+      +
+      O(g^6 \log^3 C)\cdot O(g^2)
+  \\  &amp;=
+      O(g^4 n\log^2 n \log^2 C)
+      +
+      O(g^8 \log^3 C)
+  \\  &amp;=
+      O(g^4 n\log^4 n)
+      +
+      O(g^8 \log^3 n)
+  \end{aligned}
+\]</span> First term dominates because <span class="math inline">\(g =
+O((n\log n)^{1/4})\)</span>.</p></li>
+<li><p>Fast bit RAM: <span class="math inline">\(A(N) = O(N)\)</span>
+and <span class="math inline">\(M(N) = O(N\log N)\)</span> <span
+class="math display">\[
+  \begin{aligned}
+      O(N\,A(N)\, T_s + d^2\,N\,M(N))
+      &amp;=
+      O(N^2 T_s +  d^2 N^2\log N)
+  \\  &amp;=
+      O(g^4 \log^2 C)\cdot O(n\log^2 n)
+      \\
+      &amp;\qquad {}+
+      O(g^2)\cdot O(g^4 \log^2 C \log (g\log C))
+  \\  &amp;=
+      O(g^4 n\log^2 n \log^2 C)
+      +
+      O(g^6 \log^2 C \log (g\log C))
+  \\  &amp;=
+      O(g^4 n\log^4 n)
+  \end{aligned}
+\]</span> First term dominates because <span class="math inline">\(g =
+o(\sqrt{n\log n})\)</span>.</p></li>
+<li><p>Fast word RAM: <span class="math inline">\(A(N) = M(N) =
+O(N)\)</span> — Need to verify square root time <span
+class="math display">\[
+  \begin{aligned}
+      O(N\,A(N)\, T_s + d^2\,N\,M(N))
+      &amp;=
+      O(N^2 T_s + d^2 N^2)
+  \\  &amp;=
+      O(g^4 \log^2 C)\cdot O(n\log^2 n)
+      +
+      O(g^2)\cdot O(g^4 \log^2 C)
+  \\  &amp;=
+      O(g^4 n\log^2 n \log^2 C) + O(g^6 \log^2 C)
+  \\  &amp;=
+      O(g^4 n\log^4 n)
+  \end{aligned}
+\]</span> <span class="math inline">\(\dots\)</span> because <span
+class="math inline">\(g = o(\sqrt{n})\)</span></p></li>
+</ul>
+<p><strong>Theorem:</strong> <em>Let <span
+class="math inline">\(\Sigma\)</span> be a surface map with <span
+class="math inline">\(n\)</span> vertices, genus <span
+class="math inline">\(g = o(\sqrt{n\log n})\)</span>, positive integer
+edge capacities less than <span class="math inline">\(n^{O(1)}\)</span>,
+and two vertices <span class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span>. We can compute the maximum <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(\Sigma\)</span> in <span
+class="math inline">\(O(g^4 n\log^4 n)\)</span> time.</em></p>
+<h2 data-number="1.6" id="references"><span
+class="header-section-number">1.6</span> References</h2>
+<ol type="1">
+<li><p>Alt JACM 1988</p></li>
+<li><p>Brent JACM 1976</p></li>
+<li><p>Chambers Erickson Nayyeri</p></li>
+<li><p>fast integer multiplication</p></li>
+<li><p>Fürer arXiv:1402.1811</p></li>
+</ol>
+<h2 data-number="1.7" id="aptly-named-sir"><span
+class="header-section-number">1.7</span> Aptly Named Sir</h2>
+<ul>
+<li>Directed graphs</li>
+<li>Non-orientable surfaces(?)</li>
+<li>Multi-dimensional parametric search</li>
+<li>Min-cost homologous circulations</li>
+<li>Spectral min-cost-flow algorithms, scaling</li>
+</ul>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

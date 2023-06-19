@@ -1,0 +1,966 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>13-Maxwell-Cremona</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1" id="maxwellcremona-correspondencebeta"><span
+class="header-section-number">1</span> Maxwell–Cremona
+Correspondence<span class="math inline">\(^\beta\)</span></h1>
+<p>The idea of using graphs to model physical networks of springs or
+ropes under tension does not originate with Tutte, but centuries
+earlier.</p>
+<p>In the late 1500s, the Dutch physicist Simon Stevin published an
+influential book called <em>The Art of Weighing</em>. The 1605 reissue
+of this book included a supplement where Stevin describes how to
+calculate the forces imposed by a weight hanging from a tree of ropes.
+In particular, Stevin correctly observes that as long as every vertex of
+this tree has degree <span class="math inline">\(3\)</span>, there is a
+unique force applied along each rope such that all forces balance
+out.</p>
+<figure>
+<img src="Fig/Stevin-tree.png" style="width:30.0%"
+alt="A weight hanging from a tree of ropes, from Stevin (1605)." />
+<figcaption aria-hidden="true">A weight hanging from a tree of ropes,
+from Stevin (1605).</figcaption>
+</figure>
+<p>More than a century later, the French engineer Pierre Varignon
+described a method for visualising the forces acting on a planar tree of
+ropes under tension. The network of ropes is sometimes called a
+<em>funicular polygon</em>, from the Latin <em>funiculus</em> meaning
+“small rope”, and the Greek <em>polygonos</em> meaning “many-angled”.
+(It would be another 45 years before Meister redefined “polygon” to mean
+a closed curve composed of line segments.</p>
+<figure>
+<img src="Fig/Varignon-diagram.png" style="width:35.0%"
+alt="A force polygon (dotted) for a funicular polygon of ropes under tension, from Varignon (1725)." />
+<figcaption aria-hidden="true">A force polygon (dotted) for a funicular
+polygon of ropes under tension, from Varignon (1725).</figcaption>
+</figure>
+<p>Each edge in the funicular polygon is a line segment. We can
+visualize the forces acting along these edges by drawing a <em>force
+polygon</em> as follows. For each edge <span
+class="math inline">\(e\)</span> in the funicular polygon, we draw a
+line segment <span class="math inline">\(e^*\)</span> perpendicular<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> to <span
+class="math inline">\(e\)</span> whose length is equal to the magnitude
+of force being applied along <span class="math inline">\(e\)</span>. If
+the system of ropes is in equilibrium, then the forces vectors into each
+vertex of the funicular polygon sum to zero; equivalently, the
+corresponding edges of the force polygon form a closed figure. In short,
+the force polygon is the <em>dual graph</em> of the funicular polygon.
+Outside the study of polyhedra (and especially <em>regular</em>
+polyhedra), this may be the oldest example of planar-graph duality.<a
+href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p>
+<p>Finally, in the mid-1800s, famed Scottish physicist James Clark
+Maxwell generalized Varignon’s force diagrams to arbitrarily complex
+planar graphs. Maxwell’s analysis became a key technique in the new
+field of <em>graphical statics</em> developed by William John Macquorn
+Rankine, Carl Culmann, Luigi Cremona, and others. One of the early
+successes of graphical statics was the world’s tallest man-made
+structure (at the time), constructed in the 1880s to celebrate the
+100-year anniversary of the French Revolution by Gustave Eiffel.</p>
+<h2 data-number="1.1" id="dramatis-personae"><span
+class="header-section-number">1.1</span> Dramatis Personae</h2>
+<h3 data-number="1.1.1" id="graphs-and-frameworks"><span
+class="header-section-number">1.1.1</span> Graphs and Frameworks</h3>
+<p>Let <span class="math inline">\(G\)</span> be a simple 3-connected
+planar graph. Recall from the previous lecture that <span
+class="math inline">\(G\)</span> has a unique planar embedding (up to
+homeomorphism) and therefore has a unique dual graph <span
+class="math inline">\(G^*\)</span>, which is also simple, 3-connected,
+and planar.</p>
+<p>Let <span class="math inline">\(\langle uv | ab\rangle\)</span>
+denote the unique dart <span class="math inline">\(d\)</span> in <span
+class="math inline">\(G\)</span> with tail <span
+class="math inline">\(u\)</span> and head <span
+class="math inline">\(v\)</span>, whose dual dart <span
+class="math inline">\(d^*\)</span> in <span
+class="math inline">\(G^*\)</span> has tail <span
+class="math inline">\(a\)</span> and head <span
+class="math inline">\(b\)</span>. Thus, <span
+class="math inline">\(\langle uv | ab \rangle^* = \langle ab | uv
+\rangle\)</span> and <span class="math inline">\(\textsf{rev} \langle uv
+| ab \rangle = \langle vu | ba \rangle\)</span>. Equivalently, <span
+class="math inline">\(\langle uv | ab \rangle\)</span> has right shore
+<span class="math inline">\(a^*\)</span> and left shore <span
+class="math inline">\(b^*\)</span> in the unique planar embedding of
+<span class="math inline">\(G\)</span>.</p>
+<p>A <em>position function</em> for <span
+class="math inline">\(G\)</span> is a function <span
+class="math inline">\(p\colon V(G)\to\mathbb{R}^2\)</span>, or
+equivalently a matrix <span class="math inline">\(p\in (\mathbb{R}^2)^n
+= \mathbb{R}^{2\times n}\)</span>, such that <span
+class="math inline">\(p(u)\ne p(v)\)</span> for every edge <span
+class="math inline">\(uv\)</span>. For each edge <span
+class="math inline">\(uv\)</span> of <span
+class="math inline">\(G\)</span>, we abuse notation by writing <span
+class="math inline">\(p(uv)\)</span> to denote the straight line segment
+between <span class="math inline">\(p(u)\)</span> and <span
+class="math inline">\(p(v)\)</span>. The pair <span
+class="math inline">\((G, p)\)</span> is called a <em>planar
+framework</em>. The <em>displacement</em> vector <span
+class="math inline">\(\Delta(d)\)</span> of any dart <span
+class="math inline">\(d = \langle uv | ab \rangle\)</span>, with respect
+to a fixed position function <span class="math inline">\(p\)</span>, is
+<span class="math inline">\(p(v) - p(u)\)</span>.</p>
+<p>Let me emphasize that a planar framework <span
+class="math inline">\((G,p)\)</span> is a straight-line <em>drawing</em>
+of its underlying planar graph <span class="math inline">\(G\)</span>,
+but it is not necessarily an <em>embedding</em>; images of distinct
+edges may cross, overlap, or even coincide.</p>
+<h3 data-number="1.1.2" id="stresses"><span
+class="header-section-number">1.1.2</span> Stresses</h3>
+<p>A <em>stress</em> is a function <span
+class="math inline">\(\omega\colon E(G)\to\mathbb{R}\)</span>, or
+equivalently, a vector <span class="math inline">\(\omega\in
+\mathbb{R}^m\)</span>. A stress is <em>non-zero</em> if <span
+class="math inline">\(\omega(e)\ne 0\)</span> for at least one edge
+<span class="math inline">\(e\)</span>, and <em>strict</em> if <span
+class="math inline">\(\omega(e)\ne 0\)</span> for every edge <span
+class="math inline">\(e\)</span>. We frequently abuse notation by
+defining <span class="math inline">\(\omega(uv)=0\)</span> when <span
+class="math inline">\(uv\)</span> is not an edge. We also extend the
+function <span class="math inline">\(\omega\)</span> to the darts of
+<span class="math inline">\(G\)</span> by defining <span
+class="math inline">\(\omega(\langle uv | ab \rangle) =
+\omega(uv)\)</span>.</p>
+<p>We can interpret each edge <span class="math inline">\(e\)</span> of
+a planar framework as a (first-order linear) spring with spring constant
+<span class="math inline">\(|\omega(e)|\)</span>, under tension if <span
+class="math inline">\(\omega(e)&gt;0\)</span> and under compression if
+<span class="math inline">\(\omega(e)&lt;0\)</span>. Hooke’s Law implies
+that each edge <span class="math inline">\(uv\)</span> imparts a force
+of <span class="math inline">\(\omega(uv) \cdot (p(v) - p(u)) =
+\omega(uv)\cdot \Delta(u\mathord\to v)\)</span> to vertex <span
+class="math inline">\(v\)</span>.</p>
+<p>A stress <span class="math inline">\(\omega\)</span> is called an
+<em>equilibrium</em> stress (or a <em>self-stress</em>) if the net force
+on every vertex is zero; that is, for every vertex <span
+class="math inline">\(v\)</span> we have <span class="math display">\[
+\sum_u \omega(uv) \cdot (p(v) - p(u)) = \binom{0}{0}\]</span></p>
+<p>Recall from the previous lecture that this linear system describes
+the unique critical point of the potential energy function <span
+class="math display">\[
+    \Phi(p) := \frac{1}{2} \sum_{u, v}
+                    \omega(uv) \cdot \| p(u) - p(v) \|^2.
+\]</span> Because stress coefficients are allowed to be negative, this
+unique critical point is no longer a local minimum, as it was in the
+previous lecture.</p>
+<h3 data-number="1.1.3" id="forms-and-discrete-integration"><span
+class="header-section-number">1.1.3</span> 1-Forms and Discrete
+Integration</h3>
+<p>A <em>discrete 1-form</em> (or <em>1-cochain</em>, or <em>voltage
+assignment</em>, or <em>pseudoflow</em>) on <span
+class="math inline">\(G\)</span> is an anti-symmetric function <span
+class="math inline">\(\phi\colon D(G) \to R\)</span> from the darts of
+<span class="math inline">\(G\)</span> to some additive abelian group
+<span class="math inline">\(R\)</span>, where anti-symmetry means <span
+class="math inline">\(\phi(d) = -\phi(\textsf{rev}(d))\)</span> for
+every dart <span class="math inline">\(d\)</span>. Here we consider only
+1-chains over the vector spaces <span
+class="math inline">\(\mathbb{R}\)</span> and <span
+class="math inline">\(\mathbb{R}^2\)</span>. (Let me emphasize here that
+a stress is not a 1-form!)</p>
+<p>A 1-form is <em>exact</em> if the sum of the values of the darts in
+any directed cycle is zero. Exact 1-forms are also called
+<em>tensions</em>; they are also said to obey <em>Kirchhoff’s voltage
+law</em>.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p>
+<p>A <em>vertex potential</em> (or <em>price function</em> or
+<em>discrete <span class="math inline">\(0\)</span>-form</em>) is any
+function <span class="math inline">\(\pi\colon V(G)\to R\)</span> over
+the vertices of <span class="math inline">\(G\)</span>. The
+<em>derivative</em> (or <em>coboundary</em>) <span
+class="math inline">\(\delta\pi\)</span> of a <span
+class="math inline">\(0\)</span>-form <span
+class="math inline">\(\pi\)</span> is the 1-form <span
+class="math inline">\(\delta\pi(u\mathord\to v) := \pi(v) -
+\pi(u)\)</span>.</p>
+<p><strong>Lemma:</strong> <em>A 1-form <span
+class="math inline">\(\phi\)</span> is exact if and only if <span
+class="math inline">\(\phi\)</span> is the derivative of a vertex
+potential.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The derivative <span class="math inline">\(\delta\pi\)</span> of any
+<span class="math inline">\(0\)</span>-form <span
+class="math inline">\(\pi\)</span> is clearly exact. On the other hand,
+given any exact <span class="math inline">\(1\)</span>-form <span
+class="math inline">\(\phi\)</span>, we can arbitrarily fix the
+potential <span class="math inline">\(\pi(o)\)</span> of an arbitrary
+vertex <span class="math inline">\(o\)</span>, and then for any other
+vertex define <span class="math inline">\(\pi(v)\)</span> by summing (or
+“integrating”) <span class="math inline">\(\phi\)</span> along any path
+from <span class="math inline">\(o\)</span> to <span
+class="math inline">\(v\)</span>. Exactness of <span
+class="math inline">\(\phi\)</span> implies that <span
+class="math inline">\(\pi(v)\)</span> does not depend on which path we
+choose to sum along. More generally, for any vertices <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span>, we can compute the potential
+difference <span class="math inline">\(\pi(t)-\pi(s)\)</span> by
+“integrating” <span class="math inline">\(\phi\)</span> along any <span
+class="math inline">\(s\)</span>-to-<span
+class="math inline">\(t\)</span> path.
+</dd>
+</dl>
+<p>In particular, for any fixed planar framework <span
+class="math inline">\((G, p)\)</span>, the <em>displacement</em>
+function <span class="math inline">\(\Delta \colon D(G) \to
+\mathbb{R}^2\)</span> defined by <span
+class="math inline">\(\Delta(u\mathord\to v) = p(v) - p(u)\)</span> is
+an exact 1-form.</p>
+<p>A 1-form over a 3-connected planar graph (or more generally, any
+surface map) is <em>closed</em> if the sum of the values of the darts in
+any <em>face boundary</em> of <span class="math inline">\(G\)</span> sum
+to zero. Exact 1-forms are also called <em>cocirculations</em>.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Let <span class="math inline">\(G\)</span> be an arbitrary
+3-connected planar graph. A 1-form on <span
+class="math inline">\(G\)</span> is closed <strong>if and only
+if</strong> it is exact.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Every face boundary in <span class="math inline">\(G\)</span> is a
+directed cycle by definition, so every exact 1-form is trivially closed
+(even if the graph <span class="math inline">\(G\)</span> is not
+planar). The Jordan curve theorem applied to any planar embedding of
+<span class="math inline">\(G\)</span> implies that every directed cycle
+in <span class="math inline">\(G\)</span> is a sum (or symmetric
+difference) of directed face boundaries. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<h2 data-number="1.2" id="reciprocal-diagrams"><span
+class="header-section-number">1.2</span> Reciprocal diagrams</h2>
+<p>A <em>reciprocal diagram</em> for a planar framework <span
+class="math inline">\((G, p)\)</span> is another planar framework <span
+class="math inline">\((G^*, p^*)\)</span> such that <span
+class="math inline">\(G^*\)</span> and <span
+class="math inline">\(G\)</span> are dual and corresponding edges in
+<span class="math inline">\(G\)</span> and <span
+class="math inline">\(G^*\)</span> are mapped to orthogonal segments by
+<span class="math inline">\(p\)</span> and <span
+class="math inline">\(p^*\)</span>, respectively. Two reciprocal
+diagrams are <em>equivalent</em> if one is a translation of the other.
+For any vector <span class="math inline">\(v\in \mathbb{R}^2\)</span>,
+let <span class="math inline">\(v^\perp\)</span> denote the result of
+rotating <span class="math inline">\(v\)</span> a quarter turn
+counterclockwise: <span class="math inline">\(\binom{x}{y}^\perp =
+\binom{-y}{x}\)</span>.</p>
+<dl>
+<dt><strong>Theorem [Maxwell, Whiteley]:</strong></dt>
+<dd>
+<em>There is a bijection between equilibrium stresses <span
+class="math inline">\(\omega\)</span> for <span
+class="math inline">\((G, p)\)</span> and equivalence classes of
+reciprocal diagrams <span class="math inline">\((G^*, p^*)\)</span>.
+Moreover, the stress <span class="math inline">\(\omega^*(e) =
+1/\omega(e)\)</span> is an equilibrium stress for every reciprocal
+diagram <span class="math inline">\((G^*, p^*)\)</span>, and the
+corresponding equivalence class of reciprocal diagrams of any <span
+class="math inline">\((G^*, p^*)\)</span> contains <span
+class="math inline">\((G,p)\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\omega\)</span> be any equilibrium
+stress for <span class="math inline">\((G,p)\)</span>. Define a 1-form
+<span class="math inline">\(\Delta^*\colon
+D(G^*)\to\mathbb{R}^2\)</span>, which might be called the <em>dual
+displacement function</em>, by setting <span class="math display">\[
+\Delta^*(d^*)
+:= \omega(d)\cdot \Delta(d)^\perp
+\]</span> for every dart <span class="math inline">\(d\)</span> of <span
+class="math inline">\(G\)</span>. For any face <span
+class="math inline">\(v^*\)</span> of the dual graph <span
+class="math inline">\(G^*\)</span>, equilibrium implies that <span
+class="math display">\[\begin{aligned}
+\sum_{d^* \colon v^* = \textsf{left}(d^*)} \Delta^*(d^*)
+&amp;=
+\sum_{d \colon v = \textsf{head}(d)} \omega(d)\cdot\Delta(d)^\perp
+\\  &amp;=
+\sum_{u} \omega(uv) \cdot \Delta(u\mathord\to v)^\perp
+=
+\binom{0}{0}^\perp
+=
+\binom{0}{0}.
+\end{aligned}\]</span> Thus, the function <span
+class="math inline">\(\Delta^*\)</span> is a closed 1-form in the dual
+graph <span class="math inline">\(G^*\)</span>. , it follows that <span
+class="math inline">\(\Delta^*\)</span> is an <em>exact</em> 1-form on
+<span class="math inline">\(G^*\)</span>. Thus, there is a potential
+function <span class="math inline">\(p^*\)</span> on the vertices of
+<span class="math inline">\(G^*\)</span> such that <span
+class="math inline">\(\Delta^*(a\mathord\to b) = p^*(b) -
+p^*(a)\)</span> for all dual darts <span
+class="math inline">\(a\mathord\to b\)</span>; moreover, <span
+class="math inline">\(p^*\)</span> is unique up to translation. By
+construction, the framework <span class="math inline">\((G^*,
+p^*)\)</span> is a reciprocal diagram of <span
+class="math inline">\((G,p)\)</span>.
+</dd>
+<dd>
+<p>On the other hand, let <span class="math inline">\((G^*,
+p^*)\)</span> be any reciprocal diagram for <span
+class="math inline">\((G,p)\)</span>. For each dart <span
+class="math inline">\(d = \langle uv | ab \rangle\)</span>, there is a
+unique real number <span class="math inline">\(\omega(d)\)</span> such
+that <span class="math display">\[
+p^*(b) - p^*(a) = \omega(d) \cdot ( p(v) - p(u) )^\perp.
+\]</span> Kirchoff’s voltage law in <span class="math inline">\((G^*,
+p^*)\)</span> immediately implies that <span
+class="math inline">\(\omega\)</span> is an equilibrium stress for <span
+class="math inline">\((G, p)\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="1.3" id="polyhedral-lifts"><span
+class="header-section-number">1.3</span> Polyhedral lifts</h2>
+<p>A <em>lift</em> of a planar framework <span
+class="math inline">\((G,p)\)</span> is another <em>height</em> function
+<span class="math inline">\(z\colon V(G)\to\mathbb{R}\)</span>, or
+equivalently, a vector <span class="math inline">\(z\in
+\mathbb{R}^n\)</span>. The position and height functions define a
+three-dimensional position function <span
+class="math inline">\(\hat{p}\colon V(G)\to \mathbb{R}^3\)</span> by
+concatenation: <span class="math inline">\(\hat{p}(v) = (x(v), y(v),
+z(v))\)</span>, where <span class="math inline">\((x(v), y(v)) =
+p(v)\)</span>. A lift of <span class="math inline">\((G,p)\)</span> is
+<em>polyhedral</em> if, for each face <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span>, the images <span
+class="math inline">\(\hat{p}(v)\)</span> of all vertices <span
+class="math inline">\(v\in f\)</span> are coplanar; a polyhedral lift is
+<em>trivial</em> if all points <span
+class="math inline">\(\hat{p}(v)\)</span> are coplanar. Finally, two
+polyhedral lifts <span class="math inline">\(z\)</span> and <span
+class="math inline">\(z’\)</span> are <em>equivalent</em> if their
+difference a constant: <span class="math inline">\(z(u) - z’(u) = z(v) -
+z’(v)\)</span> for all vertices <span class="math inline">\(u\)</span>
+and <span class="math inline">\(v\)</span>. For example, every trivial
+lift is equivalent to the zero lift <span class="math inline">\(h\equiv
+0\)</span>.</p>
+<dl>
+<dt><strong>Theorem [Maxwell, Whiteley]:</strong></dt>
+<dd>
+<em>There is a bijection between reciprocal diagrams <span
+class="math inline">\((G^*, p^*)\)</span> of <span
+class="math inline">\((G,p)\)</span> and equivalence classes of
+nontrivial polyhedral lifts of <span
+class="math inline">\((G,p)\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The <em>radial graph <span
+class="math inline">\(G^\diamond\)</span></em> of <span
+class="math inline">\(G\)</span> is a bipartite planar graph whose
+vertices correspond to the vertices and faces of <span
+class="math inline">\(G\)</span>, and whose edges correspond to
+vertex-face incidences or <em>corners</em> of <span
+class="math inline">\(G\)</span>. The radial graph <span
+class="math inline">\(G^\diamond\)</span> inherits a unique planar
+embedding from the unique embeddings of <span
+class="math inline">\(G\)</span> and <span
+class="math inline">\(G^*\)</span>. The faces of this embedding are
+correspond to the edges of <span class="math inline">\(G\)</span>; in
+particular, every face of <span
+class="math inline">\(G^\diamond\)</span> has degree <span
+class="math inline">\(4\)</span>.<a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a>
+</dd>
+<dd>
+
+</dd>
+<dd>
+<p>Let <span class="math inline">\(z\)</span> be any non-trivial
+polyhedral lift of <span class="math inline">\((G,p)\)</span>. For each
+face <span class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span>, let the equation <span
+class="math inline">\(z = x^*(f)\cdot x + y^*(f)\cdot y -
+z^*(f)\)</span> denote the plane supporting the lifted face <span
+class="math inline">\(\hat{p}(f)\)</span>, and define <span
+class="math inline">\(p^*(f) = (x^*(f), y^*(f))\)</span>. For every
+corner <span class="math inline">\((v, f)\)</span> in <span
+class="math inline">\(G\)</span> (or equivalently, every edge <span
+class="math inline">\(vf\)</span> of the radial map <span
+class="math inline">\(G^\diamond\)</span>) we immediately have <span
+class="math display">\[
+z(v) + z^*(f)
+~=~ x^*(f)\cdot x(v) + y^*(f)\cdot y(v)
+~=~ p(v) \cdot p^*(f)
+\]</span> Thus, for every dart <span class="math inline">\(d = \langle
+uv | ab \rangle\)</span> of <span class="math inline">\(G\)</span>, we
+have four identities: <span class="math display">\[
+\begin{aligned}
+    p(u)\cdot p^*(a) &amp;= z(u) + z^*(a) \\
+    p(u)\cdot p^*(b) &amp;= z(u) + z^*(b) \\
+    p(v)\cdot p^*(a) &amp;= z(v) + z^*(a) \\
+    p(v)\cdot p^*(b) &amp;= z(v) + z^*(b)
+\end{aligned}
+\]</span> It follows that <span
+class="math inline">\((p(u)-p(v))\cdot(p^*(a)-p^*(b)) = 0\)</span>. We
+conclude that each edge of <span class="math inline">\((G,p)\)</span> is
+orthogonal to its dual edge in <span class="math inline">\((G^*,
+p^*)\)</span>.</p>
+</dd>
+<dd>
+<p>On the other hand, let <span class="math inline">\((G^*,
+p^*)\)</span> be any reciprocal diagram for <span
+class="math inline">\((G,p)\)</span>. For each face <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span> we interpret the dual position vector
+<span class="math inline">\(p^*(f)\)</span> as the gradient vector <span
+class="math inline">\((x^*(f), y^*(f))\)</span> of the support plane of
+the lifted face <span class="math inline">\(\hat{p}(f)\)</span>. We
+simultaneously compute vertical offsets <span
+class="math inline">\(z^*(f)\)</span> for those support planes and
+heights <span class="math inline">\(z(v)\)</span> for the vertices to
+obtain a consistent polyhedral lift.</p>
+</dd>
+<dd>
+<p>We can assign values <span class="math inline">\(z(v)\)</span> and
+<span class="math inline">\(z^*(f)\)</span> to the vertices <span
+class="math inline">\(v\)</span> and faces <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span> by integrating a closed <span
+class="math inline">\(1\)</span>-form over the darts of the radial map
+<span class="math inline">\(G^\diamond\)</span>. Specifically, we define
+the 1-form <span class="math inline">\(\phi^\diamond\colon
+D(G^\diamond)\to\mathbb{R}\)</span> by setting <span
+class="math display">\[\phi^\diamond(f\mathord\to v) := p(v)\cdot
+p^*(f),\]</span> and therefore <span
+class="math display">\[\phi^\diamond(v\mathord\to f) = -p(v)\cdot
+p^*(f),\]</span> for each vertex <span class="math inline">\(v\)</span>
+and face <span class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span>. For each dart <span
+class="math inline">\(d = \langle uv | ab \rangle\)</span> of <span
+class="math inline">\(G\)</span>, reciprocality implies <span
+class="math display">\[
+\begin{aligned}
+    \phi^\diamond(a\mathord\to v) + \phi^\diamond(v\mathord\to b)
+&amp;{}
+        + \phi^\diamond(b\mathord\to u) + \phi^\diamond(u\mathord\to a)
+\\  &amp;=
+    p(v)\cdot p^*(a) - p(v)\cdot p^*(b)
+        + p(u)\cdot p^*(b) - p(u)\cdot p^*(a)
+\\  &amp;=
+    (p(v)-p(u)) \cdot (p^*(a) - p^*(b)) = 0.
+\end{aligned}
+\]</span> Thus, <span class="math inline">\(\phi^\diamond\)</span> is a
+closed, and therefore exact, 1-form on the radial graph <span
+class="math inline">\(G^\diamond\)</span>. It follows that there is a
+0-form <span class="math inline">\(\pi^\diamond\colon V(G^\diamond)
+\to\mathbb{R}\)</span>, unique up to translation, such that <span
+class="math inline">\(\phi^\diamond(f\mathord\to v) = \pi^\diamond(v) -
+\pi^\diamond(f)\)</span>. For each vertex <span
+class="math inline">\(v\)</span> of <span
+class="math inline">\(G\)</span>, define <span
+class="math inline">\(z(v) := \pi^\diamond(v)\)</span>, and for each
+face <span class="math inline">\(f\)</span> of <span
+class="math inline">\(G\)</span>, define <span
+class="math inline">\(z^*(f) := -\pi^\diamond(f)\)</span>. By
+construction, for any corner <span class="math inline">\((v, f)\)</span>
+of <span class="math inline">\(G\)</span>, we have <span
+class="math display">\[
+z(v) + z^*(f) = p(v)\cdot p^*(f)
+\]</span> and therefore <span class="math display">\[
+z(v) = x(v)\cdot x^*(f) + y(v)\cdot y^*(f) - z^*(f).
+\]</span> Thus, the point <span class="math inline">\(\hat{p}(v) =
+(x(v), y(v), z(v))\)</span> lies on the supporting plane of <span
+class="math inline">\(\hat{p}(f)\)</span>, which has equation <span
+class="math inline">\(z = x^*(f)\cdot f + y^*(f)\cdot y -
+z^*(f)\)</span>. We conclude that the vertex heights <span
+class="math inline">\(z(v)\)</span> and facet-plane offsets <span
+class="math inline">\(z^*(f)\)</span> are consistent with a polyhedral
+lift of <span class="math inline">\(G\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="1.4" id="a-non-obvious-example-the-anticube"><span
+class="header-section-number">1.4</span> A Non-Obvious Example: The
+“Anticube”</h2>
+<p>Consider the planar framework <span class="math inline">\(\Gamma =
+(G,p)\)</span> shown below left, whose underlying graph <span
+class="math inline">\(G\)</span> is the standard cube graph, which is
+planar and 3-connected. The six faces of the cube have vertices <span
+class="math inline">\(1243\)</span>, <span
+class="math inline">\(1276\)</span>, <span
+class="math inline">\(2457\)</span>, <span
+class="math inline">\(4365\)</span>, <span
+class="math inline">\(3186\)</span>, and <span
+class="math inline">\(5687\)</span>. (Short orthogonal edges have stress
+coefficient <span class="math inline">\(6\)</span>; long orthogonal
+edges have stress coefficient <span class="math inline">\(3\)</span>;
+diagonal edges have stress coefficient <span
+class="math inline">\(-4\)</span>.)</p>
+<p>The resulting reciprocal framework <span
+class="math inline">\(\Gamma^* = (G^*, p^*)\)</span> is shown on the
+right, scaled down by a factor of <span
+class="math inline">\(6\)</span>, along with its dual equilibrium
+stress. (Dual vertices <span class="math inline">\(A\)</span> and <span
+class="math inline">\(F\)</span> actually coincide, but are perturbed
+apart to better illustrate the framework structure.) The dual graph
+<span class="math inline">\(G^*\)</span> is the graph of the regular
+octahedron. I computed this reciprocal framework by solving the system
+of linear equations <span class="math inline">\(\Delta^*(a\mathord\to b)
+= p^*(b) - p^*(a)\)</span>, one for each dual edge, for the dual
+position vectors <span class="math inline">\(p^*(a)\)</span>.</p>
+<figure>
+<img src="Fig/anticube.png" style="width:80.0%"
+alt="The anticube framework with an equilibrium stress, the radial map of the cube, and the corresponding reciprocal framework." />
+<figcaption aria-hidden="true">The anticube framework with an
+equilibrium stress, the radial map of the cube, and the corresponding
+reciprocal framework.</figcaption>
+</figure>
+<!--
+\begin{align*}
+    P &= \begin{bmatrix}
+        +1 & +2 \\
+        -1 & +2 \\
+        +1 & -2 \\
+        -1 & -2 \\
+        +2 & +1 \\
+        -2 & +1 \\
+        +2 & -1 \\
+        -2 & -1
+    \end{bmatrix}
+    &
+    L &= \begin{bmatrix}
+        -5 & 6 & 3 & \cdot & \cdot & \cdot & \cdot & -4 \\ 
+        6 & -5 & \cdot & 3 & \cdot & \cdot & -4 & \cdot \\
+        3 & \cdot & -5 & 6 & \cdot & -4 & \cdot & \cdot \\
+        \cdot & 3 & 6 & -5 & -4 & \cdot & \cdot & \cdot \\
+        \cdot & \cdot & \cdot & -4 & -5 & 3 & 6 & \cdot \\ 
+        \cdot & \cdot & -4 & \cdot & 3 & -5 & \cdot & 6 \\
+        \cdot & -4 & \cdot & \cdot & 6 & \cdot & -5 & 3 \\
+        -4 & \cdot & \cdot & \cdot & \cdot & 6 & 3 & -5 
+    \end{bmatrix}
+    &
+    \ker L &= \begin{bmatrix}
+        +1 & +2 & 1 \\
+        -1 & +2 & 1 \\
+        +1 & -2 & 1 \\
+        -1 & -2 & 1 \\
+        +2 & +1 & 1 \\
+        -2 & +1 & 1 \\
+        +2 & -1 & 1 \\
+        -2 & -1 & 1
+    \end{bmatrix}
+\end{align*}
+\begin{align*}
+    \Delta &=
+    \begin{bmatrix}
+        -2 & 0 \\
+        0 & -4 \\
+        -3 & -3 \\
+        0 & -4 \\
+        +3 & -3 \\
+        -2 & 0 \\
+        -3 & 3 \\
+        +3 & +3 \\
+        -4 & 0 \\
+        0 & -2 \\
+        0 & -2 \\
+        -4 & 0
+    \end{bmatrix}
+    ~
+    \textcolor{Salmon}
+    {\begin{matrix}
+        \arc12 \\ \arc13 \\ \arc18 \\ \arc24 \\
+        \arc27 \\ \arc34 \\ \arc36 \\ \arc45 \\
+        \arc56 \\ \arc57 \\ \arc68 \\ \arc78
+    \end{matrix}}
+    \quad
+    \textcolor{YellowGreen}
+    {\begin{matrix}
+        \fence{B}{A} \\ \fence{A}{C} \\ \fence{C}{B} \\ \fence{D}{A} \\
+        \fence{B}{D} \\ \fence{A}{E} \\ \fence{E}{C} \\ \fence{D}{E} \\
+        \fence{F}{E} \\ \fence{D}{F} \\ \fence{F}{C} \\ \fence{B}{F}
+    \end{matrix}}
+    &
+    \Delta^* &=
+    \begin{bmatrix}
+        0 & -12  \\
+        +12 & 0  \\
+        -12 & +12 \\
+        +12 & 0 \\
+        -12 & -12 \\
+        0 & -12 \\
+        +12 & +12 \\
+        +12 & -12 \\
+        0 & -12 \\
+        +12 & 0 \\
+        +12 & 0 \\
+        0 & -12
+    \end{bmatrix}
+    ~
+    \textcolor{Salmon}
+    {\begin{matrix}
+        \fence12 \\ \fence13 \\ \fence18 \\ \fence24 \\
+        \fence27 \\ \fence34 \\ \fence36 \\ \fence45 \\
+        \fence56 \\ \fence57 \\ \fence68 \\ \fence78
+    \end{matrix}}
+    \quad
+    \textcolor{YellowGreen}
+    {\begin{matrix}
+        \arc{B}{A} \\ \arc{A}{C} \\ \arc{C}{B} \\ \arc{D}{A} \\
+        \arc{B}{D} \\ \arc{A}{E} \\ \arc{E}{C} \\ \arc{D}{E} \\
+        \arc{F}{E} \\ \arc{D}{F} \\ \arc{F}{C} \\ \arc{B}{F}
+    \end{matrix}}
+\end{align*}
+\begin{align*}
+    [P, Z] &= \begin{bmatrix}[cc:c]
+        +1 & +2 & 0 \\
+        -1 & +2 & 0 \\
+        +1 & -2 & 0 \\
+        -1 & -2 & 0 \\
+        +2 & +1 & 36 \\
+        -2 & +1 & 36 \\
+        +2 & -1 & 36 \\
+        -2 & -1 & 36
+    \end{bmatrix}
+    \textcolor{Gray}    {\begin{matrix} 1\\2\\3\\4\\5\\6\\7\\8 \end{matrix}}
+    &
+    [P^*, Z^*] &= \begin{bmatrix}[cc:c]
+        0 & 0 & 0 \\
+        0 & +12 & 24 \\
+        +12 & 0 & 12 \\
+        -12 & 0 & 12 \\
+        0 & -12 & 24 \\
+        0 & 0 & 36
+    \end{bmatrix}
+    \textcolor{Gray}    {\begin{matrix} A\\B\\C\\D\\E\\F \end{matrix}}
+    &   
+    \phi^\diamond &= 
+    \begin{bmatrix}
+        0 \\ +24 \\ +12 \\ 
+        0 \\ +24 \\ +12 \\
+        0 \\ +12 \\ +24 \\
+        0 \\ +12 \\ +24 \\\hdashline
+        -24 \\ -12 \\ 0 \\
+        -24 \\ -12 \\ 0 \\
+        -12 \\ -24 \\ 0 \\
+        -12 \\ -24 \\ 0
+    \end{bmatrix}
+    \textcolor{Gray}
+    {\begin{matrix}
+        \arc{1}{A} \\ \arc{1}{B} \\ \arc{1}{C} \\
+        \arc{2}{A} \\ \arc{2}{B} \\ \arc{2}{D} \\
+        \arc{3}{A} \\ \arc{3}{C} \\ \arc{3}{E} \\
+        \arc{4}{A} \\ \arc{4}{D} \\ \arc{4}{E} \\\hdashline
+        \arc{5}{D} \\ \arc{5}{E} \\ \arc{5}{F} \\
+        \arc{6}{C} \\ \arc{6}{E} \\ \arc{6}{F} \\
+        \arc{7}{B} \\ \arc{7}{D} \\ \arc{7}{F} \\
+        \arc{8}{B} \\ \arc{8}{C} \\ \arc{8}{F}
+    \end{matrix}}
+\end{align*}
+-->
+<p>The next figure shows the polyhedral lift of the anticube
+corresponding to the given equilibrium stress (scaled vertically by a
+factor of <span class="math inline">\(9\)</span>). This polyhedron
+appears to consist of two triangular prisms and a tetrahedron, but in
+fact it is a self-intersecting embedding of the cube; the corners of the
+central tetrahedron are not actually vertices of the polyhedron. Four of
+the six cube faces are embedded as planar but self-intersecting
+quadrilaterals; opposite pairs of these faces intersect each other.
+Again, I computed this polyhedral lift by solving the system of linear
+equations <span class="math inline">\(\phi^\diamond(f\mathord\to v) =
+\pi^\diamond(v) - \pi^\diamond(f)\)</span>, one for each radial edge,
+for the radial vertex potentials <span class="math inline">\(z(v) =
+\pi^\diamond(v)\)</span> and <span class="math inline">\(z^*(f^*) =
+\pi^\diamond(f)\)</span>.</p>
+<figure>
+<img src="Fig/anticube-lift.png" style="width:30.0%"
+alt="The corresponding polyhedral lift of the anticube." />
+<figcaption aria-hidden="true">The corresponding polyhedral lift of the
+anticube.</figcaption>
+</figure>
+<h2 data-number="1.5" id="steinitzs-theorem"><span
+class="header-section-number">1.5</span> Steinitz’s Theorem</h2>
+<p><strong><em>[[Write this!]]</em></strong></p>
+<p>For embedded planar frameworks, positive-stress bars lift to locally
+convex edges, and negative-stress bars lift to locally concave edges. We
+can solve for negative boundary stresses that turn any Tutte drawing
+into an self-stressed planar framework. The Maxwell–Cremona lift of the
+resulting framework is (the boundary of) a <em>convex polytope</em>.</p>
+<p><strong>Steinitz’s Theorem:</strong> <em>Every 3-connected planar
+graph is the 1-skeleton of am essentially unique convex polytope in
+<span class="math inline">\(\mathbb{R}^3\)</span>.</em></p>
+<p>(In fact, Steinitz only proved that every <em>polyhedral planar
+map</em> is equivalent to the boundary map of a convex polytope.
+Steinitz proved this theorem using a direct inductive construction via
+the medial map. The equivalence of 3-connected planar graphs and
+polyhedral embeddings was later proved by Whitney.)</p>
+<p><strong><em>Positive interior stresses lift to convex edges; negative
+interior stresses lift to concave edges.</em></strong></p>
+<p><strong><em>We can’t actually solve for negative boundary stresses
+for arbitrary outer faces, but we can for triangles. Every simple planar
+map has either a face or a vertex of degree 3.</em></strong></p>
+<h2 data-number="1.6" id="non-3-connected-frameworks"><span
+class="header-section-number">1.6</span> Non-3-connected Frameworks</h2>
+<p>The definitions of planar framework and equilibrium stress do not
+actually require the underlying graph to be planar and 3-connected. A
+planar framework is a pair <span class="math inline">\((G,p)\)</span>
+where <span class="math inline">\(G\)</span> is an
+<strong><em>arbitrary</em></strong> graph and <span
+class="math inline">\(p\colon V(G)\to\mathbb{R}^2\)</span> is a position
+function for the vertices of <span class="math inline">\(G\)</span>. The
+adjective “planar” refers to the target space of the position function
+<span class="math inline">\(p\)</span>, not a the underlying graph of
+the framework. Similarly, the definition of equilibrium stress has
+nothing to do with the planarity or connectedness of the underlying
+graph.</p>
+<p>If the underlying graph <span class="math inline">\(G\)</span> of a
+planar framework <span class="math inline">\((G,p)\)</span> is planar
+but not 3-connected, we no longer have a bijection between equilibrium
+stresses and equivalence classes of reciprocal diagrams. Instead, each
+planar embedding of <span class="math inline">\(G\)</span> yields a
+<em>different</em> bijection between equilibrium stresses and reciprocal
+diagrams. In short, reciprocal diagrams are defined for <em>planar
+embeddings</em>, not just for abstract graphs.</p>
+<p>The following figure shows a planar framework whose underlying graph
+two different planar embeddings, obtained by swapping the two “interior”
+vertices; the shaded green polygons indicate one face of each embedding.
+Each embedding yields a different reciprocal diagram for the same
+equilibrium stress. (The arrows indicate the rotation system around the
+vertex of the reciprocal diagram dual to the shaded green face in the
+primal framework.)</p>
+<figure>
+<img src="Fig/MC-not-3-connected.png" style="width:95.0%"
+alt="Two reciprocal frameworks for the same planar framework" />
+<figcaption aria-hidden="true">Two reciprocal frameworks for the same
+planar framework</figcaption>
+</figure>
+<p>Each embedding similarly yields a different polyhedral lift of the
+framework <span class="math inline">\((G,p)\)</span>. One embedding is a
+tetrahedron with a notch carved out of one edge; the other is a
+self-intersecting polyhedron with convex faces that looks like two
+tetrahedra sharing an edge.</p>
+<h2 data-number="1.7" id="non-planar-frameworks"><span
+class="header-section-number">1.7</span> Non-Planar Frameworks</h2>
+<p>What about non-planar graphs? Every rotation system for a graph <span
+class="math inline">\(G\)</span> yields a well-defined dual graph <span
+class="math inline">\(G^*\)</span>. But if the rotation system for <span
+class="math inline">\(G\)</span> does not define a planar map, we lose
+the equivalence between <em>closed</em> and <em>exact</em> 1-forms in
+the resulting dual graph <span class="math inline">\(G^*\)</span>. The
+equilibrium stress at each vertex of <span
+class="math inline">\(G\)</span> still defines (up to translation) a
+planar polygon of forces for the corresponding face of <span
+class="math inline">\(G^*\)</span>, but these polygons no longer
+necessarily fit together consistently in the plane.</p>
+<p>The final figures show two examples from Maxwell’s original papers.
+The first figure shows a framework on the left that has <span
+class="math inline">\(K_{3,3}\)</span> as a subgraph and is therefore
+non-planar, together with an attempted reciprocal framework on the
+right. The framework on the left has two edges <span
+class="math inline">\(e\)</span> and <span
+class="math inline">\(e&#39;\)</span> (respectively, <span
+class="math inline">\(h\)</span> and <span
+class="math inline">\(h&#39;\)</span>) that are dual to the same edge
+<span class="math inline">\(E\)</span> (respectively <span
+class="math inline">\(H\)</span>) in the original framework,
+respectively. We can complete Maxwell’s construction by identifying
+these edge pairs, but the resulting structure no longer embeds in the
+plane; instead, we get a well-defined reciprocal framework in the
+<em>flat torus</em>!</p>
+<figure>
+<img src="Fig/MC-nonplanar.png" style="width:60.0%"
+alt="A non-planar planar framework with a toroidal reciprocal framework, from Maxwell (1864)" />
+<figcaption aria-hidden="true">A non-planar planar framework with a
+toroidal reciprocal framework, from Maxwell (1864)</figcaption>
+</figure>
+<p>On the other hand, sometimes we get lucky. The last figure shows a
+planar framework <span class="math inline">\((G,p)\)</span> whose
+underlying graph <span class="math inline">\(G\)</span> is again not
+planar, but that has a natural embedding on the torus as a <span
+class="math inline">\(4\times 4\)</span> toroidal grid. It’s fairly easy
+to construct an equilibrium stress for this framework by assigning
+positive stresses to one family of disjoint 4-cycles and negative
+stresses to the other family of disjoint 4-cycles. Maxwell constructs a
+reciprocal framework <span class="math inline">\((G^*, p^*)\)</span>
+with respect to this toroidal embedding of <span
+class="math inline">\(G\)</span> and such an equilibrium stress, and the
+result is a proper planar framework!</p>
+<figure>
+<img src="Fig/MC-toroidal.png" style="width:60.0%"
+alt="A toroidal planar framework with a planar reciprocal framework, from Maxwell (1870)" />
+<figcaption aria-hidden="true">A toroidal planar framework with a planar
+reciprocal framework, from Maxwell (1870)</figcaption>
+</figure>
+<h2 data-number="1.8" id="references"><span
+class="header-section-number">1.8</span> References</h2>
+<ol type="1">
+<li><p>Henry Crapo and Walter Whiteley. <a
+href="http://hdl.handle.net/2099/1091">Plane self stresses and projected
+polyhedra I: The basic pattern</a>. <em>Topologie structurale /
+Structural Topology</em> 20:55–77, 1993.</p></li>
+<li><p>Henry Crapo and Walter Whiteley. <a
+href="https://www.emis.de/journals/BAG/vol.35/no.2/">Spaces of stresses,
+projections and parallel drawings for spherical polyhedra.</a>
+<em>Beitr. Algebra Geom.</em> 35(2):259–281, 1994.</p></li>
+<li><p>Luigi Cremona. <a
+href="http://www.luigi-cremona.it/download/Scritti_matematici/1872_statica_grafica.pdf"><em>Le
+figure reciproche nella statica grafica</em></a>. Tipografia di Giuseppe
+Bernardoni, 1872. English translation in [4].</p></li>
+<li><p>Luigi Cremona. <a
+href="https://archive.org/details/graphicalstatic02cremgoog"><em>Graphical
+Statics</em></a>. Oxford Univ. Press, 1890. English translation of [3]
+by Thomas Hudson Beare.</p></li>
+<li><p>Eduard J. Dijksterhuis, editor. <em>The Principal Works of Simon
+Stevin, Volume I</em>. C. V. Swets &amp; Zeitlinger, 1955. English
+translation by Carry Dikshoorn.</p></li>
+<li><p>Peter Eades and Patrick Garvan. <a
+href="https://doi.org/10.1007/BFb0021805">Drawing stressed planar graphs
+in three dimensions</a>. <em>Proc. 2nd Symp. Graph Drawing</em>,
+212–223, 1995. Lecture Notes Comput. Sci. 1027, Springer.</p></li>
+<li><p>John E. Hopcroft and Peter J. Kahn. <a
+href="https://doi.org/10.1007/BF01758769">A paradigm for robust
+geometric algorithms</a>. <em>Algorithmica</em> 7(1–6):339–380,
+1992.</p></li>
+<li><p>James Clerk Maxwell. On reciprocal figures and diagrams of
+forces. <em>Phil. Mag. (Ser. 4)</em> 27(182):250–261, 1864.</p></li>
+<li><p>James Clerk Maxwell. On the application of the theory of
+reciprocal polar figures to the construction of diagrams of forces.
+<em>Engineer</em> 24:402, 1867. Reprinted in [109,
+pp. 313–316].</p></li>
+<li><p>James Clerk Maxwell. On reciprocal figures, frames, and diagrams
+of forces. <em>Trans. Royal Soc. Edinburgh</em> 26(1):1–40,
+1870.</p></li>
+<li><p>James Clerk Maxwell. <em>The Scientific Letters and Papers of
+James Clerk Maxwell. Volume 2: 1862–1873</em>. Cambridge Univ. Press,
+2009.</p></li>
+<li><p>Ares Ribó Mor, Günter Rote, and André Schulz. <a
+href="https://doi.org/10.1007/s00454-010-9301-0">Small grid embeddings
+of 3-polytopes</a>. <em>Discrete Comput. Geom.</em> 45(1):65–87,
+2011.</p></li>
+<li><p>Ernst Steinitz. <a
+href="http://gdz.sub.uni-goettingen.de/dms/load/img/?PPN=PPN360609767&amp;DMDID=dmdlog203">Polyeder
+und Raumeinteilungen</a>. <em>Enzyklopädie der mathematischen
+Wissenschaften mit Einschluss ihrer Anwendungen</em> III.AB(12):1–139,
+1916.</p></li>
+<li><p>Ernst Steinitz and Hans Rademacher. <em>Vorlesungen über die
+Theorie der Polyeder: unter Einschluß der Elemente der Topologie</em>.
+Grundlehren der mathematischen Wissenschaften 41. Springer-Verlag, 1934.
+Reprinted 1976.</p></li>
+<li><p>Simon Stevin. <em>Byvough der Weeghconst [Supplement to the Art
+of Weighing]</em>. 1605. Reprinted and translated into English in [5,
+pp. 525–607].</p></li>
+<li><p>Pierre Varignon. <a
+href="https://gallica.bnf.fr/ark:/12148/bpt6k5652714w.texteImage"><em>Nouvelle
+mechanique ou statique, dont le projet fut donné en
+M.DC.LXXVII</em></a>. Claude Jombert, Paris, 1725.</p></li>
+<li><p>Walter Whiteley. <a href="http://hdl.handle.net/2099/989">Motion
+and stresses of projected polyhedra</a>. <em>Topologie structurale /
+Structural Topology</em> 7:13–38, 1982.</p></li>
+</ol>
+<h2 data-number="1.9" id="aptly-named"><span
+class="header-section-number">1.9</span> Aptly Named</h2>
+<ul>
+<li>Homological constraints for planar reciprocal frameworks</li>
+<li>Impossible figures (cohomology, linear programming)</li>
+<li>Resolving force loads [Rote and Schulz]</li>
+<li>Rigidity (via LP duality)</li>
+</ul>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>It may seem more natural to draw each edges of the force
+diagram <em>parallel</em> to the corresponding funicular edge; indeed,
+many sources define force diagrams this way. The perpendicular
+formulation makes the <em>duality</em> between reciprocal diagrams more
+apparent. It also simplifies the derivation of polyhedral lifts; in
+particular, perpendicular reciprocal diagrams have polyhedral lifts that
+are projective polars through the unit paraboloid <span
+class="math inline">\(z = (x^2+y^2)/2\)</span>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Computational geometers might see some resemblance
+between Varignon’s figure and the geometric duality between Delaunay
+triangulations and Voronoi diagrams. That is <em>not</em> a coincidence.
+Neither is the appearance of the unit paraboloid in the previous
+footnote.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The fact that not all <em>voltage</em> assignments
+satisfy Kirchhoff’s <em>voltage</em> law is an unfortunate byproduct of
+the term’s history. See “red herring principle”.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Normally we would consider the faces of the radial
+<em>map</em> <span class="math inline">\(\Sigma^\diamond\)</span> of a
+planar <em>map</em> <span class="math inline">\(\Sigma\)</span>.
+However, because <span class="math inline">\(G\)</span> is 3-connected,
+it has only one combinatorial embedding, its radial <em>graph</em> and
+the faces thereof are well-defined.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

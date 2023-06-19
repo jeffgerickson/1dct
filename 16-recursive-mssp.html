@@ -1,0 +1,936 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>16-recursive-mssp</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1"
+id="multiple-source-shortest-paths-revisitedalpha"><span
+class="header-section-number">1</span> Multiple-Source Shortest Paths,
+Revisited<span class="math inline">\(^\alpha\)</span></h1>
+<p>In a recent breakthrough, Das, Kipouridis, Probst Gutenberg, and
+Wulff-Nilsen described an alternative algorithm that solves the planar
+multiple-source shortest path problem using a relatively simple
+divide-and-conquer strategy. Their algorithm theoretically runs in <span
+class="math inline">\(O(n\log h)\)</span> time, where <span
+class="math inline">\(h\)</span> is the number of vertices on the outer
+face, which improves the <span class="math inline">\(O(n\log n)\)</span>
+time of Klein’s algorithm when <span class="math inline">\(h\)</span> is
+small. Moreover, this running time is worst-case optimal as a function
+of both <span class="math inline">\(n\)</span> and <span
+class="math inline">\(h\)</span>.</p>
+<p>A better expression for the running time is <span
+class="math inline">\(O(S(n)\log h)\)</span>, where <span
+class="math inline">\(S(n)\)</span> is the time to compute a
+single-source shortest path tree.</p>
+<ul>
+<li>If we use Dijkstra’s algorithm off the shelf, the running time is
+<span class="math inline">\(O(n\log n \log h)\)</span>.</li>
+<li>If we use the <span class="math inline">\(O(n\log\log
+n)\)</span>-time algorithm that we will see in Lecture 15,<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> the
+running time is <span class="math inline">\(O(n\log h\log\log
+n)\)</span>.</li>
+<li>If we use the <span class="math inline">\(O(n)\)</span>-time
+algorithm of Henzinger et al.,<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a> the running time is the
+optimal <span class="math inline">\(O(n\log h)\)</span>.</li>
+</ul>
+<p>The new algorithm is simpler in the sense that it uses only black-box
+shortest-path algorithms, completely avoiding complex dynamic forest
+data structures that are inefficient in practice, at least for small
+graphs.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> On the other hand, the new algorithm
+requires a subtle divide-and-conquer algorithm with weighted <span
+class="math inline">\(r\)</span>-divisions, which is <em>also</em>
+inefficient in practice, to achieve its best possible running time <span
+class="math inline">\(O(n\log h)\)</span>. On the gripping hand, Klein’s
+algorithm has been observed to require a sublinear number of pivots for
+many inputs, so the <span class="math inline">\(O(n\log n)\)</span> time
+bound, while tight in the worst case, is usually conservative; whereas,
+the <span class="math inline">\(O(n\log h)\)</span> time bound for the
+new algorithm is tight for <em>all</em> inputs. It would be interesting
+to experimentally compare Klein (or CCE) using linear-time dynamic trees
+against the new algorithm using Dijkstra as a black box.</p>
+<h2 data-number="1.1" id="problem-formulation"><span
+class="header-section-number">1.1</span> Problem formulation</h2>
+<p>It will be convenient to describe the inputs and outputs of the MSSP
+problem slightly differently than in the previous lecture.</p>
+<p>The input consists primarily of a <em>directed</em> planar map <span
+class="math inline">\(\Sigma = (V, E, F)\)</span> with a distinguished
+outer face <span class="math inline">\(o\)</span> and a non-negative
+weight <span class="math inline">\(\ell(u\mathord\to v)\)</span> for
+every directed edge/dart <span class="math inline">\(u\mathord\to
+v\)</span>, which could be infinite (to indicate that a directed edge is
+missing from the graph). The weights are not necessarily symmetric; we
+allow <span class="math inline">\(\ell(u\mathord\to v) \ne
+\ell(v\mathord\to u)\)</span>.</p>
+<p>Let <span class="math inline">\(s_0, s_1, \dots, s_{h-1}\)</span> be
+any subsequence of <span class="math inline">\(h\)</span> vertices in
+counterclockwise order around the outer face, and let <span
+class="math inline">\(S = \{s_0, s_1, \dots, s_{h-1}\}\)</span>. Our
+goal is to compute an implicit representation of the shortest paths from
+each source <span class="math inline">\(s_i\)</span> to every original
+vertex of <span class="math inline">\(\Sigma\)</span>. See Figure 1.</p>
+<p>For ease of presentation, I will make a few minor technical
+assumptions:</p>
+<ul>
+<li>Every source vertex <span class="math inline">\(s_i\in S\)</span>
+has out-degree <span class="math inline">\(1\)</span> and in-degree
+<span class="math inline">\(0\)</span>. We can enforce this assumption
+if necessary by adding a new artificial source vertex <span
+class="math inline">\(s&#39;_i\)</span> and a single directed edge <span
+class="math inline">\(s&#39;_i \mathord\to s_i\)</span> with weight
+<span class="math inline">\(0\)</span>.</li>
+<li><span class="math inline">\(\Sigma\)</span> is simple. We can
+enforce this condition if necessary by resolving parallel edges and
+deleting loops in <span class="math inline">\(O(n)\)</span> time using
+hashing.<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></li>
+<li>The graph of <span class="math inline">\(\Sigma \setminus S\)</span>
+is strongly connected. Thus, the shortest path tree rooted at each
+source vertex <span class="math inline">\(s_i\)</span> includes every
+non-source vertex. We can enforce this assumption if necessary by adding
+new infinite-weight edges.</li>
+<li>All shortest paths are unique. If necessary, we can enforce this
+assumption either by randomly perturbing the edge weights or by choosing
+leftmost shortest paths, just as in the previous lecture.</li>
+</ul>
+<figure>
+<img src="Fig/planar-mssp-setup.png" style="width:30.0%"
+alt="Setup for the recursive MSSP algorithm." />
+<figcaption aria-hidden="true">Setup for the recursive MSSP
+algorithm.</figcaption>
+</figure>
+<p>For any index <span class="math inline">\(j\)</span> and any vertex
+<span class="math inline">\(v\)</span>, let <span
+class="math inline">\(\mathit{path}_j(v)\)</span> denote the shortest
+path in <span class="math inline">\(\Sigma\)</span> from <span
+class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>, let <span
+class="math inline">\(\mathit{dist}_j(v)\)</span> denote the length of
+this shortest path, and let <span
+class="math inline">\(\mathit{pred}_j(v)\)</span> denote the predecessor
+of <span class="math inline">\(v\)</span> in this shortest path.</p>
+<p>The main recursive algorithm <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> preprocesses the map
+<span class="math inline">\(\Sigma\)</span> into a data structure that
+implicitly encodes the single-source shortest path trees rooted at every
+source <span class="math inline">\(s_j\)</span>. A separate query
+algorithm <span class="math inline">\(\textsf{MSSP-Query}(s_j,
+v)\)</span> returns <span
+class="math inline">\(\mathit{dist}_j(v)\)</span>.</p>
+<h2 data-number="1.2" id="overview"><span
+class="header-section-number">1.2</span> Overview</h2>
+<p>The preprocessing algorithm uses a divide-and conquer-strategy. The
+input to each recursive call <span
+class="math inline">\(\textsf{MSSP-Prep}(H, i, k)\)</span> consists of
+the following:</p>
+<ul>
+<li>A planar map <span class="math inline">\(H\)</span>, which is a
+simple weighted minor of the top-level input map <span
+class="math inline">\(\Sigma\)</span>.</li>
+<li>Two indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span>. To simplify presentation, we
+implicitly assume that <span class="math inline">\(s_i, s_{i+1}, \dots,
+s_k\)</span> are the only source vertices in <span
+class="math inline">\(H\)</span>.</li>
+</ul>
+<p>For each index <span class="math inline">\(j\)</span>, let <span
+class="math inline">\(T_j\)</span> denote the tree of shortest paths in
+<span class="math inline">\(H\)</span> from <span
+class="math inline">\(s_j\)</span> to every other vertex of <span
+class="math inline">\(H\)</span>. The recursive call <span
+class="math inline">\(\textsf{MSSP-Prep}(H, i, k)\)</span> computes an
+implicit representation of all <span
+class="math inline">\(k-i+1\)</span> shortest path trees <span
+class="math inline">\(T_1, T_{i+1}, \dots, T_k\)</span>. The top-level
+call is <span class="math inline">\(\textsf{MSSP-Prep}(\Sigma, 0,
+h-1)\)</span>.</p>
+<p><span class="math inline">\(\textsf{MSSP-Prep}\)</span> invokes a
+subroutine <span class="math inline">\(\textsf{Filter}(H, i, k)\)</span>
+that behaves as follows:</p>
+<ul>
+<li>Compute the shortest path trees <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> rooted at <span
+class="math inline">\(s_i\)</span> and <span
+class="math inline">\(s_k\)</span>.</li>
+<li>Identify directed edges that are shared by all shortest path trees
+<span class="math inline">\(T_j\)</span> with <span
+class="math inline">\(i\le j\le k\)</span>.</li>
+<li>Contract shared edges and update nearby weights to maintain shortest
+path distances.</li>
+<li>Return the resulting contracted planar map.</li>
+</ul>
+<p>Finally, ignoring base cases for now, <span
+class="math inline">\(\textsf{MSSP-Prep}(H,i,k)\)</span> has four
+steps:</p>
+<ul>
+<li>Set <span class="math inline">\(H’ \gets \textsf{Filter}(H, i,
+k)\)</span>.</li>
+<li>Set <span class="math inline">\(j \gets \lfloor (i+k)/2
+\rfloor\)</span>.</li>
+<li>Recursively call <span class="math inline">\(\textsf{MSSP-Prep}(H’,
+i, j)\)</span>.</li>
+<li>Recursively call <span class="math inline">\(\textsf{MSSP-Prep}(H’,
+j, k)\)</span>.</li>
+</ul>
+<p>Finally, <span
+class="math inline">\(\textsf{MSSP-Prep}(H,i,k)\)</span> returns a
+record storing the following information:</p>
+<ul>
+<li>the indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span></li>
+<li>data about each vertex in <span class="math inline">\(H\)</span>
+computed by <span class="math inline">\(\textsf{Filter}\)</span></li>
+<li>pointers to the records returned by the recursive calls</li>
+</ul>
+<p>Said differently, <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> returns a data
+structure that mirrors its binary recursion tree; every record in this
+data structure stores information computed by one invocation of <span
+class="math inline">\(\textsf{Filter}\)</span>.</p>
+<p>The time and space analysis of <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> hinges on the
+observation that the total size of all minors <span
+class="math inline">\(H\)</span> at each level of the resulting
+recursion tree is only <span class="math inline">\(O(n)\)</span>. The
+depth of the recursion tree is <span class="math inline">\(O(\log
+h)\)</span>, so the total size of the data structure is <span
+class="math inline">\(O(n\log h)\)</span>. Similarly, aside from
+recursive calls, the time for each subproblem with <span
+class="math inline">\(m\)</span> vertices is <span
+class="math inline">\(O(S(m))\)</span>, so the overall running time is
+<span class="math inline">\(O(S(n)\log h)\)</span>.</p>
+<p>Finally, the query algorithm recovers the shortest-path distance from
+any source <span class="math inline">\(s_j\)</span> to any vertex <span
+class="math inline">\(v\)</span> by traversing the recursion tree of
+<span class="math inline">\(\textsf{MSSP-Prep}\)</span> in <span
+class="math inline">\(O(\log h)\)</span> time.</p>
+<p>In the rest of this note, I’ll consider each of the component
+algorithms in more detail.</p>
+<h2 data-number="1.3" id="properly-shared-edges"><span
+class="header-section-number">1.3</span> Properly shared edges</h2>
+<p>Now I’ll describe the filtering algorithm <span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> in more detail.
+For any index <span class="math inline">\(j\)</span> and any vertex
+<span class="math inline">\(v\)</span>, define the following:</p>
+<ul>
+<li><span class="math inline">\(T_j\)</span> is the shortest-path tree
+in <span class="math inline">\(H\)</span> rooted at source vertex <span
+class="math inline">\(s_j\)</span>.</li>
+<li><span class="math inline">\(\mathit{dist}_j(v)\)</span> is the
+shortest-path distance in <span class="math inline">\(H\)</span> from
+<span class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>.</li>
+<li><span class="math inline">\(\mathit{pred}_j(v)\)</span> is the
+predecessor of <span class="math inline">\(v\)</span> on the shortest
+path in <span class="math inline">\(H\)</span> from <span
+class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>.</li>
+</ul>
+<p>Our filtering algorithm <span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> begins by
+computing the distances <span
+class="math inline">\(\mathit{dist}_i(v)\)</span> and <span
+class="math inline">\(\mathit{dist}_k(v)\)</span> and predecessors <span
+class="math inline">\(\mathit{pred}_i(v)\)</span> and <span
+class="math inline">\(\mathit{pred}_k(v)\)</span> for every vertex <span
+class="math inline">\(v\)</span>, using two invocations of your favorite
+shortest-path algorithm. The algorithm also initializes two variables
+for every vertex <span class="math inline">\(v\)</span>, which will
+eventually be used by the query algorithm:</p>
+<ul>
+<li>A <em>representative</em> vertex <span
+class="math inline">\(\mathit{rep}(v)\)</span>, initially equal to <span
+class="math inline">\(v\)</span>.</li>
+<li>A non-negative real <em>offset</em> <span
+class="math inline">\(\mathit{off}(v)\)</span>, initially equal to <span
+class="math inline">\(0\)</span>.</li>
+</ul>
+<p>Call any directed edge <span class="math inline">\(u \mathord\to
+v\)</span> <em>properly shared</em> by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> if it satisfies the following
+recursive conditions:</p>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_i(v) = \mathit{pred}_k(v)
+= u\)</span>; in other words, <span class="math inline">\(u \mathord\to
+v\)</span> is an edge in both <span class="math inline">\(T_i\)</span>
+and <span class="math inline">\(T_k\)</span>.</li>
+<li>If <span class="math inline">\(\mathit{pred}_i(u) =
+\mathit{pred}_k(u)\)</span>, then the edge <span
+class="math inline">\(\mathit{pred}_i(u)\mathord\to u\)</span> is
+properly shared.</li>
+<li>Otherwise, vertices <span
+class="math inline">\(\mathit{pred}_i(u)\)</span>, <span
+class="math inline">\(v\)</span>, <span
+class="math inline">\(\mathit{pred}_k(u)\)</span> are ordered clockwise
+around <span class="math inline">\(u\)</span>.</li>
+</ul>
+<p>We say that a properly shared edge <span class="math inline">\(u
+\mathord\to v\)</span> is <em>exposed</em> if <span
+class="math inline">\(\mathit{pred}_i(u) \ne
+\mathit{pred}_k(u)\)</span>. For example, in Figure 2, both heavy black
+edges on the left are properly shared, but only the lower edge is
+exposed; the heavy black edges on the right are not properly shared.</p>
+<figure>
+<img src="Fig/planar-mssp-two-paths.png" style="width:60.0%"
+alt="Shortest paths that share two edges. Left: Properly shared. Right: Improperly shared." />
+<figcaption aria-hidden="true">Shortest paths that share two edges.
+Left: Properly shared. Right: Improperly shared.</figcaption>
+</figure>
+<figure>
+<img src="Fig/planar-mssp-two-trees.png" style="width:90.0%"
+alt="Two shortest path trees with five properly shared edges, four of which are exposed." />
+<figcaption aria-hidden="true">Two shortest path trees with five
+properly shared edges, four of which are exposed.</figcaption>
+</figure>
+<p><strong>Lemma:</strong> <em>If <span
+class="math inline">\(u\mathord\to v\)</span> is properly shared by
+<span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>, then <span
+class="math inline">\(\mathit{pred}_j(v) = u\)</span> for all <span
+class="math inline">\(i\le j\le k\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+First suppose <span class="math inline">\(u\mathord\to v\)</span> is
+properly shared and exposed. Let <span
+class="math inline">\(\gamma\)</span> be a simple closed curve obtained
+by concatenating <span
+class="math inline">\(\mathit{path}_k(u)\)</span>, the reversal of <span
+class="math inline">\(\mathit{path}_i(u)\)</span>, and a simple path
+from <span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(s_k\)</span> through the outer face. (The shaded
+yellow region Figure 2 is the interior of <span
+class="math inline">\(\gamma\)</span>.) Each source vertex <span
+class="math inline">\(s_j\)</span> is inside <span
+class="math inline">\(\gamma\)</span>, and <span
+class="math inline">\(v\)</span> is outside <span
+class="math inline">\(\gamma\)</span>. So the Jordan curve theorem
+implies that <span class="math inline">\(\mathit{path}_j(v)\)</span>
+must cross <span class="math inline">\(\gamma\)</span>. Uniqueness of
+shortest paths implies that <span
+class="math inline">\(\mathit{path}_j(v)\)</span> cannot cross either
+<span class="math inline">\(\mathit{path}_i(v)\)</span> or <span
+class="math inline">\(\mathit{path}_k(v)\)</span>. It follows that <span
+class="math inline">\(\mathit{path}_j(v)\)</span> must contain <span
+class="math inline">\(u\)</span>, and thus <span
+class="math inline">\(\mathit{pred}_j(v) = u\)</span>.
+</dd>
+<dd>
+<p>Now suppose <span class="math inline">\(u\mathord\to v\)</span> is
+properly shared but not exposed. Let <span
+class="math inline">\(p\)</span> be the first vertex on <span
+class="math inline">\(\mathit{path}_i(v)\)</span> that is also in <span
+class="math inline">\(\mathit{path}_k(v)\)</span>, and let <span
+class="math inline">\(p\mathord\to q\)</span> be the first edge on the
+shortest path from <span class="math inline">\(p\)</span> to <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(H\)</span>. Our recursive definitions imply that
+<span class="math inline">\(p\mathord\to q\)</span> is properly shared
+and exposed, so by the previous paragraph, for any index <span
+class="math inline">\(j\)</span>, we have <span
+class="math inline">\(\mathit{pred}_j(q) = p\)</span> for all <span
+class="math inline">\(i\le j\le k\)</span>. It follows that <span
+class="math inline">\(T_j\)</span> contains the entire shortest path
+from <span class="math inline">\(p\)</span> to <span
+class="math inline">\(v\)</span>, and in particular, the edge <span
+class="math inline">\(u\mathord\to v\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The converse of the previous lemma is not necessarily true; it is
+possible for <span class="math inline">\(\mathit{pred}_j(v) = u\)</span>
+for every index <span class="math inline">\(j\)</span> even though <span
+class="math inline">\(u\mathord\to v\)</span> is not properly shared.
+Consider the reversed shortest path tree <span
+class="math inline">\(\overline{T}_v\)</span> rooted at <span
+class="math inline">\(v\)</span>. Let <span
+class="math inline">\(s_l\)</span> and <span
+class="math inline">\(s_r\)</span> be the leftmost and rightmost source
+vertices in the subtree of <span
+class="math inline">\(\overline{T}_v\)</span> rooted at <span
+class="math inline">\(u\)</span>. If this subtree contains
+<em>every</em> source vertex <span class="math inline">\(s_j\)</span>,
+then <span class="math inline">\(l = r+1 \bmod h\)</span>; intuitively,
+the subtree wraps around <span class="math inline">\(u\mathord\to
+v\)</span> and meets itself at the boundary. See Figure 4 for an
+example. Edges of this form are <em>not</em> detected by the filtering
+algorithm.</p>
+<figure>
+<img src="Fig/mssp-improper.png" style="width:30.0%"
+alt="The black edge is shared by all shortest-path trees, but not properly shared by T_i and T_k." />
+<figcaption aria-hidden="true">The black edge is shared by all
+shortest-path trees, but not properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>.</figcaption>
+</figure>
+<p>Let <span class="math inline">\(m\)</span> denote the number of
+vertices in <span class="math inline">\(H\)</span>. We can identify all
+properly shared edges in <span class="math inline">\(H\)</span> in <span
+class="math inline">\(O(m)\)</span> time using a preorder traversal of
+either <span class="math inline">\(T_i\)</span> or <span
+class="math inline">\(T_k\)</span>. In particular, we can find all
+<em>exposed</em> edges leaving vertex <span
+class="math inline">\(u\)</span> in <span
+class="math inline">\(\deg(u)\)</span> time by visiting the darts into
+<span class="math inline">\(u\)</span> in clockwise order—following the
+successor permutation—from <span
+class="math inline">\(\mathit{pred}_i(u)\mathord\to u\)</span> to <span
+class="math inline">\(\mathit{pred}_k(u)\mathord\to u\)</span>.</p>
+<h2 data-number="1.4" id="contraction"><span
+class="header-section-number">1.4</span> Contraction</h2>
+<p>The main work of the filtering algorithm is <em>contracting</em>
+properly shared edges so that they need not be passed to recursive
+subproblems. Intuitively, we contract the edge <span
+class="math inline">\(u\mathord\to v\)</span> into its tail <span
+class="math inline">\(u\)</span>, changing the tail of each directed
+edge <span class="math inline">\(v\mathord\to w\)</span> from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(u\)</span>. Here are the steps in detail:</p>
+<ul>
+<li>Set <span class="math inline">\(\mathit{rep}(v) \gets
+u\)</span></li>
+<li>Set <span class="math inline">\(\mathit{off}(v) \gets
+\ell(u\mathord\to v)\)</span></li>
+<li>For every edge <span class="math inline">\(w\mathord\to v\)</span>:
+<ul>
+<li>Set <span class="math inline">\(\ell(w\mathord\to v) \gets
+\infty\)</span></li>
+</ul></li>
+<li>For every edge <span class="math inline">\(v\mathord\to w\)</span>:
+<ul>
+<li>Set <span class="math inline">\(\ell(v\mathord\to w) \gets
+\mathit{off}(v) + \ell(v\mathord\to w)\)</span></li>
+<li>If <span class="math inline">\(\mathit{pred}_i(w)=v\)</span>, set
+<span class="math inline">\(\mathit{pred}_i(w)\gets u\)</span></li>
+<li>If <span class="math inline">\(\mathit{pred}_k(w)=v\)</span>, set
+<span class="math inline">\(\mathit{pred}_k(w)\gets u\)</span></li>
+</ul></li>
+<li>Contract <span class="math inline">\(uv\)</span> to <span
+class="math inline">\(u\)</span></li>
+</ul>
+<p>The actual edge-contraction (in the second-to-last step) merges the
+successor permutations of <span class="math inline">\(u\)</span> and
+<span class="math inline">\(v\)</span> in <span
+class="math inline">\(O(1)\)</span> time, as described in Lecture
+10.</p>
+<figure>
+<img src="Fig/planar-mssp-contraction.png" style="width:65.0%"
+alt="Contracting an exposed properly shared dart." />
+<figcaption aria-hidden="true">Contracting an exposed properly shared
+dart.</figcaption>
+</figure>
+<figure>
+<img src="Fig/mssp-contract.png" style="width:60.0%"
+alt="Edge weights before and after contraction and cleanup" />
+<figcaption aria-hidden="true">Edge weights before and after contraction
+and cleanup</figcaption>
+</figure>
+<p>If <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span> have any common neighbors, contracting
+<span class="math inline">\(v\)</span> into <span
+class="math inline">\(u\)</span> creates parallel edges, which we must
+resolve before passing the contracted map to <span
+class="math inline">\(\textsf{MSSP-prep}\)</span>. After all properly
+shared edges are contracted, we perform a global cleanup that identifies
+and resolves all families of parallel edges. Specifically, for each pair
+of neighboring vertices <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span> in the contracted map, we choose on
+edge <span class="math inline">\(e\)</span> between <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span>, change the dart weights of <span
+class="math inline">\(e\)</span> to match the lightest darts <span
+class="math inline">\(u\mathord\to v\)</span> and <span
+class="math inline">\(v\mathord\to u\)</span>, and then delete all other
+edges between <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span>. If we use hashing to recognize and
+collect parallel edges, the entire cleanup phase takes linear time.<a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a></p>
+<p>Contracting <span class="math inline">\(u\mathord\to v\)</span>
+preserves the shortest-path distance from every source <span
+class="math inline">\(s_j\)</span> to every other vertex (except the
+contracted vertex <span class="math inline">\(v\)</span>). Moreover, for
+every source vertex <span class="math inline">\(s_j\)</span> and every
+vertex <span class="math inline">\(w\)</span> in the original map <span
+class="math inline">\(H\)</span> <em>including <span
+class="math inline">\(v\)</span></em>, contraction also maintains the
+following invariant, which allows us to recover shortest-path distances
+during the query algorithm. Let <span
+class="math inline">\(\mathit{dist}_j(w)\)</span> denote the
+shortest-path distance from <span class="math inline">\(s_j\)</span> to
+<span class="math inline">\(w\)</span> in the original map <span
+class="math inline">\(H\)</span>, and let <span
+class="math inline">\(\mathit{dist}’_j(w)\)</span> denote the
+corresponding distance in the current contracted map.</p>
+<p><strong>Key Invariant:</strong> <em>For every vertex <span
+class="math inline">\(w\)</span> of <span
+class="math inline">\(H\)</span> and for every index <span
+class="math inline">\(j\)</span> such that <span
+class="math inline">\(i\le j\le k\)</span>, we have <span
+class="math inline">\(\mathit{dist}_j(w) =
+\mathit{dist}’_j(\mathit{rep}(w)) + \mathit{off}(w)\)</span>.</em></p>
+<p>When <span class="math inline">\(\textsf{Filter}\)</span> begins, we
+have <span class="math inline">\(\mathit{dist}_j(w) =
+\mathit{dist}’_j(w)\)</span> and <span
+class="math inline">\(\mathit{rep}(w) = w\)</span> and <span
+class="math inline">\(\mathit{off}(w)=0\)</span>, so the Key Invariant
+holds trivially.</p>
+<p>We contract properly shared edges in the same order they were
+discovered, following a preorder traversal of <span
+class="math inline">\(T_i\)</span>. This contraction order conveniently
+guarantees that we only contract <em>exposed</em> edges; contracting one
+exposed edge <span class="math inline">\(u \mathord\to v\)</span>
+transforms each properly shared edge leaving <span
+class="math inline">\(v\)</span> into an <em>exposed</em> properly
+shared edge leaving <span class="math inline">\(u\)</span>. This
+contraction order also guarantees that after contracting <span
+class="math inline">\(u\mathord\to v\)</span>, no edge into <span
+class="math inline">\(u\)</span> will ever be contracted. It follows
+that we change the tail of each edge (and therefore the predecessors of
+each vertex) at most once, and the Key Invariant is maintained. We
+conclude:</p>
+<p><strong>Lemma:</strong> <em><span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> identifies and
+contracts all properly shared edges in <span
+class="math inline">\(H\)</span> in <span class="math inline">\(O(S(m) +
+m)\)</span> time, where <span class="math inline">\(m = |V(H)|\)</span>.
+Moreover, after <span class="math inline">\(\textsf{Filter}(H, i,
+k)\)</span> ends, the Key Invariant holds.</em></p>
+<figure>
+<img src="Fig/planar-mssp-recursion.png" style="width:90.0%"
+alt="Contracting all properly shared directed edges and recursing." />
+<figcaption aria-hidden="true">Contracting all properly shared directed
+edges and recursing.</figcaption>
+</figure>
+<figure>
+<img src="Fig/planar-mssp-recursion-tree.png" style="width:100.0%"
+alt="Recursive subproblems after contraction become more and more birdlike." />
+<figcaption aria-hidden="true">Recursive subproblems after contraction
+become more and more birdlike.</figcaption>
+</figure>
+<h2 data-number="1.5" id="distance-queries"><span
+class="header-section-number">1.5</span> Distance Queries</h2>
+<p>Each call to <span
+class="math inline">\(\textsf{Filter}(H,i,k)\)</span> creates a record
+storing the following information:</p>
+<ul>
+<li>indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span></li>
+<li>for each vertex <span class="math inline">\(v\)</span> of the input
+map <span class="math inline">\(H\)</span>:<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+<ul>
+<li>shortest-path distances <span
+class="math inline">\(\mathit{dist}_i(v)\)</span> and <span
+class="math inline">\(\mathit{dist}_k(v)\)</span></li>
+<li>the representative vertex <span
+class="math inline">\(\mathit{rep}(v)\)</span></li>
+<li>the offset <span
+class="math inline">\(\mathit{off}(v)\)</span>.</li>
+</ul></li>
+</ul>
+<p>The recursive calls to <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> assemble these records
+into a binary tree, mirroring the tree of recursive calls, connected by
+<span class="math inline">\(\mathit{left}\)</span> and <span
+class="math inline">\(\mathit{right}\)</span> pointers.</p>
+<p>The query algorithm <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec},j,v)\)</span>
+takes as input a recursive-call record <span
+class="math inline">\(\mathit{Rec}\)</span>, a source index <span
+class="math inline">\(j\)</span>, and a vertex <span
+class="math inline">\(v\)</span>, satisfying two conditions:</p>
+<ul>
+<li><span class="math inline">\(\mathit{Rec}.i \le j\le
+\mathit{Rec}.k\)</span></li>
+<li><span class="math inline">\(v\)</span> is a vertex of the input map
+<span class="math inline">\(H\)</span> to the recursive call to <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> that created <span
+class="math inline">\(\mathit{Rec}\)</span>.</li>
+</ul>
+<p>The output of <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec},j,v)\)</span> is
+the shortest-path distance from <span class="math inline">\(s_j\)</span>
+to <span class="math inline">\(v\)</span> in <span
+class="math inline">\(\Sigma\)</span>. The query algorithm follows
+straightforwardly from the Key Invariant:</p>
+<ul>
+<li>if <span class="math inline">\(j=i\)</span>, return <span
+class="math inline">\(\mathit{Rec}.\mathit{dist}_i[v]\)</span></li>
+<li>else if <span class="math inline">\(j=k\)</span>, return <span
+class="math inline">\(\mathit{Rec}.\mathit{dist}_k[v]\)</span></li>
+<li>else if <span class="math inline">\(j \le
+\mathit{Rec}.\mathit{left}.k\)</span>, return <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec}.\mathit{left}, j,
+\mathit{Rec}.\mathit{rep}[v]) +
+\mathit{Rec}.\mathit{off}[v]\)</span></li>
+<li>else return <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec}.\mathit{righ}, j,
+\mathit{Rec}.\mathit{rep}[v]) +
+\mathit{Rec}\mathord.\mathit{off}[v]\)</span></li>
+</ul>
+<p>Because the recursion tree has depth <span
+class="math inline">\(O(\log h)\)</span>, the query algorithm runs in
+<span class="math inline">\(O(\log h)\)</span> time.</p>
+<h2 data-number="1.6" id="space-and-time-analysis"><span
+class="header-section-number">1.6</span> Space and Time Analysis</h2>
+<p>It remains only to bound the size of our data structure and the
+running time of <span class="math inline">\(\textsf{MSSP-Prep}\)</span>.
+The key claim is that the total size of all input maps at any level of
+the recursion tree is <span class="math inline">\(O(n)\)</span>.</p>
+<p><strong>Contraction sharing lemma:</strong> <em>Contracting one
+properly shared edge neither creates nor destroys other properly shared
+edges.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix a map <span class="math inline">\(H\)</span> and source indices
+<span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span>. Let <span
+class="math inline">\(u\mathord\to v\)</span> be an edge in <span
+class="math inline">\(H\)</span> that is properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>. Let <span class="math inline">\(H’ =
+H / u{\to}v\)</span>, with dart weights adjusted as described above, and
+let <span class="math inline">\(T’_i\)</span> and <span
+class="math inline">\(T’_k\)</span> denote the shortest path trees
+rooted at <span class="math inline">\(s_i\)</span> and <span
+class="math inline">\(s_k\)</span> in <span
+class="math inline">\(H’\)</span>.
+</dd>
+<dd>
+<p>First, because contraction preserves shortest paths, we can easily
+verify that <span class="math inline">\(T’_i = T_i / u{\to}v\)</span>
+and <span class="math inline">\(T’_k = T_k / u{\to}v\)</span>. It
+follows that an edge in <span class="math inline">\(H\)</span> is shared
+by <span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> if and only if the corresponding edge
+in <span class="math inline">\(H’\)</span> is shared by <span
+class="math inline">\(T’_i\)</span> and <span
+class="math inline">\(T’_k\)</span>.</p>
+</dd>
+<dd>
+<p>Now consider any edge <span class="math inline">\(x{\to}y \in T_i
+\cap T_k\)</span> that is not <span
+class="math inline">\(u{\to}v\)</span>. We must have <span
+class="math inline">\(y\ne v\)</span>, because each vertex has only one
+predecessor in any shortest-path tree. Let <span
+class="math inline">\(w\)</span> be the first node on the shortest path
+from <span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(x\)</span> in <span
+class="math inline">\(H\)</span> that is also on the shortest path from
+<span class="math inline">\(s_k\)</span> to <span
+class="math inline">\(x\)</span>, so the entire shortest path from <span
+class="math inline">\(w\)</span> to <span
+class="math inline">\(y\)</span> is shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>. Consider three paths:</p>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\alpha =\)</span> the shortest path from
+<span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(w\)</span></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\beta =\)</span> the reverse of the
+shortest path from <span class="math inline">\(w\)</span> to <span
+class="math inline">\(y\)</span></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\gamma =\)</span> the shortest path from
+<span class="math inline">\(s_k\)</span> to <span
+class="math inline">\(w\)</span></li>
+</ul>
+</dd>
+<dd>
+<p>Then <span class="math inline">\(x{\to}y\)</span> is properly shared
+if and only if (the last edges of) <span
+class="math inline">\(\alpha\)</span>, <span
+class="math inline">\(\beta\)</span>, and <span
+class="math inline">\(\gamma\)</span> are incident to <span
+class="math inline">\(w\)</span> in clockwise order. The definition of
+properly shared implies <span class="math inline">\(v=w\)</span>, so
+<span class="math inline">\(w\)</span> is also a vertex in <span
+class="math inline">\(H’\)</span>. Contracting <span
+class="math inline">\(u{\to}v\)</span> might shorten one of the three
+paths to <span class="math inline">\(w\)</span>, but it cannot change
+their cyclic order around <span class="math inline">\(w\)</span>. We
+conclude that <span class="math inline">\(x{\to}y\)</span> is properly
+shared in <span class="math inline">\(H\)</span> if and only if <span
+class="math inline">\(x{\to}y\)</span> (or <span
+class="math inline">\(u{\to}y\)</span> if <span
+class="math inline">\(x=v\)</span>) is properly shared in <span
+class="math inline">\(H’\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The contraction sharing lemma implies by induction that every call to
+<span class="math inline">\(\textsf{Filter}(H, i, k)\)</span> outputs
+the same contracted map as <span
+class="math inline">\(\textsf{Filter}(\Sigma, i, k)\)</span>. In
+particular, an edge <span class="math inline">\(u\mathord\to v\)</span>
+in <span class="math inline">\(H\)</span> is properly shared by two
+shortest-oath trees in <span class="math inline">\(H\)</span> if and
+only if the corresponding edge in <span
+class="math inline">\(\Sigma\)</span> (which may have a different tail
+vertex) is properly shared by the corresponding trees in <span
+class="math inline">\(\Sigma\)</span>. So from now on, “properly shared”
+always implies “in the top level map <span
+class="math inline">\(\Sigma\)</span>”.</p>
+<p><strong>Corollary:</strong> <em>For all indices <span
+class="math inline">\(i\le i’&lt;k’\le k\)</span>, if <span
+class="math inline">\(u{\to}v\)</span> is properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>, then <span
+class="math inline">\(u{\to}v\)</span> is properly shared by <span
+class="math inline">\(T_{i’}\)</span> and <span
+class="math inline">\(T_{k’}\)</span>.</em></p>
+<p><strong>Corollary:</strong> <em>The vertices of <span
+class="math inline">\(\textsf{Filter}(\Sigma, i, k)\)</span> are
+precisely the vertices <span class="math inline">\(v\)</span> such that
+no edge into <span class="math inline">\(v\)</span> is properly shared
+by <span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>.</em></p>
+<p>Fix any vertex <span class="math inline">\(v\)</span> of <span
+class="math inline">\(\Sigma\)</span>. We call an index <span
+class="math inline">\(j\)</span> <em>interesting</em> if <span
+class="math inline">\(\mathit{pred}_j(v)\mathord\to v\)</span> is
+<em>not</em> properly shared by <span class="math inline">\(T_j\)</span>
+and <span class="math inline">\(T_{j+1}\)</span>.</p>
+<p><strong>Lemma:</strong> <em>Every vertex <span
+class="math inline">\(v\)</span> of <span
+class="math inline">\(\Sigma\)</span> has at most <span
+class="math inline">\(\deg(v)\)</span> indices.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Equivalently, <span class="math inline">\(j\)</span> is interesting to
+<span class="math inline">\(v\)</span> if either of the following
+conditions holds:
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_j(v) \ne
+\mathit{pred}_{j+1}(v)\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_0(v) = \mathit{pred}_1(v)
+= \cdots = \mathit{pred}_{h-1}(v) = u\)</span> and the paths <span
+class="math inline">\(\mathit{path}_j(u)\)</span> and <span
+class="math inline">\(\mathit{path}_{j+1}(u)\)</span> “wrap around”
+<span class="math inline">\(u \mathord\to v\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<p>The Disk-Tree Lemma implies that the first condition holds for at
+most <span class="math inline">\(\deg(v)\)</span> indices <span
+class="math inline">\(j\)</span>. If the first condition never holds
+(that is, if <span class="math inline">\(\mathit{pred}_j(v)\)</span> is
+the same for index <span class="math inline">\(j\)</span>), then the
+second condition holds for exactly one index <span
+class="math inline">\(j\)</span>; otherwise the second condition never
+holds. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p><strong>Lemma:</strong> <em>Each vertex <span
+class="math inline">\(v\)</span> appears in at most <span
+class="math inline">\(2\deg(v)\)</span> subproblems at each level of the
+recursion tree.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The children <span
+class="math inline">\(\mathit{Rec}.\mathit{left}\)</span> and <span
+class="math inline">\(\mathit{Rec}.\mathit{right}\)</span> of any
+recursion record <span class="math inline">\(\mathit{Rec}\)</span> store
+information about <span class="math inline">\(v\)</span> and if and only
+if at least one index <span class="math inline">\(j\)</span> such that
+<span class="math inline">\(\mathit{Rec}.i\le j\le
+\mathit{Rec}.k\)</span> is interesting to <span
+class="math inline">\(v\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Theorem:</strong> <em><span
+class="math inline">\(\textsf{MSSP-Prep}(\Sigma, 0, h-1)\)</span> builds
+a data structure of size <span class="math inline">\(O(n\log h)\)</span>
+in <span class="math inline">\(O(S(n)\log h)\)</span> time.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The total number of vertices in all subproblems at the same level of the
+recursion tree is at most <span class="math inline">\(\sum_v 2\deg(v)
+\le 4\cdot|E(\Sigma)| \le 4(3n-6) = 12n-24\)</span> by Euler’s formula,
+since <span class="math inline">\(\Sigma\)</span> is a simple planar
+map. Each recursion record uses <span
+class="math inline">\(O(1)\)</span> space per vertex, so the total space
+used at any level is <span class="math inline">\(O(n)\)</span>.
+Similarly, the time spent in any subproblem is at most <span
+class="math inline">\(O(S(n)/n)\)</span> per vertex, so the total time
+spent in each level of the recursion tree is <span
+class="math inline">\(O(S(n))\)</span>.
+</dd>
+<dd>
+<p>Finally, the recursion tree has <span class="math inline">\(O(\log
+h)\)</span> levels. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="1.7" id="references"><span
+class="header-section-number">1.7</span> References</h2>
+<ol type="1">
+<li><p>Debarati Das, Evangelos Kipouridis, Maximilian Probst Gutenberg,
+and Christian Wulff-Nilsen. <a
+href="https://doi.org/10.1137/1.9781611977066.1">A simple algorithm for
+multiple-source shortest paths in planar digraphs</a>. <em>Proc. 5th
+Symp. Simplicity in Algorithms</em>, 1–11, 2022.</p></li>
+<li><p>David Eisenstat. <a
+href="https://cs.brown.edu/research/pubs/theses/phd/2014/eisenstat.pdf"><em>Toward
+Practical Planar Graph Algorithms</em></a>. Ph.D. thesis, Comput. Sci.
+Dept., Brown Univ., May 2014.</p></li>
+<li><p>Jacob Holm, Giuseppe F. Italiano, Adam Karczmarz, Jakub Łącki,
+Eva Rotenberg, and Piotr Sankowski. <a
+href="http://doi.org/10.4230/LIPIcs.ESA.2017.50">Contracting a planar
+graph efficiently</a>. <em>Proc. 25th Ann. Europ. Symp. Algorithms</em>,
+50:1–50:15, 2017. Leibniz Int. Proc. Informatics 87, Schloss
+Dagstuhl–Leibniz-Zentrum für Informatik. arXiv:<a
+href="https://arxiv.org/abs/1706.10228">1706.10228</a>.</p></li>
+<li><p>Frank Kammer and Johannes Meintrup. <a
+href="http://doi.org/10.48550/ARXIV.2301.10564">Succinct planar encoding
+with minor operations</a>. Preprint, January 2023. arXiv:<a
+href="https://arxiv.org/abs/2301.10564">2301.10564</a>.</p></li>
+<li><p>Robert E. Tarjan and Renato F. Werneck. <a
+href="http://doi.org/10.1145/1498698.1594231">Dynamic trees in
+practice</a>. <em>J. Exper. Algorithmics</em> 14:5:1–5:21,
+2009.</p></li>
+<li><p>Renato Werneck. <a
+href="https://www.cs.princeton.edu/research/techreps/TR-750-06"><em>Design
+and Analysis of Data Structures for Dynamic Trees</em></a>.
+Ph.D. thesis, Dept. Comput. Sci., Princeton Univ., April 2006. Tech.
+Rep. TR-750-06.</p></li>
+</ol>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The <span class="math inline">\(O(n\log\log
+n)\)</span>-time shortest-path algorithm from Lecture 15 uses the
+<em>parametric</em> MSSP algorithm from the previous lecture as a
+subroutine. If we instead recursively apply the recursive MSSP strategy
+described in this lecture, the resulting doubly-recursive MSSP algorithm
+runs in <span class="math inline">\(O(n\log h\,\log\log n\,\log\log\log
+n\,\log\log\log\log n\dots)\)</span> time.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This <span class="math inline">\(O(n)\)</span>-time
+shortest-path algorithm does <em>not</em> use MSSP as a subroutine.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>David Eisenstat [2] implemented Chambers, Cabello, and
+Erickson’s MSSP algorithm using both efficient dynamic trees and
+brute-force to find pivots. His experimental evaluation showed that the
+brute-force implementation was faster in practice for graphs with up to
+200000 vertices.
+<!-- Hoch and Wang performed a similar comparison with my planar maximum-flow algorithm; for planar graphs with up to 12000 vertices, they observed that the brute-force implementation is fastest. -->
+More generally, in a large-scale experimental comparison of several
+dynamic-forest data structures by Tarjan and Werneck [6, 7], brute-force
+implementation beat all other data structures for trees with depth less
+than 1000.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The algorithms I describe in this note use hashing in
+multiple places. It is possible to achieve the same running time without
+hashing, at the expense of simplicity (and probably some efficiency).<a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Efficiently maintaining a <em>simple</em> planar graph
+under arbitrary edge contractions is surprisingly subtle; see Holm et al
+[2] and Kammer and Meintrup [3]. For this MSSP algorithm, it suffices to
+resolve only <em>adjacent</em> parallel edges and delete <em>empty</em>
+loops immediately after each contraction in <span
+class="math inline">\(O(1)\)</span> time per deleted edge using only
+standard graph data structures. The resulting planar map is no longer
+necessarily simple, but every face has degree at least <span
+class="math inline">\(3\)</span>, which is good enough.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>To keep the space usage low, we store this vertex
+information in four hash tables, each of size linear in the number of
+vertices of <span class="math inline">\(H\)</span>. Alternatively, we
+can avoid hash tables by compacting the incidence-list structure of
+<span class="math inline">\(H’\)</span> during the cleanup phase of
+<span class="math inline">\(\textsf{Filter}\)</span>, and storing the
+index in the filtered map <span class="math inline">\(H’\)</span> of
+each vertex of the input map <span class="math inline">\(H\)</span>.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>

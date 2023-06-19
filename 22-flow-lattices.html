@@ -1,0 +1,137 @@
+<!doctype html>
+<html >
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
+
+    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
+    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
+
+    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
+    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
+  
+    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+        
+  
+    <!-- <script src="script.js"></script> -->
+  
+    <!-- <script src="jquery.sticky-kit.js "></script> -->
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
+
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
+    <meta name="generator" content="pandoc" />
+  <title>22-flow-lattices</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  
+</head>
+<body>
+
+    
+    <div class="container">
+    <div class="row">
+            <div class="span12">
+
+      
+      <h1 data-number="1"
+id="distributive-flow-latticesvarnothing"><span
+class="header-section-number">1</span> Distributive Flow Lattices<span
+class="math inline">\(^\varnothing\)</span></h1>
+<p><strong><em>Status: Unwritten</em></strong></p>
+<h2 data-number="1.1" id="pseudoflows-and-circulations"><span
+class="header-section-number">1.1</span> Pseudoflows and
+Circulations</h2>
+<p>Let <span class="math inline">\(\Sigma\)</span> be a planar map. A
+<em>pseudoflow</em> in <span class="math inline">\(\Sigma\)</span> is an
+antisymmetric function <span class="math inline">\(\phi\colon
+D(\Sigma)\to \mathbb{R}\)</span> from the darts of <span
+class="math inline">\(\Sigma\)</span> to the reals; here antisymmetry
+means <span class="math inline">\(\phi(d) =
+-\phi(\textsf{rev}(d))\)</span> for every dart <span
+class="math inline">\(d\)</span>.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a> Pseudoflows in <span
+class="math inline">\(\Sigma\)</span> define a real vector space <span
+class="math inline">\(C_1(\Sigma)\)</span>, unimaginatively called the
+<em>chain space</em> of <span class="math inline">\(\Sigma\)</span>,
+whose dimension is equal to the number of <em>edges</em> of <span
+class="math inline">\(\Sigma\)</span>. If we arbitrarily fix a
+<em>reference dart</em> <span class="math inline">\(e^+\)</span> for
+every edge <span class="math inline">\(e\)</span>, then we can specify a
+unique 1-chain by assigning arbitrary values to the reference darts.</p>
+<p>A <em>circulation</em> is a pseudoflow that obeys <em>Kirchhoff’s
+current law</em>: For every vertex <span
+class="math inline">\(v\)</span>, the values assigned to darts into
+<span class="math inline">\(v\)</span> sum to zero. (We previously
+called circulations <em>closed discrete 1-forms</em>) More generally,
+the <em>boundary</em> <span class="math inline">\(\partial\phi\)</span>
+of any pseudoflow is the function <span
+class="math inline">\(\partial\phi\colon V(\Sigma)\to\mathbb{R}\)</span>
+defined by <span class="math display">\[\partial\phi(v) =
+\sum_{u\mathord\to v} \phi(u\mathord\to v) = \sum_{d\colon
+\textsf{head}(d)=v} \phi(v).\]</span> (At the risk of confusing the
+reader, I will use the first summation notation even when <span
+class="math inline">\(\Sigma\)</span> has parallel edges.)</p>
+<p>Fix a tree-cotree decomposition <span
+class="math inline">\((T,C)\)</span> of <span
+class="math inline">\(\Sigma\)</span>. For any non-tree edge <span
+class="math inline">\(e\in C\)</span>, the <em>fundamental cycle</em>
+<span class="math inline">\(\textsf{cycle}_T(e^+)\)</span> is the
+directed cycle consisting of the reference dart <span
+class="math inline">\(e^+\)</span> and the directed path in <span
+class="math inline">\(T\)</span> from <span
+class="math inline">\(\textsf{head}(e^+)\)</span> to <span
+class="math inline">\(\textsf{tail}(e^+)\)</span>.</p>
+<p><strong>Lemma:</strong> <em>Fix an arbitrary planar map <span
+class="math inline">\(\Sigma\)</span> and an arbitrary tree-cotree
+decomposition <span class="math inline">\((T, C)\)</span> of <span
+class="math inline">\(\Sigma\)</span>. Every circulation <span
+class="math inline">\(\phi\)</span> in <span
+class="math inline">\(\Sigma\)</span> satisfies the identity <span
+class="math display">\[ \phi = \sum_{e\in C} \phi(e^+) \cdot
+\textsf{cycle}_T(e^+) \]</span>.</em></p>
+<h2 data-number="1.2" id="aptly-named-sir-not"><span
+class="header-section-number">1.2</span> Aptly Named Sir Not</h2>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In the lecture on the Maxwell-Cremona correspondence, we
+used exactly the same definition for <em>discrete 1-forms</em> or
+<em>1-cochains</em>, but topologists should really think of pseudoflows
+as <em>1-chains</em>.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+            </div>
+    </div>
+  </div>
+  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
+
+</body>
+</html>
