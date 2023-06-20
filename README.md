@@ -16,3 +16,4 @@ These notes (and other course materials) are available under a [Creative Commons
 
 ![CC By 4.0](https://upload.wikimedia.org/wikipedia/commons/e/e1/CC_BY_icon.svg)
 
+![Tree onion](https://github.com/jeffgerickson/1dct/blob/main/Fig/childs-tree-onion.jpg)
