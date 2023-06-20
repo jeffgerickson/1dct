@@ -6,11 +6,11 @@ I’m writing everything in Markdown, partly to focus my time on _writing_ inste
 
 I drafted most of these notes in Fall 2020 and revised them in Spring 2023; a handful of chapters (13, 16, 26, 27, 29, 30) were first drafted in Spring 2023.  Most of the missing chapters either cover material I did not discussed in class, or cover material from my own research papers.  
 
-I think I’m about 2/3 of the way to a complete draft of an actual textbook, but **even the most polished notes are still VERY rough drafts***.  
+I think I’m about 2/3 of the way to a complete draft of an actual textbook, but even the most polished notes are still **very** rough drafts.  
 
 ***You are welcome to use these notes, but I would not recommend citing them as a definitive source for ANYTHING.***
 
-I plan to work on this sporadically over summer 2023, but (thanks to a heavy fall teaching load) not in earnest until 2024.
+I honestly don't know when I'll be able to work on these notes again in earnest, or when (if ever) they're likely to be complete.  I'll fiddle with them a bit over the summer, but I'm going to be swamped with my real job during the academic year, especially in the fall,  I won't teach this class again until 2025 at the absolute earliest.
 
 These notes (and other course materials) are available under a [Creative Commons Attribution license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
