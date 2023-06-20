@@ -14,7 +14,7 @@ header-includes: |
 
 # Foreward$^\alpha$ {-}
 
-This book consists of lecture notes from a special-topics class on topological graph algorithms that I have taught several times at the University of Illinois.  These lecture notes (and other course materials) are available under a [Creative Commons Attribution license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+These are lecture notes from a special-topics class on topological graph algorithms that I have taught several times at the University of Illinois.  These lecture notes (and other course materials) are available under a [Creative Commons Attribution license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 ![CC BY 4.0](Fig/cc-by){ width=15% }
 
