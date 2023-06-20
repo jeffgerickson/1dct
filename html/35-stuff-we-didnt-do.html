@@ -1,65 +1,175 @@
-<!doctype html>
-<html >
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!--[if lt IE 9]>
-                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-        <![endif]-->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="Content-Style-Type" content="text/css" />
-
-    <!-- <link rel="stylesheet" type="text/css" href="template.css" /> -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/template.css" />
-
-    <link href="https://vjs.zencdn.net/5.4.4/video-js.css" rel="stylesheet" />
-
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <!-- <script type='text/javascript' src='menu/js/jquery.cookie.js'></script> -->
-    <!-- <script type='text/javascript' src='menu/js/jquery.hoverIntent.minified.js'></script> -->
-    <!-- <script type='text/javascript' src='menu/js/jquery.dcjqaccordion.2.7.min.js'></script> -->
-
-    <!-- <link href="menu/css/skins/blue.css" rel="stylesheet" type="text/css" /> -->
-    <!-- <link href="menu/css/skins/graphite.css" rel="stylesheet" type="text/css" /> -->
-    <!-- <link href="menu/css/skins/grey.css" rel="stylesheet" type="text/css" /> -->
-  
-    <!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-        
-  
-    <!-- <script src="script.js"></script> -->
-  
-    <!-- <script src="jquery.sticky-kit.js "></script> -->
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.cookie.js'></script>
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.hoverIntent.minified.js'></script>
-    <script type='text/javascript' src='https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/js/jquery.dcjqaccordion.2.7.min.js'></script>
-
-    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/blue.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/graphite.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/menu/css/skins/grey.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.jsdelivr.net/gh/ryangrose/easy-pandoc-templates@948e28e5/css/elegant_bootstrap.css" rel="stylesheet" type="text/css" />
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/script.js"></script>
-  
-    <script src="https://cdn.jsdelivr.net/gh/diversen/pandoc-bootstrap-adaptive-template@959c3622/jquery.sticky-kit.js"></script>
-    <meta name="generator" content="pandoc" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>35-stuff-we-didnt-do</title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <style>
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
-  
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-
-    
-    <div class="container">
-    <div class="row">
-            <div class="span12">
-
-      
-      <h1 data-number="1" id="closing-the-loopvarnothing"><span
+<h1 data-number="1" id="closing-the-loopvarnothing"><span
 class="header-section-number">1</span> Closing the Loop<span
 class="math inline">\(^\varnothing\)</span></h1>
 <p>We covered several topics related to <em>planar</em> curves and maps
@@ -122,9 +232,10 @@ can be interpreted as a rotation system for a <span
 class="math inline">\(4\)</span>-regular graph with <span
 class="math inline">\(n\)</span> vertices, and thus represents a unique
 curve (up to homeomorphism) on a unique orientable surface.</p>
-<p>Given an unsigned Gauss code <span class="math inline">\(x\)</span>
-and a surface <span class="math inline">\(\mathcal{S}\)</span>
-(specified by orientability and genus), we can determine whether <span
+<p>In principle, given an unsigned Gauss code <span
+class="math inline">\(x\)</span> and a surface <span
+class="math inline">\(\mathcal{S}\)</span> (specified by orientability
+and genus), we can determine whether <span
 class="math inline">\(x\)</span> is consistent with a curve on <span
 class="math inline">\(\mathcal{S}\)</span> in time <span
 class="math inline">\(g^{O(g)}n\)</span> as follows.</p>
@@ -217,166 +328,31 @@ class="math inline">\((\Sigma, p)\)</span>.</em></p>
 defining <span class="math inline">\(\Sigma\)</span>. The same stress
 <span class="math inline">\(\omega\)</span> can be reciprocal for some
 rotations systems but not others.</p>
-<h3 class="unnumbered" id="the-petrie-cube">The Petrie Cube</h3>
+<h3 class="unnumbered" id="the-petrie-cube">The Petrie Cube(?)</h3>
 <p>As a simple example of a non-planar ordered framework, consider the
-<em>Petrie cube</em>. The Petrie cube is a map of the torus with six
-vertices, twelve edges, and six hexagonal faces, whose underlying graph
+<em>Petrie cube</em>. The Petrie cube is a map of the torus with eight
+vertices, twelve edges, and four hexagonal faces, whose underlying graph
 is identical to the graph of the cube. Each face of the Petrie cube is
 bounded by the cycle obtained by deleting two opposite vertices of the
 cube graph. Equivalently, the Petrie cube is the map obtained from the
 standard cube by reversing the rotation system at four independent
 vertices.</p>
-<!--
-$$
-\begin{aligned}
-    P &= \begin{bmatrix}
-        +1 & +2 \\
-        -1 & +2 \\
-        +1 & -2 \\
-        -1 & -2 \\
-        +2 & +1 \\
-        -2 & +1 \\
-        +2 & -1 \\
-        -2 & -1
-    \end{bmatrix}
-    &
-    L &= \begin{bmatrix}
-        -5 & 6 & 3 & \cdot & \cdot & \cdot & \cdot & -4 \\ 
-        6 & -5 & \cdot & 3 & \cdot & \cdot & -4 & \cdot \\
-        3 & \cdot & -5 & 6 & \cdot & -4 & \cdot & \cdot \\
-        \cdot & 3 & 6 & -5 & -4 & \cdot & \cdot & \cdot \\
-        \cdot & \cdot & \cdot & -4 & -5 & 3 & 6 & \cdot \\ 
-        \cdot & \cdot & -4 & \cdot & 3 & -5 & \cdot & 6 \\
-        \cdot & -4 & \cdot & \cdot & 6 & \cdot & -5 & 3 \\
-        -4 & \cdot & \cdot & \cdot & \cdot & 6 & 3 & -5 
-    \end{bmatrix}
-    &
-    \ker L &= \begin{bmatrix}
-        +1 & +2 & 1 \\
-        -1 & +2 & 1 \\
-        +1 & -2 & 1 \\
-        -1 & -2 & 1 \\
-        +2 & +1 & 1 \\
-        -2 & +1 & 1 \\
-        +2 & -1 & 1 \\
-        -2 & -1 & 1
-    \end{bmatrix}
-\end{aligned}
-$$
-
-$$
-\begin{aligned}
-    \Delta &=
-    \begin{bmatrix}
-        -2 & 0 \\
-        0 & -4 \\
-        -3 & -3 \\
-        0 & -4 \\
-        +3 & -3 \\
-        -2 & 0 \\
-        -3 & 3 \\
-        +3 & +3 \\
-        -4 & 0 \\
-        0 & -2 \\
-        0 & -2 \\
-        -4 & 0
-    \end{bmatrix}
-    ~
-    \textcolor{pink}
-    {\begin{matrix}
-        \arc12 \\ \arc13 \\ \arc18 \\ \arc24 \\
-        \arc27 \\ \arc34 \\ \arc36 \\ \arc45 \\
-        \arc56 \\ \arc57 \\ \arc68 \\ \arc78
-    \end{matrix}}
-    \quad
-    \textcolor{cyan}
-    {\begin{matrix}
-        \fence{B}{A} \\ \fence{A}{C} \\ \fence{C}{B} \\ \fence{D}{A} \\
-        \fence{B}{D} \\ \fence{A}{E} \\ \fence{E}{C} \\ \fence{D}{E} \\
-        \fence{F}{E} \\ \fence{D}{F} \\ \fence{F}{C} \\ \fence{B}{F}
-    \end{matrix}}
-    &
-    \Delta^* &=
-    \begin{bmatrix}
-        0 & -12  \\
-        +12 & 0  \\
-        -12 & +12 \\
-        +12 & 0 \\
-        -12 & -12 \\
-        0 & -12 \\
-        +12 & +12 \\
-        +12 & -12 \\
-        0 & -12 \\
-        +12 & 0 \\
-        +12 & 0 \\
-        0 & -12
-    \end{bmatrix}
-    ~
-    \textcolor{pink}
-    {\begin{matrix}
-        \fence12 \\ \fence13 \\ \fence18 \\ \fence24 \\
-        \fence27 \\ \fence34 \\ \fence36 \\ \fence45 \\
-        \fence56 \\ \fence57 \\ \fence68 \\ \fence78
-    \end{matrix}}
-    \quad
-    \textcolor{cyan}
-    {\begin{matrix}
-        \arc{B}{A} \\ \arc{A}{C} \\ \arc{C}{B} \\ \arc{D}{A} \\
-        \arc{B}{D} \\ \arc{A}{E} \\ \arc{E}{C} \\ \arc{D}{E} \\
-        \arc{F}{E} \\ \arc{D}{F} \\ \arc{F}{C} \\ \arc{B}{F}
-    \end{matrix}}
-\end{aligned}
-$$
-
-$$
-\begin{aligned}
-    [P, Z] &= \begin{bmatrix}[cc:c]
-        +1 & +2 & 0 \\
-        -1 & +2 & 0 \\
-        +1 & -2 & 0 \\
-        -1 & -2 & 0 \\
-        +2 & +1 & 36 \\
-        -2 & +1 & 36 \\
-        +2 & -1 & 36 \\
-        -2 & -1 & 36
-    \end{bmatrix}
-    \textcolor{Gray}    {\begin{matrix} 1\\2\\3\\4\\5\\6\\7\\8 \end{matrix}}
-    &
-    [P^*, Z^*] &= \begin{bmatrix}[cc:c]
-        0 & 0 & 0 \\
-        0 & +12 & 24 \\
-        +12 & 0 & 12 \\
-        -12 & 0 & 12 \\
-        0 & -12 & 24 \\
-        0 & 0 & 36
-    \end{bmatrix}
-    \textcolor{Gray}    {\begin{matrix} A\\B\\C\\D\\E\\F \end{matrix}}
-    &   
-    \phi^\diamond &= 
-    \begin{bmatrix}
-        0 \\ +24 \\ +12 \\ 
-        0 \\ +24 \\ +12 \\
-        0 \\ +12 \\ +24 \\
-        0 \\ +12 \\ +24 \\\hdashline
-        -24 \\ -12 \\ 0 \\
-        -24 \\ -12 \\ 0 \\
-        -12 \\ -24 \\ 0 \\
-        -12 \\ -24 \\ 0
-    \end{bmatrix}
-    \textcolor{Gray}
-    {\begin{matrix}
-        \arc{1}{A} \\ \arc{1}{B} \\ \arc{1}{C} \\
-        \arc{2}{A} \\ \arc{2}{B} \\ \arc{2}{D} \\
-        \arc{3}{A} \\ \arc{3}{C} \\ \arc{3}{E} \\
-        \arc{4}{A} \\ \arc{4}{D} \\ \arc{4}{E} \\\hdashline
-        \arc{5}{D} \\ \arc{5}{E} \\ \arc{5}{F} \\
-        \arc{6}{C} \\ \arc{6}{E} \\ \arc{6}{F} \\
-        \arc{7}{B} \\ \arc{7}{D} \\ \arc{7}{F} \\
-        \arc{8}{B} \\ \arc{8}{C} \\ \arc{8}{F}
-    \end{matrix}}
-\end{aligned}
-$$
--->
+<p>Unfortunately, the only way to establish a reciprocal stress on a
+planar drawing of the Petrie cube is to collapse each pair of opposite
+vertices to a single point. Let <span
+class="math inline">\(p,q,r,s\)</span> be any four points in the plane.
+We can draw the Petrie cube with one pair of opposite faces at each of
+these points, two coincident edges between each pair of those points,
+and with faces <span class="math inline">\(pqrpqr\)</span>, <span
+class="math inline">\(prsprs\)</span>, <span
+class="math inline">\(psqpsq\)</span>, and <span
+class="math inline">\(srqsrq\)</span>. The reciprocal drawing also looks
+like a tetrahedron with doubled edges, but now with two copies of each
+triangular face, and with degenerate hexagons as vertex figures. The
+dual map of the Petrie cube is the <em>Petrie octahedron</em>, whose
+underlying graph is the same as the Platonic octahedron, but whose faces
+are hexagons bouncing back and forth between pairs of parallel
+faces.</p>
 <h3 class="unnumbered"
 id="polyhedral-lifts-of-non-planar-frameworks">Polyhedral Lifts of
 Non-planar Frameworks</h3>
@@ -385,10 +361,5 @@ polyhedral lifts?</p>
 <h3 class="unnumbered" id="toroidal-frameworks">Toroidal Frameworks</h3>
 <h2 data-number="1.9" id="references"><span
 class="header-section-number">1.9</span> References</h2>
-            </div>
-    </div>
-  </div>
-  <script src="https://vjs.zencdn.net/5.4.4/video.js"></script>
-
 </body>
 </html>

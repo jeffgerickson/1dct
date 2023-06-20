@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Straight-line Planar Maps^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="12-tuttes-spring-embedding-theorembeta.html" accesskey="n" rel="next">Tutte’s Spring Embedding Theorem<span
+class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="10-tree-cotree-decompositionsbeta.html" accesskey="p" rel="previous">Tree-Cotree Decompositions<span class="math inline">\(^\beta\)</span></a>
+</span>
+</div>
+</nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="-forewardalpha.html" id="toc-forewardalpha">Foreward<span
+class="math inline">\(^\alpha\)</span></a></li>
+<li><a href="1-simple-polygonsbeta.html"
+id="toc-simple-polygonsbeta"><span class="toc-section-number">1</span>
+Simple Polygons<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="1-simple-polygonsbeta.html#definitions"
+id="toc-definitions"><span class="toc-section-number">1.1</span>
+Definitions</a></li>
+<li><a
+href="1-simple-polygonsbeta.html#proof-of-the-jordan-polygon-theorem"
+id="toc-proof-of-the-jordan-polygon-theorem"><span
+class="toc-section-number">1.2</span> Proof of the Jordan Polygon
+Theorem</a></li>
+<li><a href="1-simple-polygonsbeta.html#point-in-polygon-test"
+id="toc-point-in-polygon-test"><span
+class="toc-section-number">1.3</span> Point-in-Polygon Test</a></li>
+<li><a href="1-simple-polygonsbeta.html#polygons-can-be-triangulated"
+id="toc-polygons-can-be-triangulated"><span
+class="toc-section-number">1.4</span> Polygons Can Be
+Triangulated</a></li>
+<li><a href="1-simple-polygonsbeta.html#computing-a-triangulation"
+id="toc-computing-a-triangulation"><span
+class="toc-section-number">1.5</span> Computing a Triangulation</a></li>
+<li><a href="1-simple-polygonsbeta.html#the-dehn-schönflies-theorem"
+id="toc-the-dehn-schönflies-theorem"><span
+class="toc-section-number">1.6</span> The Dehn-Schönflies
+Theorem</a></li>
+<li><a
+href="1-simple-polygonsbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film"><span
+class="toc-section-number">1.7</span> and the aptly named Sir Not
+Appearing in This Film</a></li>
+<li><a href="1-simple-polygonsbeta.html#references"
+id="toc-references"><span class="toc-section-number">1.8</span>
+References</a></li>
+</ul></li>
+<li><a href="2-winding-numbersbeta.html"
+id="toc-winding-numbersbeta"><span class="toc-section-number">2</span>
+Winding Numbers<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="2-winding-numbersbeta.html#let-me-not-be-pent-up-sir-i-will-fast-being-loose."
+id="toc-let-me-not-be-pent-up-sir-i-will-fast-being-loose."><span
+class="toc-section-number">2.1</span> Let me not be pent up, sir; I will
+fast, being loose.</a></li>
+<li><a href="2-winding-numbersbeta.html#shoelaces-and-signed-areas"
+id="toc-shoelaces-and-signed-areas"><span
+class="toc-section-number">2.2</span> Shoelaces and Signed
+Areas</a></li>
+<li><a href="2-winding-numbersbeta.html#winding-numbers"
+id="toc-winding-numbers"><span class="toc-section-number">2.3</span>
+Winding numbers</a></li>
+<li><a href="2-winding-numbersbeta.html#homotopy"
+id="toc-homotopy"><span class="toc-section-number">2.4</span>
+Homotopy</a></li>
+<li><a href="2-winding-numbersbeta.html#vertex-moves"
+id="toc-vertex-moves"><span class="toc-section-number">2.5</span> Vertex
+moves</a></li>
+<li><a
+href="2-winding-numbersbeta.html#polygon-homotopies-are-sequences-of-vertex-moves"
+id="toc-polygon-homotopies-are-sequences-of-vertex-moves"><span
+class="toc-section-number">2.6</span> Polygon homotopies are sequences
+of vertex moves</a></li>
+<li><a href="2-winding-numbersbeta.html#homotopy-invariant"
+id="toc-homotopy-invariant"><span class="toc-section-number">2.7</span>
+Homotopy Invariant</a></li>
+<li><a
+href="2-winding-numbersbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film-1"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film-1"><span
+class="toc-section-number">2.8</span> …and the Aptly Named Sir Not
+Appearing in This Film</a></li>
+<li><a href="2-winding-numbersbeta.html#references-1"
+id="toc-references-1"><span class="toc-section-number">2.9</span>
+References</a></li>
+</ul></li>
+<li><a href="3-homotopy-testingbeta.html"
+id="toc-homotopy-testingbeta"><span class="toc-section-number">3</span>
+Homotopy Testing<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="3-homotopy-testingbeta.html#multiple-obstacles"
+id="toc-multiple-obstacles"><span class="toc-section-number">3.1</span>
+Multiple Obstacles</a></li>
+<li><a href="3-homotopy-testingbeta.html#crossing-sequences"
+id="toc-crossing-sequences"><span class="toc-section-number">3.2</span>
+Crossing Sequences</a></li>
+<li><a href="3-homotopy-testingbeta.html#reductions"
+id="toc-reductions"><span class="toc-section-number">3.3</span>
+Reductions</a></li>
+<li><a href="3-homotopy-testingbeta.html#varations"
+id="toc-varations"><span class="toc-section-number">3.4</span>
+Varations</a></li>
+<li><a
+href="3-homotopy-testingbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film-2"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film-2"><span
+class="toc-section-number">3.5</span> …and the Aptly Named Sir Not
+Appearing in This Film</a></li>
+</ul></li>
+<li><a href="4-faster-homotopy-testingbeta.html"
+id="toc-faster-homotopy-testingbeta"><span
+class="toc-section-number">4</span> Faster Homotopy Testing<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="4-faster-homotopy-testingbeta.html#trapezoidal-decomposition"
+id="toc-trapezoidal-decomposition"><span
+class="toc-section-number">4.1</span> Trapezoidal decomposition</a></li>
+<li><a
+href="4-faster-homotopy-testingbeta.html#vertical-and-horizontal-ranks"
+id="toc-vertical-and-horizontal-ranks"><span
+class="toc-section-number">4.2</span> Vertical and horizontal
+ranks</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#rectification"
+id="toc-rectification"><span class="toc-section-number">4.3</span>
+Rectification</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#reduction"
+id="toc-reduction"><span class="toc-section-number">4.4</span>
+Reduction</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#layered-range-trees"
+id="toc-layered-range-trees"><span class="toc-section-number">4.5</span>
+Layered Range Trees</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#final-analysis"
+id="toc-final-analysis"><span class="toc-section-number">4.6</span>
+Final Analysis</a></li>
+<li><a
+href="4-faster-homotopy-testingbeta.html#dots-and-the-aptly-named-et-cetera-ad-nauseam"
+id="toc-dots-and-the-aptly-named-et-cetera-ad-nauseam"><span
+class="toc-section-number">4.7</span> <span
+class="math inline">\(\dots\)</span> And the Aptly Named Et Cetera Ad
+Nauseam</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#references-2"
+id="toc-references-2"><span class="toc-section-number">4.8</span>
+References</a></li>
+</ul></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html"
+id="toc-shortest-homotopic-pathsbeta"><span
+class="toc-section-number">5</span> Shortest (Homotopic) Paths<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#shortest-paths-in-simple-polygons"
+id="toc-shortest-paths-in-simple-polygons"><span
+class="toc-section-number">5.1</span> Shortest Paths in Simple
+Polygons</a></li>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#triangulations-and-dual-graphs"
+id="toc-triangulations-and-dual-graphs"><span
+class="toc-section-number">5.2</span> Triangulations and Dual
+Graphs</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#crossing-sequences-1"
+id="toc-crossing-sequences-1"><span
+class="toc-section-number">5.3</span> Crossing Sequences</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#sleeves"
+id="toc-sleeves"><span class="toc-section-number">5.4</span>
+Sleeves</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#growing-funnels"
+id="toc-growing-funnels"><span class="toc-section-number">5.5</span>
+Growing Funnels</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#polygons-with-holes"
+id="toc-polygons-with-holes"><span class="toc-section-number">5.6</span>
+Polygons with Holes</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#the-universal-cover"
+id="toc-the-universal-cover"><span class="toc-section-number">5.7</span>
+The Universal Cover</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#covering-spaces"
+id="toc-covering-spaces"><span class="toc-section-number">5.8</span>
+Covering Spaces</a></li>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#dotsand-the-aptly-named-yadda-yadda"
+id="toc-dotsand-the-aptly-named-yadda-yadda"><span
+class="toc-section-number">5.9</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#references-3"
+id="toc-references-3"><span class="toc-section-number">5.10</span>
+References</a></li>
+</ul></li>
+<li><a href="6-generic-planar-curvesalpha.html"
+id="toc-generic-planar-curvesalpha"><span
+class="toc-section-number">6</span> Generic Planar Curves<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="6-generic-planar-curvesalpha.html#technicalities"
+id="toc-technicalities"><span class="toc-section-number">6.1</span>
+Technicalities</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#image-graphs"
+id="toc-image-graphs"><span class="toc-section-number">6.2</span> Image
+graphs</a></li>
+<li><a
+href="6-generic-planar-curvesalpha.html#gauss-codes-and-gauss-diagrams"
+id="toc-gauss-codes-and-gauss-diagrams"><span
+class="toc-section-number">6.3</span> Gauss codes and Gauss
+diagrams</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#tracing-faces"
+id="toc-tracing-faces"><span class="toc-section-number">6.4</span>
+Tracing Faces</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#homotopy-moves"
+id="toc-homotopy-moves"><span class="toc-section-number">6.5</span>
+Homotopy moves</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#planarity-testing"
+id="toc-planarity-testing"><span class="toc-section-number">6.6</span>
+Planarity testing</a></li>
+<li><a
+href="6-generic-planar-curvesalpha.html#dotsand-the-aptly-named-yadda-yadda-1"
+id="toc-dotsand-the-aptly-named-yadda-yadda-1"><span
+class="toc-section-number">6.7</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#references-4"
+id="toc-references-4"><span class="toc-section-number">6.8</span>
+References</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#possible-reorganization"
+id="toc-possible-reorganization"><span
+class="toc-section-number">6.9</span> Possible reorganization</a></li>
+</ul></li>
+<li><a href="7-unsigned-gauss-codesbeta.html"
+id="toc-unsigned-gauss-codesbeta"><span
+class="toc-section-number">7</span> Unsigned Gauss codes<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="7-unsigned-gauss-codesbeta.html#winding-numbers-again"
+id="toc-winding-numbers-again"><span
+class="toc-section-number">7.1</span> Winding numbers again</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#smoothing"
+id="toc-smoothing"><span class="toc-section-number">7.2</span>
+Smoothing</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#gausss-parity-condition"
+id="toc-gausss-parity-condition"><span
+class="toc-section-number">7.3</span> Gauss’s parity condition</a></li>
+<li><a
+href="7-unsigned-gauss-codesbeta.html#dehns-non-crossing-condition"
+id="toc-dehns-non-crossing-condition"><span
+class="toc-section-number">7.4</span> Dehn’s non-crossing
+condition</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#tree-onion-figures"
+id="toc-tree-onion-figures"><span class="toc-section-number">7.5</span>
+Tree-onion figures</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#bipartite-interlacement"
+id="toc-bipartite-interlacement"><span
+class="toc-section-number">7.6</span> Bipartite interlacement</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#recrossing"
+id="toc-recrossing"><span class="toc-section-number">7.7</span>
+Recrossing</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#algorithm-summary"
+id="toc-algorithm-summary"><span class="toc-section-number">7.8</span>
+Algorithm summary</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#faster-faster"
+id="toc-faster-faster"><span class="toc-section-number">7.9</span>
+Faster! Faster!</a></li>
+<li><a
+href="7-unsigned-gauss-codesbeta.html#dotsand-the-aptly-named-yadda-yadda-2"
+id="toc-dotsand-the-aptly-named-yadda-yadda-2"><span
+class="toc-section-number">7.10</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#references-5"
+id="toc-references-5"><span class="toc-section-number">7.11</span>
+References</a></li>
+</ul></li>
+<li><a href="8-curve-homotopy-and-curve-invariantsalpha.html"
+id="toc-curve-homotopy-and-curve-invariantsalpha"><span
+class="toc-section-number">8</span> Curve homotopy and curve
+invariants<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#steinitzs-contraction-algorithm"
+id="toc-steinitzs-contraction-algorithm"><span
+class="toc-section-number">8.1</span> Steinitz’s contraction
+algorithm</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#rotation-number"
+id="toc-rotation-number"><span class="toc-section-number">8.2</span>
+Rotation number</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#regular-homotopy"
+id="toc-regular-homotopy"><span class="toc-section-number">8.3</span>
+Regular homotopy</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#strangeness"
+id="toc-strangeness"><span class="toc-section-number">8.4</span>
+Strangeness</a></li>
+<li><a href="8-curve-homotopy-and-curve-invariantsalpha.html#defect"
+id="toc-defect"><span class="toc-section-number">8.5</span>
+Defect</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#aptly-yadda-yadda"
+id="toc-aptly-yadda-yadda"><span class="toc-section-number">8.6</span>
+Aptly Yadda Yadda</a></li>
+</ul></li>
+<li><a href="9-planar-graphsbeta.html" id="toc-planar-graphsbeta"><span
+class="toc-section-number">9</span> Planar Graphs<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="9-planar-graphsbeta.html#abstract-graphs"
+id="toc-abstract-graphs"><span class="toc-section-number">9.1</span>
+Abstract graphs</a></li>
+<li><a href="9-planar-graphsbeta.html#data-structures"
+id="toc-data-structures"><span class="toc-section-number">9.2</span>
+Data structures</a></li>
+<li><a href="9-planar-graphsbeta.html#topological-graphs"
+id="toc-topological-graphs"><span class="toc-section-number">9.3</span>
+Topological graphs</a></li>
+<li><a href="9-planar-graphsbeta.html#planar-graphs-and-planar-maps"
+id="toc-planar-graphs-and-planar-maps"><span
+class="toc-section-number">9.4</span> Planar graphs and planar
+maps</a></li>
+<li><a href="9-planar-graphsbeta.html#rotation-systems"
+id="toc-rotation-systems"><span class="toc-section-number">9.5</span>
+Rotation systems</a></li>
+<li><a href="9-planar-graphsbeta.html#formalities-and-trivialities"
+id="toc-formalities-and-trivialities"><span
+class="toc-section-number">9.6</span> Formalities and
+Trivialities</a></li>
+<li><a href="9-planar-graphsbeta.html#caveat-lector"
+id="toc-caveat-lector"><span class="toc-section-number">9.7</span>
+Caveat Lector</a></li>
+<li><a href="9-planar-graphsbeta.html#duality" id="toc-duality"><span
+class="toc-section-number">9.8</span> Duality</a></li>
+<li><a href="9-planar-graphsbeta.html#self-dual-data-structures"
+id="toc-self-dual-data-structures"><span
+class="toc-section-number">9.9</span> Self-dual data structures</a></li>
+<li><a href="9-planar-graphsbeta.html#endianity"
+id="toc-endianity"><span class="toc-section-number">9.10</span>
+Endianity</a></li>
+<li><a href="9-planar-graphsbeta.html#other-derived-maps"
+id="toc-other-derived-maps"><span class="toc-section-number">9.11</span>
+Other derived maps</a></li>
+<li><a href="9-planar-graphsbeta.html#aptly-yadda-yadda-1"
+id="toc-aptly-yadda-yadda-1"><span
+class="toc-section-number">9.12</span> Aptly Yadda Yadda</a></li>
+<li><a href="9-planar-graphsbeta.html#revision" id="toc-revision"><span
+class="toc-section-number">9.13</span> Revision?</a></li>
+</ul></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html"
+id="toc-tree-cotree-decompositionsbeta"><span
+class="toc-section-number">10</span> Tree-Cotree Decompositions<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#important-graph-definitions-yawn"
+id="toc-important-graph-definitions-yawn"><span
+class="toc-section-number">10.1</span> Important graph definitions
+(yawn)</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#deletion-and-contraction"
+id="toc-deletion-and-contraction"><span
+class="toc-section-number">10.2</span> Deletion and Contraction</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#spanning-trees"
+id="toc-spanning-trees"><span class="toc-section-number">10.3</span>
+Spanning trees</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#deletion-and-contraction-in-planar-maps"
+id="toc-deletion-and-contraction-in-planar-maps"><span
+class="toc-section-number">10.4</span> Deletion and Contraction in
+Planar Maps</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#tree-cotree-decompositions"
+id="toc-tree-cotree-decompositions"><span
+class="toc-section-number">10.5</span> Tree-Cotree
+Decompositions</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#eulers-formula"
+id="toc-eulers-formula"><span class="toc-section-number">10.6</span>
+Euler’s Formula</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#the-combinatorial-gauss-bonnet-theorem"
+id="toc-the-combinatorial-gauss-bonnet-theorem"><span
+class="toc-section-number">10.7</span> The Combinatorial Gauss-Bonnet
+Theorem</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#historical-digression"
+id="toc-historical-digression"><span
+class="toc-section-number">10.8</span> Historical Digression</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#aptly-named"
+id="toc-aptly-named"><span class="toc-section-number">10.9</span> Aptly
+Named</a></li>
+</ul></li>
+<li><a href="11-straight-line-planar-mapsbeta.html"
+id="toc-straight-line-planar-mapsbeta"><span
+class="toc-section-number">11</span> Straight-line Planar Maps<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#simple-triangulations"
+id="toc-simple-triangulations"><span
+class="toc-section-number">11.1</span> Simple triangulations</a></li>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#inner-induction-hole-filling"
+id="toc-inner-induction-hole-filling"><span
+class="toc-section-number">11.2</span> Inner Induction (Hole
+Filling)</a></li>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#outer-induction-canonical-ordering"
+id="toc-outer-induction-canonical-ordering"><span
+class="toc-section-number">11.3</span> Outer Induction (Canonical
+Ordering)</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#schnyder-woods"
+id="toc-schnyder-woods"><span class="toc-section-number">11.4</span>
+Schnyder Woods</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#grid-embedding"
+id="toc-grid-embedding"><span class="toc-section-number">11.5</span>
+Grid embedding</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#references-6"
+id="toc-references-6"><span class="toc-section-number">11.6</span>
+References</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#not-appearing"
+id="toc-not-appearing"><span class="toc-section-number">11.7</span> Not
+Appearing</a></li>
+</ul></li>
+<li><a href="12-tuttes-spring-embedding-theorembeta.html"
+id="toc-tuttes-spring-embedding-theorembeta"><span
+class="toc-section-number">12</span> Tutte’s Spring Embedding
+Theorem<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#outer-face-is-outer"
+id="toc-outer-face-is-outer"><span
+class="toc-section-number">12.1</span> Outer Face is Outer</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#laplacian-linear-systems-and-energy-minimization"
+id="toc-laplacian-linear-systems-and-energy-minimization"><span
+class="toc-section-number">12.2</span> Laplacian linear systems and
+energy minimization</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#slicing-with-lines"
+id="toc-slicing-with-lines"><span class="toc-section-number">12.3</span>
+Slicing with Lines</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#no-degenerate-vertex-neighborhoods"
+id="toc-no-degenerate-vertex-neighborhoods"><span
+class="toc-section-number">12.4</span> No Degenerate Vertex
+Neighborhoods</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#no-degenerate-faces"
+id="toc-no-degenerate-faces"><span
+class="toc-section-number">12.5</span> No Degenerate Faces</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#whitneys-uniqueness-theorem"
+id="toc-whitneys-uniqueness-theorem"><span
+class="toc-section-number">12.6</span> Whitney’s Uniqueness
+Theorem</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#not-appearing-1"
+id="toc-not-appearing-1"><span class="toc-section-number">12.7</span>
+Not Appearing</a></li>
+</ul></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html"
+id="toc-maxwellcremona-correspondencebeta"><span
+class="toc-section-number">13</span> Maxwell–Cremona Correspondence<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#dramatis-personae"
+id="toc-dramatis-personae"><span class="toc-section-number">13.1</span>
+Dramatis Personae</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#reciprocal-diagrams"
+id="toc-reciprocal-diagrams"><span
+class="toc-section-number">13.2</span> Reciprocal diagrams</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#polyhedral-lifts"
+id="toc-polyhedral-lifts"><span class="toc-section-number">13.3</span>
+Polyhedral lifts</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#a-non-obvious-example-the-anticube"
+id="toc-a-non-obvious-example-the-anticube"><span
+class="toc-section-number">13.4</span> A Non-Obvious Example: The
+“Anticube”</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#steinitzs-theorem"
+id="toc-steinitzs-theorem"><span class="toc-section-number">13.5</span>
+Steinitz’s Theorem</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#non-3-connected-frameworks"
+id="toc-non-3-connected-frameworks"><span
+class="toc-section-number">13.6</span> Non-3-connected
+Frameworks</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#non-planar-frameworks"
+id="toc-non-planar-frameworks"><span
+class="toc-section-number">13.7</span> Non-Planar Frameworks</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#references-7"
+id="toc-references-7"><span class="toc-section-number">13.8</span>
+References</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#aptly-named-1"
+id="toc-aptly-named-1"><span class="toc-section-number">13.9</span>
+Aptly Named</a></li>
+</ul></li>
+<li><a href="14-circle-packingvarnothing.html"
+id="toc-circle-packingvarnothing"><span
+class="toc-section-number">14</span> Circle Packing<span
+class="math inline">\(^\varnothing\)</span></a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html"
+id="toc-multiple-source-shortest-pathsalpha"><span
+class="toc-section-number">15</span> Multiple-Source Shortest Paths<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#problem-statement"
+id="toc-problem-statement"><span class="toc-section-number">15.1</span>
+Problem Statement</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#shortest-paths-and-slacks"
+id="toc-shortest-paths-and-slacks"><span
+class="toc-section-number">15.2</span> Shortest paths and
+slacks</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#compact-output"
+id="toc-compact-output"><span class="toc-section-number">15.3</span>
+Compact Output</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#parametric-shortest-paths"
+id="toc-parametric-shortest-paths"><span
+class="toc-section-number">15.4</span> Parametric Shortest
+Paths</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#dynamic-forest-data-structures"
+id="toc-dynamic-forest-data-structures"><span
+class="toc-section-number">15.5</span> Dynamic Forest Data
+Structures</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#the-pivoting-algorithm"
+id="toc-the-pivoting-algorithm"><span
+class="toc-section-number">15.6</span> The Pivoting Algorithm</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#applications"
+id="toc-applications"><span class="toc-section-number">15.7</span>
+Applications</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#enforcing-unique-shortest-paths"
+id="toc-enforcing-unique-shortest-paths"><span
+class="toc-section-number">15.8</span> Enforcing Unique Shortest
+Paths</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#leftmost-shortest-paths"
+id="toc-leftmost-shortest-paths"><span
+class="toc-section-number">15.9</span> Leftmost shortest paths</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#references-8"
+id="toc-references-8"><span class="toc-section-number">15.10</span>
+References</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#sir-not-appearing"
+id="toc-sir-not-appearing"><span class="toc-section-number">15.11</span>
+Sir not appearing</a></li>
+</ul></li>
+<li><a href="16-multiple-source-shortest-paths-revisitedalpha.html"
+id="toc-multiple-source-shortest-paths-revisitedalpha"><span
+class="toc-section-number">16</span> Multiple-Source Shortest Paths,
+Revisited<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#problem-formulation"
+id="toc-problem-formulation"><span
+class="toc-section-number">16.1</span> Problem formulation</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#overview"
+id="toc-overview"><span class="toc-section-number">16.2</span>
+Overview</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#properly-shared-edges"
+id="toc-properly-shared-edges"><span
+class="toc-section-number">16.3</span> Properly shared edges</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#contraction"
+id="toc-contraction"><span class="toc-section-number">16.4</span>
+Contraction</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#distance-queries"
+id="toc-distance-queries"><span class="toc-section-number">16.5</span>
+Distance Queries</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#space-and-time-analysis"
+id="toc-space-and-time-analysis"><span
+class="toc-section-number">16.6</span> Space and Time Analysis</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#references-9"
+id="toc-references-9"><span class="toc-section-number">16.7</span>
+References</a></li>
+</ul></li>
+<li><a href="17-planar-separatorsbeta.html"
+id="toc-planar-separatorsbeta"><span
+class="toc-section-number">17</span> Planar Separators<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="17-planar-separatorsbeta.html#tree-separators"
+id="toc-tree-separators"><span class="toc-section-number">17.1</span>
+Tree separators</a></li>
+<li><a href="17-planar-separatorsbeta.html#fundamental-cycle-separators"
+id="toc-fundamental-cycle-separators"><span
+class="toc-section-number">17.2</span> Fundamental cycle
+separators</a></li>
+<li><a
+href="17-planar-separatorsbeta.html#breadth-first-level-separators"
+id="toc-breadth-first-level-separators"><span
+class="toc-section-number">17.3</span> Breadth-first level
+separators</a></li>
+<li><a href="17-planar-separatorsbeta.html#cycle-separators"
+id="toc-cycle-separators"><span class="toc-section-number">17.4</span>
+Cycle separators</a></li>
+<li><a
+href="17-planar-separatorsbeta.html#good-r-divisions-and-subdivision-hierarchies"
+id="toc-good-r-divisions-and-subdivision-hierarchies"><span
+class="toc-section-number">17.5</span> Good <span
+class="math inline">\(r\)</span>-divisions and Subdivision
+Hierarchies</a></li>
+<li><a href="17-planar-separatorsbeta.html#history"
+id="toc-history"><span class="toc-section-number">17.6</span>
+History</a></li>
+<li><a href="17-planar-separatorsbeta.html#references-10"
+id="toc-references-10"><span class="toc-section-number">17.7</span>
+References</a></li>
+<li><a href="17-planar-separatorsbeta.html#aptly-named-sir-not"
+id="toc-aptly-named-sir-not"><span
+class="toc-section-number">17.8</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="18-branch-decompositionsvarnothing.html"
+id="toc-branch-decompositionsvarnothing"><span
+class="toc-section-number">18</span> Branch Decompositions<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="18-branch-decompositionsvarnothing.html#branchwidth"
+id="toc-branchwidth"><span class="toc-section-number">18.1</span>
+Branchwidth</a></li>
+<li><a href="18-branch-decompositionsvarnothing.html#treewidth"
+id="toc-treewidth"><span class="toc-section-number">18.2</span>
+Treewidth</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#width-versus-diameter"
+id="toc-width-versus-diameter"><span
+class="toc-section-number">18.3</span> Width versus diameter</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#local-approximation"
+id="toc-local-approximation"><span
+class="toc-section-number">18.4</span> Local approximation</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#aptly-named-sir-not-1"
+id="toc-aptly-named-sir-not-1"><span
+class="toc-section-number">18.5</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="19-fast-shortest-paths-in-planar-graphsbeta.html"
+id="toc-fast-shortest-paths-in-planar-graphsbeta"><span
+class="toc-section-number">19</span> Fast Shortest Paths in Planar
+Graphs<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#dense-distance-graphs"
+id="toc-dense-distance-graphs"><span
+class="toc-section-number">19.1</span> Dense Distance Graphs</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-dijkstra"
+id="toc-beating-dijkstra"><span class="toc-section-number">19.2</span>
+Beating Dijkstra</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-bellman-ford-nested-dissection"
+id="toc-beating-bellman-ford-nested-dissection"><span
+class="toc-section-number">19.3</span> Beating Bellman-Ford: Nested
+Dissection</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#aside-computing-spring-embeddings"
+id="toc-aside-computing-spring-embeddings"><span
+class="toc-section-number">19.4</span> Aside: Computing Spring
+Embeddings</a></li>
+<li><a href="19-fast-shortest-paths-in-planar-graphsbeta.html#repricing"
+id="toc-repricing"><span class="toc-section-number">19.5</span>
+Repricing</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#nested-dissection-revisited"
+id="toc-nested-dissection-revisited"><span
+class="toc-section-number">19.6</span> Nested Dissection
+Revisited</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#monge-arrays-and-smawk"
+id="toc-monge-arrays-and-smawk"><span
+class="toc-section-number">19.7</span> Monge arrays and SMAWK</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#planar-distance-matrices-are-almost-monge"
+id="toc-planar-distance-matrices-are-almost-monge"><span
+class="toc-section-number">19.8</span> Planar distance matrices are
+(almost) Monge</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-nested-dissection"
+id="toc-beating-nested-dissection"><span
+class="toc-section-number">19.9</span> Beating Nested
+Dissection</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#references-11"
+id="toc-references-11"><span class="toc-section-number">19.10</span>
+References</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#aptly-named-sir-not-2"
+id="toc-aptly-named-sir-not-2"><span
+class="toc-section-number">19.11</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="20-minimum-cutsbeta.html" id="toc-minimum-cutsbeta"><span
+class="toc-section-number">20</span> Minimum Cuts<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="20-minimum-cutsbeta.html#duality-shortest-essential-cycle"
+id="toc-duality-shortest-essential-cycle"><span
+class="toc-section-number">20.1</span> Duality: Shortest essential
+cycle</a></li>
+<li><a href="20-minimum-cutsbeta.html#crossing-at-most-once"
+id="toc-crossing-at-most-once"><span
+class="toc-section-number">20.2</span> Crossing at most once</a></li>
+<li><a href="20-minimum-cutsbeta.html#slicing-along-a-path"
+id="toc-slicing-along-a-path"><span
+class="toc-section-number">20.3</span> Slicing along a path</a></li>
+<li><a href="20-minimum-cutsbeta.html#algorithms"
+id="toc-algorithms"><span class="toc-section-number">20.4</span>
+Algorithms</a></li>
+<li><a
+href="20-minimum-cutsbeta.html#faster-shortest-paths-with-negative-lengths"
+id="toc-faster-shortest-paths-with-negative-lengths"><span
+class="toc-section-number">20.5</span> Faster Shortest Paths with
+Negative Lengths</a></li>
+<li><a href="20-minimum-cutsbeta.html#faster-minimum-cuts-fr-dijkstra"
+id="toc-faster-minimum-cuts-fr-dijkstra"><span
+class="toc-section-number">20.6</span> Faster Minimum Cuts:
+FR-Dijkstra</a></li>
+<li><a href="20-minimum-cutsbeta.html#references-12"
+id="toc-references-12"><span class="toc-section-number">20.7</span>
+References</a></li>
+<li><a href="20-minimum-cutsbeta.html#aptly-named-sir-not-3"
+id="toc-aptly-named-sir-not-3"><span
+class="toc-section-number">20.8</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html"
+id="toc-faster-minimum-cuts-fr-dijkstraalpha"><span
+class="toc-section-number">21</span> Faster Minimum Cuts
+(FR-Dijkstra)<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html#monge-heaps"
+id="toc-monge-heaps"><span class="toc-section-number">21.1</span> Monge
+Heaps</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#monge-structure-of-nice-r-divisions"
+id="toc-monge-structure-of-nice-r-divisions"><span
+class="toc-section-number">21.2</span> Monge structure of nice <span
+class="math inline">\(r\)</span>-divisions</a></li>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html#fr-dijkstra"
+id="toc-fr-dijkstra"><span class="toc-section-number">21.3</span>
+FR-Dijkstra</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#back-to-minimum-cut"
+id="toc-back-to-minimum-cut"><span
+class="toc-section-number">21.4</span> Back to minimum cut</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#aptly-named-sir-not-4"
+id="toc-aptly-named-sir-not-4"><span
+class="toc-section-number">21.5</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="22-distributive-flow-latticesvarnothing.html"
+id="toc-distributive-flow-latticesvarnothing"><span
+class="toc-section-number">22</span> Distributive Flow Lattices<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="22-distributive-flow-latticesvarnothing.html#pseudoflows-and-circulations"
+id="toc-pseudoflows-and-circulations"><span
+class="toc-section-number">22.1</span> Pseudoflows and
+Circulations</a></li>
+<li><a
+href="22-distributive-flow-latticesvarnothing.html#aptly-named-sir-not-5"
+id="toc-aptly-named-sir-not-5"><span
+class="toc-section-number">22.2</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="23-maximum-flowvarnothingalpha.html"
+id="toc-maximum-flowvarnothingalpha"><span
+class="toc-section-number">23</span> Maximum Flow<span
+class="math inline">\(^{\varnothing/\alpha}\)</span></a>
+<ul>
+<li><a href="23-maximum-flowvarnothingalpha.html#background"
+id="toc-background"><span class="toc-section-number">23.1</span>
+Background</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#planar-circulations"
+id="toc-planar-circulations"><span
+class="toc-section-number">23.2</span> Planar Circulations</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#feasible-planar-circulations-and-shortest-paths"
+id="toc-feasible-planar-circulations-and-shortest-paths"><span
+class="toc-section-number">23.3</span> Feasible Planar Circulations and
+Shortest Paths</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#our-first-planar-max-flow-algorithm"
+id="toc-our-first-planar-max-flow-algorithm"><span
+class="toc-section-number">23.4</span> Our First Planar Max-flow
+Algorithm</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#parametric-shortest-paths-1"
+id="toc-parametric-shortest-paths-1"><span
+class="toc-section-number">23.5</span> Parametric Shortest
+Paths</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#active-darts"
+id="toc-active-darts"><span class="toc-section-number">23.6</span>
+Active Darts</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#fast-pivots"
+id="toc-fast-pivots"><span class="toc-section-number">23.7</span> Fast
+Pivots</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#universal-cover-analysis"
+id="toc-universal-cover-analysis"><span
+class="toc-section-number">23.8</span> Universal Cover Analysis</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#references-13"
+id="toc-references-13"><span class="toc-section-number">23.9</span>
+References</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#aptly-not"
+id="toc-aptly-not"><span class="toc-section-number">23.10</span> Aptly
+Not</a></li>
+</ul></li>
+<li><a href="24-surface-mapsbeta.html" id="toc-surface-mapsbeta"><span
+class="toc-section-number">24</span> Surface Maps<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="24-surface-mapsbeta.html#surfaces-polygonal-schemata-and-cellular-embeddings"
+id="toc-surfaces-polygonal-schemata-and-cellular-embeddings"><span
+class="toc-section-number">24.1</span> Surfaces, Polygonal Schemata, and
+Cellular Embeddings</a></li>
+<li><a href="24-surface-mapsbeta.html#orientability"
+id="toc-orientability"><span class="toc-section-number">24.2</span>
+Orientability</a></li>
+<li><a href="24-surface-mapsbeta.html#band-decompositions"
+id="toc-band-decompositions"><span
+class="toc-section-number">24.3</span> Band Decompositions</a></li>
+<li><a href="24-surface-mapsbeta.html#reflection-systems"
+id="toc-reflection-systems"><span class="toc-section-number">24.4</span>
+Reflection Systems</a></li>
+<li><a href="24-surface-mapsbeta.html#equivalence"
+id="toc-equivalence"><span class="toc-section-number">24.5</span>
+Equivalence</a></li>
+<li><a href="24-surface-mapsbeta.html#duality-1"
+id="toc-duality-1"><span class="toc-section-number">24.6</span>
+Duality</a></li>
+<li><a
+href="24-surface-mapsbeta.html#loops-and-isthmuses-deletion-and-contraction"
+id="toc-loops-and-isthmuses-deletion-and-contraction"><span
+class="toc-section-number">24.7</span> Loops and Isthmuses; Deletion and
+Contraction</a></li>
+<li><a href="24-surface-mapsbeta.html#references-14"
+id="toc-references-14"><span class="toc-section-number">24.8</span>
+References</a></li>
+<li><a href="24-surface-mapsbeta.html#sir-not-appearing-1"
+id="toc-sir-not-appearing-1"><span
+class="toc-section-number">24.9</span> Sir Not Appearing</a></li>
+</ul></li>
+<li><a href="25-surface-classificationbeta.html"
+id="toc-surface-classificationbeta"><span
+class="toc-section-number">25</span> Surface Classification<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="25-surface-classificationbeta.html#tree-cotree-decompositions-and-systems-of-loops"
+id="toc-tree-cotree-decompositions-and-systems-of-loops"><span
+class="toc-section-number">25.1</span> Tree-Cotree Decompositions and
+Systems of Loops</a></li>
+<li><a href="25-surface-classificationbeta.html#handles"
+id="toc-handles"><span class="toc-section-number">25.2</span>
+Handles</a></li>
+<li><a href="25-surface-classificationbeta.html#twists"
+id="toc-twists"><span class="toc-section-number">25.3</span>
+Twists</a></li>
+<li><a href="25-surface-classificationbeta.html#dycks-surface"
+id="toc-dycks-surface"><span class="toc-section-number">25.4</span>
+Dyck’s Surface</a></li>
+<li><a
+href="25-surface-classificationbeta.html#canonical-polygonal-schemata"
+id="toc-canonical-polygonal-schemata"><span
+class="toc-section-number">25.5</span> Canonical Polygonal
+Schemata</a></li>
+<li><a href="25-surface-classificationbeta.html#oilers-formula"
+id="toc-oilers-formula"><span class="toc-section-number">25.6</span>
+“Oiler’s” Formula</a></li>
+<li><a href="25-surface-classificationbeta.html#references-15"
+id="toc-references-15"><span class="toc-section-number">25.7</span>
+References</a></li>
+<li><a href="25-surface-classificationbeta.html#aptly-named-sir"
+id="toc-aptly-named-sir"><span class="toc-section-number">25.8</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html"
+id="toc-homotopy-in-surface-mapsalpha"><span
+class="toc-section-number">26</span> Homotopy in Surface Maps<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#cut-graphs"
+id="toc-cut-graphs"><span class="toc-section-number">26.1</span> Cut
+Graphs</a></li>
+<li><a
+href="26-homotopy-in-surface-mapsalpha.html#systems-of-loops-and-homotopy"
+id="toc-systems-of-loops-and-homotopy"><span
+class="toc-section-number">26.2</span> Systems of Loops and
+Homotopy</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#whats-a-curve"
+id="toc-whats-a-curve"><span class="toc-section-number">26.3</span>
+What’s a “curve”?</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#spur-and-face-moves"
+id="toc-spur-and-face-moves"><span
+class="toc-section-number">26.4</span> Spur and Face Moves</a></li>
+<li><a
+href="26-homotopy-in-surface-mapsalpha.html#characterizing-homotopy"
+id="toc-characterizing-homotopy"><span
+class="toc-section-number">26.5</span> Characterizing Homotopy</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#references-16"
+id="toc-references-16"><span class="toc-section-number">26.6</span>
+References</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#aptly-named-sir-1"
+id="toc-aptly-named-sir-1"><span class="toc-section-number">26.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="27-planarization-and-separationalphabeta.html"
+id="toc-planarization-and-separationalphabeta"><span
+class="toc-section-number">27</span> Planarization and Separation<span
+class="math inline">\(^{\alpha/\beta}\)</span></a>
+<ul>
+<li><a
+href="27-planarization-and-separationalphabeta.html#multiple-short-cycles"
+id="toc-multiple-short-cycles"><span
+class="toc-section-number">27.1</span> Multiple Short Cycles</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#slabification"
+id="toc-slabification"><span class="toc-section-number">27.2</span>
+Slabification</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#nice-r-divisions"
+id="toc-nice-r-divisions"><span class="toc-section-number">27.3</span>
+Nice <span class="math inline">\(r\)</span>-divisions</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#applications-1"
+id="toc-applications-1"><span class="toc-section-number">27.4</span>
+Applications</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#references-17"
+id="toc-references-17"><span class="toc-section-number">27.5</span>
+References</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#aptly-named-sir-2"
+id="toc-aptly-named-sir-2"><span class="toc-section-number">27.6</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html"
+id="toc-homotopy-testing-on-surface-mapsbeta"><span
+class="toc-section-number">28</span> Homotopy Testing on Surface
+Maps<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#reducing-to-a-system-of-loops"
+id="toc-reducing-to-a-system-of-loops"><span
+class="toc-section-number">28.1</span> Reducing to a System of
+Loops</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#universal-cover"
+id="toc-universal-cover"><span class="toc-section-number">28.2</span>
+Universal Cover</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#dehns-lemma"
+id="toc-dehns-lemma"><span class="toc-section-number">28.3</span> Dehn’s
+Lemma</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#dehns-algorithm"
+id="toc-dehns-algorithm"><span class="toc-section-number">28.4</span>
+Dehn’s algorithm!</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#system-of-quads"
+id="toc-system-of-quads"><span class="toc-section-number">28.5</span>
+System of quads</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#brackets"
+id="toc-brackets"><span class="toc-section-number">28.6</span>
+Brackets</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#reduction-algorithm"
+id="toc-reduction-algorithm"><span
+class="toc-section-number">28.7</span> Reduction algorithm</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#references-18"
+id="toc-references-18"><span class="toc-section-number">28.8</span>
+References</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#sir-not"
+id="toc-sir-not"><span class="toc-section-number">28.9</span> Sir
+Not</a></li>
+</ul></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html"
+id="toc-systems-of-cycles-and-homologyalpha"><span
+class="toc-section-number">29</span> Systems of Cycles and Homology<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#cycles-and-boundaries"
+id="toc-cycles-and-boundaries"><span
+class="toc-section-number">29.1</span> Cycles and Boundaries</a></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html#homology"
+id="toc-homology"><span class="toc-section-number">29.2</span>
+Homology</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#relax-its-just-linear-algebra"
+id="toc-relax-its-just-linear-algebra"><span
+class="toc-section-number">29.3</span> Relax, it’s just linear
+algebra!</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#crossing-numbers"
+id="toc-crossing-numbers"><span class="toc-section-number">29.4</span>
+Crossing Numbers</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#systems-of-cocycles-and-cohomology"
+id="toc-systems-of-cocycles-and-cohomology"><span
+class="toc-section-number">29.5</span> Systems of Cocycles and
+Cohomology</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#homology-signatures"
+id="toc-homology-signatures"><span
+class="toc-section-number">29.6</span> Homology Signatures</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#separating-cycles"
+id="toc-separating-cycles"><span class="toc-section-number">29.7</span>
+Separating Cycles</a></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html#references-19"
+id="toc-references-19"><span class="toc-section-number">29.8</span>
+References</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#aptly-named-sir-3"
+id="toc-aptly-named-sir-3"><span class="toc-section-number">29.9</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html"
+id="toc-shortest-interesting-cyclesalpha"><span
+class="toc-section-number">30</span> Shortest Interesting Cycles<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#properties-of-shortest-nontrivial-cycles"
+id="toc-properties-of-shortest-nontrivial-cycles"><span
+class="toc-section-number">30.1</span> Properties of Shortest Nontrivial
+Cycles</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#a-polynomial-time-algorithm"
+id="toc-a-polynomial-time-algorithm"><span
+class="toc-section-number">30.2</span> A polynomial-time
+algorithm</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#near-quadratic-time"
+id="toc-near-quadratic-time"><span
+class="toc-section-number">30.3</span> Near-quadratic time</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#multiple-source-shortest-paths"
+id="toc-multiple-source-shortest-paths"><span
+class="toc-section-number">30.4</span> Multiple-Source Shortest
+Paths</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#shortest-nonseparating-cycles-in-near-linear-time"
+id="toc-shortest-nonseparating-cycles-in-near-linear-time"><span
+class="toc-section-number">30.5</span> Shortest Nonseparating Cycles in
+Near-Linear Time</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#shortest-noncontractible-cycles-in-near-linear-time-sketch"
+id="toc-shortest-noncontractible-cycles-in-near-linear-time-sketch"><span
+class="toc-section-number">30.6</span> Shortest Noncontractible Cycles
+in Near-Linear Time (sketch)</a></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html#references-20"
+id="toc-references-20"><span class="toc-section-number">30.7</span>
+References</a></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html#aptly-named-sir-4"
+id="toc-aptly-named-sir-4"><span class="toc-section-number">30.8</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html"
+id="toc-surfaces-with-boundaryvarnothing"><span
+class="toc-section-number">31</span> Surfaces with Boundary<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#arcs-and-slicing"
+id="toc-arcs-and-slicing"><span class="toc-section-number">31.1</span>
+Arcs and Slicing</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#forest-cotree-decompositions"
+id="toc-forest-cotree-decompositions"><span
+class="toc-section-number">31.2</span> Forest-Cotree
+Decompositions</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#cut-graphs-and-systems-of-arcs"
+id="toc-cut-graphs-and-systems-of-arcs"><span
+class="toc-section-number">31.3</span> Cut Graphs and Systems of
+Arcs</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#tree-coforest-decompositions-and-systems-of-coarcs"
+id="toc-tree-coforest-decompositions-and-systems-of-coarcs"><span
+class="toc-section-number">31.4</span> Tree-Coforest Decompositions and
+Systems of Coarcs</a></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#references-21"
+id="toc-references-21"><span class="toc-section-number">31.5</span>
+References</a></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#aptly-named-sir-5"
+id="toc-aptly-named-sir-5"><span class="toc-section-number">31.6</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="32-minimum-cuts-in-surface-graphsvarnothing.html"
+id="toc-minimum-cuts-in-surface-graphsvarnothing"><span
+class="toc-section-number">32</span> Minimum Cuts in Surface Graphs<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#duality-with-even-subgraphs"
+id="toc-duality-with-even-subgraphs"><span
+class="toc-section-number">32.1</span> Duality with Even
+Subgraphs</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-homology-cover"
+id="toc-mathbbz_2-homology-cover"><span
+class="toc-section-number">32.2</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Homology Cover</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-minimal-cycles"
+id="toc-mathbbz_2-minimal-cycles"><span
+class="toc-section-number">32.3</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Minimal Cycles</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-minimal-even-subgraphs"
+id="toc-mathbbz_2-minimal-even-subgraphs"><span
+class="toc-section-number">32.4</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Minimal Even
+Subgraphs</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#np-hardness"
+id="toc-np-hardness"><span class="toc-section-number">32.5</span>
+NP-hardness (??)</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#references-22"
+id="toc-references-22"><span class="toc-section-number">32.6</span>
+References</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#aptly-named-sir-6"
+id="toc-aptly-named-sir-6"><span class="toc-section-number">32.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="33-maximum-flows-in-surface-graphsvarnothing.html"
+id="toc-maximum-flows-in-surface-graphsvarnothing"><span
+class="toc-section-number">33</span> Maximum Flows in Surface
+Graphs<span class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#real-homology"
+id="toc-real-homology"><span class="toc-section-number">33.1</span> Real
+Homology</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#homologous-feasible-flows"
+id="toc-homologous-feasible-flows"><span
+class="toc-section-number">33.2</span> Homologous Feasible
+Flows</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#shortest-paths-with-negative-edges"
+id="toc-shortest-paths-with-negative-edges"><span
+class="toc-section-number">33.3</span> Shortest Paths with Negative
+Edges</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#ellipsoid-method-sketch"
+id="toc-ellipsoid-method-sketch"><span
+class="toc-section-number">33.4</span> Ellipsoid Method
+(Sketch)</a></li>
+<li><a href="33-maximum-flows-in-surface-graphsvarnothing.html#summary"
+id="toc-summary"><span class="toc-section-number">33.5</span>
+Summary</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#references-23"
+id="toc-references-23"><span class="toc-section-number">33.6</span>
+References</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#aptly-named-sir-7"
+id="toc-aptly-named-sir-7"><span class="toc-section-number">33.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html"
+id="toc-geodesic-embeddingsvarnothing"><span
+class="toc-section-number">34</span> Geodesic Embeddings<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="34-geodesic-embeddingsvarnothing.html#flat-torus"
+id="toc-flat-torus"><span class="toc-section-number">34.1</span> Flat
+Torus</a></li>
+<li><a
+href="34-geodesic-embeddingsvarnothing.html#spring-embeddings-on-other-surfaces"
+id="toc-spring-embeddings-on-other-surfaces"><span
+class="toc-section-number">34.2</span> Spring Embeddings on Other
+Surfaces</a></li>
+<li><a
+href="34-geodesic-embeddingsvarnothing.html#circle-packing-on-other-surfaces"
+id="toc-circle-packing-on-other-surfaces"><span
+class="toc-section-number">34.3</span> Circle Packing on Other
+Surfaces</a></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html#references-24"
+id="toc-references-24"><span class="toc-section-number">34.4</span>
+References</a></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html#named-sir-not"
+id="toc-named-sir-not"><span class="toc-section-number">34.5</span>
+Named Sir Not</a></li>
+</ul></li>
+<li><a href="35-closing-the-loopvarnothing.html"
+id="toc-closing-the-loopvarnothing"><span
+class="toc-section-number">35</span> Closing the Loop<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="35-closing-the-loopvarnothing.html#simple-polygons"
+id="toc-simple-polygons"><span class="toc-section-number">35.1</span>
+Simple Polygons</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#winding-numbers-1"
+id="toc-winding-numbers-1"><span class="toc-section-number">35.2</span>
+Winding Numbers</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#curve-homotopy"
+id="toc-curve-homotopy"><span class="toc-section-number">35.3</span>
+Curve Homotopy</a></li>
+<li><a
+href="35-closing-the-loopvarnothing.html#shortest-homotopic-paths-and-cycles"
+id="toc-shortest-homotopic-paths-and-cycles"><span
+class="toc-section-number">35.4</span> Shortest Homotopic Paths and
+Cycles</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#gauss-codes"
+id="toc-gauss-codes"><span class="toc-section-number">35.5</span> Gauss
+codes</a></li>
+<li><a
+href="35-closing-the-loopvarnothing.html#curve-invariants-and-simplification"
+id="toc-curve-invariants-and-simplification"><span
+class="toc-section-number">35.6</span> Curve Invariants and
+Simplification</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#geodesic-embeddings"
+id="toc-geodesic-embeddings"><span
+class="toc-section-number">35.7</span> Geodesic Embeddings</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#maxwellcremona"
+id="toc-maxwellcremona"><span class="toc-section-number">35.8</span>
+Maxwell–Cremona</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#references-25"
+id="toc-references-25"><span class="toc-section-number">35.9</span>
+References</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="11" id="straight-line-planar-mapsbeta"><span
+class="header-section-number">11</span> Straight-line Planar Maps<span
+class="math inline">\(^\beta\)</span></h1>
+<p>So far we have not assumed that planar embeddings are in any way
+well-behaved geometrically; edges can be embedded as arbitrarily
+pathological paths. It is not hard to prove using a compactness argument
+(Similar to the simplicial approximation theorem for homotopy) that
+every planar graph has a <em>piecewise-linear</em> planar embedding,
+where every edge is embedded as a simple polygonal path.</p>
+<p>But in fact, every <em>simple</em> planar graph has a
+<em>straight-line</em> embedding, where every edge is represented by a
+single straight line segment. More strongly, any planar
+<em>embedding</em> is equivalent to (meaning it has the same rotation
+system as) a straight-line embedding. This result was first proved
+(indirectly) by Steinitz (1916), and then independently rediscovered by
+Wagner (1936), [Cairns (1944)], Fáry (1948), Stein (1951), Stojaković
+(1959), and Tutte (1960), so of course it’s usually called “Fáry’s
+theorem”.</p>
+<p>Non-simple planar graphs do not have straight-line embeddings; in any
+such embedding, parallel edges would coincide and loops would degenerate
+to points. But every planar map can be transformed into a simple map by
+subdividing loops into cycles of length <span
+class="math inline">\(3\)</span> and parallel edges into paths of length
+<span class="math inline">\(2\)</span>. It (finally!) follows that any
+generic planar curve with <span class="math inline">\(n\)</span>
+vertices is equivalent to a planar <em>polygon</em> with at most <span
+class="math inline">\(3n\)</span> vertices.</p>
+<p>The existence of straight-line maps for simple planar graphs finally
+gives us the converse of Euler’s theorem:.</p>
+<ul>
+<li>Every rotation system with <span class="math inline">\(n\)</span>
+vertices, <span class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces is the rotation system of a
+planar map <strong>if and only if</strong> <span
+class="math inline">\(n-m+f = 2\)</span>.</li>
+<li>A signed Gauss code with <span class="math inline">\(n\)</span>
+symbols describes a planar curve <strong>if and only if</strong> it
+induces <span class="math inline">\(n+2\)</span> faces.</li>
+</ul>
+<p>Moreover, all of the proofs described in this note are constructive;
+in particular, they all imply linear-time algorithms to construct
+straight-line embeddings from a given planar rotation system.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given a planar rotation system for a planar graph <span
+class="math inline">\(G\)</span> with <span
+class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(m\)</span> edges, we can compute an equivalent
+piecewise-linear embedding (or an equivalent straight-line embedding if
+<span class="math inline">\(G\)</span> is simple) in <span
+class="math inline">\(O(n+m)\)</span> time.</em>
+</dd>
+</dl>
+<h2 data-number="11.1" id="simple-triangulations"><span
+class="header-section-number">11.1</span> Simple triangulations</h2>
+<p>Throughout this note, we’ll consider the special case of <em>simple
+triangulations</em>: simple planar maps in which every face is bounded
+by three edges.</p>
+<dl>
+<dt><strong>Triangulation Lemma (Fáry 1948):</strong></dt>
+<dd>
+<em>Every simple planar map can be extended to a simple triangulation by
+adding edges between existing vertices.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix a simple planar map <span class="math inline">\(\Sigma\)</span> with
+a non-triangular face <span class="math inline">\(f\)</span>, and let
+<span class="math inline">\(w,x,y,z\)</span> be any four consecutive
+vertices on the boundary of <span class="math inline">\(f\)</span>. I
+claim that we can add at least one new edge <span
+class="math inline">\(wy\)</span> or <span
+class="math inline">\(xz\)</span> inside <span
+class="math inline">\(f\)</span> without creating any parallel edges.
+The lemma follows form this claim by induction on the quantity <span
+class="math inline">\(\sum_f (\deg(f)-3)\)</span>.
+</dd>
+<dd>
+<p>For ease of presentation, assume <span
+class="math inline">\(f\)</span> is bounded. Suppose <span
+class="math inline">\(\Sigma\)</span> contains an edge between <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(y\)</span>, necessarily outside <span
+class="math inline">\(f\)</span>. The vertices <span
+class="math inline">\(w\)</span> and <span
+class="math inline">\(y\)</span> subdivide the boundary of <span
+class="math inline">\(f\)</span> into two paths, one through <span
+class="math inline">\(x\)</span> and the other through <span
+class="math inline">\(z\)</span>. Adding the edge <span
+class="math inline">\(wy\)</span> to those paths creates two cycles.
+Without loss of generality, <span class="math inline">\(x\)</span> lies
+in the interior of the cycle <span class="math inline">\(C\)</span> that
+passes through <span class="math inline">\(z\)</span>; as shown in
+Figure 1.</p>
+</dd>
+<dd>
+<p>Now suppose for the sake of argument that <span
+class="math inline">\(\Sigma\)</span> also contains an edge <span
+class="math inline">\(xz\)</span>, again necessarily outside <span
+class="math inline">\(f\)</span>. This edge passes through the exterior
+of <span class="math inline">\(C\)</span> near <span
+class="math inline">\(z\)</span>, but it also passes through the
+interior of <span class="math inline">\(C\)</span> near <span
+class="math inline">\(x\)</span>. So the Jordan Curve Theorem implies
+that <span class="math inline">\(xz\)</span> intersects <span
+class="math inline">\(C\)</span>, contradicting the definition of
+embedding. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<figure>
+<img src="Fig/face-diagonal.png" style="width:25.0%"
+alt="Proof of the triangulation lemma." />
+<figcaption aria-hidden="true">Proof of the triangulation
+lemma.</figcaption>
+</figure>
+<p>To compute a straight-line map <span
+class="math inline">\(\overline\Sigma\)</span> equivalent to an
+arbitrary simple planar map <span class="math inline">\(\Sigma\)</span>,
+it suffices to add edges to <span class="math inline">\(\Sigma\)</span>
+to obtain a simple planar triangulation <span
+class="math inline">\(T\)</span>, compute a straight-line map <span
+class="math inline">\(\overline{T}\)</span> equivalent to <span
+class="math inline">\(T\)</span>, and then delete the (straightened)
+added edges.</p>
+<p>In the following sections, I’ll describe three different
+constructions of straight-line triangulations equivalent to a given
+triangulation <span class="math inline">\(T\)</span>.</p>
+<h2 data-number="11.2" id="inner-induction-hole-filling"><span
+class="header-section-number">11.2</span> Inner Induction (Hole
+Filling)</h2>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Every simple planar triangulation with more than <span
+class="math inline">\(3\)</span> vertices has an interior vertex with
+degree at most <span class="math inline">\(5\)</span>.</em>
+</dd>
+</dl>
+<!--
+**Proof (Euler):**
+: Let $T$ be a simple planar triangulation with $n>3$ vertices.  Every vertex of $T$ has degree at least $3$; otherwise, either $T$ is not simple or $T$ has a face with degree greater than $3$.  Euler’s formula implies that $T$ has exactly $3n-6$ edges, so the _average_ vertex degree is just less than $6$.  On the other hand, if $T$ has $k$ vertices with degree less than $6$, then $T$ has _at least_ $3n - 3k/2$ edges.  The inequality $3n-3k/2 \le 3n-6$  implies $k\ge 4$.  We conclude that $T$ has at least four vertices with degree less than $6$, at least one of which is an interior vertex. -->
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(T\)</span> be a simple planar
+triangulation with <span class="math inline">\(n&gt;3\)</span> vertices.
+Every vertex of <span class="math inline">\(T\)</span> has degree at
+least <span class="math inline">\(3\)</span>; otherwise, either <span
+class="math inline">\(T\)</span> is not simple or <span
+class="math inline">\(T\)</span> has a face with degree greater than
+<span class="math inline">\(3\)</span>. Assign angle <span
+class="math inline">\(\angle c = 1/3\)</span> to every corner of <span
+class="math inline">\(T\)</span>, so that every face <span
+class="math inline">\(f\)</span> has discrete curvature <span
+class="math inline">\(\kappa(f) = 0\)</span>. Then each vertex <span
+class="math inline">\(v\)</span> has curvature <span
+class="math inline">\(\kappa(v) = 1 - \deg(v)/6 \le 1/2\)</span>; in
+particular, a vertex has positive curvature if and only if its degree is
+at most <span class="math inline">\(5\)</span>. The combinatorial
+Gauss-Bonnet theorem implies that <span class="math inline">\(\sum_v
+\kappa(v) = 2\)</span>, so <span class="math inline">\(T\)</span> must
+have at least four vertices with positive curvature. At least one of
+these is an interior vertex.
+</dd>
+</dl>
+<p>A simple polygon <span class="math inline">\(P\)</span> is
+<em>star-shaped</em> if there is at least one interior point <span
+class="math inline">\(q\)</span> such that for each vertex <span
+class="math inline">\(p\)</span> of <span
+class="math inline">\(P\)</span>, the segment <span
+class="math inline">\(pq\)</span> does not cross any edge of <span
+class="math inline">\(P\)</span>. The set of all such points <span
+class="math inline">\(q\)</span> is called the <em>kernel</em> of <span
+class="math inline">\(P\)</span>.</p>
+<dl>
+<dt><strong>Lemma (Cairns 1944, Stojaković 1959):</strong></dt>
+<dd>
+<em>Every simple polygon with at most <span
+class="math inline">\(5\)</span> vertices is star-shaped.</em>
+</dd>
+<dt><strong>Proof (sketch):</strong></dt>
+<dd>
+Every convex polygon is trivially star-shaped. Every simple
+quadrilateral has at most one reflex vertex; every simple pentagon has
+at most two reflex vertices, which are either adjacent or not. In every
+case, we can verify by exhaustive case analysis that the kernel is
+non-empty; see the figure below.
+</dd>
+</dl>
+<figure>
+<img src="Fig/vertex-links.png" style="width:75.0%"
+alt="Every simple polygon with at most five vertices is star-shaped" />
+<figcaption aria-hidden="true">Every simple polygon with at most five
+vertices is star-shaped</figcaption>
+</figure>
+<dl>
+<dt><strong>Straight-Line Triangulation Theorem:</strong></dt>
+<dd>
+<em>Every simple planar triangulation is equivalent to a straight-line
+triangulation.</em>
+</dd>
+<dt><strong>Proof (Stojaković 1959):</strong></dt>
+<dd>
+We argue by induction on the number of vertices. Let <span
+class="math inline">\(T\)</span> be any simple planar triangulation. If
+<span class="math inline">\(T\)</span> has only <span
+class="math inline">\(3\)</span> vertices, then <span
+class="math inline">\(T\)</span> is clearly equivalent to any
+(geometric) triangle <span class="math inline">\(\overline{T}\)</span>.
+So assume otherwise.
+</dd>
+<dd>
+<p>Let <span class="math inline">\(v\)</span> be any interior vertex of
+<span class="math inline">\(T\)</span> with degree at most <span
+class="math inline">\(5\)</span>. Deleting <span
+class="math inline">\(v\)</span> creates a face <span
+class="math inline">\(f\)</span> with degree <span
+class="math inline">\(\deg(v)\)</span>. We extend <span
+class="math inline">\(T\setminus v\)</span> to a simple triangulation
+<span class="math inline">\(T’\)</span> by adding <span
+class="math inline">\(\deg(v)-3\)</span> diagonals inside <span
+class="math inline">\(f\)</span>, following the Triangulation Lemma. The
+induction hypothesis implies that <span
+class="math inline">\(T’\)</span> is equivalent to a straight-line
+triangulation <span class="math inline">\(\overline{T}’\)</span>.
+Deleting the diagonals yields a simple planar map <span
+class="math inline">\(\overline{T\setminus v}\)</span> equivalent to
+<span class="math inline">\(T\setminus v\)</span>. The face <span
+class="math inline">\(\overline{f}\)</span> of <span
+class="math inline">\(\overline{T\setminus v}\)</span> corresponding to
+<span class="math inline">\(f\)</span> is a simple polygon with <span
+class="math inline">\(\deg(v)\le 5\)</span> vertices. Inserting a vertex
+<span class="math inline">\(\overline{v}\)</span> in the kernel of <span
+class="math inline">\(\overline{f}\)</span> and connecting <span
+class="math inline">\(\overline{v}\)</span> to every vertex of <span
+class="math inline">\(\overline{f}\)</span> yields a straight-line
+triangulation <span class="math inline">\(\overline{T}\)</span>
+equivalent to <span class="math inline">\(T\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<!-- ## Variations on a Theme
+
+### Separating Triangles (Fáry)
+
+Fáry avoids using the Triangulation Lemma in the induction step as follows:
+
+**Proof (Fáry):**
+: After removing _any_ interior vertex $v$, triangulate the resulting face $f$ by joining _any_ vertex $w$ to all others.  Equivalently, choose any two bounded faces $uvw$ and $vwx$ that share an edge $vw$, and contracting $vw$ to a new vertex $v’$.  This contraction creates parallel pairs of edges $uv’$ and $v’w$; delete one edge from each pair.
+
+: If the resulting map $\Sigma’$ is not simple, the original triangulation $T$ has a nontrivial _separating triangle_ $tvw$.  Let $T^+$ be the subgraph of $T$ obtained by deleting all vertices inside $tvw$, and let $T^-$ be the subgraph obtained by deleting all vertices outside $tvw$.  We can recursively construct straight-line triangulations $\overline{T^+}$ and $\overline{T^-}$ equivalent to $T^+$ and $T^-$.  Affinely mapping $\overline{T^-}$ into face $\overline{tvw}$ of $\overline{T^+}$ gives us a straight-line triangulation $\overline{T}$ equivalent to $T$.
+
+: Recursion inside the inner triangulation $T^-$ implies that it is always possible to choose an edge $vw$ whose contraction yields a simple triangulation.  So we can proceed as follows:
+
+: Choose any interior vertex $v$.  Find a neighbor $w$ of $v$ that is adjacent to only two other neighbors of $v$.  Delete $v$ and connect $w$ to all of $v$’s other neighbors, to obtain a map $\Sigma’$.  Recursively compute a straight-line map $\overline\Sigma’$.  Delete the edges from $\overline{w}$ to the other neighbors of $v$; let $f$ be the resulting $\deg(v)$-gonal face.  The kernel of $f$ includes vertex $\overline{w}$ and therefore has nonempty intersection with the interior of $f$.  Add a point $\overline{v}$ in the interior of the kernel, and Bob’s your uncle!
+
+
+## Convex Polyhedral Embeddings (Stein)
+
+Stein actually proves a stronger claim, establishing necessary and sufficient conditions for embeddings with convex faces.  A planar map is _weakly convex_ if the boundary of each face, including the outer face, is a convex polygon, possibly with collinear edges.  In particular, every edge of a weakly convex map is a straight line segment.  Every weakly convex planar map satisfies two topological conditions:
+
+- The boundary of every face is a simple cycle.
+- The intersection of any two facial cycles is connected: either empty, a single vertex, or a simple path.
+
+Any planar map satisfying these two conditions is called _weakly polyhedral_.
+
+**Weakly Convex Embedding Theorem (Stein):** _For every weakly polyhedral planar embedding, there is an equivalent weakly convex polyhedral embedding._
+
+
+**Proof [¡¡BROKEN!!]:**
+: Let $\Sigma$ be a weakly polyhedral embedding.  If the underlying graph of $\Sigma$ is the complete graph $K_4$---the simplest graph with a polyhedral embedding---finding an equivalent convex embedding is straightforward, so assume otherwise.  There are two cases to consider:
+
+: Suppose $\Sigma$ has a vertex $v$ with degree $2$.  Let $u$ and $w$ be the neighbors of $v$.  The contracted map $\Sigma / uv$ is still weakly polyhedral.  So  the induction hypothesis implies that there is a convex embedding $\overline{\Sigma'}$ equivalent to $\Sigma / uv$.  We can obtain a convex embedding $\overline{\Sigma}$ equivalent to $\Sigma$ by adding a vertex $\overline{v}$ on the edge $\overline{uw}$ in $\overline{\Sigma'}$.
+
+: On the other hand, suppose every vertex in $\Sigma$ has degree at least $3$. I claim that there is an interior edge $e$ such that $\Sigma \setminus e$ is weakly polyhedral.
+
+: Deleting any interior edge $e$ merges the faces $f$ and $g$ on either side of $e$  into a single face $f\cup g$.  Suppose this new face has disconnected intersection with some other face $h$; equivalently, the union $f\cup g\cup h$ is not simply connected.  Then there is a closed curve $\gamma$ that starts at an endpoint of $e$, then passes through $f$ to some vertex in $f \cap h$, then passes through $h$ to some vertex in $g\cap h$, and finally passes through $g$ back to its starting endpoint of $e$.  The interior of $\gamma$ contains at least one face of $\Sigma$.
+
+: Deleting $uv$ merges the two shores of $u\mathord\to v$ into a new face $f$.  The the inductive hypothesis implies that there is an equivalent convex embedding $\overline{\Sigma \setminus uv}$.  We can obtain a convex embedding $\overline{\Sigma}$ equivalent to $\Sigma$ by adding the line segment $\overline{uv}$ through the convex face $\overline{f}$ in $\overline{\Sigma'}$.  $\qquad\square$
+
+
+![Two weakly convex embeddings of the cube graph obtained by Stein's algorithm.](Fig/cube-convex){ width=40% }
+
+With a bit more effort, Stein's argument can be extended to show that every _strictly_ polyhedral embedding (where two faces intersect in at most one edge) is equivalent to a _strictly_ convex embedding (where no two edges of any face are collinear).  But we'll see a more interesting proof of that fact in the next lecture.
+-->
+<h2 data-number="11.3" id="outer-induction-canonical-ordering"><span
+class="header-section-number">11.3</span> Outer Induction (Canonical
+Ordering)</h2>
+<p>Here is a second inductive proof of the Straight-Line Triangulation
+Theorem that does <em>not</em> rely on Euler’s formula, roughly
+following an argument of de Fraysseix, Pach, and Pollack (1988). This
+proof is close in spirit to early flawed inductive proofs of Euler’s
+formula, including Euler’s own flawed proof.</p>
+<p>We actually prove the following stronger claim: Let <span
+class="math inline">\(\Sigma\)</span> be any simple planar map whose
+interior faces are triangles and whose outer face is bounded by a simple
+cycle of length <span class="math inline">\(h\ge 3\)</span>. Let <span
+class="math inline">\(v_1, v_2, \dots, v_h\)</span> be the vertices of
+the outer face of <span class="math inline">\(\Sigma\)</span> in
+counterclockwise order. Let <span class="math inline">\(P\)</span> be
+any convex polygon with vertices <span class="math inline">\(p_1, p_2,
+\dots, p_h\)</span> in counterclockwise order. Then there is a
+straight-line planar map <span
+class="math inline">\(\overline{\Sigma}\)</span> that is equivalent to
+<span class="math inline">\(\Sigma\)</span>, whose outer face is <span
+class="math inline">\(P\)</span>, such that each outer vertex <span
+class="math inline">\(v_i\)</span> corresponds to the polygon vertex
+<span class="math inline">\(p_i\)</span>.</p>
+<p>The proof proceeds by induction on the number of vertices of <span
+class="math inline">\(\Sigma\)</span>. If <span
+class="math inline">\(\Sigma\)</span> is a single triangle, the claim is
+trivial, so assume otherwise. There are two nontrivial cases to
+consider: Either <span class="math inline">\(v_1\)</span> and <span
+class="math inline">\(v_{h-1}\)</span> are the only neighbors of <span
+class="math inline">\(v_h\)</span> on the outer face, or <span
+class="math inline">\(v_h\)</span> has another neighbor <span
+class="math inline">\(v_j\)</span> on the outer face.</p>
+<dl>
+<dt><strong>Case 1: Only two neighbors on the outer face.</strong></dt>
+<dd>
+<p>In this case, we recursively compute a straight-line planar map
+equivalent to <span class="math inline">\(\Sigma\setminus v_h\)</span>
+and then embed the edges incident to <span
+class="math inline">\(v_h\)</span> as line segments.</p>
+</dd>
+<dd>
+<p>Specifically, let <span class="math inline">\(w_1, w_2, \dots,
+w_d\)</span> be the neighbors of <span
+class="math inline">\(v_h\)</span>, indexed in order around <span
+class="math inline">\(v_h\)</span> so that <span
+class="math inline">\(w_1 = v_{h-1}\)</span> and <span
+class="math inline">\(w_d = v_1\)</span>. The vertices <span
+class="math inline">\(w_2, \dots, w_{d-1}\)</span> all lie in the
+complement of the outer face, and <span
+class="math inline">\(\Sigma\)</span> contains the edge <span
+class="math inline">\(w_i w_{i+1}\)</span> for every index <span
+class="math inline">\(i\)</span>. It follows that the outer face of the
+submap <span class="math inline">\(\Sigma’ = \Sigma\setminus
+v_h\)</span> is bounded by a simple cycle with vertices <span
+class="math inline">\(v_1, v_2, \dots, v_{h-1}=w_1, w_2, \dots,
+w_d=v_1\)</span>. Every bounded face of <span
+class="math inline">\(\Sigma’\)</span> is also a bounded face of <span
+class="math inline">\(\Sigma\)</span> and thus has degree <span
+class="math inline">\(3\)</span>.</p>
+</dd>
+<dd>
+<p>Now let <span class="math inline">\(\alpha\)</span> be a convex arc
+from <span class="math inline">\(p_1\)</span> to <span
+class="math inline">\(p_{h-1}\)</span> inside the triangle <span
+class="math inline">\(p_1 p_h p_{h-1}\)</span>. (For example, <span
+class="math inline">\(\alpha\)</span> could be a circular arc tangent to
+<span class="math inline">\(p_1 p_h\)</span> at <span
+class="math inline">\(p_1\)</span> and tangent to <span
+class="math inline">\(p_h p_{h-1}\)</span> at <span
+class="math inline">\(p_{h-1}\)</span>.) Place <span
+class="math inline">\(d\)</span> evenly spaced points <span
+class="math inline">\(q_1, q_2, q_3, \dots, q_d\)</span> along <span
+class="math inline">\(\alpha\)</span>, with <span
+class="math inline">\(q_1 = p_{h-1}\)</span> and <span
+class="math inline">\(q_d = p_1\)</span>. Finally, let <span
+class="math inline">\(P&#39;\)</span> be the convex polygon obtained by
+replacing the edges <span class="math inline">\(p_{h-1}p_h\)</span> and
+<span class="math inline">\(p_hp_1\)</span> with the polygonal chain
+<span class="math inline">\(q_1 q_2 \dots q_d\)</span>.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/straight-embedding-1.png" style="width:45.0%"
+alt="Case 1: Remove vertex v_h and recurse" />
+<figcaption aria-hidden="true">Case 1: Remove vertex <span
+class="math inline">\(v_h\)</span> and recurse</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The inductive hypothesis implies that there is a straight-line
+embedding <span class="math inline">\(\overline{\Sigma’}\)</span>
+equivalent to <span class="math inline">\(\Sigma’\)</span> with outer
+face <span class="math inline">\(P&#39;\)</span>, that maps each vertex
+<span class="math inline">\(v_i\)</span> (with <span
+class="math inline">\(i\ne h\)</span>) to the corresponding point <span
+class="math inline">\(p_i\)</span> and each vertex <span
+class="math inline">\(w_i\)</span> to the corresponding point <span
+class="math inline">\(q_i\)</span>. Adding the edges <span
+class="math inline">\(p_h q_i\)</span> gives us a straight-line map
+<span class="math inline">\(\overline{\Sigma}\)</span> equivalent to
+<span class="math inline">\(\Sigma\)</span> with outer face <span
+class="math inline">\(P\)</span> and the required vertex
+correspondences.</p>
+</dd>
+<dt><strong>Case 2: More than two neighbors on the outer
+face.</strong></dt>
+<dd>
+<p>Now suppose <span class="math inline">\(v_h\)</span> is adjacent to
+some vertex <span class="math inline">\(v_j\)</span> on the outer face
+besides <span class="math inline">\(v_1\)</span> and <span
+class="math inline">\(v_{h-1}\)</span>. In this case, we split <span
+class="math inline">\(\Sigma\)</span> into two submaps along the edge
+<span class="math inline">\(v_h v_j\)</span>, split the polygon <span
+class="math inline">\(P\)</span> into two smaller polygons along the
+diagonal <span class="math inline">\(p_hp_j\)</span>, and recursively
+embed each fragment of <span class="math inline">\(\Sigma\)</span> into
+the corresponding fragment of <span
+class="math inline">\(P\)</span>.</p>
+</dd>
+<dd>
+<p>Specifically, let <span class="math inline">\(\Sigma^\sharp\)</span>
+be the submap of <span class="math inline">\(\Sigma\)</span> obtained by
+deleting every vertex outside the simple cycle <span
+class="math inline">\((v_h, v_1, v_2, \dots, v_j, v_h)\)</span>. (The
+outside of this cycle is well-defined by the Jordan Curve Theorem.)
+Similarly, let <span class="math inline">\(\Sigma^\flat\)</span> be the
+submap of <span class="math inline">\(\Sigma\)</span> obtained by
+deleting every vertex outside the simple cycle <span
+class="math inline">\((v_h, v_j, v_{j-1}, \dots, v_{h-1}, v_h)\)</span>.
+Both <span class="math inline">\(\Sigma^\flat\)</span> and <span
+class="math inline">\(\Sigma^\sharp\)</span> satisfy the conditions of
+our claim.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/straight-embedding-2.png" style="width:45.0%"
+alt="Case 2: Split along the diagonal and recurse twice" />
+<figcaption aria-hidden="true">Case 2: Split along the diagonal and
+recurse twice</figcaption>
+</figure>
+</dd>
+<dd>
+<p>The line segment <span class="math inline">\(p_hp_j\)</span>
+partitions the polygon <span class="math inline">\(P\)</span> into two
+smaller convex polygons <span class="math inline">\(P^\flat\)</span> and
+<span class="math inline">\(P^\sharp\)</span>. The induction hypothesis
+give us straight-line embeddings <span
+class="math inline">\(\overline{\Sigma^\flat}\)</span> and <span
+class="math inline">\(\overline{\Sigma^\sharp}\)</span>, respectively
+equivalent to <span class="math inline">\(\Sigma^\flat\)</span> and
+<span class="math inline">\(\Sigma^\sharp\)</span>, with respective
+outer faces bounded by <span class="math inline">\(P^\flat\)</span> and
+<span class="math inline">\(P^\sharp\)</span>, mapping each vertex <span
+class="math inline">\(v_i\)</span> to the corresponding point <span
+class="math inline">\(p_i\)</span>. In particular, in both straight-line
+embeddings, the the line segment <span
+class="math inline">\(p_hp_j\)</span> corresponds to the edge <span
+class="math inline">\(v_hv_j\)</span>. Combining the straight-line
+embeddings <span class="math inline">\(\overline{\Sigma^\flat}\)</span>
+and <span class="math inline">\(\overline{\Sigma^\sharp}\)</span> along
+<span class="math inline">\(p_hp_j\)</span> gives us the required
+straight-line embedding <span
+class="math inline">\(\overline{\Sigma}\)</span>.</p>
+</dd>
+</dl>
+<p>The second case is actually redundant. A simple recursive argument,
+similar to the proof that every polygon triangulation has two ears,
+implies that there are at least two non-adjacent vertices on the outer
+face with exactly two neighbors on the outer face. It follows that the
+vertices of <span class="math inline">\(\Sigma\)</span> can be ordered
+<span class="math inline">\(v_1, v_2, \dots, v_n\)</span>, so that after
+deleting any prefix <span class="math inline">\(v_1, v_2, \dots,
+v_i\)</span> where <span class="math inline">\(i\le n-3\)</span>, the
+outer face of the remaining subgraph is bounded by a simple cycle, and
+the next vertex <span class="math inline">\(v_{i+1}\)</span> lies on the
+outer face. This sequence of vertices is called a <em>canonical
+ordering</em> (or a <em>vertex-shelling order</em>) for <span
+class="math inline">\(\Sigma\)</span></p>
+<h2 data-number="11.4" id="schnyder-woods"><span
+class="header-section-number">11.4</span> Schnyder Woods</h2>
+<p>In 1989, Walter Schnyder discovered a significant refinement of the
+previous proof, which implies that any <span
+class="math inline">\(n\)</span>-vertex planar graph has a straight-line
+embedding whose vertices lie on an <span
+class="math inline">\((n-1)\times (n-1)\)</span> integer grid. Again, we
+consider only simple planar <em>triangulations</em>, where all faces
+have degree <span class="math inline">\(3\)</span>, including the outer
+face.</p>
+<p>Let <span class="math inline">\(T\)</span> be a simple planar
+triangulation with <span class="math inline">\(n\)</span> vertices.
+Schnyder defined two different ways to annotate features of <span
+class="math inline">\(T\)</span> with the colors red, green, and blue.
+The first of these is a <em>Schnyder coloring</em>, which colors the
+interior corners subject to two conditions:</p>
+<ul>
+<li>The corners of each face are colored red, green, and blue in
+counterclockwise order.</li>
+<li>The corners around each internal vertex are colored red, then green,
+then blue in counterclockwise order. In particular, each internal vertex
+is incident to at least one corner of each color.</li>
+</ul>
+<figure>
+<img src="Fig/Schnyder-coloring.png" style="width:40.0%"
+alt="A Schnyder coloring of a simple triangulation" />
+<figcaption aria-hidden="true">A Schnyder coloring of a simple
+triangulation</figcaption>
+</figure>
+<p>A Schnyder coloring can be constructed in linear time as follows.
+Color the outer vertices of <span class="math inline">\(T\)</span> red,
+green, and blue in counterclockwise order. If <span
+class="math inline">\(T\)</span> has a single bounded face, its three
+corners inherit the colors of the incident vertices. Otherwise, choose
+an arbitrary edge from a boundary vertex <span
+class="math inline">\(u\)</span> to an interior vertex <span
+class="math inline">\(v\)</span>. There are two cases to consider.</p>
+<ul>
+<li><p>Suppose <span class="math inline">\(v\)</span> has exactly two
+common neighbors with <span class="math inline">\(u\)</span>. The
+contraction <span class="math inline">\(T/uv\)</span> has two pairs of
+parallel edges; deleting one edge in each pair yields a smaller
+triangulation <span class="math inline">\(T’\)</span>. Recursively
+compute a Schnyder coloring for <span class="math inline">\(T’\)</span>,
+and transfer the corner colors back to <span
+class="math inline">\(T\)</span>. Finally, there is only one way to
+consistently color the faces of <span class="math inline">\(T\)</span>
+on either side of <span class="math inline">\(uv\)</span>; specifically,
+the corners incident to the boundary vertex <span
+class="math inline">\(u\)</span> inherit <span
+class="math inline">\(u\)</span>’s color.</p></li>
+<li><p>If <span class="math inline">\(v\)</span> has at least three
+common neighbors with <span class="math inline">\(u\)</span>, there must
+be a triangle <span class="math inline">\(uvw\)</span> in <span
+class="math inline">\(T\)</span> containing at least one vertex in its
+interior. In this case, we recursively compute Schnyder colorings of the
+subgraphs of <span class="math inline">\(G\)</span> inside <span
+class="math inline">\(uvw\)</span> and outside <span
+class="math inline">\(uvw\)</span>. In both recursive subproblems the
+boundary vertex <span class="math inline">\(u\)</span> retains its
+originally assigned color, so that the resulting Schnyder colorings are
+compatible.</p></li>
+</ul>
+<p>In fact, the second case is unnecessary. By expanding the recursion
+from the second case, we see that the entire construction is carried out
+by a sequence of contractions; equivalently, an easy induction argument
+implies that at least one edge from each boundary vertex can be
+contracted immediately. The Schnyder coloring in the figure above was
+computed by contacting the interior vertices toward the top (green)
+vertex in the order indicated by the vertex labels.</p>
+<figure>
+<img src="Fig/Schnyder-contraction.png" style="width:55.0%"
+alt="Recursively computing a Schnyder coloring" />
+<figcaption aria-hidden="true">Recursively computing a Schnyder
+coloring</figcaption>
+</figure>
+<p>The second annotation, called a <em>Schnyder wood</em>, assigns a
+direction and a color to every internal edge of <span
+class="math inline">\(T\)</span>. Every internal edge in <span
+class="math inline">\(T\)</span> is incident to corners with all three
+colors, with one color appearing twice at one endpoint. Schnyder orients
+each internal edge <span class="math inline">\(e\)</span> toward the
+endpoint with the same color twice, and assigns the repeated color to
+the edge. The resulting coloring and orientation has the following
+useful properties:</p>
+<ul>
+<li>Each boundary vertex has only incoming internal edges, all with the
+same color as the vertex itself.</li>
+<li>Every internal vertex has exactly one outgoing edge of each
+color.</li>
+<li>At every internal vertex, incident edges appear in counterclockwise
+order as follows: one outgoing red, all incoming blue, one outgoing
+green, all incoming red, one outgoing blue, all incoming green.</li>
+</ul>
+<figure>
+<img src="Fig/Schnyder-wood.png" style="width:40.0%"
+alt="The Schnyder wood constructed from the coloring in Figure 5" />
+<figcaption aria-hidden="true">The Schnyder wood constructed from the
+coloring in Figure 5</figcaption>
+</figure>
+<p>We can also construct Schnyder woods directly using a sequence of
+edge contractions, just as we constructed Schnyder colorings. Expanding
+an edge introduces one vertex and three edges; we orient the new edges
+away from the new vertex, and assign them the only colors consistent
+with the properties listed above. Conversely, <em>every</em> Schnyder
+wood can be constructed using this algorithm, contracting toward any of
+the outer vertices.</p>
+<figure>
+<img src="Fig/Schnyder-edge-contraction.png" style="width:55.0%"
+alt="Recursively computing a Schnyder wood" />
+<figcaption aria-hidden="true">Recursively computing a Schnyder
+wood</figcaption>
+</figure>
+<p>Given any Schnyder wood, we can define an equivalent Schnyder
+coloring as follows. For any interior corner, if the two edges are both
+leaving the corner vertex, assign the third color to the corner;
+otherwise, assign the color of the incoming edge(s) to the corner.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>In any Schnyder wood, the edges of each color induce a spanning tree
+of the internal vertices, rooted at the boundary vertex with that
+color.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Without loss of generality, assume the Schnyder wood is constructed by
+repeatedly contracting to the green boundary vertex. Each interior
+vertex has exactly one outgoing edge of each color, either leading to
+another interior vertex or the boundary vertex of that color.
+</dd>
+<dd>
+<p>Number the interior vertices by the order in which they are
+contracted to the green boundary vertex, as shown in the figures. Label
+the green boundary vertex <span class="math inline">\(0\)</span> and the
+other two boundary vertices <span class="math inline">\(\infty\)</span>.
+Call an edge <span class="math inline">\(v\mathord\to w\)</span>
+<em>increasing</em> if the label of <span
+class="math inline">\(w\)</span> is larger than the label of <span
+class="math inline">\(w\)</span> and <em>decreasing</em> otherwise.
+Every green edge is decreasing, and every red and blue edge is
+increasing. Thus, none of the red, green, or blue subgraphs contains a
+cycle; starting from any interior node, following edges of any fixed
+color leads to the outer vertex of that color. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>Hey, look, we have yet another proof of Euler’s formula!</p>
+<dl>
+<dt><strong>Euler’s formula:</strong></dt>
+<dd>
+<em>For any planar map with <span class="math inline">\(n\)</span>
+vertices, <span class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces, we have <span
+class="math inline">\(n-m+f=2\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+It suffices to prove the theorem for simple planar triangulations. If
+<span class="math inline">\(\Sigma\)</span> is not a simple map, we can
+make it simple by splitting each edge into a path of three edges, by
+introducing two new vertices; the resulting simple graph has <span
+class="math inline">\(n+2m\)</span> vertices, <span
+class="math inline">\(3m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces. Similarly, if any face of <span
+class="math inline">\(\Sigma\)</span> has degree greater than~<span
+class="math inline">\(3\)</span>, it must contain a path between two
+non-adjacent vertices; adding this path to the embedding yields a new
+planar map with <span class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m+1\)</span> edges, and <span
+class="math inline">\(f+1\)</span> faces.
+</dd>
+<dd>
+<p>Consider any Schnyder wood of a simple planar triangulation <span
+class="math inline">\(T\)</span> with <span
+class="math inline">\(n\)</span> vertices, <span
+class="math inline">\(m\)</span> edges, and <span
+class="math inline">\(f\)</span> faces (including the outer face). The
+edges of each color define a rooted tree with <span
+class="math inline">\(n-2\)</span> vertices, and therefore <span
+class="math inline">\(n-3\)</span> edges, and every interior
+edgesbelongs to exactly one such tree. It immediately follows that <span
+class="math inline">\(m = 3(n-3)+3 = 3n-6\)</span>. Finally, because
+every face is a triangle, we have <span class="math inline">\(2m = 3f =
+6n-12\)</span>, so <span class="math inline">\(f = 2n-4\)</span>. We
+conclude that <span class="math inline">\(n-m+f = n - (3n-6) + (2n-4) =
+2\)</span>. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="11.5" id="grid-embedding"><span
+class="header-section-number">11.5</span> Grid embedding</h2>
+<p>Now we assign integer coordinates to every interior vertex <span
+class="math inline">\(v\)</span> as follows. There is a unique path of
+red edges, a unique path of green edges, and a unique path of blue edges
+from <span class="math inline">\(v\)</span> to the boundary. These three
+paths partition the triangulation into three regions, which we color
+red, green, and blue as shown below. Each region contains its clockwise
+bounding path—for example, the green region includes the blue path,
+including the blue boundary vertex—but not <span
+class="math inline">\(v\)</span> itself.</p>
+<p>For purposes of defining these regions when <span
+class="math inline">\(v\)</span> is a boundary vertex, we orient the
+boundary edges clockwise and color each edge according to its head.
+Thus, if <span class="math inline">\(r,g,b\)</span> are the red, green,
+and blue boundary vertices, the green region of <span
+class="math inline">\(g\)</span> contains every vertex except <span
+class="math inline">\(g\)</span> and <span
+class="math inline">\(r\)</span>, the red region of <span
+class="math inline">\(g\)</span> contains only <span
+class="math inline">\(r\)</span>, and the blue region of <span
+class="math inline">\(g\)</span> is empty.</p>
+<p>For each vertex <span class="math inline">\(v\)</span>, let <span
+class="math inline">\(r(v)\)</span>, <span
+class="math inline">\(g(v)\)</span>, <span
+class="math inline">\(b(v)\)</span> respectively denote the number of
+vertices in the red, green, and blue regions of <span
+class="math inline">\(v\)</span>. By definition, we have <span
+class="math inline">\(r(v) + g(v) + b(v) = n-1\)</span> for every vertex
+<span class="math inline">\(v\)</span>.</p>
+<figure>
+<img src="Fig/Schnyder-regions.png" style="width:45.0%"
+alt="Schnyder regions for an interior vertex with coordinates (r,g,b) = (2,7,4)." />
+<figcaption aria-hidden="true">Schnyder regions for an interior vertex
+with coordinates <span class="math inline">\((r,g,b) =
+(2,7,4)\)</span>.</figcaption>
+</figure>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Schnyder’s coordinates <span class="math inline">\((r(v), g(v),
+b(v))\)</span> satisfy the following conditions:</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>For every red edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) &lt; r(w)\)</span>
+and <span class="math inline">\(g(v) \ge g(w)\)</span> and <span
+class="math inline">\(b(v) &gt; b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="a">
+<li><em>For every green edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) &gt; r(w)\)</span>
+and <span class="math inline">\(g(v) &lt; g(w)\)</span> and <span
+class="math inline">\(b(v) \ge b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="3" type="a">
+<li><em>For every blue edge <span class="math inline">\(v\mathord\to
+w\)</span>, we have <span class="math inline">\(r(v) \ge r(w)\)</span>
+and <span class="math inline">\(g(v) &gt; g(w)\)</span> and <span
+class="math inline">\(b(v) &lt; b(w)\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="4" type="a">
+<li><em>For every triangle <span class="math inline">\({uvw}\)</span>
+whose corners at <span class="math inline">\(u\)</span>, <span
+class="math inline">\(v\)</span>, and <span
+class="math inline">\(w\)</span> are respectively red, green, and blue,
+we have <span class="math inline">\(r(u) \ge r(v) &gt; r(w)\)</span> and
+<span class="math inline">\(g(v) \ge g(w) &gt; g(u)\)</span> and <span
+class="math inline">\(b(w) \ge b(u) &gt; b(v)\)</span>.</em></li>
+</ol>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix an arbitrary reference vertex <span
+class="math inline">\(v\)</span>, Color <span
+class="math inline">\(v\)</span> black, and color the other <span
+class="math inline">\(n-1\)</span> vertices according to the region that
+contains it. When we move the reference vertex from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(w\)</span> along a green edge <span
+class="math inline">\(v\mathord\to w\)</span>, <span
+class="math inline">\(v\)</span> changes from black to green, <span
+class="math inline">\(w\)</span> changes from red to black, every green
+vertex remains green, and no vertex changes from red to blue or vice
+versa. (Some red or blue vertices might become green, and the set of
+blue vertices might remain unchanged.) Part (b) now follows immediately;
+parts (a) and (c) follow from similar arguments.
+</dd>
+<dd>
+<p>Finally, part (d) follows by straightforward case analysis. Up to a
+choice of colors, there are only two cases to consider: either the edges
+of <span class="math inline">\(uvw\)</span> have distinct colors (and
+therefore define a directed cycle), or two of the three edges have the
+same color (so the edges do not define a directed cycle). <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Any planar embedding of a simple planar graph with <span
+class="math inline">\(n\)</span> vertices is equivalent to a
+straight-line embedding with vertices on the <span
+class="math inline">\((n-1)\times (n-1)\)</span> integer grid.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+As usual, it suffices to consider only simple triangulations. Let <span
+class="math inline">\(T\)</span> be a simple planar triangulation with
+<span class="math inline">\(n\)</span> vertices. Fix an arbitrary
+Schnyder coloring of <span class="math inline">\(T\)</span>, and thus an
+arbitrary Schnyder wood.
+</dd>
+<dd>
+<p>Assign each vertex <span class="math inline">\(v\)</span> of <span
+class="math inline">\(T\)</span> the integer coordinates <span
+class="math inline">\((g(v), b(v))\)</span>. Let <span
+class="math inline">\(uvw\)</span> be an arbitrary triangle whose
+corners at <span class="math inline">\(u\)</span>, <span
+class="math inline">\(v\)</span>, and <span
+class="math inline">\(w\)</span> are respectively colored red, green,
+and blue by the Schnyder coloring. The orientation of the new embedding
+of <span class="math inline">\(uvw\)</span> is given by the sign of the
+determinant <span class="math display">\[
+\left|\begin{matrix}
+    1 &amp; g(u) &amp; b(u) \\
+    1 &amp; g(v) &amp; b(v) \\
+    1 &amp; g(w) &amp; b(w)
+\end{matrix}\right|
+~=~
+\big(g(v)-g(u)\big)\big(b(w)-b(u)\big) -
+\big(g(w)-g(u)\big)\big(b(v)-b(u)\big).
+\]</span> The previous lemma implies that this expression is positive,
+which implies that the triangle is oriented counterclockwise. Because
+every triangle is oriented consistently, no two triangles in the
+embedding can overlap, and therefore no pair of edges can intersect.
+(The signed area of the outer triangle is equal to the sum of the signed
+areas of the interior triangles; if two triangles overlapped, the sum of
+the areas of the interior triangles would be strictly larger than the
+unsigned area of the outer triangle!) All vertex coordinates are
+integers between <span class="math inline">\(0\)</span> and <span
+class="math inline">\(n-2\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The following figure shows the resulting embedding for our example
+graph. Instead of embedding on the square grid, I’m using a grid of
+equilateral triangles, assigning each vertex <span
+class="math inline">\(v\)</span> <em>barycentric</em> coordinates <span
+class="math inline">\((r(v), g(v), b(v))\)</span>.</p>
+<figure>
+<img src="Fig/Schnyder-grid.png" style="width:45.0%"
+alt="Schnyder’s barycentric grid embedding." />
+<figcaption aria-hidden="true">Schnyder’s barycentric grid
+embedding.</figcaption>
+</figure>
+<h2 data-number="11.6" id="references-6"><span
+class="header-section-number">11.6</span> References</h2>
+<p>Eventually….</p>
+<h2 data-number="11.7" id="not-appearing"><span
+class="header-section-number">11.7</span> Not Appearing</h2>
+<ul>
+<li>Looser grid embedding from canonical ordering or Schnyder face
+counts</li>
+<li>Schnyder woods for more general planar graphs (Felsner et al.)</li>
+<li>Weighted Schnyder embeddings</li>
+<li>Morphing between equivalent straight-line embeddings (better via
+Tutte)</li>
+<li>Convex polyhedral embeddings (Stein, better via Tutte)</li>
+<li>Steinitz’s theorem (better via Tutte)</li>
+<li>Distributive lattice of 3-orientations (maybe later)</li>
+<li>Koebe-Andreev circle packing (maybe later)</li>
+</ul>
+</body>
+</html>

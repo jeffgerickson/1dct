@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Multiple-Source Shortest Paths, Revisited^\alpha</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="17-planar-separatorsbeta.html" accesskey="n" rel="next">Planar Separators<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="15-multiple-source-shortest-pathsalpha.html" accesskey="p" rel="previous">Multiple-Source Shortest Paths<span
+class="math inline">\(^\alpha\)</span></a>
+</span>
+</div>
+</nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="-forewardalpha.html" id="toc-forewardalpha">Foreward<span
+class="math inline">\(^\alpha\)</span></a></li>
+<li><a href="1-simple-polygonsbeta.html"
+id="toc-simple-polygonsbeta"><span class="toc-section-number">1</span>
+Simple Polygons<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="1-simple-polygonsbeta.html#definitions"
+id="toc-definitions"><span class="toc-section-number">1.1</span>
+Definitions</a></li>
+<li><a
+href="1-simple-polygonsbeta.html#proof-of-the-jordan-polygon-theorem"
+id="toc-proof-of-the-jordan-polygon-theorem"><span
+class="toc-section-number">1.2</span> Proof of the Jordan Polygon
+Theorem</a></li>
+<li><a href="1-simple-polygonsbeta.html#point-in-polygon-test"
+id="toc-point-in-polygon-test"><span
+class="toc-section-number">1.3</span> Point-in-Polygon Test</a></li>
+<li><a href="1-simple-polygonsbeta.html#polygons-can-be-triangulated"
+id="toc-polygons-can-be-triangulated"><span
+class="toc-section-number">1.4</span> Polygons Can Be
+Triangulated</a></li>
+<li><a href="1-simple-polygonsbeta.html#computing-a-triangulation"
+id="toc-computing-a-triangulation"><span
+class="toc-section-number">1.5</span> Computing a Triangulation</a></li>
+<li><a href="1-simple-polygonsbeta.html#the-dehn-schönflies-theorem"
+id="toc-the-dehn-schönflies-theorem"><span
+class="toc-section-number">1.6</span> The Dehn-Schönflies
+Theorem</a></li>
+<li><a
+href="1-simple-polygonsbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film"><span
+class="toc-section-number">1.7</span> and the aptly named Sir Not
+Appearing in This Film</a></li>
+<li><a href="1-simple-polygonsbeta.html#references"
+id="toc-references"><span class="toc-section-number">1.8</span>
+References</a></li>
+</ul></li>
+<li><a href="2-winding-numbersbeta.html"
+id="toc-winding-numbersbeta"><span class="toc-section-number">2</span>
+Winding Numbers<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="2-winding-numbersbeta.html#let-me-not-be-pent-up-sir-i-will-fast-being-loose."
+id="toc-let-me-not-be-pent-up-sir-i-will-fast-being-loose."><span
+class="toc-section-number">2.1</span> Let me not be pent up, sir; I will
+fast, being loose.</a></li>
+<li><a href="2-winding-numbersbeta.html#shoelaces-and-signed-areas"
+id="toc-shoelaces-and-signed-areas"><span
+class="toc-section-number">2.2</span> Shoelaces and Signed
+Areas</a></li>
+<li><a href="2-winding-numbersbeta.html#winding-numbers"
+id="toc-winding-numbers"><span class="toc-section-number">2.3</span>
+Winding numbers</a></li>
+<li><a href="2-winding-numbersbeta.html#homotopy"
+id="toc-homotopy"><span class="toc-section-number">2.4</span>
+Homotopy</a></li>
+<li><a href="2-winding-numbersbeta.html#vertex-moves"
+id="toc-vertex-moves"><span class="toc-section-number">2.5</span> Vertex
+moves</a></li>
+<li><a
+href="2-winding-numbersbeta.html#polygon-homotopies-are-sequences-of-vertex-moves"
+id="toc-polygon-homotopies-are-sequences-of-vertex-moves"><span
+class="toc-section-number">2.6</span> Polygon homotopies are sequences
+of vertex moves</a></li>
+<li><a href="2-winding-numbersbeta.html#homotopy-invariant"
+id="toc-homotopy-invariant"><span class="toc-section-number">2.7</span>
+Homotopy Invariant</a></li>
+<li><a
+href="2-winding-numbersbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film-1"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film-1"><span
+class="toc-section-number">2.8</span> …and the Aptly Named Sir Not
+Appearing in This Film</a></li>
+<li><a href="2-winding-numbersbeta.html#references-1"
+id="toc-references-1"><span class="toc-section-number">2.9</span>
+References</a></li>
+</ul></li>
+<li><a href="3-homotopy-testingbeta.html"
+id="toc-homotopy-testingbeta"><span class="toc-section-number">3</span>
+Homotopy Testing<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="3-homotopy-testingbeta.html#multiple-obstacles"
+id="toc-multiple-obstacles"><span class="toc-section-number">3.1</span>
+Multiple Obstacles</a></li>
+<li><a href="3-homotopy-testingbeta.html#crossing-sequences"
+id="toc-crossing-sequences"><span class="toc-section-number">3.2</span>
+Crossing Sequences</a></li>
+<li><a href="3-homotopy-testingbeta.html#reductions"
+id="toc-reductions"><span class="toc-section-number">3.3</span>
+Reductions</a></li>
+<li><a href="3-homotopy-testingbeta.html#varations"
+id="toc-varations"><span class="toc-section-number">3.4</span>
+Varations</a></li>
+<li><a
+href="3-homotopy-testingbeta.html#and-the-aptly-named-sir-not-appearing-in-this-film-2"
+id="toc-and-the-aptly-named-sir-not-appearing-in-this-film-2"><span
+class="toc-section-number">3.5</span> …and the Aptly Named Sir Not
+Appearing in This Film</a></li>
+</ul></li>
+<li><a href="4-faster-homotopy-testingbeta.html"
+id="toc-faster-homotopy-testingbeta"><span
+class="toc-section-number">4</span> Faster Homotopy Testing<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="4-faster-homotopy-testingbeta.html#trapezoidal-decomposition"
+id="toc-trapezoidal-decomposition"><span
+class="toc-section-number">4.1</span> Trapezoidal decomposition</a></li>
+<li><a
+href="4-faster-homotopy-testingbeta.html#vertical-and-horizontal-ranks"
+id="toc-vertical-and-horizontal-ranks"><span
+class="toc-section-number">4.2</span> Vertical and horizontal
+ranks</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#rectification"
+id="toc-rectification"><span class="toc-section-number">4.3</span>
+Rectification</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#reduction"
+id="toc-reduction"><span class="toc-section-number">4.4</span>
+Reduction</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#layered-range-trees"
+id="toc-layered-range-trees"><span class="toc-section-number">4.5</span>
+Layered Range Trees</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#final-analysis"
+id="toc-final-analysis"><span class="toc-section-number">4.6</span>
+Final Analysis</a></li>
+<li><a
+href="4-faster-homotopy-testingbeta.html#dots-and-the-aptly-named-et-cetera-ad-nauseam"
+id="toc-dots-and-the-aptly-named-et-cetera-ad-nauseam"><span
+class="toc-section-number">4.7</span> <span
+class="math inline">\(\dots\)</span> And the Aptly Named Et Cetera Ad
+Nauseam</a></li>
+<li><a href="4-faster-homotopy-testingbeta.html#references-2"
+id="toc-references-2"><span class="toc-section-number">4.8</span>
+References</a></li>
+</ul></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html"
+id="toc-shortest-homotopic-pathsbeta"><span
+class="toc-section-number">5</span> Shortest (Homotopic) Paths<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#shortest-paths-in-simple-polygons"
+id="toc-shortest-paths-in-simple-polygons"><span
+class="toc-section-number">5.1</span> Shortest Paths in Simple
+Polygons</a></li>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#triangulations-and-dual-graphs"
+id="toc-triangulations-and-dual-graphs"><span
+class="toc-section-number">5.2</span> Triangulations and Dual
+Graphs</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#crossing-sequences-1"
+id="toc-crossing-sequences-1"><span
+class="toc-section-number">5.3</span> Crossing Sequences</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#sleeves"
+id="toc-sleeves"><span class="toc-section-number">5.4</span>
+Sleeves</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#growing-funnels"
+id="toc-growing-funnels"><span class="toc-section-number">5.5</span>
+Growing Funnels</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#polygons-with-holes"
+id="toc-polygons-with-holes"><span class="toc-section-number">5.6</span>
+Polygons with Holes</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#the-universal-cover"
+id="toc-the-universal-cover"><span class="toc-section-number">5.7</span>
+The Universal Cover</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#covering-spaces"
+id="toc-covering-spaces"><span class="toc-section-number">5.8</span>
+Covering Spaces</a></li>
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#dotsand-the-aptly-named-yadda-yadda"
+id="toc-dotsand-the-aptly-named-yadda-yadda"><span
+class="toc-section-number">5.9</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="5-shortest-homotopic-pathsbeta.html#references-3"
+id="toc-references-3"><span class="toc-section-number">5.10</span>
+References</a></li>
+</ul></li>
+<li><a href="6-generic-planar-curvesalpha.html"
+id="toc-generic-planar-curvesalpha"><span
+class="toc-section-number">6</span> Generic Planar Curves<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="6-generic-planar-curvesalpha.html#technicalities"
+id="toc-technicalities"><span class="toc-section-number">6.1</span>
+Technicalities</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#image-graphs"
+id="toc-image-graphs"><span class="toc-section-number">6.2</span> Image
+graphs</a></li>
+<li><a
+href="6-generic-planar-curvesalpha.html#gauss-codes-and-gauss-diagrams"
+id="toc-gauss-codes-and-gauss-diagrams"><span
+class="toc-section-number">6.3</span> Gauss codes and Gauss
+diagrams</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#tracing-faces"
+id="toc-tracing-faces"><span class="toc-section-number">6.4</span>
+Tracing Faces</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#homotopy-moves"
+id="toc-homotopy-moves"><span class="toc-section-number">6.5</span>
+Homotopy moves</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#planarity-testing"
+id="toc-planarity-testing"><span class="toc-section-number">6.6</span>
+Planarity testing</a></li>
+<li><a
+href="6-generic-planar-curvesalpha.html#dotsand-the-aptly-named-yadda-yadda-1"
+id="toc-dotsand-the-aptly-named-yadda-yadda-1"><span
+class="toc-section-number">6.7</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#references-4"
+id="toc-references-4"><span class="toc-section-number">6.8</span>
+References</a></li>
+<li><a href="6-generic-planar-curvesalpha.html#possible-reorganization"
+id="toc-possible-reorganization"><span
+class="toc-section-number">6.9</span> Possible reorganization</a></li>
+</ul></li>
+<li><a href="7-unsigned-gauss-codesbeta.html"
+id="toc-unsigned-gauss-codesbeta"><span
+class="toc-section-number">7</span> Unsigned Gauss codes<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="7-unsigned-gauss-codesbeta.html#winding-numbers-again"
+id="toc-winding-numbers-again"><span
+class="toc-section-number">7.1</span> Winding numbers again</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#smoothing"
+id="toc-smoothing"><span class="toc-section-number">7.2</span>
+Smoothing</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#gausss-parity-condition"
+id="toc-gausss-parity-condition"><span
+class="toc-section-number">7.3</span> Gauss’s parity condition</a></li>
+<li><a
+href="7-unsigned-gauss-codesbeta.html#dehns-non-crossing-condition"
+id="toc-dehns-non-crossing-condition"><span
+class="toc-section-number">7.4</span> Dehn’s non-crossing
+condition</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#tree-onion-figures"
+id="toc-tree-onion-figures"><span class="toc-section-number">7.5</span>
+Tree-onion figures</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#bipartite-interlacement"
+id="toc-bipartite-interlacement"><span
+class="toc-section-number">7.6</span> Bipartite interlacement</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#recrossing"
+id="toc-recrossing"><span class="toc-section-number">7.7</span>
+Recrossing</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#algorithm-summary"
+id="toc-algorithm-summary"><span class="toc-section-number">7.8</span>
+Algorithm summary</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#faster-faster"
+id="toc-faster-faster"><span class="toc-section-number">7.9</span>
+Faster! Faster!</a></li>
+<li><a
+href="7-unsigned-gauss-codesbeta.html#dotsand-the-aptly-named-yadda-yadda-2"
+id="toc-dotsand-the-aptly-named-yadda-yadda-2"><span
+class="toc-section-number">7.10</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda
+Yadda</a></li>
+<li><a href="7-unsigned-gauss-codesbeta.html#references-5"
+id="toc-references-5"><span class="toc-section-number">7.11</span>
+References</a></li>
+</ul></li>
+<li><a href="8-curve-homotopy-and-curve-invariantsalpha.html"
+id="toc-curve-homotopy-and-curve-invariantsalpha"><span
+class="toc-section-number">8</span> Curve homotopy and curve
+invariants<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#steinitzs-contraction-algorithm"
+id="toc-steinitzs-contraction-algorithm"><span
+class="toc-section-number">8.1</span> Steinitz’s contraction
+algorithm</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#rotation-number"
+id="toc-rotation-number"><span class="toc-section-number">8.2</span>
+Rotation number</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#regular-homotopy"
+id="toc-regular-homotopy"><span class="toc-section-number">8.3</span>
+Regular homotopy</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#strangeness"
+id="toc-strangeness"><span class="toc-section-number">8.4</span>
+Strangeness</a></li>
+<li><a href="8-curve-homotopy-and-curve-invariantsalpha.html#defect"
+id="toc-defect"><span class="toc-section-number">8.5</span>
+Defect</a></li>
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#aptly-yadda-yadda"
+id="toc-aptly-yadda-yadda"><span class="toc-section-number">8.6</span>
+Aptly Yadda Yadda</a></li>
+</ul></li>
+<li><a href="9-planar-graphsbeta.html" id="toc-planar-graphsbeta"><span
+class="toc-section-number">9</span> Planar Graphs<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="9-planar-graphsbeta.html#abstract-graphs"
+id="toc-abstract-graphs"><span class="toc-section-number">9.1</span>
+Abstract graphs</a></li>
+<li><a href="9-planar-graphsbeta.html#data-structures"
+id="toc-data-structures"><span class="toc-section-number">9.2</span>
+Data structures</a></li>
+<li><a href="9-planar-graphsbeta.html#topological-graphs"
+id="toc-topological-graphs"><span class="toc-section-number">9.3</span>
+Topological graphs</a></li>
+<li><a href="9-planar-graphsbeta.html#planar-graphs-and-planar-maps"
+id="toc-planar-graphs-and-planar-maps"><span
+class="toc-section-number">9.4</span> Planar graphs and planar
+maps</a></li>
+<li><a href="9-planar-graphsbeta.html#rotation-systems"
+id="toc-rotation-systems"><span class="toc-section-number">9.5</span>
+Rotation systems</a></li>
+<li><a href="9-planar-graphsbeta.html#formalities-and-trivialities"
+id="toc-formalities-and-trivialities"><span
+class="toc-section-number">9.6</span> Formalities and
+Trivialities</a></li>
+<li><a href="9-planar-graphsbeta.html#caveat-lector"
+id="toc-caveat-lector"><span class="toc-section-number">9.7</span>
+Caveat Lector</a></li>
+<li><a href="9-planar-graphsbeta.html#duality" id="toc-duality"><span
+class="toc-section-number">9.8</span> Duality</a></li>
+<li><a href="9-planar-graphsbeta.html#self-dual-data-structures"
+id="toc-self-dual-data-structures"><span
+class="toc-section-number">9.9</span> Self-dual data structures</a></li>
+<li><a href="9-planar-graphsbeta.html#endianity"
+id="toc-endianity"><span class="toc-section-number">9.10</span>
+Endianity</a></li>
+<li><a href="9-planar-graphsbeta.html#other-derived-maps"
+id="toc-other-derived-maps"><span class="toc-section-number">9.11</span>
+Other derived maps</a></li>
+<li><a href="9-planar-graphsbeta.html#aptly-yadda-yadda-1"
+id="toc-aptly-yadda-yadda-1"><span
+class="toc-section-number">9.12</span> Aptly Yadda Yadda</a></li>
+<li><a href="9-planar-graphsbeta.html#revision" id="toc-revision"><span
+class="toc-section-number">9.13</span> Revision?</a></li>
+</ul></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html"
+id="toc-tree-cotree-decompositionsbeta"><span
+class="toc-section-number">10</span> Tree-Cotree Decompositions<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#important-graph-definitions-yawn"
+id="toc-important-graph-definitions-yawn"><span
+class="toc-section-number">10.1</span> Important graph definitions
+(yawn)</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#deletion-and-contraction"
+id="toc-deletion-and-contraction"><span
+class="toc-section-number">10.2</span> Deletion and Contraction</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#spanning-trees"
+id="toc-spanning-trees"><span class="toc-section-number">10.3</span>
+Spanning trees</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#deletion-and-contraction-in-planar-maps"
+id="toc-deletion-and-contraction-in-planar-maps"><span
+class="toc-section-number">10.4</span> Deletion and Contraction in
+Planar Maps</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#tree-cotree-decompositions"
+id="toc-tree-cotree-decompositions"><span
+class="toc-section-number">10.5</span> Tree-Cotree
+Decompositions</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#eulers-formula"
+id="toc-eulers-formula"><span class="toc-section-number">10.6</span>
+Euler’s Formula</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#the-combinatorial-gauss-bonnet-theorem"
+id="toc-the-combinatorial-gauss-bonnet-theorem"><span
+class="toc-section-number">10.7</span> The Combinatorial Gauss-Bonnet
+Theorem</a></li>
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#historical-digression"
+id="toc-historical-digression"><span
+class="toc-section-number">10.8</span> Historical Digression</a></li>
+<li><a href="10-tree-cotree-decompositionsbeta.html#aptly-named"
+id="toc-aptly-named"><span class="toc-section-number">10.9</span> Aptly
+Named</a></li>
+</ul></li>
+<li><a href="11-straight-line-planar-mapsbeta.html"
+id="toc-straight-line-planar-mapsbeta"><span
+class="toc-section-number">11</span> Straight-line Planar Maps<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#simple-triangulations"
+id="toc-simple-triangulations"><span
+class="toc-section-number">11.1</span> Simple triangulations</a></li>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#inner-induction-hole-filling"
+id="toc-inner-induction-hole-filling"><span
+class="toc-section-number">11.2</span> Inner Induction (Hole
+Filling)</a></li>
+<li><a
+href="11-straight-line-planar-mapsbeta.html#outer-induction-canonical-ordering"
+id="toc-outer-induction-canonical-ordering"><span
+class="toc-section-number">11.3</span> Outer Induction (Canonical
+Ordering)</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#schnyder-woods"
+id="toc-schnyder-woods"><span class="toc-section-number">11.4</span>
+Schnyder Woods</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#grid-embedding"
+id="toc-grid-embedding"><span class="toc-section-number">11.5</span>
+Grid embedding</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#references-6"
+id="toc-references-6"><span class="toc-section-number">11.6</span>
+References</a></li>
+<li><a href="11-straight-line-planar-mapsbeta.html#not-appearing"
+id="toc-not-appearing"><span class="toc-section-number">11.7</span> Not
+Appearing</a></li>
+</ul></li>
+<li><a href="12-tuttes-spring-embedding-theorembeta.html"
+id="toc-tuttes-spring-embedding-theorembeta"><span
+class="toc-section-number">12</span> Tutte’s Spring Embedding
+Theorem<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#outer-face-is-outer"
+id="toc-outer-face-is-outer"><span
+class="toc-section-number">12.1</span> Outer Face is Outer</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#laplacian-linear-systems-and-energy-minimization"
+id="toc-laplacian-linear-systems-and-energy-minimization"><span
+class="toc-section-number">12.2</span> Laplacian linear systems and
+energy minimization</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#slicing-with-lines"
+id="toc-slicing-with-lines"><span class="toc-section-number">12.3</span>
+Slicing with Lines</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#no-degenerate-vertex-neighborhoods"
+id="toc-no-degenerate-vertex-neighborhoods"><span
+class="toc-section-number">12.4</span> No Degenerate Vertex
+Neighborhoods</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#no-degenerate-faces"
+id="toc-no-degenerate-faces"><span
+class="toc-section-number">12.5</span> No Degenerate Faces</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#whitneys-uniqueness-theorem"
+id="toc-whitneys-uniqueness-theorem"><span
+class="toc-section-number">12.6</span> Whitney’s Uniqueness
+Theorem</a></li>
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#not-appearing-1"
+id="toc-not-appearing-1"><span class="toc-section-number">12.7</span>
+Not Appearing</a></li>
+</ul></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html"
+id="toc-maxwellcremona-correspondencebeta"><span
+class="toc-section-number">13</span> Maxwell–Cremona Correspondence<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#dramatis-personae"
+id="toc-dramatis-personae"><span class="toc-section-number">13.1</span>
+Dramatis Personae</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#reciprocal-diagrams"
+id="toc-reciprocal-diagrams"><span
+class="toc-section-number">13.2</span> Reciprocal diagrams</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#polyhedral-lifts"
+id="toc-polyhedral-lifts"><span class="toc-section-number">13.3</span>
+Polyhedral lifts</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#a-non-obvious-example-the-anticube"
+id="toc-a-non-obvious-example-the-anticube"><span
+class="toc-section-number">13.4</span> A Non-Obvious Example: The
+“Anticube”</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#steinitzs-theorem"
+id="toc-steinitzs-theorem"><span class="toc-section-number">13.5</span>
+Steinitz’s Theorem</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#non-3-connected-frameworks"
+id="toc-non-3-connected-frameworks"><span
+class="toc-section-number">13.6</span> Non-3-connected
+Frameworks</a></li>
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#non-planar-frameworks"
+id="toc-non-planar-frameworks"><span
+class="toc-section-number">13.7</span> Non-Planar Frameworks</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#references-7"
+id="toc-references-7"><span class="toc-section-number">13.8</span>
+References</a></li>
+<li><a href="13-maxwellcremona-correspondencebeta.html#aptly-named-1"
+id="toc-aptly-named-1"><span class="toc-section-number">13.9</span>
+Aptly Named</a></li>
+</ul></li>
+<li><a href="14-circle-packingvarnothing.html"
+id="toc-circle-packingvarnothing"><span
+class="toc-section-number">14</span> Circle Packing<span
+class="math inline">\(^\varnothing\)</span></a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html"
+id="toc-multiple-source-shortest-pathsalpha"><span
+class="toc-section-number">15</span> Multiple-Source Shortest Paths<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#problem-statement"
+id="toc-problem-statement"><span class="toc-section-number">15.1</span>
+Problem Statement</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#shortest-paths-and-slacks"
+id="toc-shortest-paths-and-slacks"><span
+class="toc-section-number">15.2</span> Shortest paths and
+slacks</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#compact-output"
+id="toc-compact-output"><span class="toc-section-number">15.3</span>
+Compact Output</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#parametric-shortest-paths"
+id="toc-parametric-shortest-paths"><span
+class="toc-section-number">15.4</span> Parametric Shortest
+Paths</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#dynamic-forest-data-structures"
+id="toc-dynamic-forest-data-structures"><span
+class="toc-section-number">15.5</span> Dynamic Forest Data
+Structures</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#the-pivoting-algorithm"
+id="toc-the-pivoting-algorithm"><span
+class="toc-section-number">15.6</span> The Pivoting Algorithm</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#applications"
+id="toc-applications"><span class="toc-section-number">15.7</span>
+Applications</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#enforcing-unique-shortest-paths"
+id="toc-enforcing-unique-shortest-paths"><span
+class="toc-section-number">15.8</span> Enforcing Unique Shortest
+Paths</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#leftmost-shortest-paths"
+id="toc-leftmost-shortest-paths"><span
+class="toc-section-number">15.9</span> Leftmost shortest paths</a></li>
+<li><a href="15-multiple-source-shortest-pathsalpha.html#references-8"
+id="toc-references-8"><span class="toc-section-number">15.10</span>
+References</a></li>
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#sir-not-appearing"
+id="toc-sir-not-appearing"><span class="toc-section-number">15.11</span>
+Sir not appearing</a></li>
+</ul></li>
+<li><a href="16-multiple-source-shortest-paths-revisitedalpha.html"
+id="toc-multiple-source-shortest-paths-revisitedalpha"><span
+class="toc-section-number">16</span> Multiple-Source Shortest Paths,
+Revisited<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#problem-formulation"
+id="toc-problem-formulation"><span
+class="toc-section-number">16.1</span> Problem formulation</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#overview"
+id="toc-overview"><span class="toc-section-number">16.2</span>
+Overview</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#properly-shared-edges"
+id="toc-properly-shared-edges"><span
+class="toc-section-number">16.3</span> Properly shared edges</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#contraction"
+id="toc-contraction"><span class="toc-section-number">16.4</span>
+Contraction</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#distance-queries"
+id="toc-distance-queries"><span class="toc-section-number">16.5</span>
+Distance Queries</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#space-and-time-analysis"
+id="toc-space-and-time-analysis"><span
+class="toc-section-number">16.6</span> Space and Time Analysis</a></li>
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#references-9"
+id="toc-references-9"><span class="toc-section-number">16.7</span>
+References</a></li>
+</ul></li>
+<li><a href="17-planar-separatorsbeta.html"
+id="toc-planar-separatorsbeta"><span
+class="toc-section-number">17</span> Planar Separators<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="17-planar-separatorsbeta.html#tree-separators"
+id="toc-tree-separators"><span class="toc-section-number">17.1</span>
+Tree separators</a></li>
+<li><a href="17-planar-separatorsbeta.html#fundamental-cycle-separators"
+id="toc-fundamental-cycle-separators"><span
+class="toc-section-number">17.2</span> Fundamental cycle
+separators</a></li>
+<li><a
+href="17-planar-separatorsbeta.html#breadth-first-level-separators"
+id="toc-breadth-first-level-separators"><span
+class="toc-section-number">17.3</span> Breadth-first level
+separators</a></li>
+<li><a href="17-planar-separatorsbeta.html#cycle-separators"
+id="toc-cycle-separators"><span class="toc-section-number">17.4</span>
+Cycle separators</a></li>
+<li><a
+href="17-planar-separatorsbeta.html#good-r-divisions-and-subdivision-hierarchies"
+id="toc-good-r-divisions-and-subdivision-hierarchies"><span
+class="toc-section-number">17.5</span> Good <span
+class="math inline">\(r\)</span>-divisions and Subdivision
+Hierarchies</a></li>
+<li><a href="17-planar-separatorsbeta.html#history"
+id="toc-history"><span class="toc-section-number">17.6</span>
+History</a></li>
+<li><a href="17-planar-separatorsbeta.html#references-10"
+id="toc-references-10"><span class="toc-section-number">17.7</span>
+References</a></li>
+<li><a href="17-planar-separatorsbeta.html#aptly-named-sir-not"
+id="toc-aptly-named-sir-not"><span
+class="toc-section-number">17.8</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="18-branch-decompositionsvarnothing.html"
+id="toc-branch-decompositionsvarnothing"><span
+class="toc-section-number">18</span> Branch Decompositions<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="18-branch-decompositionsvarnothing.html#branchwidth"
+id="toc-branchwidth"><span class="toc-section-number">18.1</span>
+Branchwidth</a></li>
+<li><a href="18-branch-decompositionsvarnothing.html#treewidth"
+id="toc-treewidth"><span class="toc-section-number">18.2</span>
+Treewidth</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#width-versus-diameter"
+id="toc-width-versus-diameter"><span
+class="toc-section-number">18.3</span> Width versus diameter</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#local-approximation"
+id="toc-local-approximation"><span
+class="toc-section-number">18.4</span> Local approximation</a></li>
+<li><a
+href="18-branch-decompositionsvarnothing.html#aptly-named-sir-not-1"
+id="toc-aptly-named-sir-not-1"><span
+class="toc-section-number">18.5</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="19-fast-shortest-paths-in-planar-graphsbeta.html"
+id="toc-fast-shortest-paths-in-planar-graphsbeta"><span
+class="toc-section-number">19</span> Fast Shortest Paths in Planar
+Graphs<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#dense-distance-graphs"
+id="toc-dense-distance-graphs"><span
+class="toc-section-number">19.1</span> Dense Distance Graphs</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-dijkstra"
+id="toc-beating-dijkstra"><span class="toc-section-number">19.2</span>
+Beating Dijkstra</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-bellman-ford-nested-dissection"
+id="toc-beating-bellman-ford-nested-dissection"><span
+class="toc-section-number">19.3</span> Beating Bellman-Ford: Nested
+Dissection</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#aside-computing-spring-embeddings"
+id="toc-aside-computing-spring-embeddings"><span
+class="toc-section-number">19.4</span> Aside: Computing Spring
+Embeddings</a></li>
+<li><a href="19-fast-shortest-paths-in-planar-graphsbeta.html#repricing"
+id="toc-repricing"><span class="toc-section-number">19.5</span>
+Repricing</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#nested-dissection-revisited"
+id="toc-nested-dissection-revisited"><span
+class="toc-section-number">19.6</span> Nested Dissection
+Revisited</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#monge-arrays-and-smawk"
+id="toc-monge-arrays-and-smawk"><span
+class="toc-section-number">19.7</span> Monge arrays and SMAWK</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#planar-distance-matrices-are-almost-monge"
+id="toc-planar-distance-matrices-are-almost-monge"><span
+class="toc-section-number">19.8</span> Planar distance matrices are
+(almost) Monge</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#beating-nested-dissection"
+id="toc-beating-nested-dissection"><span
+class="toc-section-number">19.9</span> Beating Nested
+Dissection</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#references-11"
+id="toc-references-11"><span class="toc-section-number">19.10</span>
+References</a></li>
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#aptly-named-sir-not-2"
+id="toc-aptly-named-sir-not-2"><span
+class="toc-section-number">19.11</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="20-minimum-cutsbeta.html" id="toc-minimum-cutsbeta"><span
+class="toc-section-number">20</span> Minimum Cuts<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a href="20-minimum-cutsbeta.html#duality-shortest-essential-cycle"
+id="toc-duality-shortest-essential-cycle"><span
+class="toc-section-number">20.1</span> Duality: Shortest essential
+cycle</a></li>
+<li><a href="20-minimum-cutsbeta.html#crossing-at-most-once"
+id="toc-crossing-at-most-once"><span
+class="toc-section-number">20.2</span> Crossing at most once</a></li>
+<li><a href="20-minimum-cutsbeta.html#slicing-along-a-path"
+id="toc-slicing-along-a-path"><span
+class="toc-section-number">20.3</span> Slicing along a path</a></li>
+<li><a href="20-minimum-cutsbeta.html#algorithms"
+id="toc-algorithms"><span class="toc-section-number">20.4</span>
+Algorithms</a></li>
+<li><a
+href="20-minimum-cutsbeta.html#faster-shortest-paths-with-negative-lengths"
+id="toc-faster-shortest-paths-with-negative-lengths"><span
+class="toc-section-number">20.5</span> Faster Shortest Paths with
+Negative Lengths</a></li>
+<li><a href="20-minimum-cutsbeta.html#faster-minimum-cuts-fr-dijkstra"
+id="toc-faster-minimum-cuts-fr-dijkstra"><span
+class="toc-section-number">20.6</span> Faster Minimum Cuts:
+FR-Dijkstra</a></li>
+<li><a href="20-minimum-cutsbeta.html#references-12"
+id="toc-references-12"><span class="toc-section-number">20.7</span>
+References</a></li>
+<li><a href="20-minimum-cutsbeta.html#aptly-named-sir-not-3"
+id="toc-aptly-named-sir-not-3"><span
+class="toc-section-number">20.8</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html"
+id="toc-faster-minimum-cuts-fr-dijkstraalpha"><span
+class="toc-section-number">21</span> Faster Minimum Cuts
+(FR-Dijkstra)<span class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html#monge-heaps"
+id="toc-monge-heaps"><span class="toc-section-number">21.1</span> Monge
+Heaps</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#monge-structure-of-nice-r-divisions"
+id="toc-monge-structure-of-nice-r-divisions"><span
+class="toc-section-number">21.2</span> Monge structure of nice <span
+class="math inline">\(r\)</span>-divisions</a></li>
+<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html#fr-dijkstra"
+id="toc-fr-dijkstra"><span class="toc-section-number">21.3</span>
+FR-Dijkstra</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#back-to-minimum-cut"
+id="toc-back-to-minimum-cut"><span
+class="toc-section-number">21.4</span> Back to minimum cut</a></li>
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#aptly-named-sir-not-4"
+id="toc-aptly-named-sir-not-4"><span
+class="toc-section-number">21.5</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="22-distributive-flow-latticesvarnothing.html"
+id="toc-distributive-flow-latticesvarnothing"><span
+class="toc-section-number">22</span> Distributive Flow Lattices<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="22-distributive-flow-latticesvarnothing.html#pseudoflows-and-circulations"
+id="toc-pseudoflows-and-circulations"><span
+class="toc-section-number">22.1</span> Pseudoflows and
+Circulations</a></li>
+<li><a
+href="22-distributive-flow-latticesvarnothing.html#aptly-named-sir-not-5"
+id="toc-aptly-named-sir-not-5"><span
+class="toc-section-number">22.2</span> Aptly Named Sir Not</a></li>
+</ul></li>
+<li><a href="23-maximum-flowvarnothingalpha.html"
+id="toc-maximum-flowvarnothingalpha"><span
+class="toc-section-number">23</span> Maximum Flow<span
+class="math inline">\(^{\varnothing/\alpha}\)</span></a>
+<ul>
+<li><a href="23-maximum-flowvarnothingalpha.html#background"
+id="toc-background"><span class="toc-section-number">23.1</span>
+Background</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#planar-circulations"
+id="toc-planar-circulations"><span
+class="toc-section-number">23.2</span> Planar Circulations</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#feasible-planar-circulations-and-shortest-paths"
+id="toc-feasible-planar-circulations-and-shortest-paths"><span
+class="toc-section-number">23.3</span> Feasible Planar Circulations and
+Shortest Paths</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#our-first-planar-max-flow-algorithm"
+id="toc-our-first-planar-max-flow-algorithm"><span
+class="toc-section-number">23.4</span> Our First Planar Max-flow
+Algorithm</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#parametric-shortest-paths-1"
+id="toc-parametric-shortest-paths-1"><span
+class="toc-section-number">23.5</span> Parametric Shortest
+Paths</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#active-darts"
+id="toc-active-darts"><span class="toc-section-number">23.6</span>
+Active Darts</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#fast-pivots"
+id="toc-fast-pivots"><span class="toc-section-number">23.7</span> Fast
+Pivots</a></li>
+<li><a
+href="23-maximum-flowvarnothingalpha.html#universal-cover-analysis"
+id="toc-universal-cover-analysis"><span
+class="toc-section-number">23.8</span> Universal Cover Analysis</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#references-13"
+id="toc-references-13"><span class="toc-section-number">23.9</span>
+References</a></li>
+<li><a href="23-maximum-flowvarnothingalpha.html#aptly-not"
+id="toc-aptly-not"><span class="toc-section-number">23.10</span> Aptly
+Not</a></li>
+</ul></li>
+<li><a href="24-surface-mapsbeta.html" id="toc-surface-mapsbeta"><span
+class="toc-section-number">24</span> Surface Maps<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="24-surface-mapsbeta.html#surfaces-polygonal-schemata-and-cellular-embeddings"
+id="toc-surfaces-polygonal-schemata-and-cellular-embeddings"><span
+class="toc-section-number">24.1</span> Surfaces, Polygonal Schemata, and
+Cellular Embeddings</a></li>
+<li><a href="24-surface-mapsbeta.html#orientability"
+id="toc-orientability"><span class="toc-section-number">24.2</span>
+Orientability</a></li>
+<li><a href="24-surface-mapsbeta.html#band-decompositions"
+id="toc-band-decompositions"><span
+class="toc-section-number">24.3</span> Band Decompositions</a></li>
+<li><a href="24-surface-mapsbeta.html#reflection-systems"
+id="toc-reflection-systems"><span class="toc-section-number">24.4</span>
+Reflection Systems</a></li>
+<li><a href="24-surface-mapsbeta.html#equivalence"
+id="toc-equivalence"><span class="toc-section-number">24.5</span>
+Equivalence</a></li>
+<li><a href="24-surface-mapsbeta.html#duality-1"
+id="toc-duality-1"><span class="toc-section-number">24.6</span>
+Duality</a></li>
+<li><a
+href="24-surface-mapsbeta.html#loops-and-isthmuses-deletion-and-contraction"
+id="toc-loops-and-isthmuses-deletion-and-contraction"><span
+class="toc-section-number">24.7</span> Loops and Isthmuses; Deletion and
+Contraction</a></li>
+<li><a href="24-surface-mapsbeta.html#references-14"
+id="toc-references-14"><span class="toc-section-number">24.8</span>
+References</a></li>
+<li><a href="24-surface-mapsbeta.html#sir-not-appearing-1"
+id="toc-sir-not-appearing-1"><span
+class="toc-section-number">24.9</span> Sir Not Appearing</a></li>
+</ul></li>
+<li><a href="25-surface-classificationbeta.html"
+id="toc-surface-classificationbeta"><span
+class="toc-section-number">25</span> Surface Classification<span
+class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="25-surface-classificationbeta.html#tree-cotree-decompositions-and-systems-of-loops"
+id="toc-tree-cotree-decompositions-and-systems-of-loops"><span
+class="toc-section-number">25.1</span> Tree-Cotree Decompositions and
+Systems of Loops</a></li>
+<li><a href="25-surface-classificationbeta.html#handles"
+id="toc-handles"><span class="toc-section-number">25.2</span>
+Handles</a></li>
+<li><a href="25-surface-classificationbeta.html#twists"
+id="toc-twists"><span class="toc-section-number">25.3</span>
+Twists</a></li>
+<li><a href="25-surface-classificationbeta.html#dycks-surface"
+id="toc-dycks-surface"><span class="toc-section-number">25.4</span>
+Dyck’s Surface</a></li>
+<li><a
+href="25-surface-classificationbeta.html#canonical-polygonal-schemata"
+id="toc-canonical-polygonal-schemata"><span
+class="toc-section-number">25.5</span> Canonical Polygonal
+Schemata</a></li>
+<li><a href="25-surface-classificationbeta.html#oilers-formula"
+id="toc-oilers-formula"><span class="toc-section-number">25.6</span>
+“Oiler’s” Formula</a></li>
+<li><a href="25-surface-classificationbeta.html#references-15"
+id="toc-references-15"><span class="toc-section-number">25.7</span>
+References</a></li>
+<li><a href="25-surface-classificationbeta.html#aptly-named-sir"
+id="toc-aptly-named-sir"><span class="toc-section-number">25.8</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html"
+id="toc-homotopy-in-surface-mapsalpha"><span
+class="toc-section-number">26</span> Homotopy in Surface Maps<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#cut-graphs"
+id="toc-cut-graphs"><span class="toc-section-number">26.1</span> Cut
+Graphs</a></li>
+<li><a
+href="26-homotopy-in-surface-mapsalpha.html#systems-of-loops-and-homotopy"
+id="toc-systems-of-loops-and-homotopy"><span
+class="toc-section-number">26.2</span> Systems of Loops and
+Homotopy</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#whats-a-curve"
+id="toc-whats-a-curve"><span class="toc-section-number">26.3</span>
+What’s a “curve”?</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#spur-and-face-moves"
+id="toc-spur-and-face-moves"><span
+class="toc-section-number">26.4</span> Spur and Face Moves</a></li>
+<li><a
+href="26-homotopy-in-surface-mapsalpha.html#characterizing-homotopy"
+id="toc-characterizing-homotopy"><span
+class="toc-section-number">26.5</span> Characterizing Homotopy</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#references-16"
+id="toc-references-16"><span class="toc-section-number">26.6</span>
+References</a></li>
+<li><a href="26-homotopy-in-surface-mapsalpha.html#aptly-named-sir-1"
+id="toc-aptly-named-sir-1"><span class="toc-section-number">26.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="27-planarization-and-separationalphabeta.html"
+id="toc-planarization-and-separationalphabeta"><span
+class="toc-section-number">27</span> Planarization and Separation<span
+class="math inline">\(^{\alpha/\beta}\)</span></a>
+<ul>
+<li><a
+href="27-planarization-and-separationalphabeta.html#multiple-short-cycles"
+id="toc-multiple-short-cycles"><span
+class="toc-section-number">27.1</span> Multiple Short Cycles</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#slabification"
+id="toc-slabification"><span class="toc-section-number">27.2</span>
+Slabification</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#nice-r-divisions"
+id="toc-nice-r-divisions"><span class="toc-section-number">27.3</span>
+Nice <span class="math inline">\(r\)</span>-divisions</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#applications-1"
+id="toc-applications-1"><span class="toc-section-number">27.4</span>
+Applications</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#references-17"
+id="toc-references-17"><span class="toc-section-number">27.5</span>
+References</a></li>
+<li><a
+href="27-planarization-and-separationalphabeta.html#aptly-named-sir-2"
+id="toc-aptly-named-sir-2"><span class="toc-section-number">27.6</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html"
+id="toc-homotopy-testing-on-surface-mapsbeta"><span
+class="toc-section-number">28</span> Homotopy Testing on Surface
+Maps<span class="math inline">\(^\beta\)</span></a>
+<ul>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#reducing-to-a-system-of-loops"
+id="toc-reducing-to-a-system-of-loops"><span
+class="toc-section-number">28.1</span> Reducing to a System of
+Loops</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#universal-cover"
+id="toc-universal-cover"><span class="toc-section-number">28.2</span>
+Universal Cover</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#dehns-lemma"
+id="toc-dehns-lemma"><span class="toc-section-number">28.3</span> Dehn’s
+Lemma</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#dehns-algorithm"
+id="toc-dehns-algorithm"><span class="toc-section-number">28.4</span>
+Dehn’s algorithm!</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#system-of-quads"
+id="toc-system-of-quads"><span class="toc-section-number">28.5</span>
+System of quads</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#brackets"
+id="toc-brackets"><span class="toc-section-number">28.6</span>
+Brackets</a></li>
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#reduction-algorithm"
+id="toc-reduction-algorithm"><span
+class="toc-section-number">28.7</span> Reduction algorithm</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#references-18"
+id="toc-references-18"><span class="toc-section-number">28.8</span>
+References</a></li>
+<li><a href="28-homotopy-testing-on-surface-mapsbeta.html#sir-not"
+id="toc-sir-not"><span class="toc-section-number">28.9</span> Sir
+Not</a></li>
+</ul></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html"
+id="toc-systems-of-cycles-and-homologyalpha"><span
+class="toc-section-number">29</span> Systems of Cycles and Homology<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#cycles-and-boundaries"
+id="toc-cycles-and-boundaries"><span
+class="toc-section-number">29.1</span> Cycles and Boundaries</a></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html#homology"
+id="toc-homology"><span class="toc-section-number">29.2</span>
+Homology</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#relax-its-just-linear-algebra"
+id="toc-relax-its-just-linear-algebra"><span
+class="toc-section-number">29.3</span> Relax, it’s just linear
+algebra!</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#crossing-numbers"
+id="toc-crossing-numbers"><span class="toc-section-number">29.4</span>
+Crossing Numbers</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#systems-of-cocycles-and-cohomology"
+id="toc-systems-of-cocycles-and-cohomology"><span
+class="toc-section-number">29.5</span> Systems of Cocycles and
+Cohomology</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#homology-signatures"
+id="toc-homology-signatures"><span
+class="toc-section-number">29.6</span> Homology Signatures</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#separating-cycles"
+id="toc-separating-cycles"><span class="toc-section-number">29.7</span>
+Separating Cycles</a></li>
+<li><a href="29-systems-of-cycles-and-homologyalpha.html#references-19"
+id="toc-references-19"><span class="toc-section-number">29.8</span>
+References</a></li>
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#aptly-named-sir-3"
+id="toc-aptly-named-sir-3"><span class="toc-section-number">29.9</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html"
+id="toc-shortest-interesting-cyclesalpha"><span
+class="toc-section-number">30</span> Shortest Interesting Cycles<span
+class="math inline">\(^\alpha\)</span></a>
+<ul>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#properties-of-shortest-nontrivial-cycles"
+id="toc-properties-of-shortest-nontrivial-cycles"><span
+class="toc-section-number">30.1</span> Properties of Shortest Nontrivial
+Cycles</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#a-polynomial-time-algorithm"
+id="toc-a-polynomial-time-algorithm"><span
+class="toc-section-number">30.2</span> A polynomial-time
+algorithm</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#near-quadratic-time"
+id="toc-near-quadratic-time"><span
+class="toc-section-number">30.3</span> Near-quadratic time</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#multiple-source-shortest-paths"
+id="toc-multiple-source-shortest-paths"><span
+class="toc-section-number">30.4</span> Multiple-Source Shortest
+Paths</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#shortest-nonseparating-cycles-in-near-linear-time"
+id="toc-shortest-nonseparating-cycles-in-near-linear-time"><span
+class="toc-section-number">30.5</span> Shortest Nonseparating Cycles in
+Near-Linear Time</a></li>
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#shortest-noncontractible-cycles-in-near-linear-time-sketch"
+id="toc-shortest-noncontractible-cycles-in-near-linear-time-sketch"><span
+class="toc-section-number">30.6</span> Shortest Noncontractible Cycles
+in Near-Linear Time (sketch)</a></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html#references-20"
+id="toc-references-20"><span class="toc-section-number">30.7</span>
+References</a></li>
+<li><a href="30-shortest-interesting-cyclesalpha.html#aptly-named-sir-4"
+id="toc-aptly-named-sir-4"><span class="toc-section-number">30.8</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html"
+id="toc-surfaces-with-boundaryvarnothing"><span
+class="toc-section-number">31</span> Surfaces with Boundary<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#arcs-and-slicing"
+id="toc-arcs-and-slicing"><span class="toc-section-number">31.1</span>
+Arcs and Slicing</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#forest-cotree-decompositions"
+id="toc-forest-cotree-decompositions"><span
+class="toc-section-number">31.2</span> Forest-Cotree
+Decompositions</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#cut-graphs-and-systems-of-arcs"
+id="toc-cut-graphs-and-systems-of-arcs"><span
+class="toc-section-number">31.3</span> Cut Graphs and Systems of
+Arcs</a></li>
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#tree-coforest-decompositions-and-systems-of-coarcs"
+id="toc-tree-coforest-decompositions-and-systems-of-coarcs"><span
+class="toc-section-number">31.4</span> Tree-Coforest Decompositions and
+Systems of Coarcs</a></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#references-21"
+id="toc-references-21"><span class="toc-section-number">31.5</span>
+References</a></li>
+<li><a href="31-surfaces-with-boundaryvarnothing.html#aptly-named-sir-5"
+id="toc-aptly-named-sir-5"><span class="toc-section-number">31.6</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="32-minimum-cuts-in-surface-graphsvarnothing.html"
+id="toc-minimum-cuts-in-surface-graphsvarnothing"><span
+class="toc-section-number">32</span> Minimum Cuts in Surface Graphs<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#duality-with-even-subgraphs"
+id="toc-duality-with-even-subgraphs"><span
+class="toc-section-number">32.1</span> Duality with Even
+Subgraphs</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-homology-cover"
+id="toc-mathbbz_2-homology-cover"><span
+class="toc-section-number">32.2</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Homology Cover</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-minimal-cycles"
+id="toc-mathbbz_2-minimal-cycles"><span
+class="toc-section-number">32.3</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Minimal Cycles</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#mathbbz_2-minimal-even-subgraphs"
+id="toc-mathbbz_2-minimal-even-subgraphs"><span
+class="toc-section-number">32.4</span> <span
+class="math inline">\(\mathbb{Z}_2\)</span>-Minimal Even
+Subgraphs</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#np-hardness"
+id="toc-np-hardness"><span class="toc-section-number">32.5</span>
+NP-hardness (??)</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#references-22"
+id="toc-references-22"><span class="toc-section-number">32.6</span>
+References</a></li>
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#aptly-named-sir-6"
+id="toc-aptly-named-sir-6"><span class="toc-section-number">32.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="33-maximum-flows-in-surface-graphsvarnothing.html"
+id="toc-maximum-flows-in-surface-graphsvarnothing"><span
+class="toc-section-number">33</span> Maximum Flows in Surface
+Graphs<span class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#real-homology"
+id="toc-real-homology"><span class="toc-section-number">33.1</span> Real
+Homology</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#homologous-feasible-flows"
+id="toc-homologous-feasible-flows"><span
+class="toc-section-number">33.2</span> Homologous Feasible
+Flows</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#shortest-paths-with-negative-edges"
+id="toc-shortest-paths-with-negative-edges"><span
+class="toc-section-number">33.3</span> Shortest Paths with Negative
+Edges</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#ellipsoid-method-sketch"
+id="toc-ellipsoid-method-sketch"><span
+class="toc-section-number">33.4</span> Ellipsoid Method
+(Sketch)</a></li>
+<li><a href="33-maximum-flows-in-surface-graphsvarnothing.html#summary"
+id="toc-summary"><span class="toc-section-number">33.5</span>
+Summary</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#references-23"
+id="toc-references-23"><span class="toc-section-number">33.6</span>
+References</a></li>
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#aptly-named-sir-7"
+id="toc-aptly-named-sir-7"><span class="toc-section-number">33.7</span>
+Aptly Named Sir</a></li>
+</ul></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html"
+id="toc-geodesic-embeddingsvarnothing"><span
+class="toc-section-number">34</span> Geodesic Embeddings<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="34-geodesic-embeddingsvarnothing.html#flat-torus"
+id="toc-flat-torus"><span class="toc-section-number">34.1</span> Flat
+Torus</a></li>
+<li><a
+href="34-geodesic-embeddingsvarnothing.html#spring-embeddings-on-other-surfaces"
+id="toc-spring-embeddings-on-other-surfaces"><span
+class="toc-section-number">34.2</span> Spring Embeddings on Other
+Surfaces</a></li>
+<li><a
+href="34-geodesic-embeddingsvarnothing.html#circle-packing-on-other-surfaces"
+id="toc-circle-packing-on-other-surfaces"><span
+class="toc-section-number">34.3</span> Circle Packing on Other
+Surfaces</a></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html#references-24"
+id="toc-references-24"><span class="toc-section-number">34.4</span>
+References</a></li>
+<li><a href="34-geodesic-embeddingsvarnothing.html#named-sir-not"
+id="toc-named-sir-not"><span class="toc-section-number">34.5</span>
+Named Sir Not</a></li>
+</ul></li>
+<li><a href="35-closing-the-loopvarnothing.html"
+id="toc-closing-the-loopvarnothing"><span
+class="toc-section-number">35</span> Closing the Loop<span
+class="math inline">\(^\varnothing\)</span></a>
+<ul>
+<li><a href="35-closing-the-loopvarnothing.html#simple-polygons"
+id="toc-simple-polygons"><span class="toc-section-number">35.1</span>
+Simple Polygons</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#winding-numbers-1"
+id="toc-winding-numbers-1"><span class="toc-section-number">35.2</span>
+Winding Numbers</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#curve-homotopy"
+id="toc-curve-homotopy"><span class="toc-section-number">35.3</span>
+Curve Homotopy</a></li>
+<li><a
+href="35-closing-the-loopvarnothing.html#shortest-homotopic-paths-and-cycles"
+id="toc-shortest-homotopic-paths-and-cycles"><span
+class="toc-section-number">35.4</span> Shortest Homotopic Paths and
+Cycles</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#gauss-codes"
+id="toc-gauss-codes"><span class="toc-section-number">35.5</span> Gauss
+codes</a></li>
+<li><a
+href="35-closing-the-loopvarnothing.html#curve-invariants-and-simplification"
+id="toc-curve-invariants-and-simplification"><span
+class="toc-section-number">35.6</span> Curve Invariants and
+Simplification</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#geodesic-embeddings"
+id="toc-geodesic-embeddings"><span
+class="toc-section-number">35.7</span> Geodesic Embeddings</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#maxwellcremona"
+id="toc-maxwellcremona"><span class="toc-section-number">35.8</span>
+Maxwell–Cremona</a></li>
+<li><a href="35-closing-the-loopvarnothing.html#references-25"
+id="toc-references-25"><span class="toc-section-number">35.9</span>
+References</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="16"
+id="multiple-source-shortest-paths-revisitedalpha"><span
+class="header-section-number">16</span> Multiple-Source Shortest Paths,
+Revisited<span class="math inline">\(^\alpha\)</span></h1>
+<p>In a recent breakthrough, Das, Kipouridis, Probst Gutenberg, and
+Wulff-Nilsen described an alternative algorithm that solves the planar
+multiple-source shortest path problem using a relatively simple
+divide-and-conquer strategy. Their algorithm theoretically runs in <span
+class="math inline">\(O(n\log h)\)</span> time, where <span
+class="math inline">\(h\)</span> is the number of vertices on the outer
+face, which improves the <span class="math inline">\(O(n\log n)\)</span>
+time of Klein’s algorithm when <span class="math inline">\(h\)</span> is
+small. Moreover, this running time is worst-case optimal as a function
+of both <span class="math inline">\(n\)</span> and <span
+class="math inline">\(h\)</span>.</p>
+<p>A better expression for the running time is <span
+class="math inline">\(O(S(n)\log h)\)</span>, where <span
+class="math inline">\(S(n)\)</span> is the time to compute a
+single-source shortest path tree.</p>
+<ul>
+<li>If we use Dijkstra’s algorithm off the shelf, the running time is
+<span class="math inline">\(O(n\log n \log h)\)</span>.</li>
+<li>If we use the <span class="math inline">\(O(n\log\log
+n)\)</span>-time algorithm that we will see in Lecture 15,<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> the
+running time is <span class="math inline">\(O(n\log h\log\log
+n)\)</span>.</li>
+<li>If we use the <span class="math inline">\(O(n)\)</span>-time
+algorithm of Henzinger et al.,<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a> the running time is the
+optimal <span class="math inline">\(O(n\log h)\)</span>.</li>
+</ul>
+<p>The new algorithm is simpler in the sense that it uses only black-box
+shortest-path algorithms, completely avoiding complex dynamic forest
+data structures that are inefficient in practice, at least for small
+graphs.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> On the other hand, the new algorithm
+requires a subtle divide-and-conquer algorithm with weighted <span
+class="math inline">\(r\)</span>-divisions, which is <em>also</em>
+inefficient in practice, to achieve its best possible running time <span
+class="math inline">\(O(n\log h)\)</span>. On the gripping hand, Klein’s
+algorithm has been observed to require a sublinear number of pivots for
+many inputs, so the <span class="math inline">\(O(n\log n)\)</span> time
+bound, while tight in the worst case, is usually conservative; whereas,
+the <span class="math inline">\(O(n\log h)\)</span> time bound for the
+new algorithm is tight for <em>all</em> inputs. It would be interesting
+to experimentally compare Klein (or CCE) using linear-time dynamic trees
+against the new algorithm using Dijkstra as a black box.</p>
+<h2 data-number="16.1" id="problem-formulation"><span
+class="header-section-number">16.1</span> Problem formulation</h2>
+<p>It will be convenient to describe the inputs and outputs of the MSSP
+problem slightly differently than in the previous lecture.</p>
+<p>The input consists primarily of a <em>directed</em> planar map <span
+class="math inline">\(\Sigma = (V, E, F)\)</span> with a distinguished
+outer face <span class="math inline">\(o\)</span> and a non-negative
+weight <span class="math inline">\(\ell(u\mathord\to v)\)</span> for
+every directed edge/dart <span class="math inline">\(u\mathord\to
+v\)</span>, which could be infinite (to indicate that a directed edge is
+missing from the graph). The weights are not necessarily symmetric; we
+allow <span class="math inline">\(\ell(u\mathord\to v) \ne
+\ell(v\mathord\to u)\)</span>.</p>
+<p>Let <span class="math inline">\(s_0, s_1, \dots, s_{h-1}\)</span> be
+any subsequence of <span class="math inline">\(h\)</span> vertices in
+counterclockwise order around the outer face, and let <span
+class="math inline">\(S = \{s_0, s_1, \dots, s_{h-1}\}\)</span>. Our
+goal is to compute an implicit representation of the shortest paths from
+each source <span class="math inline">\(s_i\)</span> to every original
+vertex of <span class="math inline">\(\Sigma\)</span>. See Figure 1.</p>
+<p>For ease of presentation, I will make a few minor technical
+assumptions:</p>
+<ul>
+<li>Every source vertex <span class="math inline">\(s_i\in S\)</span>
+has out-degree <span class="math inline">\(1\)</span> and in-degree
+<span class="math inline">\(0\)</span>. We can enforce this assumption
+if necessary by adding a new artificial source vertex <span
+class="math inline">\(s&#39;_i\)</span> and a single directed edge <span
+class="math inline">\(s&#39;_i \mathord\to s_i\)</span> with weight
+<span class="math inline">\(0\)</span>.</li>
+<li><span class="math inline">\(\Sigma\)</span> is simple. We can
+enforce this condition if necessary by resolving parallel edges and
+deleting loops in <span class="math inline">\(O(n)\)</span> time using
+hashing.<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></li>
+<li>The graph of <span class="math inline">\(\Sigma \setminus S\)</span>
+is strongly connected. Thus, the shortest path tree rooted at each
+source vertex <span class="math inline">\(s_i\)</span> includes every
+non-source vertex. We can enforce this assumption if necessary by adding
+new infinite-weight edges.</li>
+<li>All shortest paths are unique. If necessary, we can enforce this
+assumption either by randomly perturbing the edge weights or by choosing
+leftmost shortest paths, just as in the previous lecture.</li>
+</ul>
+<figure>
+<img src="Fig/planar-mssp-setup.png" style="width:30.0%"
+alt="Setup for the recursive MSSP algorithm." />
+<figcaption aria-hidden="true">Setup for the recursive MSSP
+algorithm.</figcaption>
+</figure>
+<p>For any index <span class="math inline">\(j\)</span> and any vertex
+<span class="math inline">\(v\)</span>, let <span
+class="math inline">\(\mathit{path}_j(v)\)</span> denote the shortest
+path in <span class="math inline">\(\Sigma\)</span> from <span
+class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>, let <span
+class="math inline">\(\mathit{dist}_j(v)\)</span> denote the length of
+this shortest path, and let <span
+class="math inline">\(\mathit{pred}_j(v)\)</span> denote the predecessor
+of <span class="math inline">\(v\)</span> in this shortest path.</p>
+<p>The main recursive algorithm <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> preprocesses the map
+<span class="math inline">\(\Sigma\)</span> into a data structure that
+implicitly encodes the single-source shortest path trees rooted at every
+source <span class="math inline">\(s_j\)</span>. A separate query
+algorithm <span class="math inline">\(\textsf{MSSP-Query}(s_j,
+v)\)</span> returns <span
+class="math inline">\(\mathit{dist}_j(v)\)</span>.</p>
+<h2 data-number="16.2" id="overview"><span
+class="header-section-number">16.2</span> Overview</h2>
+<p>The preprocessing algorithm uses a divide-and conquer-strategy. The
+input to each recursive call <span
+class="math inline">\(\textsf{MSSP-Prep}(H, i, k)\)</span> consists of
+the following:</p>
+<ul>
+<li>A planar map <span class="math inline">\(H\)</span>, which is a
+simple weighted minor of the top-level input map <span
+class="math inline">\(\Sigma\)</span>.</li>
+<li>Two indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span>. To simplify presentation, we
+implicitly assume that <span class="math inline">\(s_i, s_{i+1}, \dots,
+s_k\)</span> are the only source vertices in <span
+class="math inline">\(H\)</span>.</li>
+</ul>
+<p>For each index <span class="math inline">\(j\)</span>, let <span
+class="math inline">\(T_j\)</span> denote the tree of shortest paths in
+<span class="math inline">\(H\)</span> from <span
+class="math inline">\(s_j\)</span> to every other vertex of <span
+class="math inline">\(H\)</span>. The recursive call <span
+class="math inline">\(\textsf{MSSP-Prep}(H, i, k)\)</span> computes an
+implicit representation of all <span
+class="math inline">\(k-i+1\)</span> shortest path trees <span
+class="math inline">\(T_1, T_{i+1}, \dots, T_k\)</span>. The top-level
+call is <span class="math inline">\(\textsf{MSSP-Prep}(\Sigma, 0,
+h-1)\)</span>.</p>
+<p><span class="math inline">\(\textsf{MSSP-Prep}\)</span> invokes a
+subroutine <span class="math inline">\(\textsf{Filter}(H, i, k)\)</span>
+that behaves as follows:</p>
+<ul>
+<li>Compute the shortest path trees <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> rooted at <span
+class="math inline">\(s_i\)</span> and <span
+class="math inline">\(s_k\)</span>.</li>
+<li>Identify directed edges that are shared by all shortest path trees
+<span class="math inline">\(T_j\)</span> with <span
+class="math inline">\(i\le j\le k\)</span>.</li>
+<li>Contract shared edges and update nearby weights to maintain shortest
+path distances.</li>
+<li>Return the resulting contracted planar map.</li>
+</ul>
+<p>Finally, ignoring base cases for now, <span
+class="math inline">\(\textsf{MSSP-Prep}(H,i,k)\)</span> has four
+steps:</p>
+<ul>
+<li>Set <span class="math inline">\(H’ \gets \textsf{Filter}(H, i,
+k)\)</span>.</li>
+<li>Set <span class="math inline">\(j \gets \lfloor (i+k)/2
+\rfloor\)</span>.</li>
+<li>Recursively call <span class="math inline">\(\textsf{MSSP-Prep}(H’,
+i, j)\)</span>.</li>
+<li>Recursively call <span class="math inline">\(\textsf{MSSP-Prep}(H’,
+j, k)\)</span>.</li>
+</ul>
+<p>Finally, <span
+class="math inline">\(\textsf{MSSP-Prep}(H,i,k)\)</span> returns a
+record storing the following information:</p>
+<ul>
+<li>the indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span></li>
+<li>data about each vertex in <span class="math inline">\(H\)</span>
+computed by <span class="math inline">\(\textsf{Filter}\)</span></li>
+<li>pointers to the records returned by the recursive calls</li>
+</ul>
+<p>Said differently, <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> returns a data
+structure that mirrors its binary recursion tree; every record in this
+data structure stores information computed by one invocation of <span
+class="math inline">\(\textsf{Filter}\)</span>.</p>
+<p>The time and space analysis of <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> hinges on the
+observation that the total size of all minors <span
+class="math inline">\(H\)</span> at each level of the resulting
+recursion tree is only <span class="math inline">\(O(n)\)</span>. The
+depth of the recursion tree is <span class="math inline">\(O(\log
+h)\)</span>, so the total size of the data structure is <span
+class="math inline">\(O(n\log h)\)</span>. Similarly, aside from
+recursive calls, the time for each subproblem with <span
+class="math inline">\(m\)</span> vertices is <span
+class="math inline">\(O(S(m))\)</span>, so the overall running time is
+<span class="math inline">\(O(S(n)\log h)\)</span>.</p>
+<p>Finally, the query algorithm recovers the shortest-path distance from
+any source <span class="math inline">\(s_j\)</span> to any vertex <span
+class="math inline">\(v\)</span> by traversing the recursion tree of
+<span class="math inline">\(\textsf{MSSP-Prep}\)</span> in <span
+class="math inline">\(O(\log h)\)</span> time.</p>
+<p>In the rest of this note, I’ll consider each of the component
+algorithms in more detail.</p>
+<h2 data-number="16.3" id="properly-shared-edges"><span
+class="header-section-number">16.3</span> Properly shared edges</h2>
+<p>Now I’ll describe the filtering algorithm <span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> in more detail.
+For any index <span class="math inline">\(j\)</span> and any vertex
+<span class="math inline">\(v\)</span>, define the following:</p>
+<ul>
+<li><span class="math inline">\(T_j\)</span> is the shortest-path tree
+in <span class="math inline">\(H\)</span> rooted at source vertex <span
+class="math inline">\(s_j\)</span>.</li>
+<li><span class="math inline">\(\mathit{dist}_j(v)\)</span> is the
+shortest-path distance in <span class="math inline">\(H\)</span> from
+<span class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>.</li>
+<li><span class="math inline">\(\mathit{pred}_j(v)\)</span> is the
+predecessor of <span class="math inline">\(v\)</span> on the shortest
+path in <span class="math inline">\(H\)</span> from <span
+class="math inline">\(s_j\)</span> to <span
+class="math inline">\(v\)</span>.</li>
+</ul>
+<p>Our filtering algorithm <span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> begins by
+computing the distances <span
+class="math inline">\(\mathit{dist}_i(v)\)</span> and <span
+class="math inline">\(\mathit{dist}_k(v)\)</span> and predecessors <span
+class="math inline">\(\mathit{pred}_i(v)\)</span> and <span
+class="math inline">\(\mathit{pred}_k(v)\)</span> for every vertex <span
+class="math inline">\(v\)</span>, using two invocations of your favorite
+shortest-path algorithm. The algorithm also initializes two variables
+for every vertex <span class="math inline">\(v\)</span>, which will
+eventually be used by the query algorithm:</p>
+<ul>
+<li>A <em>representative</em> vertex <span
+class="math inline">\(\mathit{rep}(v)\)</span>, initially equal to <span
+class="math inline">\(v\)</span>.</li>
+<li>A non-negative real <em>offset</em> <span
+class="math inline">\(\mathit{off}(v)\)</span>, initially equal to <span
+class="math inline">\(0\)</span>.</li>
+</ul>
+<p>Call any directed edge <span class="math inline">\(u \mathord\to
+v\)</span> <em>properly shared</em> by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> if it satisfies the following
+recursive conditions:</p>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_i(v) = \mathit{pred}_k(v)
+= u\)</span>; in other words, <span class="math inline">\(u \mathord\to
+v\)</span> is an edge in both <span class="math inline">\(T_i\)</span>
+and <span class="math inline">\(T_k\)</span>.</li>
+<li>If <span class="math inline">\(\mathit{pred}_i(u) =
+\mathit{pred}_k(u)\)</span>, then the edge <span
+class="math inline">\(\mathit{pred}_i(u)\mathord\to u\)</span> is
+properly shared.</li>
+<li>Otherwise, vertices <span
+class="math inline">\(\mathit{pred}_i(u)\)</span>, <span
+class="math inline">\(v\)</span>, <span
+class="math inline">\(\mathit{pred}_k(u)\)</span> are ordered clockwise
+around <span class="math inline">\(u\)</span>.</li>
+</ul>
+<p>We say that a properly shared edge <span class="math inline">\(u
+\mathord\to v\)</span> is <em>exposed</em> if <span
+class="math inline">\(\mathit{pred}_i(u) \ne
+\mathit{pred}_k(u)\)</span>. For example, in Figure 2, both heavy black
+edges on the left are properly shared, but only the lower edge is
+exposed; the heavy black edges on the right are not properly shared.</p>
+<figure>
+<img src="Fig/planar-mssp-two-paths.png" style="width:60.0%"
+alt="Shortest paths that share two edges. Left: Properly shared. Right: Improperly shared." />
+<figcaption aria-hidden="true">Shortest paths that share two edges.
+Left: Properly shared. Right: Improperly shared.</figcaption>
+</figure>
+<figure>
+<img src="Fig/planar-mssp-two-trees.png" style="width:90.0%"
+alt="Two shortest path trees with five properly shared edges, four of which are exposed." />
+<figcaption aria-hidden="true">Two shortest path trees with five
+properly shared edges, four of which are exposed.</figcaption>
+</figure>
+<p><strong>Lemma:</strong> <em>If <span
+class="math inline">\(u\mathord\to v\)</span> is properly shared by
+<span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>, then <span
+class="math inline">\(\mathit{pred}_j(v) = u\)</span> for all <span
+class="math inline">\(i\le j\le k\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+First suppose <span class="math inline">\(u\mathord\to v\)</span> is
+properly shared and exposed. Let <span
+class="math inline">\(\gamma\)</span> be a simple closed curve obtained
+by concatenating <span
+class="math inline">\(\mathit{path}_k(u)\)</span>, the reversal of <span
+class="math inline">\(\mathit{path}_i(u)\)</span>, and a simple path
+from <span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(s_k\)</span> through the outer face. (The shaded
+yellow region Figure 2 is the interior of <span
+class="math inline">\(\gamma\)</span>.) Each source vertex <span
+class="math inline">\(s_j\)</span> is inside <span
+class="math inline">\(\gamma\)</span>, and <span
+class="math inline">\(v\)</span> is outside <span
+class="math inline">\(\gamma\)</span>. So the Jordan curve theorem
+implies that <span class="math inline">\(\mathit{path}_j(v)\)</span>
+must cross <span class="math inline">\(\gamma\)</span>. Uniqueness of
+shortest paths implies that <span
+class="math inline">\(\mathit{path}_j(v)\)</span> cannot cross either
+<span class="math inline">\(\mathit{path}_i(v)\)</span> or <span
+class="math inline">\(\mathit{path}_k(v)\)</span>. It follows that <span
+class="math inline">\(\mathit{path}_j(v)\)</span> must contain <span
+class="math inline">\(u\)</span>, and thus <span
+class="math inline">\(\mathit{pred}_j(v) = u\)</span>.
+</dd>
+<dd>
+<p>Now suppose <span class="math inline">\(u\mathord\to v\)</span> is
+properly shared but not exposed. Let <span
+class="math inline">\(p\)</span> be the first vertex on <span
+class="math inline">\(\mathit{path}_i(v)\)</span> that is also in <span
+class="math inline">\(\mathit{path}_k(v)\)</span>, and let <span
+class="math inline">\(p\mathord\to q\)</span> be the first edge on the
+shortest path from <span class="math inline">\(p\)</span> to <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(H\)</span>. Our recursive definitions imply that
+<span class="math inline">\(p\mathord\to q\)</span> is properly shared
+and exposed, so by the previous paragraph, for any index <span
+class="math inline">\(j\)</span>, we have <span
+class="math inline">\(\mathit{pred}_j(q) = p\)</span> for all <span
+class="math inline">\(i\le j\le k\)</span>. It follows that <span
+class="math inline">\(T_j\)</span> contains the entire shortest path
+from <span class="math inline">\(p\)</span> to <span
+class="math inline">\(v\)</span>, and in particular, the edge <span
+class="math inline">\(u\mathord\to v\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The converse of the previous lemma is not necessarily true; it is
+possible for <span class="math inline">\(\mathit{pred}_j(v) = u\)</span>
+for every index <span class="math inline">\(j\)</span> even though <span
+class="math inline">\(u\mathord\to v\)</span> is not properly shared.
+Consider the reversed shortest path tree <span
+class="math inline">\(\overline{T}_v\)</span> rooted at <span
+class="math inline">\(v\)</span>. Let <span
+class="math inline">\(s_l\)</span> and <span
+class="math inline">\(s_r\)</span> be the leftmost and rightmost source
+vertices in the subtree of <span
+class="math inline">\(\overline{T}_v\)</span> rooted at <span
+class="math inline">\(u\)</span>. If this subtree contains
+<em>every</em> source vertex <span class="math inline">\(s_j\)</span>,
+then <span class="math inline">\(l = r+1 \bmod h\)</span>; intuitively,
+the subtree wraps around <span class="math inline">\(u\mathord\to
+v\)</span> and meets itself at the boundary. See Figure 4 for an
+example. Edges of this form are <em>not</em> detected by the filtering
+algorithm.</p>
+<figure>
+<img src="Fig/mssp-improper.png" style="width:30.0%"
+alt="The black edge is shared by all shortest-path trees, but not properly shared by T_i and T_k." />
+<figcaption aria-hidden="true">The black edge is shared by all
+shortest-path trees, but not properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>.</figcaption>
+</figure>
+<p>Let <span class="math inline">\(m\)</span> denote the number of
+vertices in <span class="math inline">\(H\)</span>. We can identify all
+properly shared edges in <span class="math inline">\(H\)</span> in <span
+class="math inline">\(O(m)\)</span> time using a preorder traversal of
+either <span class="math inline">\(T_i\)</span> or <span
+class="math inline">\(T_k\)</span>. In particular, we can find all
+<em>exposed</em> edges leaving vertex <span
+class="math inline">\(u\)</span> in <span
+class="math inline">\(\deg(u)\)</span> time by visiting the darts into
+<span class="math inline">\(u\)</span> in clockwise order—following the
+successor permutation—from <span
+class="math inline">\(\mathit{pred}_i(u)\mathord\to u\)</span> to <span
+class="math inline">\(\mathit{pred}_k(u)\mathord\to u\)</span>.</p>
+<h2 data-number="16.4" id="contraction"><span
+class="header-section-number">16.4</span> Contraction</h2>
+<p>The main work of the filtering algorithm is <em>contracting</em>
+properly shared edges so that they need not be passed to recursive
+subproblems. Intuitively, we contract the edge <span
+class="math inline">\(u\mathord\to v\)</span> into its tail <span
+class="math inline">\(u\)</span>, changing the tail of each directed
+edge <span class="math inline">\(v\mathord\to w\)</span> from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(u\)</span>. Here are the steps in detail:</p>
+<ul>
+<li>Set <span class="math inline">\(\mathit{rep}(v) \gets
+u\)</span></li>
+<li>Set <span class="math inline">\(\mathit{off}(v) \gets
+\ell(u\mathord\to v)\)</span></li>
+<li>For every edge <span class="math inline">\(w\mathord\to v\)</span>:
+<ul>
+<li>Set <span class="math inline">\(\ell(w\mathord\to v) \gets
+\infty\)</span></li>
+</ul></li>
+<li>For every edge <span class="math inline">\(v\mathord\to w\)</span>:
+<ul>
+<li>Set <span class="math inline">\(\ell(v\mathord\to w) \gets
+\mathit{off}(v) + \ell(v\mathord\to w)\)</span></li>
+<li>If <span class="math inline">\(\mathit{pred}_i(w)=v\)</span>, set
+<span class="math inline">\(\mathit{pred}_i(w)\gets u\)</span></li>
+<li>If <span class="math inline">\(\mathit{pred}_k(w)=v\)</span>, set
+<span class="math inline">\(\mathit{pred}_k(w)\gets u\)</span></li>
+</ul></li>
+<li>Contract <span class="math inline">\(uv\)</span> to <span
+class="math inline">\(u\)</span></li>
+</ul>
+<p>The actual edge-contraction (in the second-to-last step) merges the
+successor permutations of <span class="math inline">\(u\)</span> and
+<span class="math inline">\(v\)</span> in <span
+class="math inline">\(O(1)\)</span> time, as described in Lecture
+10.</p>
+<figure>
+<img src="Fig/planar-mssp-contraction.png" style="width:65.0%"
+alt="Contracting an exposed properly shared dart." />
+<figcaption aria-hidden="true">Contracting an exposed properly shared
+dart.</figcaption>
+</figure>
+<figure>
+<img src="Fig/mssp-contract.png" style="width:60.0%"
+alt="Edge weights before and after contraction and cleanup" />
+<figcaption aria-hidden="true">Edge weights before and after contraction
+and cleanup</figcaption>
+</figure>
+<p>If <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span> have any common neighbors, contracting
+<span class="math inline">\(v\)</span> into <span
+class="math inline">\(u\)</span> creates parallel edges, which we must
+resolve before passing the contracted map to <span
+class="math inline">\(\textsf{MSSP-prep}\)</span>. After all properly
+shared edges are contracted, we perform a global cleanup that identifies
+and resolves all families of parallel edges. Specifically, for each pair
+of neighboring vertices <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span> in the contracted map, we choose on
+edge <span class="math inline">\(e\)</span> between <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span>, change the dart weights of <span
+class="math inline">\(e\)</span> to match the lightest darts <span
+class="math inline">\(u\mathord\to v\)</span> and <span
+class="math inline">\(v\mathord\to u\)</span>, and then delete all other
+edges between <span class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span>. If we use hashing to recognize and
+collect parallel edges, the entire cleanup phase takes linear time.<a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a></p>
+<p>Contracting <span class="math inline">\(u\mathord\to v\)</span>
+preserves the shortest-path distance from every source <span
+class="math inline">\(s_j\)</span> to every other vertex (except the
+contracted vertex <span class="math inline">\(v\)</span>). Moreover, for
+every source vertex <span class="math inline">\(s_j\)</span> and every
+vertex <span class="math inline">\(w\)</span> in the original map <span
+class="math inline">\(H\)</span> <em>including <span
+class="math inline">\(v\)</span></em>, contraction also maintains the
+following invariant, which allows us to recover shortest-path distances
+during the query algorithm. Let <span
+class="math inline">\(\mathit{dist}_j(w)\)</span> denote the
+shortest-path distance from <span class="math inline">\(s_j\)</span> to
+<span class="math inline">\(w\)</span> in the original map <span
+class="math inline">\(H\)</span>, and let <span
+class="math inline">\(\mathit{dist}’_j(w)\)</span> denote the
+corresponding distance in the current contracted map.</p>
+<p><strong>Key Invariant:</strong> <em>For every vertex <span
+class="math inline">\(w\)</span> of <span
+class="math inline">\(H\)</span> and for every index <span
+class="math inline">\(j\)</span> such that <span
+class="math inline">\(i\le j\le k\)</span>, we have <span
+class="math inline">\(\mathit{dist}_j(w) =
+\mathit{dist}’_j(\mathit{rep}(w)) + \mathit{off}(w)\)</span>.</em></p>
+<p>When <span class="math inline">\(\textsf{Filter}\)</span> begins, we
+have <span class="math inline">\(\mathit{dist}_j(w) =
+\mathit{dist}’_j(w)\)</span> and <span
+class="math inline">\(\mathit{rep}(w) = w\)</span> and <span
+class="math inline">\(\mathit{off}(w)=0\)</span>, so the Key Invariant
+holds trivially.</p>
+<p>We contract properly shared edges in the same order they were
+discovered, following a preorder traversal of <span
+class="math inline">\(T_i\)</span>. This contraction order conveniently
+guarantees that we only contract <em>exposed</em> edges; contracting one
+exposed edge <span class="math inline">\(u \mathord\to v\)</span>
+transforms each properly shared edge leaving <span
+class="math inline">\(v\)</span> into an <em>exposed</em> properly
+shared edge leaving <span class="math inline">\(u\)</span>. This
+contraction order also guarantees that after contracting <span
+class="math inline">\(u\mathord\to v\)</span>, no edge into <span
+class="math inline">\(u\)</span> will ever be contracted. It follows
+that we change the tail of each edge (and therefore the predecessors of
+each vertex) at most once, and the Key Invariant is maintained. We
+conclude:</p>
+<p><strong>Lemma:</strong> <em><span
+class="math inline">\(\textsf{Filter}(H, i, k)\)</span> identifies and
+contracts all properly shared edges in <span
+class="math inline">\(H\)</span> in <span class="math inline">\(O(S(m) +
+m)\)</span> time, where <span class="math inline">\(m = |V(H)|\)</span>.
+Moreover, after <span class="math inline">\(\textsf{Filter}(H, i,
+k)\)</span> ends, the Key Invariant holds.</em></p>
+<figure>
+<img src="Fig/planar-mssp-recursion.png" style="width:90.0%"
+alt="Contracting all properly shared directed edges and recursing." />
+<figcaption aria-hidden="true">Contracting all properly shared directed
+edges and recursing.</figcaption>
+</figure>
+<figure>
+<img src="Fig/planar-mssp-recursion-tree.png" style="width:100.0%"
+alt="Recursive subproblems after contraction become more and more birdlike." />
+<figcaption aria-hidden="true">Recursive subproblems after contraction
+become more and more birdlike.</figcaption>
+</figure>
+<h2 data-number="16.5" id="distance-queries"><span
+class="header-section-number">16.5</span> Distance Queries</h2>
+<p>Each call to <span
+class="math inline">\(\textsf{Filter}(H,i,k)\)</span> creates a record
+storing the following information:</p>
+<ul>
+<li>indices <span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span></li>
+<li>for each vertex <span class="math inline">\(v\)</span> of the input
+map <span class="math inline">\(H\)</span>:<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+<ul>
+<li>shortest-path distances <span
+class="math inline">\(\mathit{dist}_i(v)\)</span> and <span
+class="math inline">\(\mathit{dist}_k(v)\)</span></li>
+<li>the representative vertex <span
+class="math inline">\(\mathit{rep}(v)\)</span></li>
+<li>the offset <span
+class="math inline">\(\mathit{off}(v)\)</span>.</li>
+</ul></li>
+</ul>
+<p>The recursive calls to <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> assemble these records
+into a binary tree, mirroring the tree of recursive calls, connected by
+<span class="math inline">\(\mathit{left}\)</span> and <span
+class="math inline">\(\mathit{right}\)</span> pointers.</p>
+<p>The query algorithm <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec},j,v)\)</span>
+takes as input a recursive-call record <span
+class="math inline">\(\mathit{Rec}\)</span>, a source index <span
+class="math inline">\(j\)</span>, and a vertex <span
+class="math inline">\(v\)</span>, satisfying two conditions:</p>
+<ul>
+<li><span class="math inline">\(\mathit{Rec}.i \le j\le
+\mathit{Rec}.k\)</span></li>
+<li><span class="math inline">\(v\)</span> is a vertex of the input map
+<span class="math inline">\(H\)</span> to the recursive call to <span
+class="math inline">\(\textsf{MSSP-Prep}\)</span> that created <span
+class="math inline">\(\mathit{Rec}\)</span>.</li>
+</ul>
+<p>The output of <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec},j,v)\)</span> is
+the shortest-path distance from <span class="math inline">\(s_j\)</span>
+to <span class="math inline">\(v\)</span> in <span
+class="math inline">\(\Sigma\)</span>. The query algorithm follows
+straightforwardly from the Key Invariant:</p>
+<ul>
+<li>if <span class="math inline">\(j=i\)</span>, return <span
+class="math inline">\(\mathit{Rec}.\mathit{dist}_i[v]\)</span></li>
+<li>else if <span class="math inline">\(j=k\)</span>, return <span
+class="math inline">\(\mathit{Rec}.\mathit{dist}_k[v]\)</span></li>
+<li>else if <span class="math inline">\(j \le
+\mathit{Rec}.\mathit{left}.k\)</span>, return <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec}.\mathit{left}, j,
+\mathit{Rec}.\mathit{rep}[v]) +
+\mathit{Rec}.\mathit{off}[v]\)</span></li>
+<li>else return <span
+class="math inline">\(\textsf{MSSP-query}(\mathit{Rec}.\mathit{righ}, j,
+\mathit{Rec}.\mathit{rep}[v]) +
+\mathit{Rec}\mathord.\mathit{off}[v]\)</span></li>
+</ul>
+<p>Because the recursion tree has depth <span
+class="math inline">\(O(\log h)\)</span>, the query algorithm runs in
+<span class="math inline">\(O(\log h)\)</span> time.</p>
+<h2 data-number="16.6" id="space-and-time-analysis"><span
+class="header-section-number">16.6</span> Space and Time Analysis</h2>
+<p>It remains only to bound the size of our data structure and the
+running time of <span class="math inline">\(\textsf{MSSP-Prep}\)</span>.
+The key claim is that the total size of all input maps at any level of
+the recursion tree is <span class="math inline">\(O(n)\)</span>.</p>
+<p><strong>Contraction sharing lemma:</strong> <em>Contracting one
+properly shared edge neither creates nor destroys other properly shared
+edges.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix a map <span class="math inline">\(H\)</span> and source indices
+<span class="math inline">\(i\)</span> and <span
+class="math inline">\(k\)</span>. Let <span
+class="math inline">\(u\mathord\to v\)</span> be an edge in <span
+class="math inline">\(H\)</span> that is properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>. Let <span class="math inline">\(H’ =
+H / u{\to}v\)</span>, with dart weights adjusted as described above, and
+let <span class="math inline">\(T’_i\)</span> and <span
+class="math inline">\(T’_k\)</span> denote the shortest path trees
+rooted at <span class="math inline">\(s_i\)</span> and <span
+class="math inline">\(s_k\)</span> in <span
+class="math inline">\(H’\)</span>.
+</dd>
+<dd>
+<p>First, because contraction preserves shortest paths, we can easily
+verify that <span class="math inline">\(T’_i = T_i / u{\to}v\)</span>
+and <span class="math inline">\(T’_k = T_k / u{\to}v\)</span>. It
+follows that an edge in <span class="math inline">\(H\)</span> is shared
+by <span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span> if and only if the corresponding edge
+in <span class="math inline">\(H’\)</span> is shared by <span
+class="math inline">\(T’_i\)</span> and <span
+class="math inline">\(T’_k\)</span>.</p>
+</dd>
+<dd>
+<p>Now consider any edge <span class="math inline">\(x{\to}y \in T_i
+\cap T_k\)</span> that is not <span
+class="math inline">\(u{\to}v\)</span>. We must have <span
+class="math inline">\(y\ne v\)</span>, because each vertex has only one
+predecessor in any shortest-path tree. Let <span
+class="math inline">\(w\)</span> be the first node on the shortest path
+from <span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(x\)</span> in <span
+class="math inline">\(H\)</span> that is also on the shortest path from
+<span class="math inline">\(s_k\)</span> to <span
+class="math inline">\(x\)</span>, so the entire shortest path from <span
+class="math inline">\(w\)</span> to <span
+class="math inline">\(y\)</span> is shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>. Consider three paths:</p>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\alpha =\)</span> the shortest path from
+<span class="math inline">\(s_i\)</span> to <span
+class="math inline">\(w\)</span></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\beta =\)</span> the reverse of the
+shortest path from <span class="math inline">\(w\)</span> to <span
+class="math inline">\(y\)</span></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\gamma =\)</span> the shortest path from
+<span class="math inline">\(s_k\)</span> to <span
+class="math inline">\(w\)</span></li>
+</ul>
+</dd>
+<dd>
+<p>Then <span class="math inline">\(x{\to}y\)</span> is properly shared
+if and only if (the last edges of) <span
+class="math inline">\(\alpha\)</span>, <span
+class="math inline">\(\beta\)</span>, and <span
+class="math inline">\(\gamma\)</span> are incident to <span
+class="math inline">\(w\)</span> in clockwise order. The definition of
+properly shared implies <span class="math inline">\(v=w\)</span>, so
+<span class="math inline">\(w\)</span> is also a vertex in <span
+class="math inline">\(H’\)</span>. Contracting <span
+class="math inline">\(u{\to}v\)</span> might shorten one of the three
+paths to <span class="math inline">\(w\)</span>, but it cannot change
+their cyclic order around <span class="math inline">\(w\)</span>. We
+conclude that <span class="math inline">\(x{\to}y\)</span> is properly
+shared in <span class="math inline">\(H\)</span> if and only if <span
+class="math inline">\(x{\to}y\)</span> (or <span
+class="math inline">\(u{\to}y\)</span> if <span
+class="math inline">\(x=v\)</span>) is properly shared in <span
+class="math inline">\(H’\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>The contraction sharing lemma implies by induction that every call to
+<span class="math inline">\(\textsf{Filter}(H, i, k)\)</span> outputs
+the same contracted map as <span
+class="math inline">\(\textsf{Filter}(\Sigma, i, k)\)</span>. In
+particular, an edge <span class="math inline">\(u\mathord\to v\)</span>
+in <span class="math inline">\(H\)</span> is properly shared by two
+shortest-oath trees in <span class="math inline">\(H\)</span> if and
+only if the corresponding edge in <span
+class="math inline">\(\Sigma\)</span> (which may have a different tail
+vertex) is properly shared by the corresponding trees in <span
+class="math inline">\(\Sigma\)</span>. So from now on, “properly shared”
+always implies “in the top level map <span
+class="math inline">\(\Sigma\)</span>”.</p>
+<p><strong>Corollary:</strong> <em>For all indices <span
+class="math inline">\(i\le i’&lt;k’\le k\)</span>, if <span
+class="math inline">\(u{\to}v\)</span> is properly shared by <span
+class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>, then <span
+class="math inline">\(u{\to}v\)</span> is properly shared by <span
+class="math inline">\(T_{i’}\)</span> and <span
+class="math inline">\(T_{k’}\)</span>.</em></p>
+<p><strong>Corollary:</strong> <em>The vertices of <span
+class="math inline">\(\textsf{Filter}(\Sigma, i, k)\)</span> are
+precisely the vertices <span class="math inline">\(v\)</span> such that
+no edge into <span class="math inline">\(v\)</span> is properly shared
+by <span class="math inline">\(T_i\)</span> and <span
+class="math inline">\(T_k\)</span>.</em></p>
+<p>Fix any vertex <span class="math inline">\(v\)</span> of <span
+class="math inline">\(\Sigma\)</span>. We call an index <span
+class="math inline">\(j\)</span> <em>interesting</em> if <span
+class="math inline">\(\mathit{pred}_j(v)\mathord\to v\)</span> is
+<em>not</em> properly shared by <span class="math inline">\(T_j\)</span>
+and <span class="math inline">\(T_{j+1}\)</span>.</p>
+<p><strong>Lemma:</strong> <em>Every vertex <span
+class="math inline">\(v\)</span> of <span
+class="math inline">\(\Sigma\)</span> has at most <span
+class="math inline">\(\deg(v)\)</span> indices.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Equivalently, <span class="math inline">\(j\)</span> is interesting to
+<span class="math inline">\(v\)</span> if either of the following
+conditions holds:
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_j(v) \ne
+\mathit{pred}_{j+1}(v)\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li><span class="math inline">\(\mathit{pred}_0(v) = \mathit{pred}_1(v)
+= \cdots = \mathit{pred}_{h-1}(v) = u\)</span> and the paths <span
+class="math inline">\(\mathit{path}_j(u)\)</span> and <span
+class="math inline">\(\mathit{path}_{j+1}(u)\)</span> “wrap around”
+<span class="math inline">\(u \mathord\to v\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<p>The Disk-Tree Lemma implies that the first condition holds for at
+most <span class="math inline">\(\deg(v)\)</span> indices <span
+class="math inline">\(j\)</span>. If the first condition never holds
+(that is, if <span class="math inline">\(\mathit{pred}_j(v)\)</span> is
+the same for index <span class="math inline">\(j\)</span>), then the
+second condition holds for exactly one index <span
+class="math inline">\(j\)</span>; otherwise the second condition never
+holds. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p><strong>Lemma:</strong> <em>Each vertex <span
+class="math inline">\(v\)</span> appears in at most <span
+class="math inline">\(2\deg(v)\)</span> subproblems at each level of the
+recursion tree.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The children <span
+class="math inline">\(\mathit{Rec}.\mathit{left}\)</span> and <span
+class="math inline">\(\mathit{Rec}.\mathit{right}\)</span> of any
+recursion record <span class="math inline">\(\mathit{Rec}\)</span> store
+information about <span class="math inline">\(v\)</span> and if and only
+if at least one index <span class="math inline">\(j\)</span> such that
+<span class="math inline">\(\mathit{Rec}.i\le j\le
+\mathit{Rec}.k\)</span> is interesting to <span
+class="math inline">\(v\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Theorem:</strong> <em><span
+class="math inline">\(\textsf{MSSP-Prep}(\Sigma, 0, h-1)\)</span> builds
+a data structure of size <span class="math inline">\(O(n\log h)\)</span>
+in <span class="math inline">\(O(S(n)\log h)\)</span> time.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The total number of vertices in all subproblems at the same level of the
+recursion tree is at most <span class="math inline">\(\sum_v 2\deg(v)
+\le 4\cdot|E(\Sigma)| \le 4(3n-6) = 12n-24\)</span> by Euler’s formula,
+since <span class="math inline">\(\Sigma\)</span> is a simple planar
+map. Each recursion record uses <span
+class="math inline">\(O(1)\)</span> space per vertex, so the total space
+used at any level is <span class="math inline">\(O(n)\)</span>.
+Similarly, the time spent in any subproblem is at most <span
+class="math inline">\(O(S(n)/n)\)</span> per vertex, so the total time
+spent in each level of the recursion tree is <span
+class="math inline">\(O(S(n))\)</span>.
+</dd>
+<dd>
+<p>Finally, the recursion tree has <span class="math inline">\(O(\log
+h)\)</span> levels. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<h2 data-number="16.7" id="references-9"><span
+class="header-section-number">16.7</span> References</h2>
+<ol type="1">
+<li><p>Debarati Das, Evangelos Kipouridis, Maximilian Probst Gutenberg,
+and Christian Wulff-Nilsen. <a
+href="https://doi.org/10.1137/1.9781611977066.1">A simple algorithm for
+multiple-source shortest paths in planar digraphs</a>. <em>Proc. 5th
+Symp. Simplicity in Algorithms</em>, 1–11, 2022.</p></li>
+<li><p>David Eisenstat. <a
+href="https://cs.brown.edu/research/pubs/theses/phd/2014/eisenstat.pdf"><em>Toward
+Practical Planar Graph Algorithms</em></a>. Ph.D. thesis, Comput. Sci.
+Dept., Brown Univ., May 2014.</p></li>
+<li><p>Jacob Holm, Giuseppe F. Italiano, Adam Karczmarz, Jakub Łącki,
+Eva Rotenberg, and Piotr Sankowski. <a
+href="http://doi.org/10.4230/LIPIcs.ESA.2017.50">Contracting a planar
+graph efficiently</a>. <em>Proc. 25th Ann. Europ. Symp. Algorithms</em>,
+50:1–50:15, 2017. Leibniz Int. Proc. Informatics 87, Schloss
+Dagstuhl–Leibniz-Zentrum für Informatik. arXiv:<a
+href="https://arxiv.org/abs/1706.10228">1706.10228</a>.</p></li>
+<li><p>Frank Kammer and Johannes Meintrup. <a
+href="http://doi.org/10.48550/ARXIV.2301.10564">Succinct planar encoding
+with minor operations</a>. Preprint, January 2023. arXiv:<a
+href="https://arxiv.org/abs/2301.10564">2301.10564</a>.</p></li>
+<li><p>Robert E. Tarjan and Renato F. Werneck. <a
+href="http://doi.org/10.1145/1498698.1594231">Dynamic trees in
+practice</a>. <em>J. Exper. Algorithmics</em> 14:5:1–5:21,
+2009.</p></li>
+<li><p>Renato Werneck. <a
+href="https://www.cs.princeton.edu/research/techreps/TR-750-06"><em>Design
+and Analysis of Data Structures for Dynamic Trees</em></a>.
+Ph.D. thesis, Dept. Comput. Sci., Princeton Univ., April 2006. Tech.
+Rep. TR-750-06.</p></li>
+</ol>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The <span class="math inline">\(O(n\log\log
+n)\)</span>-time shortest-path algorithm from Lecture 15 uses the
+<em>parametric</em> MSSP algorithm from the previous lecture as a
+subroutine. If we instead recursively apply the recursive MSSP strategy
+described in this lecture, the resulting doubly-recursive MSSP algorithm
+runs in <span class="math inline">\(O(n\log h\,\log\log n\,\log\log\log
+n\,\log\log\log\log n\dots)\)</span> time.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This <span class="math inline">\(O(n)\)</span>-time
+shortest-path algorithm does <em>not</em> use MSSP as a subroutine.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>David Eisenstat [2] implemented Chambers, Cabello, and
+Erickson’s MSSP algorithm using both efficient dynamic trees and
+brute-force to find pivots. His experimental evaluation showed that the
+brute-force implementation was faster in practice for graphs with up to
+200000 vertices.
+<!-- Hoch and Wang performed a similar comparison with my planar maximum-flow algorithm; for planar graphs with up to 12000 vertices, they observed that the brute-force implementation is fastest. -->
+More generally, in a large-scale experimental comparison of several
+dynamic-forest data structures by Tarjan and Werneck [6, 7], brute-force
+implementation beat all other data structures for trees with depth less
+than 1000.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The algorithms I describe in this note use hashing in
+multiple places. It is possible to achieve the same running time without
+hashing, at the expense of simplicity (and probably some efficiency).<a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Efficiently maintaining a <em>simple</em> planar graph
+under arbitrary edge contractions is surprisingly subtle; see Holm et al
+[2] and Kammer and Meintrup [3]. For this MSSP algorithm, it suffices to
+resolve only <em>adjacent</em> parallel edges and delete <em>empty</em>
+loops immediately after each contraction in <span
+class="math inline">\(O(1)\)</span> time per deleted edge using only
+standard graph data structures. The resulting planar map is no longer
+necessarily simple, but every face has degree at least <span
+class="math inline">\(3\)</span>, which is good enough.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>To keep the space usage low, we store this vertex
+information in four hash tables, each of size linear in the number of
+vertices of <span class="math inline">\(H\)</span>. Alternatively, we
+can avoid hash tables by compacting the incidence-list structure of
+<span class="math inline">\(H’\)</span> during the cleanup phase of
+<span class="math inline">\(\textsf{Filter}\)</span>, and storing the
+index in the filtered map <span class="math inline">\(H’\)</span> of
+each vertex of the input map <span class="math inline">\(H\)</span>.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
