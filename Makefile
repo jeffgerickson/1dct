@@ -29,7 +29,7 @@ PANDOC_PDF_OPTIONS=--default-image-extension=pdf
 
 PANDOC_EPUB_OPTIONS=--to epub3
 
-PANDOC_BOOK_OPTIONS=--top-level-division=chapter --toc --toc-depth=2 -Vtoc
+PANDOC_BOOK_OPTIONS=--top-level-division=chapter --toc --toc-depth=2
 
 
 #
