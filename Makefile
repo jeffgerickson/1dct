@@ -70,7 +70,6 @@ bookpdf : ${SOURCE_DOCS}
 books: bookhtml bookpdf
 
 
-
 # clean:
 #	- $(RM) $(OUTPUT_DOCS)
 	
