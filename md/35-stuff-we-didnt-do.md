@@ -69,7 +69,7 @@ In principle, given an unsigned Gauss code $x$ and a surface $\mathcal{S}$ (spec
 
 ### Non-planar Frameworks in the Plane {-}
 
-Let $\Sigma$ be an orientable surface map---that is, a graph $G$ together with a rotation system $\textsf{succ}$---with positive genus.  (The underlying graph $G$ might be planar!)  Any position function $p\colon V(\Sigma) \to \mathbb{R}^2$ induces a straight-line drawing of $G$ in the plane.  I will call the pair $(G,p)$ a _framework_ and (for lack of better standard terminology) the pair $(\Sigma, p)$ an _ordered framework_.  The _displacement_ of any dart $u{\to}v$ in $G$ with respect to $p$ is the vector $\Delta(u{to}v) = p(v)-p(u)$.  The dual graph $G^*$ is the underlying graph of the dual surface map $\Sigma^*$.
+Let $\Sigma$ be an orientable surface map---that is, a graph $G$ together with a rotation system $\textsf{succ}$---with positive genus.  (The underlying graph $G$ might be planar!)  Any position function $p\colon V(\Sigma) \to \mathbb{R}^2$ induces a straight-line drawing of $G$ in the plane.  I will call the pair $(G,p)$ a _framework_ and (for lack of better standard terminology) the pair $(\Sigma, p)$ an _ordered framework_.  The _displacement_ of any dart $u{\to}v$ in $G$ with respect to $p$ is the vector $\Delta(u{\to}v) = p(v)-p(u)$.  The dual graph $G^*$ is the underlying graph of the dual surface map $\Sigma^*$.
 
 The definitions of non-zero, strict, and equilibrium stresses and closed and exact 1-forms all generalize directly from the setting where $\Sigma$ is a planar map.
 
@@ -82,13 +82,7 @@ Not every equilibrium stress on a framework induces a reciprocal framework.  Fir
 **Theorem:**
 _An equilibrium stress $\omega$ for an ordered framework $(\Sigma,p)$ induces a reciprocal framework $(\Sigma^*, p^*)$ if and only if $\omega$ is a reciprocal stress for $(\Sigma,p)$.  Conversely, any reciprocal framework $(\Sigma^*,p^*)$ defines a unique reciprocal stress $\omega$ for $(\Sigma, p)$._
 
-Notice that this theorem describes restrictions on both the stress $\omega$ and the rotation system defining $\Sigma$.  The same stress $\omega$ can be reciprocal for some rotations systems but not others.
-
-### The Petrie Cube(?) {-}
-
-As a simple example of a non-planar ordered framework, consider the _Petrie cube_.  The Petrie cube is a map of the torus with eight vertices, twelve edges, and four hexagonal faces, whose underlying graph is identical to the graph of the cube.  Each face of the Petrie cube is bounded by the cycle obtained by deleting two opposite vertices of the cube graph.  Equivalently, the Petrie cube is the map obtained from the standard cube by reversing the rotation system at four independent vertices.
-
-Unfortunately, the only way to establish a reciprocal stress on a planar drawing of the Petrie cube is to collapse each pair of opposite vertices to a single point.  Let $p,q,r,s$ be any four points in the plane.  We can draw the Petrie cube with one pair of opposite faces at each of these points, two coincident edges between each pair of those points, and with faces $pqrpqr$, $prsprs$, $psqpsq$, and $srqsrq$.  The reciprocal drawing also looks like a tetrahedron with doubled edges, but now with two copies of each triangular face, and with degenerate hexagons as vertex figures.  The dual map of the Petrie cube is the _Petrie octahedron_, whose underlying graph is the same as the Platonic octahedron, but whose faces are hexagons bouncing back and forth between pairs of parallel faces.
+Notice that this theorem describes restrictions on both the stress $\omega$ and the rotation system defining $\Sigma$.  The same stress $\omega$ can be reciprocal for some rotation systems but not others.
 
 ### Polyhedral Lifts of Non-planar Frameworks {-}
 
