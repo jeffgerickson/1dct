@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Surface Classification^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="26-homotopy-in-surface-mapsalpha.html" accesskey="n" rel="next">Homotopy in Surface Maps<span class="math inline">\(^\alpha\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="24-surface-mapsbeta.html" accesskey="p" rel="previous">Surface Maps<span class="math inline">\(^\beta\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="25" id="surface-classificationbeta"><span
+class="header-section-number">25</span> Surface Classification<span
+class="math inline">\(^\beta\)</span></h1>
+<p>In this lecture, we will prove that up to homeomorphism, surfaces are
+uniquely identified by two pieces of data: their <em>genus</em> and
+their <em>orientability</em>.</p>
+<ul>
+<li><p>The <em>genus</em> of a surface <span
+class="math inline">\(\mathcal{S}\)</span> is the maximum number of
+simple disjoint cycles that can be deleted without disconnecting the
+surface.</p></li>
+<li><p>A surface <span class="math inline">\(\mathcal{S}\)</span> is
+<em>orientable</em> if it does not contain a subspace homeomorphic to a
+Möbius band.</p></li>
+</ul>
+<p>A difficult theorem of Kerékjártó (1923) and Rado (1925) states that
+every compact 2-manifold is the underlying surface of some map.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> In light of this result, it suffices
+to consider an arbitrary surface <em>map</em> <span
+class="math inline">\(\Sigma\)</span>, represented by a reflection
+system, and argue that the underlying surface of <span
+class="math inline">\(\Sigma\)</span> is determined by its genus and
+orientability. By assumption all surface maps are connected.</p>
+<p>For any vertex <span class="math inline">\(v\)</span>, edge <span
+class="math inline">\(e\)</span>, or face <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(\Sigma\)</span>, let <span
+class="math inline">\(v^\square\)</span>, <span
+class="math inline">\(e^\square\)</span>, or <span
+class="math inline">\(f^\square\)</span> denote the corresponding face
+of the band decomposition <span
+class="math inline">\(\Sigma^\square\)</span>.</p>
+<h2 data-number="25.1"
+id="tree-cotree-decompositions-and-systems-of-loops"><span
+class="header-section-number">25.1</span> Tree-Cotree Decompositions and
+Systems of Loops</h2>
+<p>A <em>tree-cotree decomposition</em> of a surface map <span
+class="math inline">\(\Sigma\)</span> is a partition of the edges <span
+class="math inline">\(E = T\sqcup L\sqcup C\)</span>, where <span
+class="math inline">\(T\)</span> is a spanning tree of <span
+class="math inline">\(\Sigma\)</span>, <span
+class="math inline">\(C^*\)</span> is a spanning tree of the dual map
+<span class="math inline">\(\Sigma^*\)</span>, and <span
+class="math inline">\(L = E\setminus (C\cup T)\)</span> is the set of
+<em>leftover</em> edges.</p>
+<p>Because <span class="math inline">\(\Sigma\)</span> is connected,
+<span class="math inline">\(\Sigma\)</span> has a spanning tree <span
+class="math inline">\(T\)</span>, and we can contract all edges in <span
+class="math inline">\(T\)</span> to obtain a single-vertex map <span
+class="math inline">\(\Sigma \mathbin/ T\)</span>. The dual map <span
+class="math inline">\((\Sigma \mathbin/ T)^*\)</span> is also connected,
+so it has a spanning tree <span class="math inline">\(C\)</span>; we can
+delete the corresponding primal edges <span
+class="math inline">\(C^*\)</span> to obtain a map <span
+class="math inline">\(\Sigma \mathbin/ T \setminus C\)</span> that has
+one vertex, one face, and zero or more edges. Thus, every surface map
+has a tree-cotree decomposition.</p>
+<p>When <span class="math inline">\(\Sigma\)</span> is a planar (or
+spherical) map, every tree-cotree decomposition has <span
+class="math inline">\(L = \varnothing\)</span>. Tree-cotree
+decompositions were first studied for orientable surface maps by Norman
+Biggs and for arbitrary surface maps by Bruce Richter and Herbert Shank;
+however, David Eppstein was apparently the first to call the three-way
+edge partition <span class="math inline">\((T,L,C)\)</span> a
+“tree-cotree decomposition”.</p>
+<p>We call any map with a single vertex and a single face a <em>system
+of loops</em>. Trivially, every edge in a system of loops is both a loop
+(incident to only one vertex) and an isthmus (incident to only one
+face). Because contraction and deletion do not change the underlying
+surface of a map, the Kerékjártó-Rado theorem implies that every surface
+supports a system of loops. Thus, for purposes of proving the surface
+classification theorem, we can assume without loss of generality that
+<strong>the original map <span class="math inline">\(\Sigma\)</span> is
+a system of loops.</strong></p>
+<p>For any edge <span class="math inline">\(e\)</span> in a system of
+loops, the union <span class="math inline">\(e^\square \cup
+v^\square\)</span> is either a Möbius band or an annulus. If <span
+class="math inline">\(e^\square \cup v^\square\)</span> is an Möbius
+band, we call <span class="math inline">\(e\)</span> a
+<em>one-sided</em> loop; otherwise, <span
+class="math inline">\(e\)</span> is a <em>two-sided</em> loop.</p>
+<h2 data-number="25.2" id="handles"><span
+class="header-section-number">25.2</span> Handles</h2>
+<p>A <em>handle</em> in a surface <span
+class="math inline">\(\mathcal{S}\)</span> is an annulus <span
+class="math inline">\(A\)</span> whose complement <span
+class="math inline">\(\mathcal{S}\setminus A\)</span> is connected. The
+Jordan curve theorem implies that the sphere has no handles, but this
+theorem does not extend to other surfaces. To detach the handle, we
+delete it from <span class="math inline">\(\mathcal{S}\)</span> and glue
+disks to the two resulting boundary circles, as shown in the figure
+below.</p>
+<figure>
+<img src="Fig/add-handle2.png" style="width:75.0%"
+alt="Detaching or attaching a handle." />
+<figcaption aria-hidden="true">Detaching or attaching a
+handle.</figcaption>
+</figure>
+<p>Now suppose our system of loops <span
+class="math inline">\(\Sigma\)</span> is orientable, or equivalently,
+that every loop in <span class="math inline">\(\Sigma\)</span> is
+two-sided. Let <span class="math inline">\(e\)</span> be any loop in
+<span class="math inline">\(\Sigma\)</span>, and let <span
+class="math inline">\(v\)</span> be its only vertex. Then the band
+decomposition <span class="math inline">\(\Sigma^\square\)</span>
+contains a handle <span class="math inline">\(H_e\)</span>, composed of
+<span class="math inline">\(e^\square\)</span> and the rectangle in
+<span class="math inline">\(v^\square\)</span> connecting the four
+vertices of <span class="math inline">\(e^\square\)</span>; see Figure 2
+below.</p>
+<p>The two endpoints of <span class="math inline">\(e\)</span> cannot be
+adjacent around <span class="math inline">\(v\)</span>, because then
+<span class="math inline">\(e\)</span> would be the boundary of an empty
+loop on one side and another face on the other, contradicting the facet
+that <span class="math inline">\(\Sigma\)</span> has only one face.</p>
+<p>Normally, we are not allowed to contract loops, but for the sake of
+argument, consider the map <span class="math inline">\(\Sigma \mathbin/
+e\)</span> obtained by contracting <span
+class="math inline">\(e\)</span> using the usual formula for contraction
+in a reflection system. If <span class="math inline">\((\Phi, a, b,
+c)\)</span> is a reflection system for <span
+class="math inline">\(\Sigma\)</span>, then <span
+class="math inline">\((\Phi\setminus e, a, b\mathbin/ e, c)\)</span> is
+a reflection system for <span class="math inline">\(\Sigma \mathbin/
+e\)</span>, where for any dart <span class="math inline">\(\phi \in
+\Phi\setminus e\)</span>, <span class="math display">\[
+    (b\mathbin/ e)(\phi) :=
+    \begin{cases}
+        \mathit{b a b a b}(\phi)\quad{}
+                    &amp; \text{if~ $b(\phi) \in e$
+                            ~and~ $\mathit{b c b}(\phi) \in e$} \\
+        \mathit{b a b}(\phi)
+                    &amp; \text{if~ $b(\phi) \in e$} \\
+        b(\phi)         &amp; \text{otherwise}
+    \end{cases}
+\]</span> Combinatorially, contracting <span
+class="math inline">\(e\)</span> splits its sole endpoint <span
+class="math inline">\(v\)</span> of <span
+class="math inline">\(e\)</span> into two vertices, each incident to the
+darts that enter <span class="math inline">\(v\)</span> from one side or
+the other of <span class="math inline">\(e\)</span>. (This
+counterintuitive behavior is exactly why we normally forbid contracting
+loops.) Topologically, the contraction detaches the handle <span
+class="math inline">\(H_e\)</span>. The resulting map <span
+class="math inline">\(\Sigma\mathbin/ e\)</span> has two vertices but
+still only one face.</p>
+<figure>
+<img src="Fig/band-contract-2sided-loop.png" style="width:75.0%"
+alt="Detaching a handle by contracting a two-sided loop." />
+<figcaption aria-hidden="true">Detaching a handle by contracting a
+two-sided loop.</figcaption>
+</figure>
+<p>Symmetrically, because <span class="math inline">\(e\)</span> is also
+an isthmus, <em>deleting</em> <span class="math inline">\(e\)</span>
+also detaches a handle in the band decomposition, this time consisting
+of <span class="math inline">\(e^\square\)</span> and a rectangle inside
+<span class="math inline">\(f^\square\)</span>. The resulting map <span
+class="math inline">\(\Sigma\setminus e\)</span> has two faces but still
+only one vertex.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every orientable surface can be reduced to a sphere by detaching
+zero or more handles.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\Sigma\)</span> be any system of loops
+on an orientable surface <span
+class="math inline">\(\mathcal{S}\)</span>. If <span
+class="math inline">\(\Sigma\)</span> has no edges, then <span
+class="math inline">\(\mathcal{S}\)</span> is the sphere. Otherwise, let
+<span class="math inline">\(e\)</span> be any loop in <span
+class="math inline">\(\Sigma\)</span>. Contracting <span
+class="math inline">\(e\)</span> detaches a handle from <span
+class="math inline">\(\mathcal{S}\)</span> and leaves a map <span
+class="math inline">\(\Sigma\mathbin/ e\)</span> with two vertices and
+one face. <span class="math inline">\(\Sigma\mathbin/ e\)</span> must
+contain an edge <span class="math inline">\(e’\)</span> between its two
+vertices; otherwise, <span class="math inline">\(\Sigma\mathbin/
+e\)</span> would be disconnected and thus have more than one face. The
+map <span class="math inline">\(\Sigma\mathbin/ e \setminus e’\)</span>
+is a smaller system of loops. By the inductive hypothesis, the
+underlying surface of <span class="math inline">\(\Sigma\mathbin/ e
+\setminus e’\)</span> can be reduced to a sphere by detaching handles.
+<span class="math inline">\(\qquad\square\)</span>.
+</dd>
+</dl>
+<p>This theorem is more commonly stated in terms of <em>attaching</em>
+handles. For any integer <span class="math inline">\(g\ge 0\)</span>,
+let <span class="math inline">\(\mathcal{S}(g, 0)\)</span> denote the
+surface obtained from the sphere by attaching <span
+class="math inline">\(g\)</span> handles. For example, <span
+class="math inline">\(\mathcal{S}(0, 0)\)</span> is the sphere and <span
+class="math inline">\(\mathcal{S}(1, 0)\)</span> is the torus. Up to
+homeomorphism, it does not matter where or in what order the handles are
+attached, as long as they are attached in a way that preserves the
+orientability of the surface (as shown in Figure 1).</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every orientable surface is homeomorphic to <span
+class="math inline">\(\mathcal{S}(g, 0)\)</span> for some integer <span
+class="math inline">\(g\ge 0\)</span>.</em>
+</dd>
+</dl>
+<p>The integer <span class="math inline">\(g\)</span> is called the
+<em>genus</em> of the surface <span class="math inline">\(\mathcal{S}(g,
+0)\)</span>, or the genus of any map on that surface.</p>
+<h2 data-number="25.3" id="twists"><span
+class="header-section-number">25.3</span> Twists</h2>
+<p>A <em>twist</em> in a surface <span
+class="math inline">\(\mathcal{S}\)</span> is any subspace <span
+class="math inline">\(M\subset\mathcal{S}\)</span> homeomorphic to a
+Möbius band. Because <span class="math inline">\(M\)</span> has only one
+boundary edge, the complement <span
+class="math inline">\(\mathcal{S}\setminus M\)</span> is always
+connected. To detach the twist, we delete it from <span
+class="math inline">\(\mathcal{S}\)</span> and glue a disk to the
+resulting boundary circle, as shown in the figure below. (Here I am
+drawing the Möbius band as a self-intersecting surface called a
+<em>cross-cap</em>, whose boundary is a standard circle, instead of the
+usual embedding as a twisted paper strip.)</p>
+<figure>
+<img src="Fig/add-mobius.png" style="width:75.0%"
+alt="Detaching or attaching a twist." />
+<figcaption aria-hidden="true">Detaching or attaching a
+twist.</figcaption>
+</figure>
+<p>Now suppose our system of loops <span
+class="math inline">\(\Sigma\)</span> is non-orientable, or
+equivalently, that <span class="math inline">\(\Sigma\)</span> contains
+at least one one-sided loop. Let <span class="math inline">\(e\)</span>
+be any one-sided loop in <span class="math inline">\(\Sigma\)</span>.
+Then the band decomposition <span
+class="math inline">\(\Sigma^\square\)</span> contains a twist <span
+class="math inline">\(M_e\)</span>, composed of <span
+class="math inline">\(e^\square\)</span> and the rectangle in <span
+class="math inline">\(v^\square\)</span> connecting the four vertices of
+<span class="math inline">\(e^\square\)</span>; see Figure 4 below. In
+this case, the two endpoints of <span class="math inline">\(e\)</span>
+<em>can</em> be adjacent around <span
+class="math inline">\(v\)</span>.</p>
+<figure>
+<img src="Fig/band-contract-1sided-loop.png" style="width:75.0%"
+alt="Detaching a handle by contracting a one-sided loop." />
+<figcaption aria-hidden="true">Detaching a handle by contracting a
+one-sided loop.</figcaption>
+</figure>
+<p>Once again, consider the map <span class="math inline">\(\Sigma
+\setminus e\)</span> obtained by contracting <span
+class="math inline">\(e\)</span> using the usual formula for contraction
+in a reflection system. Combinatorially, contracting <span
+class="math inline">\(e\)</span> reverses the cyclic order of the
+incoming darts on one side of <span class="math inline">\(e\)</span>.
+(If the darts of <span class="math inline">\(e\)</span> are adjacent
+around <span class="math inline">\(v\)</span>, then all other darts into
+<span class="math inline">\(v\)</span> are on the same side of <span
+class="math inline">\(e\)</span>, so nothing gets reversed.)
+Topologically, the contraction detaches the twist <span
+class="math inline">\(M_e\)</span>. The resulting map <span
+class="math inline">\(\Sigma\mathbin/ e\)</span> is still a system of
+loops.</p>
+<p>Symmetrically, because <span class="math inline">\(e\)</span> is also
+an isthmus, <em>deleting</em> <span class="math inline">\(e\)</span>
+also detaches a twist in the band decomposition, this time consisting of
+<span class="math inline">\(e^\square\)</span> and a rectangle inside
+<span class="math inline">\(f^\square\)</span>. The resulting map <span
+class="math inline">\(\Sigma\setminus e\)</span> is actually isomorphic
+(not just homeomorphic!) to <span class="math inline">\(\Sigma\mathbin/
+e\)</span>.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every surface can be reduced to a sphere by detaching zero or more
+twists, and then detaching zero or more handles.</em>
+</dd>
+</dl>
+<p>For any integers <span class="math inline">\(g\ge 0\)</span> and
+<span class="math inline">\(h\ge 0\)</span>, let <span
+class="math inline">\(\mathcal{S}(g, h)\)</span> denote the surface
+obtained from the sphere by attaching <span
+class="math inline">\(g\)</span> handles and <span
+class="math inline">\(h\)</span> twists. Up to homeomorphism, it does
+not matter where or in what order the handles and twists are attached.
+In particular, if <span class="math inline">\(h&gt;0\)</span>, we can
+even attach <em>disorienting</em> handles that destroy the orientability
+of the surface. The surface <span class="math inline">\(\mathcal{S}(g,
+h)\)</span> is orientable if and only if <span
+class="math inline">\(h=0\)</span>.</p>
+<figure>
+<img src="Fig/add-twisted-handle.png" style="width:75.0%"
+alt="Detaching or attaching a disorienting handle." />
+<figcaption aria-hidden="true">Detaching or attaching a disorienting
+handle.</figcaption>
+</figure>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every non-orientable surface is homeomorphic to <span
+class="math inline">\(\mathcal{S}(g, h)\)</span> for some integers <span
+class="math inline">\(g\ge 0\)</span> and <span class="math inline">\(h
+&gt; 0\)</span>.</em>
+</dd>
+</dl>
+<h2 data-number="25.4" id="dycks-surface"><span
+class="header-section-number">25.4</span> Dyck’s Surface</h2>
+<p>Our classification of surfaces into classes <span
+class="math inline">\(\mathcal{S}(g, h)\)</span> is not yet complete,
+because the same non-orientable surface can have multiple
+classifications, depending on the order in which we contract one-sided
+loops.</p>
+<p>Consider the following example, called <em>Dyck’s surface</em> after
+its discoverer Walter von Dyck (1888).<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Let
+<span class="math inline">\(\Sigma\)</span> be a system of three
+one-sided loops <span class="math inline">\(x, y, z\)</span> incident to
+the unique vertex in the order <span class="math inline">\(x, y, x, z,
+y, z\)</span>. Contracting <span class="math inline">\(y\)</span> gives
+us an orientable system of loops on the torus <span
+class="math inline">\(\mathcal{S}(1, 0)\)</span>, implying that <span
+class="math inline">\(|\Sigma| = \mathcal{S}(1, 1)\)</span>. On the
+other hand, contracting either <span class="math inline">\(x\)</span> or
+<span class="math inline">\(z\)</span> yields a non-orientable system of
+loops on the Klein bottle <span class="math inline">\(\mathcal{S}(0,
+2)\)</span>, implying that <span class="math inline">\(|\Sigma| =
+\mathcal{S}(0, 3)\)</span>. We conclude that <span
+class="math inline">\(\mathcal{S}(1, 1)\)</span> and <span
+class="math inline">\(\mathcal{S}(0, 3)\)</span> are actually the same
+surface.</p>
+<figure>
+<img src="Fig/Dyck-contract.png" style="width:90.0%"
+alt="Contracting different one-sided loops on Dyck’s surface yields either a torus (top) or a Klein bottle (bottom)." />
+<figcaption aria-hidden="true">Contracting different one-sided loops on
+Dyck’s surface yields either a torus (top) or a Klein bottle
+(bottom).</figcaption>
+</figure>
+<p>A straightforward inductive argument now implies the following more
+general equivalence, which in turn implies a simpler classification of
+non-orientable surfaces.</p>
+<p><strong>Lemma (Dyck):</strong> <em><span
+class="math inline">\(\mathcal{S}(g,h) = \mathcal{S}(0,h+2g)\)</span>
+for all positive integers <span class="math inline">\(g\)</span> and
+<span class="math inline">\(h\)</span>.</em></p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every non-orientable surface is homeomorphic to <span
+class="math inline">\(\mathcal{S}(0, g)\)</span> for some positive
+integer <span class="math inline">\(g &gt; 0\)</span>.</em>
+</dd>
+</dl>
+<p>Again, the integer <span class="math inline">\(g\)</span> is called
+the <em>genus</em> of the surface <span
+class="math inline">\(\mathcal{S}(0, g)\)</span>, or of any map on that
+surface.</p>
+<h2 data-number="25.5" id="canonical-polygonal-schemata"><span
+class="header-section-number">25.5</span> Canonical Polygonal
+Schemata</h2>
+<p><strong><em>Write this</em></strong></p>
+<h2 data-number="25.6" id="oilers-formula"><span
+class="header-section-number">25.6</span> “Oiler’s” Formula</h2>
+<p>The <em>Euler characteristic</em> <span
+class="math inline">\(\chi(\Sigma)\)</span> of a surface map <span
+class="math inline">\(\Sigma = (V, E, F)\)</span> is the integer <span
+class="math inline">\(|V|-|E|+|F|\)</span>. Euler’s formula states that
+every planar map has Euler characteristic <span
+class="math inline">\(2\)</span>. The following generalization, first
+proposed<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> by the French mathematician Simon
+Antoine Jean l’Huillier in 1811, implies that the Euler characteristic
+is actually an invariant of the underlying surface.</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every map on the surface <span class="math inline">\(\mathcal{S}(g,
+h)\)</span> has Euler characteristic <span
+class="math inline">\(2-2g-h\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Contraction and deletion preserve both the underlying surface and the
+Euler characteristic, so it suffices to consider a system of loops <span
+class="math inline">\(\Sigma\)</span>. There are three cases to
+consider:
+</dd>
+<dd>
+<p>The trivial map (with one vertex, one face, and no edges) on the
+sphere <span class="math inline">\(\mathcal{S}(0,0)\)</span> clearly has
+Euler characteristic <span class="math inline">\(2\)</span>.</p>
+</dd>
+<dd>
+<p>Suppose <span class="math inline">\(\Sigma\)</span> is orientable but
+not planar. Let <span class="math inline">\(e\)</span> be any loop in
+<span class="math inline">\(\Sigma\)</span>, and let <span
+class="math inline">\(e’\)</span> be any edge between the two vertices
+of <span class="math inline">\(\Sigma\mathbin/ e\)</span>. The system of
+loops <span class="math inline">\(\Sigma\mathbin/ e \setminus
+e’\)</span> has two fewer loops than <span
+class="math inline">\(\Sigma\)</span>, and therefore has Euler
+characteristic <span class="math inline">\(\chi(\Sigma) + 2\)</span>. It
+follows by induction that <span
+class="math inline">\(\chi(\mathcal{S}(g, 0)) = 2-2g\)</span>.</p>
+</dd>
+<dd>
+<p>Finally, suppose <span class="math inline">\(\Sigma\)</span> is
+non-orientable. Let <span class="math inline">\(e\)</span> be any
+one-sided loop in <span class="math inline">\(\Sigma\)</span>. The
+system of loops <span class="math inline">\(\Sigma\mathbin/ e\)</span>
+has one fewer loops than <span class="math inline">\(\Sigma\)</span>,
+and therefore has Euler characteristic <span
+class="math inline">\(\chi(\Sigma) + 1\)</span>. It follows by induction
+that <span class="math inline">\(\chi(\mathcal{S}(g, h)) =
+\chi(\mathcal{S}(g, 0)) - h = 2-2g-h\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Two surface maps lie on the same underlying 2-manifold if and only
+if (1) they are either both orientable or both non-orientable and (2)
+their Euler characteristics (or their genera) are equal.</em>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>For any tree-cotree decomposition <span class="math inline">\((T, L,
+C)\)</span> of any surface map <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math inline">\(|L|= 2 - \chi(\Sigma)\)</span>. Thus, <span
+class="math inline">\(|L| = 2g\)</span> if <span
+class="math inline">\(\Sigma\)</span> is orientable, and <span
+class="math inline">\(|L| = g\)</span> if <span
+class="math inline">\(\Sigma\)</span> is not orientable.</em>
+</dd>
+</dl>
+<p>In contexts where both orientable and non-orientable surface maps are
+being discussed, it is often convenient to use the <em>Euler genus</em>
+<span class="math inline">\(\overline{g}\)</span> instead of the
+standard genus <span class="math inline">\(g\)</span>. The Euler genus
+of a map <span class="math inline">\(\Sigma\)</span> is equal to the
+number of leftover edges in any tree-cotree decomposition of <span
+class="math inline">\(\Sigma\)</span>: <span class="math display">\[
+    \overline{g} ~:=~ |L| ~=~ 2 - \chi ~=~
+    \begin{cases}
+        2g &amp; \text{if $\Sigma$ is orientable} \\
+        g &amp; \text{if $\Sigma$ is not orientable}
+    \end{cases}
+\]</span></p>
+<p>The Combinatorial Gauss-Bonnet theorem also immediately generalizes
+from planar maps to surface maps. Let <span
+class="math inline">\(\Sigma\)</span> be any surface map. Assign an
+arbitrary real value <span class="math inline">\(\angle c\)</span> to
+each corner <span class="math inline">\(c\)</span> of a planar map <span
+class="math inline">\(\Sigma\)</span>, called the <em>exterior
+angle</em> at <span class="math inline">\(c\)</span>. Recall that
+<em>combinatorial curvature</em> of a face <span
+class="math inline">\(f\)</span> or a vertex <span
+class="math inline">\(v\)</span>, with respect to this angle assignment,
+is defined as follows: <span class="math display">\[
+    \kappa(f) := 1 - \sum_{c\in f} \angle c
+    \qquad\qquad
+    \kappa(v) := 1 - \frac{1}{2} \deg(v) + \sum_{c\in v} \angle c
+\]</span></p>
+<dl>
+<dt><strong>The Combinatorial Gauss-Bonnet Theorem:</strong></dt>
+<dd>
+<em>For any surface map <span class="math inline">\(\Sigma = (V, E,
+F)\)</span> and for any assignment of angles to the corners of <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math inline">\(\sum_{v \in V} \kappa(v) + \sum_{f \in F}
+\kappa(f) = \chi(\Sigma)\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+We immediately have <span class="math inline">\(\sum_f \kappa(f) = |F| -
+\sum_c \angle c\)</span> and <span class="math inline">\(\sum_v
+\kappa(f) = |V| - |E| + \sum_c \angle c\)</span>, which implies that
+<span class="math inline">\(\sum_v \kappa(v) + \sum_f \kappa(f) = |V| -
+|E| + |F| = \chi(\Sigma)\)</span> by definition. <span
+class="math inline">\(\qquad\square\)</span>.
+</dd>
+</dl>
+<!--
+
+## Die Hauptvermutung
+
+**Theorem:**
+: _Any two maps on the same surface have a common refinement._
+
+-->
+<h2 data-number="25.7" id="references-15"><span
+class="header-section-number">25.7</span> References</h2>
+<ol type="1">
+<li><p>Norman Biggs. <a
+href="http://doi.org/10.1016/0095-8956(71)90022-0">Spanning trees of
+dual graphs</a>. <em>J. Comb. Theory Ser. B</em> 11:127–131,
+1971.</p></li>
+<li><p>David Eppstein. <a
+href="https://dl.acm.org/citation.cfm?id=644208">Dynamic generators of
+topologically embedded graphs</a>. <em>Proc. 14th Ann. ACM-SIAM Symp.
+Discrete Algorithms</em>, 599–608, 2003. arXiv:<a
+href="https://arxiv.org/abs/cs/0207082">cs/0207082</a>.</p></li>
+<li><p>R. Bruce Richter and Herbert Shank. <a
+href="http://doi.org/10.1002/jgt.3190080304">The cycle space of an
+embedded graph</a>. <em>J. Graph Theory</em> 8:365–369, 1984.</p></li>
+</ol>
+<h2 data-number="25.8" id="aptly-named-sir"><span
+class="header-section-number">25.8</span> Aptly Named Sir</h2>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This claim may seem obvious; in fact is <em>was</em>
+considered obvious until the early 20th century. The same claim is
+<em>false</em> for 4-dimensional manifolds!<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Dyck may be better known to computer scientists for
+proposing the <em>Dyck language</em>, which is the language of all
+properly balanced strings of brackets <code>[</code> and <code>]</code>.
+The Dyck language is also the set of all possible crossing sequence of a
+closed curve with winding number <span class="math inline">\(0\)</span>
+around the origin with an arbitrary ray from the origin.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Actually, l’Huillier only proposed this formula for the
+special (orientable) case of polyhedra with disjoint prismatic tunnels.
+The full classification theorem is arguably due to August Möbius (1863),
+but was not properly formalized until the early 20th century, after the
+proof of the Jordan Curve Theorem.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

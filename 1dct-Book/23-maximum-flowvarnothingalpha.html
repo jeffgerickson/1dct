@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Maximum Flow^{\varnothing/\alpha}</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="24-surface-mapsbeta.html" accesskey="n" rel="next">Surface Maps<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="22-distributive-flow-latticesvarnothing.html" accesskey="p" rel="previous">Distributive Flow Lattices<span
+class="math inline">\(^\varnothing\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="23" id="maximum-flowvarnothingalpha"><span
+class="header-section-number">23</span> Maximum Flow<span
+class="math inline">\(^{\varnothing/\alpha}\)</span></h1>
+<figure>
+<img src="Fig/HarrisRoss55-railflowcut.png" style="width:90.0%"
+alt="Harris and Ross’s map of the Warsaw-Pact railway network." />
+<figcaption aria-hidden="true">Harris and Ross’s map of the Warsaw-Pact
+railway network.</figcaption>
+</figure>
+<h2 data-number="23.1" id="background"><span
+class="header-section-number">23.1</span> Background</h2>
+<p>Here I’ll provide a brief overview of standard definitions related to
+the maximum flow problem. For a more thorough and gentler introduction,
+see chapters 10 and 11 in my algorithms textbook.</p>
+<h3 class="unnumbered"
+id="pseudoflows-flows-and-circulations">Pseudoflows, flows, and
+circulations</h3>
+<p>Recall that a <em>pseudoflow</em> (or <em>1-chain</em>, or
+<em>discrete 1-form</em>) in a graph <span
+class="math inline">\(G\)</span> is any function <span
+class="math inline">\(\phi \colon D(G) \to \mathbb{R}\)</span> on the
+darts of <span class="math inline">\(G\)</span> that is antisymmetric,
+meaning <span class="math inline">\(\phi(d) = -
+\phi(\textsf{rev}(d))\)</span> for every dart <span
+class="math inline">\(d\)</span>. Intuitively, the value <span
+class="math inline">\(\phi(u{\to}v)\)</span> represents the rate of flow
+of some divisible substance like water, train cars, or network packets
+from <span class="math inline">\(u\)</span> to <span
+class="math inline">\(v\)</span> along the undirected edge <span
+class="math inline">\(uv\)</span>. In particular, a negative value
+indicates that the substance is flowing backward from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(u\)</span>.<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The <em>boundary</em> <span class="math inline">\(\partial\phi\colon
+V(G)\to \mathbb{R}\)</span> of a pseudoflow <span
+class="math inline">\(\phi\)</span> that intuitively describes the total
+net flow into each vertex <span class="math inline">\(v\)</span>: <span
+class="math display">\[
+    \partial\phi(v) := \sum_u \phi(u{\to}v).
+\]</span> A <em>circulation</em> is a pseudoflow <span
+class="math inline">\(\phi\)</span> whose boundary <span
+class="math inline">\(\partial\phi\)</span> is identically zero.
+Intuitively, circulations are pseudoflows that respect conservation of
+mass; any positive flow into <span class="math inline">\(v\)</span> must
+be balanced by negative flow into <span class="math inline">\(v\)</span>
+(that is, positive flow out of <span
+class="math inline">\(v\)</span>).</p>
+<p>For two fixed vertices <span class="math inline">\(s\)</span> and
+<span class="math inline">\(t\)</span>, an <em><span
+class="math inline">\((s,t)\)</span>-flow</em> is a pseudoflow <span
+class="math inline">\(f\)</span> such that <span
+class="math inline">\(\partial f(v) = 0\)</span> for all <span
+class="math inline">\(v\)</span> except possibly <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span>. The <em>value</em> of an <span
+class="math inline">\((s,t)\)</span>-flow <span
+class="math inline">\(\phi\)</span> is the total net flow into <span
+class="math inline">\(t\)</span> or out of <span
+class="math inline">\(s\)</span>: <span class="math display">\[
+    |\phi| := \partial \phi(t) = -\partial \phi(s).
+\]</span> Intuitively, <span class="math inline">\((s,t)\)</span>-flows
+model some substance being injected into a network of pipes at <span
+class="math inline">\(s\)</span> and being extracted at <span
+class="math inline">\(t\)</span>, with conservation at every other
+vertex. Every circulation is an <span
+class="math inline">\((s,t)\)</span>-flow with value <span
+class="math inline">\(0\)</span>.</p>
+<p><strong>Lemma:</strong> <em>For any two <span
+class="math inline">\((s,t)\)</span>-flows <span
+class="math inline">\(\phi\)</span> and <span
+class="math inline">\(\psi\)</span> in the same graph <span
+class="math inline">\(G\)</span> and any two real numbers <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>, the function <span
+class="math inline">\(\alpha\phi + \beta\psi\)</span> is an <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G\)</span> with value <span
+class="math inline">\(\alpha|\phi| + \beta|\psi|\)</span>. In
+particular, if <span class="math inline">\(\phi\)</span> and <span
+class="math inline">\(\psi\)</span> are circulations, then <span
+class="math inline">\(\alpha\phi + \beta\psi\)</span> is also a
+circulation. Thus, circulations and <span
+class="math inline">\((s,t)\)</span>-flows in any graph <span
+class="math inline">\(G\)</span> define vector spaces.</em></p>
+<p>We can regard any directed cycle <span
+class="math inline">\(\gamma\)</span> as a circulation: <span
+class="math display">\[
+    \gamma(d) = \begin{cases}
+        1 &amp; \text{if $d \in \gamma$} \\
+        -1 &amp; \text{if $\textsf{rev}(d) \in \gamma$} \\
+        0 &amp; \text{otherwise}
+    \end{cases}
+\]</span> Similarly, we can regard any directed path <span
+class="math inline">\(\pi\)</span> from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> as an <span
+class="math inline">\((s,t)\)</span>-flow: <span class="math display">\[
+    \pi(d) = \begin{cases}
+        1 &amp; \text{if $d \in \pi$} \\
+        -1 &amp; \text{if $\textsf{rev}(d) \in \pi$} \\
+        0 &amp; \text{otherwise}
+    \end{cases}
+\]</span></p>
+<p><strong>Lemma:</strong> <em>Every circulation is a weighted sum of
+simple directed cycles. Every <span
+class="math inline">\((s,t)\)</span>-flow is a weighted sum of simple
+directed <span class="math inline">\((s,t)\)</span>-paths and simple
+directed cycles.</em></p>
+<h3 class="unnumbered" id="capacities-and-residual-graphs">Capacities
+and residual graphs</h3>
+<p>A <em>capacity</em> function for a graph <span
+class="math inline">\(G\)</span> is any function <span
+class="math inline">\(c\colon D(G)\to\mathbb{R}\)</span> from the darts
+to the reals. Capacities are not necessary either symmetric,
+antisymmetric, or non-negative. A <em>flow network</em> is a graph <span
+class="math inline">\(G\)</span> together with a capacity function <span
+class="math inline">\(c\)</span>.</p>
+<p>A pseudoflow (or circulation or <span
+class="math inline">\((s,t)\)</span>-flow) <span
+class="math inline">\(\phi\)</span> is <em>feasible</em> with respect to
+<span class="math inline">\(c\)</span> if and only if <span
+class="math inline">\(\phi(d) \le c(d)\)</span> for every dart <span
+class="math inline">\(d\)</span>. In particular, we allow the capacity
+of a dart to be negative; a negative dart capacity is equivalent to a
+positive <em>lower bound</em> on the amount of flow through the reversal
+of the dart. The zero flow <span class="math inline">\(\phi\equiv
+0\)</span> is feasible if and only if every dart has non-negative
+capacity.</p>
+<p>Given a graph <span class="math inline">\(G\)</span>, capacity
+function <span class="math inline">\(c\)</span>, and two vertices <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span> as input, the maximum flow problem asks
+for a feasible <span class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G\)</span> with the largest possible value.</p>
+<p>Fix a graph <span class="math inline">\(G\)</span> and a capacity
+function <span class="math inline">\(c\)</span>. Any pseudoflow <span
+class="math inline">\(\phi\)</span> in <span
+class="math inline">\(G\)</span> induces a <em>residual capacity</em>
+function <span class="math inline">\(c_\phi\colon D(G)\to
+\mathbb{R}\)</span>, defined simply as <span
+class="math inline">\(c_\phi(d) = c(d) - \phi(d)\)</span>. A pseudoflow
+<span class="math inline">\(\phi\)</span> is feasible if and only if
+every dart has non-negative residual capacity. The <em>residual
+graph</em> <span class="math inline">\(G_\phi\)</span> is just the
+original graph <span class="math inline">\(G\)</span> but with the new
+capacity function <span class="math inline">\(c_\phi\)</span>. A
+<em>residual path</em> (respectively, <em>residual cycle</em>) is a
+directed path (respectively, directed cycle) in <span
+class="math inline">\(G_\phi\)</span> in which every dart has
+<em>positive</em> residual capacity.</p>
+<p>The standard textbook algorithm for maximum flows, proposed by Lester
+Ford and Delbert Fulkerson in 1953, is the <em>augmenting path</em>
+method. The method starts by finding an initial feasible <span
+class="math inline">\((s,t)\)</span>-flow <span
+class="math inline">\(\phi\)</span>; typically all capacities are
+non-negative, so we can start with the zero flow <span
+class="math inline">\(\phi\equiv 0\)</span>. Then we repeatedly
+<em>augment</em> the flow <span class="math inline">\(\phi\)</span> by
+<em>pushing</em> more flow along paths from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>. Specifically, at each iteration, we
+find a residual path <span class="math inline">\(\pi\)</span> and
+augment the flow by setting <span class="math inline">\(\phi’ \gets \phi
++ \min_{d\in\pi} c_\phi(d) \cdot \pi\)</span>; here I’m treating <span
+class="math inline">\(\pi\)</span> both as a sequence of darts and as an
+<span class="math inline">\((s,t)\)</span>-flow. Straightforward
+definition-chasing implies that if the original flow <span
+class="math inline">\(\phi\)</span> is feasible, then the augmented flow
+<span class="math inline">\(\phi’\)</span> is also feasible. When <span
+class="math inline">\(G_\phi\)</span> contains no more residual paths,
+<span class="math inline">\(\phi\)</span> is a maximum <span
+class="math inline">\((s,t)\)</span>-flow. More generally:</p>
+<p><strong>Lemma:</strong> <em>Let <span
+class="math inline">\(\phi\)</span> and <span
+class="math inline">\(\phi’\)</span> be any (not necessarily feasible)
+<span class="math inline">\((s,t)\)</span>-flows in <span
+class="math inline">\(G\)</span>.</em></p>
+<ol type="a">
+<li><em><span class="math inline">\(\phi’\)</span> is a feasible <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G\)</span> if and only if <span
+class="math inline">\(\phi’-\phi\)</span> is a feasible <span
+class="math inline">\((s,t)\)</span>-flow in the residual graph <span
+class="math inline">\(G_\phi\)</span>.</em></li>
+<li><em>In particular, if <span class="math inline">\(|\phi| =
+|\phi’|\)</span>, then <span class="math inline">\(\phi’\)</span> is a
+feasible <span class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G\)</span> if and only if <span
+class="math inline">\(\phi’-\phi\)</span> is a feasible
+<strong>circulation</strong> in <span
+class="math inline">\(G_\phi\)</span>.</em></li>
+<li><em>In particular, <span class="math inline">\(\phi’\)</span> is a
+<strong>maximum</strong> <span class="math inline">\((s,t)\)</span>-flow
+in <span class="math inline">\(G\)</span> if and only if <span
+class="math inline">\(\phi’-\phi\)</span> is a <strong>maximum</strong>
+<span class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G_\phi\)</span>.</em></li>
+</ol>
+<h2 data-number="23.2" id="planar-circulations"><span
+class="header-section-number">23.2</span> Planar Circulations</h2>
+<p>Flows and circulations have particularly nice structure in planar
+graphs, or more accurately, in planar <em>maps</em>.</p>
+<p>Fix an arbitrary circulation <span
+class="math inline">\(\phi\)</span> in an arbitrary planar map <span
+class="math inline">\(\Sigma\)</span>, with a distinguished outer face
+<span class="math inline">\(o\)</span>. The <em>winding number</em> of
+<span class="math inline">\(\phi\)</span> around each face <span
+class="math inline">\(f\)</span> of <span
+class="math inline">\(\Sigma\)</span>, denoted <span
+class="math inline">\(\textsf{wind}(\phi, f)\)</span> can be defined by
+extending the definition of the Alexander numbering of a curve:</p>
+<ul>
+<li><span class="math inline">\(\textsf{wind}(\phi, o) = 0\)</span></li>
+<li>For every dart <span class="math inline">\(d\)</span>, we have <span
+class="math inline">\(\textsf{wind}(\phi, \textsf{left}(d)) = \phi(d) +
+\textsf{wind}(\phi, \textsf{right}(d))\)</span>.</li>
+</ul>
+<p>Conservation at each vertex <span class="math inline">\(v\)</span>
+implies that this st of constraints has a unique solution. Equivalently,
+for any path (in fact, any <em>walk</em>) <span
+class="math inline">\(\pi\)</span> in the dual map <span
+class="math inline">\(\Sigma^*\)</span> from dual of the outer face
+<span class="math inline">\(o^*\)</span> to the dual vertex <span
+class="math inline">\(f^*\)</span>, we have <span
+class="math display">\[
+    \textsf{wind}(\phi, f) = \sum_{d^*\in\pi} \phi(d).
+\]</span> The second definition is independent of the choice of dual
+path <span class="math inline">\(\pi\)</span>, again by conservation. A
+third equivalent definition uses the fact that <span
+class="math inline">\(\phi\)</span> is a weighted sum of simple cycles:
+<span class="math display">\[
+    \phi = \sum_i \alpha_i\cdot \gamma_i
+    \implies
+    \textsf{wind}(\phi, f) = \sum_i \alpha_i\cdot
+\textsf{wind}(\gamma_i, f);
+\]</span> This definition is independent of the chosen decomposition of
+<span class="math inline">\(\phi\)</span> into cycles <span
+class="math inline">\(\gamma_1, \gamma_2, \dots\)</span>.</p>
+<!--
+**Lemma:**
+_Fix a planar map $\Sigma$.  For any circulation $\phi$ in $\Sigma$, and any circulation $\theta$  in the dual map $\Sigma^*$, we have $\sum_d \phi(d) \cdot \theta(d^*) = 0$, where the sum is over the darts of $\Sigma$._
+
+**Proof:**
+: Because every circulation can be expressed as a sum of simple directed cycles, it suffices to consider a simple directed cycle $\gamma$ in $\Sigma$ and a simple directed cycle $\lambda$ in $\Sigma^*$.
+
+: The Jordan curve theorem implies that these two cycles intersect an even number of times; specifically, the number of times that $\gamma$ crosses $\lambda$ from left to right is equal to the number of times $\gamma$ crosses $\lambda$ from right to left.  Every crossing is the intersection of an edge of $\Sigma$ with its dual edge in $\Sigma^*$.
+
+: Consider an arbitrary dart $d$ in $\gamma$.  The dual dart $d^*$ is in $\theta$ if and only if $\gamma$ crosses $\theta$ from left to right at the point $d\cap d^*$.  Conversely, $\textsf{rev}(d^*) = \textsf{rev}(d)^* \in \theta$ if and only if $\gamma$ crosses $\theta$ from right to left at the point $d\cap d^*$.  Thus, each left-to-right crossing contributes $2$ to the sum $\sum_d \gamma(d) \cdot \lambda(d^*) = 0$ (one from the dart $d\in\gamma\cap\theta^*$ and one from its reversal), and each right-to-left crossing contributes $-2$. $\qquad\square$
+-->
+<p>Alexander numbering is an example of a <em>face potential</em> (or
+<span class="math inline">\(2\)</span>-chain); more generally, a face
+potential in <span class="math inline">\(\Sigma\)</span> is any function
+<span class="math inline">\(\alpha\colon F(\Sigma)\to\mathbb{R}\)</span>
+assigning a real number to each face of <span
+class="math inline">\(\Sigma\)</span>. The <em>boundary</em> of a face
+potential <span class="math inline">\(\alpha\)</span> is the circulation
+<span class="math inline">\(\partial\alpha\colon D(\Sigma)\to
+\mathbb{R}\)</span> defined by setting <span class="math display">\[
+    \partial\alpha(d) = \alpha(\textsf{left}(d)) -
+\alpha(\textsf{right}(d))
+\]</span> for every dart <span class="math inline">\(d\)</span>. It
+should be easy to verify that <span
+class="math inline">\(\partial\alpha\)</span> is indeed a circulation.
+Moreover, the boundary operator <span
+class="math inline">\(\partial\)</span> is linear; for all face
+potentials <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> and real numbers <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span>, we have <span
+class="math inline">\(\partial(a\cdot\alpha + b\cdot\beta) =
+a\cdot\partial\alpha + b\cdot\partial\beta\)</span>.</p>
+<p>The following lemma is a natural generalization (and consequence) of
+the Jordan Curve Theorem.</p>
+<p><strong>Lemma:</strong> <em>Every circulation in a planar map is a
+boundary circulation.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+For any circulation <span class="math inline">\(\phi\)</span>, routine
+definition-chasing implies <span class="math inline">\(\phi = \partial
+(\textsf{wind}(\phi))\)</span>. That is, <span
+class="math inline">\(\phi = \partial\alpha\)</span>, where <span
+class="math inline">\(\alpha(f) = \textsf{wind}(\alpha, f)\)</span> for
+every face <span class="math inline">\(f\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Corollary:</strong> <em>The difference between any two <span
+class="math inline">\((s,t)\)</span>-flows with the same value in the
+same planar map <span class="math inline">\(\Sigma\)</span> is a
+boundary circulation in <span
+class="math inline">\(\Sigma\)</span>.</em></p>
+<h2 data-number="23.3"
+id="feasible-planar-circulations-and-shortest-paths"><span
+class="header-section-number">23.3</span> Feasible Planar Circulations
+and Shortest Paths</h2>
+<p>Now suppose we endow our planar map <span
+class="math inline">\(\Sigma\)</span> with a capacity function <span
+class="math inline">\(c\colon D(\Sigma)\to\mathbb{R}\)</span>. Every
+dart <span class="math inline">\(d^*\)</span> in the dual map <span
+class="math inline">\(\Sigma^*\)</span> has a <em>cost</em> or
+<em>length</em> <span class="math inline">\(c(d^*)\)</span> equal to the
+capacity of the corresponding primal dart <span
+class="math inline">\(d\)</span>; in short, we have <span
+class="math inline">\(c(d^*) = c(d)\)</span>.</p>
+<p><strong>Lemma [Venkatesan]:</strong> <em>Let <span
+class="math inline">\(\Sigma\)</span> be any planar map, and let <span
+class="math inline">\(c\colon D(\Sigma)\to\mathbb{R}\)</span> be any
+capacity function for <span class="math inline">\(\Sigma\)</span>. There
+is a feasible circulation in <span class="math inline">\(\Sigma\)</span>
+if and only if the dual map <span
+class="math inline">\(\Sigma^*\)</span> has no negative cycles.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+First, consider an arbitrary circulation <span
+class="math inline">\(\phi\)</span> in <span
+class="math inline">\(\Sigma\)</span> and an arbitrary cycle <span
+class="math inline">\(\lambda^*\)</span> in the dual map <span
+class="math inline">\(\Sigma^*\)</span> with negative total cost.
+Without loss of generality, assume <span
+class="math inline">\(\lambda^*\)</span> is simple and oriented
+counterclockwise. Whitney’s duality theorem implies that the set <span
+class="math inline">\(\lambda\)</span> of primal darts whose duals lie
+in <span class="math inline">\(\lambda^*\)</span> define a <em>directed
+edge cut</em>. Specifically, let <span class="math inline">\(A\)</span>
+denote the vertices of <span class="math inline">\(\Sigma\)</span> whose
+corresponding dual faces lie inside <span
+class="math inline">\(\lambda^*\)</span>. Then <span
+class="math inline">\(\lambda\)</span> is the set of all darts in <span
+class="math inline">\(\Sigma\)</span> such that <span
+class="math inline">\(\textsf{head}(d)\in A\)</span> and <span
+class="math inline">\(\textsf{tail}(d) \not\in A\)</span>.
+Straightforward calculation implies <span class="math display">\[
+\begin{aligned}
+    \sum_{d\in \lambda} \phi(d)
+    &amp;=
+    \sum_{\textsf{head}(d)\in A} \phi(d)
+        &amp; \text{because $\phi(d) = -\phi(\textsf{rev}(d))$}
+    \\ &amp;=
+    \sum_{v\in A\vphantom{[}} ~ \sum_{\textsf{head}(d) = v} \phi(d)
+    \\ &amp;=
+    \sum_{v\in A} \partial\phi(v)
+        &amp; \text{by definition of $\partial$}
+    \\ &amp;=
+    \sum_{v\in A} 0
+        &amp; \text{because $\phi$ is a circulation}
+    \\ &amp;= 0
+    \\ &amp; &gt; \sum_{d\in \lambda} c(d).
+\end{aligned}
+\]</span> (In the first step, we are adding <span
+class="math inline">\(\phi(d)\)</span> for all darts with both endpoints
+in <span class="math inline">\(A\)</span>.) We conclude that <span
+class="math inline">\(\phi(d) &gt; c(d)\)</span> for at least one dart
+<span class="math inline">\(d\in\lambda\)</span>; in short, <span
+class="math inline">\(\phi\)</span> is not feasible.
+</dd>
+<dd>
+<p>On the other hand, suppose shortest-path distances are well-defined
+in <span class="math inline">\(\Sigma^*\)</span>. For any dual vertex
+<span class="math inline">\(p\)</span>, let <span
+class="math inline">\(\textsf{dist}(p)\)</span> denote the shortest-path
+distance from the outer face <span class="math inline">\(o\)</span> to
+<span class="math inline">\(p\)</span>. We can interpret the function
+<span class="math inline">\(\textsf{dist}\)</span> as a face potential
+function for <span class="math inline">\(\Sigma\)</span>. I claim that
+the boundary circulation <span
+class="math inline">\(\partial\textsf{dist}\)</span> is feasible. For
+any dart <span class="math inline">\(d\)</span>, we have <span
+class="math display">\[
+\phi(d)
+~=~
+\textsf{dist}(\textsf{left}(d)^*) - \textsf{dist}(\textsf{right}(d)^*)
+\]</span> Now define the <em>slack</em> of every dart <span
+class="math inline">\(d\)</span> as <span class="math display">\[
+\begin{aligned}
+    \textsf{slack}(d)
+    &amp; := c(d) - \phi(d)
+    \\
+    &amp; =
+    c(d) - \textsf{dist}(\textsf{left}(d)^*) +
+\textsf{dist}(\textsf{right}(d)^*)
+    \\
+    &amp; =
+    \textsf{dist}(\textsf{tail}(d^*)) + c(d^*) -
+\textsf{dist}(\textsf{head}(d^*))
+\end{aligned}
+\]</span> The definition of shortest paths implies that <span
+class="math inline">\(\textsf{slack}(d) \ge 0\)</span> for every dart
+<span class="math inline">\(d\)</span>, and thus <span
+class="math inline">\(\phi(d) \le c(d)\)</span> for every dart <span
+class="math inline">\(d\)</span>. We conclude that <span
+class="math inline">\(\phi\)</span> is feasible.</p>
+</dd>
+</dl>
+<p><strong>Corollary:</strong> <em>Given a planar map <span
+class="math inline">\(\Sigma\)</span> with <span
+class="math inline">\(n\)</span> vertices and arbitrary dart capacities,
+we can compute either a feasible circulation in <span
+class="math inline">\(\Sigma\)</span> or a negative-cost cycle in <span
+class="math inline">\(\Sigma^*\)</span> in <span
+class="math inline">\(O(n\log^2 n)\)</span> time.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Run the shortest-path algorithm of Klein, Mozes, and Weimann, starting
+at the vertex <span class="math inline">\(o^*\)</span> dual to the outer
+face <span class="math inline">\(o\)</span>. If shortest-path distances
+in <span class="math inline">\(\Sigma^*\)</span> are well-defined, set
+<span class="math inline">\(\phi(d) = \textsf{dist}(\textsf{left}(d)^*)
+- \textsf{dist}(\textsf{right}(d)^*)\)</span> for every dart <span
+class="math inline">\(d\)</span>. Otherwise, the algorithm finds a
+negative cycle in <span class="math inline">\(\Sigma^*\)</span>. In both
+cases, the algorithm runs in <span class="math inline">\(O(n\log^2
+n)\)</span> time.
+</dd>
+</dl>
+<h2 data-number="23.4" id="our-first-planar-max-flow-algorithm"><span
+class="header-section-number">23.4</span> Our First Planar Max-flow
+Algorithm</h2>
+<p>The previous lemma can also be used to find feasible <span
+class="math inline">\((s,t)\)</span>-flows with particular values. Fix
+two vertices <span class="math inline">\(s\)</span> and <span
+class="math inline">\(t\)</span> in <span
+class="math inline">\(G\)</span>.</p>
+<p><strong>Corollary:</strong> <em>Let <span
+class="math inline">\(\phi\)</span> be an arbitrary (not necessarily
+feasible) <span class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(\Sigma\)</span>. There is a feasible <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(G\)</span> with value <span
+class="math inline">\(|\phi|\)</span> if and only if the dual residual
+map <span class="math inline">\(\Sigma^*_\phi\)</span> has no negative
+cycles.</em></p>
+<p><strong>Corollary:</strong> <em>Given a planar map <span
+class="math inline">\(\Sigma\)</span> with <span
+class="math inline">\(n\)</span> vertices, arbitrary dart capacities,
+and a real number <span class="math inline">\(\lambda\)</span>, we can
+either compute a feasible <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(\Sigma\)</span> with value <span
+class="math inline">\(\lambda\)</span>, or correctly report that no such
+flow exists, in <span class="math inline">\(O(n\log^2 n)\)</span>
+time.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\pi\)</span> be any path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> in <span
+class="math inline">\(\Sigma\)</span> with value <span
+class="math inline">\(\lambda\)</span>, and let <span
+class="math inline">\(\phi\)</span> be the flow <span
+class="math inline">\(\lambda\cdot\pi\)</span>. Then <span
+class="math inline">\(\phi’\)</span> is a <em>feasible</em> <span
+class="math inline">\((s,t)\)</span>-flow with value <span
+class="math inline">\(\lambda\)</span> if and only if <span
+class="math inline">\(\phi’-\phi\)</span> is a feasible circulation in
+the residual map <span class="math inline">\(\Sigma_\phi\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p><strong>Corollary:</strong> <em>Given a planar map <span
+class="math inline">\(\Sigma\)</span> with <span
+class="math inline">\(n\)</span> vertices, non-negative
+<strong>integer</strong> dart capacities <span
+class="math inline">\(c(d)\)</span>, we can compute a maximum <span
+class="math inline">\((s,t)\)</span>-flow in <span
+class="math inline">\(\Sigma\)</span> in <span
+class="math inline">\(O(n\log^2 n \log (nU))\)</span> time, where <span
+class="math inline">\(U = \max_d c(d)\)</span>.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Suppose every dart in <span class="math inline">\(\Sigma\)</span> has an
+integer capacity between <span class="math inline">\(0\)</span> and
+<span class="math inline">\(U\)</span>. Because all capacities are
+non-negative, we know that the zero circulation is a feasible flow with
+value <span class="math inline">\(0\)</span>, and the upper bound on
+individual capacities implies that every feasible flow has value at most
+<span class="math inline">\(nU\)</span>. If there is a feasible flow
+with any value <span class="math inline">\(\lambda\)</span>, we can
+scale it down to a feasible flow with any value smaller than <span
+class="math inline">\(\lambda\)</span>. Finally, Ford and Fulkerson’s
+augmenting-path algorithm implies by induction that the maximum flow in
+a network with integer capacities has integer value. Thus, we can
+compute a maximum flow in <span class="math inline">\(\Sigma\)</span> by
+performing a binary search over the <span
+class="math inline">\(nU\)</span> possible flow values, running the
+<span class="math inline">\(O(n\log^2 n)\)</span>-time decision
+algorithm at each iteration. <span
+class="math inline">\(\qquad\square\)</span>
+</dd>
+</dl>
+<p>I find this algorithm deeply unsatisfying, in part because it
+requires integer capacities, but it does at least serve as a proof of
+concept. Hassin and Johnson proved that for <em>undirected</em> planar
+graphs, where every dart has the same capacity as its reversal, we can
+compute a maximum <span class="math inline">\((s,t)\)</span>-flow by
+first running Reif’s minimum-cut algorithm and then running Dijkstra’s
+algorithm in a modified dual graph. Using Reif’s original algorithm,
+this approach funds maximum flows in <span
+class="math inline">\((n\log^2 n)\)</span> time; this running time can
+be improved to <span class="math inline">\(O(n\log n)\)</span> using
+either the linear-time shortest-path algorithm of Henzinger et al inside
+Reif’s algorithm, or by replacing Reif’s algorithm with multiple-source
+shortest paths.</p>
+<p>Unfortunately, this approach does not extend to directed planar
+graphs, because we do not have a similar divide-and-conquer minimum-cut
+algorithm in that setting. In 1997, Karsten Weihe described an algorithm
+to compute maximum flows in directed planar graphs in <span
+class="math inline">\(O(n\log n)\)</span> time, generalizing his earlier
+<span class="math inline">\(O(n)\)</span>-time algorithm for undirected
+unit-capacity planar graphs. However, his algorithm assumes that every
+dart in the input graph appears in at leas one simple path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>. Darts that do not satisfy this
+criterion can be safely removed from the input graph, but an efficient
+algorithm to find all such “useless” darts was only found in 2017, by
+Jittat Fakcharoenphol, Bundit Laekhanukit, and Pattara Sukprasert.</p>
+<p>Meanwhile, in 2006, Glencora Borradaile and Philip Klein discovered a
+much cleaner algorithm to compute planar maximum flows in <span
+class="math inline">\(O(n\log n)\)</span> time. In the rest of this
+lecture note I will describe a reformulation of their algorithm that I
+published in 2010.</p>
+<h2 data-number="23.5" id="parametric-shortest-paths-1"><span
+class="header-section-number">23.5</span> Parametric Shortest Paths</h2>
+<p>We formulate the planar maximum-flow problem as a <em>parametric
+shortest-path</em> problem, similar to our first multiple-source
+shortest-path problem. Fix an arbitrary path <span
+class="math inline">\(\pi\)</span> from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>. We are trying to find the largest
+value <span class="math inline">\(\lambda\)</span> such that <span
+class="math inline">\(\Sigma\)</span> supports and <span
+class="math inline">\((s,t)\)</span>-flow with value <span
+class="math inline">\(\lambda\)</span>. Equivalently, by the arguments
+in the last two sections, we are looking for the largest value <span
+class="math inline">\(\lambda\)</span> such that the dual residual map
+<span class="math inline">\(\Sigma^*_{\lambda\cdot\pi}\)</span> does not
+contain a negative cycle. The algorithm maintains a shortest-path tree
+in the dual residual map <span
+class="math inline">\(\Sigma^*_{\lambda\cdot\pi}\)</span> as the
+parameter <span class="math inline">\(\lambda\)</span> continuously
+increases from <span class="math inline">\(0\)</span>. At critical
+values of <span class="math inline">\(\lambda\)</span>, darts <span
+class="math inline">\(p{\to}q\)</span> in <span
+class="math inline">\(\Sigma^*\)</span> become tense and pivot into the
+shortest-path tree, replacing earlier darts <span
+class="math inline">\(p’{\to}q\)</span>. The algorithm halts when a
+pivot introduces a cycle into the shortest-path tree, which would become
+negative if we increased <span class="math inline">\(\lambda\)</span>
+any further. (That cycle is dual to the minimum cut!)</p>
+<p>Again, we fix an arbitrary path <span
+class="math inline">\(\pi\)</span> from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>; we treat this path as a flow with
+value <span class="math inline">\(1\)</span>: <span
+class="math display">\[
+    \pi(d) = \begin{cases}
+        1 &amp; \text{if $d \in \pi$} \\
+        -1 &amp; \text{if $\textsf{rev}(d) \in \pi$} \\
+        0 &amp; \text{otherwise}
+    \end{cases}
+\]</span> We also fix a vertex <span class="math inline">\(o\)</span> in
+the dual map <span class="math inline">\(\Sigma^*\)</span>. Let’s
+establish some notation.</p>
+<ul>
+<li><span class="math inline">\(\Sigma_\lambda\)</span> is just
+shorthand for the residual graph <span
+class="math inline">\(\Sigma_{\lambda\cdot\pi}\)</span>.</li>
+<li><span class="math inline">\(c(\lambda, d) = c(\lambda, d^*) = c(d) -
+\lambda\cdot\pi(d)\)</span> is the capacity of <span
+class="math inline">\(d\)</span> in the residual graph <span
+class="math inline">\(\Sigma\)</span>, and therefore the cost of <span
+class="math inline">\(d^*\)</span> in the dual residual map <span
+class="math inline">\(\Sigma_\lambda^*\)</span>.</li>
+<li><span class="math inline">\(T_\lambda\)</span> is the single-source
+shortest-path rooted at <span class="math inline">\(o\)</span> in <span
+class="math inline">\(\Sigma_\lambda^*\)</span>.</li>
+<li><span class="math inline">\(\textsf{dist}(\lambda, p)\)</span> is
+the shortest-path distance from <span class="math inline">\(o\)</span>
+to <span class="math inline">\(p\)</span> in <span
+class="math inline">\(\Sigma_\lambda^*\)</span>.</li>
+<li><span class="math inline">\(\textsf{path}(\lambda, p)\)</span> is
+the shortest path from <span class="math inline">\(o\)</span> to <span
+class="math inline">\(p\)</span> in <span
+class="math inline">\(\Sigma_\lambda^*\)</span>.</li>
+<li><span class="math inline">\(\textsf{pred}(\lambda, p)\)</span> is
+the second-to-last vertex of <span
+class="math inline">\(\textsf{path}(\lambda, p)\)</span>.</li>
+<li><span class="math inline">\(\textsf{slack}(\lambda, p{\to}q) =
+\textsf{dist}(\lambda, p) + c(\lambda, p{\to}q) - \textsf{dist}(\lambda,
+p)\)</span></li>
+<li><span class="math inline">\(\textsf{cycle}(\lambda,
+p{\to}q)\)</span> is the closed walk obtained by concatenating <span
+class="math inline">\(\textsf{path}(\lambda, p)\)</span>, <span
+class="math inline">\(p{\to}q\)</span>, and <span
+class="math inline">\(\textsf{rev}(\textsf{path}(\lambda,q))\)</span>.</li>
+<li>A dart <span class="math inline">\(d\)</span> of <span
+class="math inline">\(\Sigma_\lambda\)</span> is <em>tense</em> if <span
+class="math inline">\(\textsf{slack}(\lambda, d^*) = 0\)</span>.</li>
+<li>An edge <span class="math inline">\(e\)</span> of <span
+class="math inline">\(\Sigma_\lambda\)</span> is <em>loose</em> if
+neither of its darts is tense.</li>
+<li><span class="math inline">\(L_\lambda\)</span> is the subgraph of
+all loose edges in <span
+class="math inline">\(\Sigma_\lambda\)</span>.</li>
+<li>A dart <span class="math inline">\(d\)</span> in <span
+class="math inline">\(\Sigma_\lambda\)</span> is <em>active</em> if
+<span class="math inline">\(\textsf{slack}(\lambda, d^*)\)</span> is
+decreasing at <span class="math inline">\(\lambda\)</span>.</li>
+<li><span class="math inline">\(LP_\lambda\)</span> is the set of all
+active darts in <span
+class="math inline">\(\Sigma_\lambda\)</span>.</li>
+</ul>
+<p>Except at critical values of <span
+class="math inline">\(\lambda\)</span>, subgraph <span
+class="math inline">\(L_\lambda\)</span> is a spanning tree of <span
+class="math inline">\(\Sigma_\lambda\)</span>, and in fact <span
+class="math inline">\((L_\lambda, T_\lambda)\)</span> is a tree-cotree
+decomposition of <span class="math inline">\(\Sigma\)</span>.</p>
+<p><strong>Lemma:</strong> <em><span
+class="math inline">\(LP_\lambda\)</span> is the unique path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> in <span
+class="math inline">\(L_\lambda\)</span>.</em></p>
+<p><strong>Lemma:</strong> <em><span
+class="math inline">\(LP_\lambda\)</span> is the set of all active darts
+in <span class="math inline">\(\Sigma_\lambda\)</span>.</em></p>
+<h2 data-number="23.6" id="active-darts"><span
+class="header-section-number">23.6</span> Active Darts</h2>
+<h2 data-number="23.7" id="fast-pivots"><span
+class="header-section-number">23.7</span> Fast Pivots</h2>
+<h2 data-number="23.8" id="universal-cover-analysis"><span
+class="header-section-number">23.8</span> Universal Cover Analysis</h2>
+<h2 data-number="23.9" id="references-13"><span
+class="header-section-number">23.9</span> References</h2>
+<ol type="1">
+<li><p>Therese C. Biedl, Bronǎ Brejová, and Tomáš Vinař. <a
+href="https://doi.org/10.1007/3-540-44612-5_15">Simplifying flow
+networks</a>. <em>Proc. 25th Symp. Math. Found. Comput. Sci.</em>,
+192–201, 2000. Lecture Notes Comput. Sci. 1893,
+Springer-Verlag.</p></li>
+<li><p>Glencora Borradaile and Anna Harutyunyan. <a
+href="https://doi.org/10.1007/978-3-642-45278-9_36">Maximum st-flow in
+directed planar graphs via shortest paths</a>. <em>Proc. 24th Int.
+Workshop Combin. Algorithms</em>, 423–427, 2013. Lecture Notes Comput.
+Sci. 8288, Springer. arXiv:<a
+href="https://arxiv.org/abs/1305.5823">1305.5823</a>.</p></li>
+<li><p>Glencora Borradaile and Philip Klein. <a
+href="https://doi.org/10.1145/1502793.1502798">An <span
+class="math inline">\(O(n\log n)\)</span> algorithm for maximum st-flow
+in a directed planar graph</a>. <em>J. ACM</em> 56(2):1–9:1–30,
+2009.</p></li>
+<li><p>David Eppstein and Kevin A. Wortman. <a
+href="https://doi.org/10.1007/978-3-642-03367-4_26">Optimal embedding
+into star metrics</a>. <em>Proc. 11th Algorithms Data Struct. Symp.
+(WADS)</em>, 290–301, 2009. Lecture Notes Comput. Sci. 5664, Springer.
+Another application of parametric shortest paths.</p></li>
+<li><p>Jeff Erickson. <a
+href="https://doi.org/10.1137/1.9781611973075.65">Parametric shortest
+paths and maximum flows in planar graphs</a>. <em>Proc. 21st Ann.
+ACM-SIAM Symp. Discrete Algorithms</em>, 794–804, 2010.</p></li>
+<li><p>Jittat Fakcharoenphol, Bundit Laekhanukit, and Pattara
+Sukprasert. <a href="https://arxiv.org/abs/1702.04786">Finding all
+useless arcs in directed planar graphs</a>. Preprint, May 2018. arXiv:<a
+href="https://doi.org/10.48550/arXiv.1702.04786">1702.04786</a>.</p></li>
+<li><p>Lester R. Ford and Delbert R. Fulkerson. <a
+href="http://doi.org/10.4153/CJM-1956-045-5">Maximal flow through a
+network</a>. <em>Canad. J. Math.</em> 8(399–404), 1956. First published
+as <a href="https://www.rand.org/pubs/papers/P605.html">Research
+Memorandum RM-1400</a>, The RAND Corporation, Santa Monica, California,
+November 19, 1954.</p></li>
+<li><p>Lester R. Ford and Delbert R. Fulkerson. <a
+href="https://www.jstor.org/stable/j.ctt183q0b4"><em>Flows in
+Networks</em></a>. Princeton University Press, 1962. First published as
+<a href="https://www.rand.org/pubs/reports/R375.html">Research
+Memorandum R-375-PR</a>, The RAND Corporation, Santa Monica, California,
+August 1962.</p></li>
+<li><p>Theodore E. Harris and Frank S. Ross. <a
+href="https://apps.dtic.mil/sti/citations/AD0093458">Fundamentals of a
+method for evaluating rail net capacities</a>. Research Memorandum
+RM-1573, The RAND Corporation, Santa Monica, California, October 24,
+1955. Declassified May 13, 1999.</p></li>
+<li><p>Refael Hassin and Donald B. Johnson. <a
+href="https://doi.org/10.1137/0214045">An <span
+class="math inline">\(O(n \log^2 n)\)</span> algorithm for maximum flow
+in undirected planar networks</a>. <em>SIAM J. Comput.</em>
+14(3):612–624, 1985.</p></li>
+<li><p>Samir Khuller, Joseph (Seffi) Naor, and Philip Klein. <a
+href="https://doi.org/10.1137/0406038">The lattice structure of flow in
+planar graphs</a>. <em>SIAM J. Discrete Math.</em> 477–490, 1993.
+Removing clockwise residual cycles.</p></li>
+<li><p>Karl Menger. <a href="http://doi.org/10.4064/fm-10-1-96-115">Zur
+allgemeinen Kurventheorie</a>. <em>Fund. Math.</em> 10:96–115,
+1927.</p></li>
+<li><p>Shankar M. Venkatesan. <a
+href="https://www.proquest.com/docview/303173800"><em>Algorithms for
+network flows</em></a>. Ph.D. thesis, The Pennsylvania State University,
+1983.</p></li>
+<li><p>Karsten Weihe. <a
+href="http://doi.org/10.1006/jagm.1996.0831">Edge-disjoint <span
+class="math inline">\((s,t)\)</span>-paths in undirected planar graphs
+in linear time</a>. <em>J. Algorithms</em> 23(1):121–138, 1997.</p></li>
+<li><p>Karsten Weihe. <a
+href="https://doi.org/10.1006/jcss.1997.1538">Maximum <span
+class="math inline">\((s,t)\)</span>-flows in planar networks in <span
+class="math inline">\(O(|V|\log|V|)\)</span> time</a>. <em>J. Comput.
+Syst. Sci.</em> 55(3):454–476, 1997.</p></li>
+</ol>
+<h2 data-number="23.10" id="aptly-not"><span
+class="header-section-number">23.10</span> Aptly Not</h2>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A more common textbook definition of (pseudo)flow is any
+function <span class="math inline">\(\phi \colon D(G) \to
+\mathbb{R}\)</span> such that for every dart <span
+class="math inline">\(d\)</span>, we have <span
+class="math inline">\(\phi(d)\ge 0\)</span> and either <span
+class="math inline">\(\phi(d) = 0\)</span> or <span
+class="math inline">\(\phi(\textsf{rev}(d)) = 0\)</span>. That is, for
+each edge, instead of choosing an arbitrary values for the darts that
+sum to <span class="math inline">\(0\)</span>, we choose both a
+direction and a non-negative value for the edge. Converting between the
+antisymmetric formulation and the non-negative formulation is
+straightforward.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

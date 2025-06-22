@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Simple Polygons^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="2-winding-numbersbeta.html" accesskey="n" rel="next">Winding Numbers<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="-forewardalpha.html" accesskey="p" rel="previous">Foreward<span class="math inline">\(^\alpha\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="1" id="simple-polygonsbeta"><span
+class="header-section-number">1</span> Simple Polygons<span
+class="math inline">\(^\beta\)</span></h1>
+<p>The Jordan Curve Theorem and its generalizations are the formal
+foundations of many results, if not <em>every</em> result, in
+two-dimensional topology. In its simplest form, the theorem states that
+any simple closed curve partitions the plane into two connected subsets,
+exactly one of which is bounded. Although this statement is intuitively
+clear, perhaps even obvious, the generality of the term “simple closed
+curve” makes a formal proof of the theorem incredibly challenging. A
+complete proof must work not only for sane curves like circles and
+polygons, but also for more exotic beasts like fractals and
+space-filling curves. Fortunately, these exotic curves rarely occur in
+practice, except as counterexamples in point-set topology textbooks.</p>
+<p>A full proof of the Jordan Curve Theorem requires machinery that we
+won’t cover in this class (either point-set topology or singular
+homology). Here I’ll consider only the important special case of
+<em>simple polygons</em>. Polygons are by far the most common type of
+closed curve employed in practice, so this special case has immediate
+practical consequences.</p>
+<p>Most published proofs of the full Jordan Curve Theorem both dismiss
+this special case as trivial and rely on it as a key lemma. Indeed, the
+proof is ultimately <em>elementary</em>. Nevertheless, the Jordan
+Polygon Theorem and its proof are the foundation of several fundamental
+algorithmic tools in computational geometry and topology.</p>
+<h2 data-number="1.1" id="definitions"><span
+class="header-section-number">1.1</span> Definitions</h2>
+<p>A <em>path</em> in the plane is an arbitrary continuous function
+<span class="math inline">\(\pi\colon [0, 1] \to \mathbb{R}^2\)</span>,
+where <span class="math inline">\([0, 1]\)</span> is the unit interval
+on the real line. The points <span class="math inline">\(\pi(0)\)</span>
+and <span class="math inline">\(\pi(1)\)</span> are called the
+<em>endpoints</em> of the path. A <em>closed curve</em> (or
+<em>cycle</em>) in the plane is a continuous function from the unit
+circle <span class="math inline">\(S^1 = \{(x,y)\in\mathbb{R}^2 \mid
+x^2+y^2=1\}\)</span> to the plane.</p>
+<p>A path or cycle is <em>simple</em> if it is injective, or
+intuitively, if it does not “self-intersect”. To avoid excessive
+formality, we do not normally distinguish between a simple path or cycle
+(formally a function) and its image (formally a subset of the plane).<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<p>A subset <span class="math inline">\(X\)</span> of the plane is
+<em>(path-)connected</em> if there is a path in <span
+class="math inline">\(X\)</span> from any point in <span
+class="math inline">\(X\)</span> to any other point in <span
+class="math inline">\(X\)</span>. A <em>(path-)component</em> of <span
+class="math inline">\(X\)</span> is a maximal path-connected subset of
+<span class="math inline">\(X\)</span>.</p>
+<dl>
+<dt><strong>Theorem (The Jordan Curve Theorem).</strong></dt>
+<dd>
+<em>The complement <span class="math inline">\(\mathbb{R}^2\setminus
+C\)</span> of any simple closed curve <span
+class="math inline">\(C\)</span> in the plane has exactly two
+components.</em>
+</dd>
+</dl>
+<p>A <em>polygonal chain</em> is a path that passes through a finite
+sequence of points <span class="math inline">\(p_0, p_1, \dots,
+p_n\)</span>, such that for each index <span
+class="math inline">\(i\)</span>, the subpath from <span
+class="math inline">\(p_{i-1}\)</span> to <span
+class="math inline">\(p_i\)</span> is the straight line segment <span
+class="math inline">\(p_{i-1}p_i\)</span>. The points <span
+class="math inline">\(p_i\)</span> are called the <em>vertices</em> of
+the polygonal chain, and the segments <span
+class="math inline">\(p_{i-1}p_i\)</span> are called its <em>edges</em>.
+We usually assume without loss of generality that no pair of consecutive
+edges is collinear, and in particular, that no two consecutive vertices
+coincide.</p>
+<p>A polygonal chain is <em>closed</em> if it has at least one edge and
+its first and last vertices coincide (that is, if <span
+class="math inline">\(p_0 = p_n\)</span>) and <em>open</em> otherwise.
+Closed polygonal chains are also called <em>polygons</em>; a polygon
+with <span class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(n\)</span> edges is also called an <em><span
+class="math inline">\(n\)</span>-gon</em>. We can regard any polygon as
+a closed curve in the plane. Every simple polygon has at least three
+vertices.</p>
+<figure>
+<img src="Fig/Damien-tsp3-filled.png" style="width:40.0%"
+alt="A simple 10000-gon, with interior shaded" />
+<figcaption aria-hidden="true">A simple 10000-gon, with interior
+shaded</figcaption>
+</figure>
+<dl>
+<dt><strong>Theorem (The Jordan Polygon Theorem).</strong></dt>
+<dd>
+<em>The complement <span class="math inline">\(\mathbb{R}^2\setminus
+P\)</span> of any simple polygon <span class="math inline">\(P\)</span>
+in the plane has exactly two components.</em>
+</dd>
+</dl>
+<p>Let me emphasize that even though this theorem considers only
+<em>polygonal</em> closed curves, the definitions of “connected” and
+“component” allows for <em>arbitrary</em> paths between points.</p>
+<h2 data-number="1.2" id="proof-of-the-jordan-polygon-theorem"><span
+class="header-section-number">1.2</span> Proof of the Jordan Polygon
+Theorem</h2>
+<p>Fix a simple polygon <span class="math inline">\(P\)</span> with
+<span class="math inline">\(n\)</span> vertices. Without loss of
+generality, assume no two vertices of <span
+class="math inline">\(P\)</span> have equal <span
+class="math inline">\(x\)</span>-coordinates. The vertical lines through
+the vertices partition the plane into <span
+class="math inline">\(n+1\)</span> <em>slabs</em>, two of which (the
+leftmost and rightmost) are actually halfplanes. The edges of <span
+class="math inline">\(P\)</span> subdivide each slab into a finite
+number of regions we call <em>trapezoids</em>, even though some of these
+regions are actually triangles, and others are unbounded in one or more
+directions.</p>
+<figure>
+<img src="Fig/polygon-slab-decomp.png" style="width:35.0%"
+alt="A slab decomposition of a simple polygon, with trapezoids in one slab highlighted" />
+<figcaption aria-hidden="true">A slab decomposition of a simple polygon,
+with trapezoids in one slab highlighted</figcaption>
+</figure>
+<p>The boundary of each trapezoid consists of (at most) four line
+segments: the <em>floor</em> and <em>ceiling</em>, which are segments of
+polygon edges, and the <em>left</em> and <em>right walls</em>, which are
+segments of the vertical slab boundaries. The endpoints of each vertical
+wall (if any) lie on the polygon <span
+class="math inline">\(P\)</span>.</p>
+<p>Formally, we define each trapezoid to include its walls but not its
+floor, its ceiling, or any vertex on its walls. Thus, each trapezoid is
+connected, any two trapezoids intersect in a common wall or not at all,
+and the union of all the trapezoids is <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span>. In particular, a
+trapezoid is a convex (and therefore connected) region in the plane, but
+it is not a polygon!</p>
+<dl>
+<dt><strong>Lemma <span class="math inline">\(\le\)</span>
+2.</strong></dt>
+<dd>
+<em><span class="math inline">\(\mathbb{R}^2\setminus P\)</span> has at
+most two components.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Direct the edges of <span class="math inline">\(P\)</span> in increasing
+index order (modulo <span class="math inline">\(n\)</span>). Informally,
+we label every trapezoid <em>left</em> or <em>right</em> depending on
+whether a person walking around <span class="math inline">\(P\)</span>
+would see that trapezoid immediately to their left or immediately to
+their right. More formally, we label every trapezoid that satisfies at
+least one of the following conditions <em>left</em>:
+</dd>
+<dd>
+<ul>
+<li>The ceiling is directed from right to left.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>The floor is directed from left to right.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>The right wall contains a vertex <span
+class="math inline">\(p_i\)</span>, and the incoming edge <span
+class="math inline">\(p_{i-1}p_i\)</span> is below the outgoing edge
+<span class="math inline">\(p_i p_{i+1}\)</span></li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>The left wall contains a vertex <span
+class="math inline">\(p_i\)</span>, and the incoming edge <span
+class="math inline">\(p_{i-1}p_i\)</span> is above the outgoing edge
+<span class="math inline">\(p_i p_{i+1}\)</span></li>
+</ul>
+</dd>
+<dd>
+These conditions apply verbatim to unbounded and degenerate trapezoids.
+There are four symmetric conditions for labeling a trapezoid
+<em>right</em>. Every trapezoid is labeled left or right <em>or (as far
+as we know at this point) possibly both</em>.
+</dd>
+<dd>
+<figure>
+<img src="Fig/left-trapezoids.png" style="width:50.0%"
+alt="Left trapezoids" />
+<figcaption aria-hidden="true">Left trapezoids</figcaption>
+</figure>
+</dd>
+<dd>
+<p>Now imagine imagine walking once around the polygon, facing directly
+forward along edges and turning at vertices, and consider the sequence
+of trapezoids immediately to our left, as suggested by the white arrows
+in Figure 2 above. Without loss of generality, start at the leftmost
+vertex <span class="math inline">\(p_0\)</span>. Whenever we traverse a
+directed edge <span class="math inline">\(p_{i-1}p_i\)</span> from right
+to left, our left hand sweeps through all trapezoids immediately below
+that edge. Whenever we reach a vertex <span
+class="math inline">\(p_i\)</span> whose neighbors are both to the right
+of <span class="math inline">\(p_i\)</span>, where the edges make a
+right (clockwise turn), our hand sweeps through the trapezoid just to
+the left of <span class="math inline">\(p_i\)</span>. The other cases
+are symmetric. The resulting sequence of trapezoids contains every left
+trapezoid at least once (and at most four times); moreover, any adjacent
+pair of trapezoids in this sequence share a wall and thus have a
+connected union. So the union of the left trapezoids is connected.</p>
+</dd>
+<dd>
+<p>A symmetric argument implies that the union of the right trapezoids
+is also connected, which completes the proof.</p>
+</dd>
+</dl>
+<p>It’s worth noting here that Lemma <span
+class="math inline">\(\le\)</span> 2 holds for simple closed curves on
+arbitrary <em>surfaces</em>, including non-orientable surfaces like the
+Klein bottle, but it can fail for more complex topological spaces.</p>
+<dl>
+<dt><strong>Lemma <span class="math inline">\(\ge\)</span>
+2.</strong></dt>
+<dd>
+<em><span class="math inline">\(\mathbb{R}^2\setminus P\)</span> has at
+least two components.</em>
+</dd>
+<dt><strong>Proof (Jordan):</strong></dt>
+<dd>
+Label each trapezoid <em>even</em> or <em>odd</em> depending on the
+parity of the number of polygon edges directly above the trapezoid.
+Thus, within each slab, the highest trapezoid is even, and the
+trapezoids alternate between even and odd. For example, in Figure 1, the
+blue slabs are even, and the orange slabs are odd.
+</dd>
+<dd>
+<p>Consider any path <span class="math inline">\(\pi\)</span> that
+intersects exactly two trapezoids <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span>. If <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> lie in the same slab, this path
+must intersect at least one edge of <span
+class="math inline">\(P\)</span>. (I am <em>not</em> invoking the Jordan
+curve theorem here, but rather a much more basic fact called the
+<em>plane separation axiom</em>.<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>) Otherwise, <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> must lie in adjacent slabs, because
+<span class="math inline">\(\pi\)</span> is continuous, and therefore
+must share a vertical wall.</p>
+</dd>
+<dd>
+<p>Suppose this wall lies on the vertical line <span
+class="math inline">\(\ell\)</span> through <span
+class="math inline">\(p_i\)</span>, and without loss of generality,
+<span class="math inline">\(\tau\)</span> lies on the left of <span
+class="math inline">\(\ell\)</span> and <span
+class="math inline">\(\tau’\)</span> on the right. If vertices <span
+class="math inline">\(p_{i-1}\)</span> and <span
+class="math inline">\(p_{i+1}\)</span> are on opposite sides of <span
+class="math inline">\(\ell\)</span>, exactly the same number of polygon
+edges are above <span class="math inline">\(\tau\)</span> and above
+<span class="math inline">\(\tau’\)</span>. Suppose <span
+class="math inline">\(p_{i-1}\)</span> and <span
+class="math inline">\(p_{i+1}\)</span> lie to the left of <span
+class="math inline">\(\ell\)</span>. If <span
+class="math inline">\(p_i\)</span> lies below the wall <span
+class="math inline">\(\tau\cap\tau’\)</span>, then <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> are below the same number of edges;
+otherwise, <span class="math inline">\(\tau\)</span> is below two more
+edges than <span class="math inline">\(\tau’\)</span>. Similar cases
+arise when <span class="math inline">\(p_{i-1}\)</span> and <span
+class="math inline">\(p_{i+1}\)</span> both lie to the right of <span
+class="math inline">\(\ell\)</span>. In all cases, <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> have the same parity.</p>
+</dd>
+<dd>
+
+</dd>
+<dd>
+<p>More generally, consider any two trapezoids <span
+class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> in the same component of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span>. There must be a
+path <span class="math inline">\(\pi\colon [0,1]\to
+\mathbb{R}^2\setminus P\)</span> with <span
+class="math inline">\(\pi(0)\in \tau\)</span> and <span
+class="math inline">\(\pi(1)\in \tau’\)</span>. Let <span
+class="math inline">\(\tau_0, \tau_1, \dots, \tau_N\)</span> be the
+sequence of trapezoids that <span class="math inline">\(\pi\)</span>
+intersects, sorted in order of their first intersection. Thus, <span
+class="math inline">\(\tau_0 = \tau\)</span> and for each index <span
+class="math inline">\(i&gt;0\)</span>, the path <span
+class="math inline">\(\pi\)</span> enters trapezoid <span
+class="math inline">\(\tau_i\)</span> for the first time from some
+trapezoid <span class="math inline">\(\tau_j\)</span> with <span
+class="math inline">\(j&lt;i\)</span>. Our earlier arguments imply that
+<span class="math inline">\(\pi\)</span> must leave <span
+class="math inline">\(\tau_j\)</span> and enter <span
+class="math inline">\(\tau_i\)</span> through a common wall, so these
+two trapezoids have the same parity. It follows by induction that every
+trapezoid <span class="math inline">\(\tau_i\)</span> has the same
+parity as <span class="math inline">\(\tau_0\)</span>; in particular,
+<span class="math inline">\(\tau\)</span> and <span
+class="math inline">\(\tau’\)</span> have the same parity.</p>
+</dd>
+<dd>
+<p>We conclude that any two trapezoids in the same component of <span
+class="math inline">\(\mathbb{R}^2\setminus P\)</span> have the same
+parity, which completes the proof.</p>
+</dd>
+</dl>
+<p>It’s worth noting here that Lemma <span
+class="math inline">\(\le\)</span> 2 holds for more complex planar
+shapes, such as polygons with holes, but it fails for any surface that
+is no homeomorphic to a subspace of the sphere.</p>
+<p>The Jordan Polygon Theorem now follows immediately from Lemmas <span
+class="math inline">\(\le 2\)</span> and <span class="math inline">\(\ge
+2\)</span>. In particular, if the polygon is oriented counterclockwise
+(the way god intended), then “right” and “even” (and blue) mean
+“outside”, and “left” and “odd” (and orange) mean “inside”.</p>
+<p>In contexts where polygons are assumed to be simple, it is standard
+practice to use the single word ”polygon” (and the same variable names,
+and the same data structures) to refer <em>both</em> to a simple closed
+polygonal chain <em>and</em> to (the closure of) the interior of that
+polygonal chain, with the precise meaning <em>hopefully</em> clear from
+context. For example, the slab decomposition we used in this section
+decomposes <em>the polygon</em> into trapezoids, and in later lectures
+we will consider <em>polygons with holes</em>. This polysemy is
+justified by the Jordan Polygon Theorem.</p>
+<h2 data-number="1.3" id="point-in-polygon-test"><span
+class="header-section-number">1.3</span> Point-in-Polygon Test</h2>
+<p>The parity proof of Lemma <span class="math inline">\(\ge 2\)</span>
+immediately suggests a standard algorithm to test whether a point lies
+in the interior of a simple polygon in the plane in linear time: Shoot
+an arbitrary ray from the query point, count the number of times this
+ray crosses the polygon, and return <span
+class="math inline">\(\textsf{true}\)</span> if and only if this number
+is odd. This algorithm appears in Gauss’ notes (written around 1830 but
+only published after his death); it has been rediscovered many times
+since then.</p>
+<p>To make the ray-parity algorithm concrete, we need one numerical
+primitive from computational geometry. A triple <span
+class="math inline">\((q, r, s)\)</span> of points in the plane is
+<em>oriented counterclockwise</em> if walking from <span
+class="math inline">\(q\)</span> to <span
+class="math inline">\(r\)</span> and then to <span
+class="math inline">\(s\)</span> requires a left turn, or <em>oriented
+clockwise</em> if the walk requires a right turn. More explicitly,
+consider the <span class="math inline">\(3\times 3\)</span> determinant
+<span class="math display">\[
+    \Delta(q,r,s) =
+    \det
+    \begin{bmatrix}
+        1 &amp; q.x &amp; q.y \\
+        1 &amp; r.x &amp; r.y \\
+        1 &amp; s.x &amp; s.y
+    \end{bmatrix}
+    = (r.x - q.x)(s.y - q.y) - (r.y - q.y)(s.x - q.x).
+\]</span> The triple <span class="math inline">\((q,r,s)\)</span> is
+oriented counterclockwise if <span class="math inline">\(\Delta(q,r,s)
+&gt; 0\)</span>, oriented clockwise if <span
+class="math inline">\(\Delta(q,r,s) &lt; 0\)</span>, and collinear if
+<span class="math inline">\(\Delta(q,r,s) = 0\)</span>. (The absolute
+value of <span class="math inline">\(\Delta(q,r,s)\)</span> is twice the
+area of the triangle <span class="math inline">\(\triangle
+qrs\)</span>.)</p>
+<p>Straightforward case analysis implies that the vertical ray from
+<span class="math inline">\(q\)</span> crosses the line segment <span
+class="math inline">\(rs\)</span> if and only if <span
+class="math inline">\(q\)</span> lies between the vertical lines through
+<span class="math inline">\(r\)</span> and <span
+class="math inline">\(s\)</span>, and <span
+class="math inline">\(\Delta(q,r,s)\)</span> has the same sign as <span
+class="math inline">\(r.x-s.x\)</span>.</p>
+<figure>
+<img src="Fig/ray-crossings.png" style="width:50.0%"
+alt="Ray-crossing test" />
+<figcaption aria-hidden="true">Ray-crossing test</figcaption>
+</figure>
+<p>Finally, here is the algorithm in (pseudo)Python. The input polygon
+<span class="math inline">\(P\)</span> is represented by an array of
+consecutive vertices. The algorithm returns <span
+class="math inline">\(+1\)</span>, <span
+class="math inline">\(-1\)</span>, or <span
+class="math inline">\(0\)</span> to indicate that the query point <span
+class="math inline">\(q\)</span> lies inside, outside, or directly on
+<span class="math inline">\(P\)</span>, respectively. To correctly
+handle ties between <span class="math inline">\(x\)</span>-coordinates,
+the algorithm treats any polygon vertex on the vertical line through
+<span class="math inline">\(q\)</span> (but not actually coincident with
+<span class="math inline">\(q\)</span>) as though it were slightly to
+the left. The algorithm clearly runs in <span
+class="math inline">\(O(n)\)</span> time.</p>
+<pre><code>def PtInPolygon(P, q):
+    sign = -1                       // outside if no crossings
+    n = len(P)
+    for i in range(n):
+        r = P[i]
+        s = P[(i+1)% n]
+        Delta = (r.x - q.x)*(s.y - q.y) - (r.y - q.y)*(s.x - q.x)
+        if s.x &lt;= q.x &lt; r.x         // positive crossing?
+            if Delta &gt; 0:
+                sign = -sign
+            elif Delta == 0:
+                return 0
+        elif r.x &lt;= q.x &lt; s.x       // negative crossing?
+            if Delta &lt; 0:
+                sign = -sign
+            elif Delta == 0:
+                return 0
+    return sign</code></pre>
+<h2 data-number="1.4" id="polygons-can-be-triangulated"><span
+class="header-section-number">1.4</span> Polygons Can Be
+Triangulated</h2>
+<p>Most algorithms that operate on simple polygons actually require a
+decomposition of the polygon into simple pieces that are easier to
+manage. We’ve already seen one such decomposition, first into vertical
+slabs, and then into trapezoids. For many geometric and topological
+algorithms, the most natural decomposition breaks the interior of the
+polygon into triangles that meet edge-to-edge. More formally, a
+<em>triangulation</em> is a triple of sets <span
+class="math inline">\((V, E, T)\)</span> with the following
+properties.</p>
+<ul>
+<li><span class="math inline">\(T\)</span> is a finite set of triangles
+in the plane with disjoint interiors.</li>
+<li><span class="math inline">\(E\)</span> is the set of edges of
+triangles in <span class="math inline">\(T\)</span>.</li>
+<li>Any two segments in <span class="math inline">\(E\)</span> have
+disjoint interiors.</li>
+<li><span class="math inline">\(V\)</span> is the set of vertices of
+triangles in <span class="math inline">\(T\)</span>.</li>
+</ul>
+<p>The third condition guarantees that the intersection of any two
+triangles in <span class="math inline">\(T\)</span> is either an edge of
+both, a vertex of both, or empty.</p>
+<p>If the union of the triangles in <span
+class="math inline">\(T\)</span> is equal to the closure of the interior
+of a simple polygon <span class="math inline">\(P\)</span>, we call
+<span class="math inline">\((V, E, T)\)</span> a <em>triangulation of
+<span class="math inline">\(P\)</span></em>. If moreover <span
+class="math inline">\(V\)</span> is the set of vertices of <span
+class="math inline">\(P\)</span>, then <span class="math inline">\((V,
+E, T)\)</span> is called a <em>frugal</em> triangulation of <span
+class="math inline">\(P\)</span>. Every edge of a frugal triangulation
+is either an edge of <span class="math inline">\(P\)</span> or an
+<em>(interior) diagonal</em>, meaning a line segment between two
+vertices of <span class="math inline">\(P\)</span> whose interior lies
+in the interior of <span class="math inline">\(P\)</span>.</p>
+<figure>
+<img src="Fig/triangular-decomp.png" style="width:80.0%"
+alt="A frugal triangulation, a non-frugal triangulation, and a non-triangulation of a simple polygon" />
+<figcaption aria-hidden="true">A frugal triangulation, a non-frugal
+triangulation, and a non-triangulation of a simple polygon</figcaption>
+</figure>
+<p>After playing with a few examples, it may seem obvious that every
+simple polygon has a frugal triangulation, but a formal proof of this
+fact is surprisingly subtle; several incorrect (or at least incomplete)
+proofs appear in the literature. The first complete, correct, axiomatic
+proofs were developed by Dehn (1899, unpublished) and Lennes (1911),
+although some components of their arguments already appear in the
+Gauss’s posthumously published notes.</p>
+<p>The following proof is somewhat more complicated (and intentionally
+<em>less</em> formal!) than Dehn’s and Lennes’s arguments, but it
+directly motivates a faster algorithm for constructing
+triangulations.</p>
+<dl>
+<dt><strong>Diagonal Lemma (Dehn, Lennes):</strong></dt>
+<dd>
+<em>Every simple polygon with at least four vertices has an interior
+diagonal.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(P\)</span> be a simple polygon with
+vertices <span class="math inline">\(p_0, p_1, \dots, p_{n-1}\)</span>
+for some <span class="math inline">\(n\ge 4\)</span>. As before, we
+assume without loss of generality that no two vertices of <span
+class="math inline">\(P\)</span> lie on a common vertical line. We begin
+by subdividing the closed interior of <span
+class="math inline">\(P\)</span> into trapezoids with vertical line
+<em>segments</em> through the vertices. Specifically, for each vertex
+<span class="math inline">\(p_i\)</span>, we cut along the longest
+vertical segment through <span class="math inline">\(p_i\)</span> in the
+closure of the interior of~<span class="math inline">\(P\)</span>. The
+resulting subdivision, which is called a <em>trapezoidal
+decomposition</em> of <span class="math inline">\(P\)</span>, can also
+be obtained from the slab decomposition we used to prove the Jordan
+polygon theorem by removing every exterior wall and every wall that does
+not end at a vertex of <span class="math inline">\(P\)</span>.
+</dd>
+<dd>
+<figure>
+<img src="Fig/polygon-trap-decomp.png" style="width:35.0%"
+alt="A trapezoidal decomposition of a simple polygon" />
+<figcaption aria-hidden="true">A trapezoidal decomposition of a simple
+polygon</figcaption>
+</figure>
+</dd>
+<dd>
+<p>Every trapezoid in the decomposition has exactly two polygon vertices
+on its boundary. Call a trapezoid <em>boring</em> if the line segment
+between these two vertices cuts through the interior of the trapezoid,
+and therefore is a diagonal of <span class="math inline">\(P\)</span>,
+and <em>interesting</em> otherwise. Every interesting trapezoid either
+has two vertices of <span class="math inline">\(P\)</span> on its
+ceiling, or two vertices of <span class="math inline">\(P\)</span> on
+its floor.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/polygon-mono-mountains.png" style="width:35.0%"
+alt="Boring diagonals" />
+<figcaption aria-hidden="true">Boring diagonals</figcaption>
+</figure>
+</dd>
+<dd>
+<p>If any of the trapezoids is boring, we immediately have a diagonal.
+Yawn.</p>
+</dd>
+<dd>
+<p>Any path through the interior of <span
+class="math inline">\(P\)</span> that starts in a ceiling trapezoid and
+ends in a floor trapezoid must pass through a boring trapezoid. So if
+every trapezoid is interesting, then every trapezoid is interesting
+<em>the same way</em>—either every trapezoid has two vertices on its
+ceiling, or every trapezoid has two vertices on its floor. Thus, <span
+class="math inline">\(P\)</span> is a special type of polygon we call a
+<em>monotone mountain</em>: any vertical line intersects at most two
+edges of <span class="math inline">\(P\)</span>, and the leftmost and
+rightmost vertices of <span class="math inline">\(P\)</span> are
+connected by a single edge of <span
+class="math inline">\(P\)</span>.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/monotone-mountain.png" style="width:40.0%"
+alt="Four diagonals in a monotone mountain" />
+<figcaption aria-hidden="true">Four diagonals in a monotone
+mountain</figcaption>
+</figure>
+</dd>
+<dd>
+<p>Without loss of generality, suppose <span
+class="math inline">\(p_0\)</span> is the leftmost vertex, <span
+class="math inline">\(p_{n-1}\)</span> is the rightmost vertex, and
+every other vertex is above the edge <span
+class="math inline">\(p_0p_{n-1}\)</span> (so every trapezoid has two
+vertices on its ceiling). Call a vertex <span
+class="math inline">\(p_i\)</span> <em>convex</em> if the interior angle
+at that vertex is less than <span class="math inline">\(\pi\)</span>, or
+equivalently, if the triple <span class="math inline">\((p_{i-1}, p_i,
+p_{i+1})\)</span> is oriented <em>clockwise</em>. Every monotone
+mountain has at least one convex vertex <span
+class="math inline">\(p_i\)</span> other than <span
+class="math inline">\(p_0\)</span> and <span
+class="math inline">\(p_{n-1}\)</span>; take, for example, the vertex
+furthest above the floor <span
+class="math inline">\(p_0p_{n-1}\)</span>. For any such vertex <span
+class="math inline">\(p_i\)</span>, the line segment <span
+class="math inline">\(p_{i-1}p_{i+1}\)</span> is a diagonal.</p>
+</dd>
+</dl>
+<!---
+**Proof:**
+: Let $P$ be a simple polygon with at least four vertices.  Let $q$ be the rightmost vertex of $P$ (breaking ties arbitrarily), and let $p$ and $r$ be the vertices immediately before and after $q$ in order around $P$.
+
+: First suppose the segment $pr$ does not otherwise intersect $P$.  For any point $x$ in the interior of $pr$, the ray from $x$ through $q$ crosses $P$ exactly once, at the point $q$.  (The Jordan _triangle_ theorem implies that $P$ does not intersect the interior of $\triangle pqr$, and therefore does not intersect the segment $xq$.}  Similarly, the ray from $q$ leading directly away from $x$ does not intersect $P$, because $q$ is the rightmost vertex of $P$.)  It follows that $pr$ lies in the interior of $P$ and thus is a diagonal.  In this case, we call $\triangle pqr$ an _ear_ of $P$.
+
+: Otherwise, $P$ intersects the interior of $pr$.  In this case, the Jordan _triangle_ theorem implies that $\triangle pqr$ contains at least one vertex of $P$ in its interior.  Let $s$ the rightmost vertex in the interior of $\triangle pqr$.  (In fact, we can take $s$ to be any vertex in the interior of $\triangle pqr$ such that some line through $s$ separates $q$ from all other vertices in the interior of $\triangle pqr$.)  The line segment $qs$ lies in the interior of $P$ and thus is a diagonal.
+--->
+<dl>
+<dt><strong>Triangulation Theorem:</strong></dt>
+<dd>
+<em>Every simple polygon has a frugal triangulation.</em>
+</dd>
+<dt><strong>Proof (Dehn, Lennes):</strong></dt>
+<dd>
+The theorem follows by induction from the diagonal lemma. Intuitively,
+to triangulate any nontrivial polygon, we can split any polygon along a
+diagonal and then recursively triangulate each of the two resulting
+smaller polygons.
+</dd>
+<dd>
+<p>Let <span class="math inline">\(P\)</span> be a simple polygon with
+<span class="math inline">\(n\)</span> vertices <span
+class="math inline">\(p_0, p_1, p_2, \dots, p_{n-1}\)</span>. If <span
+class="math inline">\(P\)</span> is a triangle, it has a trivial
+triangulation, so assume <span class="math inline">\(n&gt;3\)</span>.
+Suppose without loss of generality (reindexing the vertices if
+necessary) that <span class="math inline">\(d = p_0p_i\)</span> is a
+diagonal of <span class="math inline">\(P\)</span>, for some index <span
+class="math inline">\(i\)</span>. Let <span
+class="math inline">\(P^+\)</span> and <span
+class="math inline">\(P^-\)</span> denote the polygons with vertices
+<span class="math inline">\(p_0, p_i, p_{i+1}, \dots, p_{n-1}\)</span>
+and <span class="math inline">\(p_0, p_1, p_2, \dots, p_i\)</span>,
+respectively. The definition of “diagonal” implies that both <span
+class="math inline">\(P^+\)</span> and <span
+class="math inline">\(P^-\)</span> are simple. Color each edge of <span
+class="math inline">\(P\)</span> <em>red</em> if it is an edge of <span
+class="math inline">\(P^+\)</span> and <em>blue</em> otherwise; every
+blue edge is an edge of <span class="math inline">\(P^-\)</span>.</p>
+</dd>
+<dd>
+<p>Now we need to prove that the diagonal <span
+class="math inline">\(d\)</span> partitions the interior of <span
+class="math inline">\(P\)</span> into the interiors of <span
+class="math inline">\(P^+\)</span> and <span
+class="math inline">\(P^-\)</span>. Proving this claim is surprisingly
+subtle.</p>
+</dd>
+<dd>
+<p>Let <span class="math inline">\(U\)</span> be any open disk in the
+interior of <span class="math inline">\(P\)</span> that intersects <span
+class="math inline">\(d\)</span>; such a disk exists because <span
+class="math inline">\(d\)</span> is an <em>interior</em> diagonal. (We
+had to use that fact somewhere!) The set <span
+class="math inline">\(U\setminus p_0p_i\)</span> has exactly two
+components.[^pasch2] Choose arbitrary points <span
+class="math inline">\(q^+\)</span> and <span
+class="math inline">\(q^-\)</span>, one in each component. Let <span
+class="math inline">\(R^+\)</span> and <span
+class="math inline">\(R^-\)</span> be parallel rays starting at <span
+class="math inline">\(q^+\)</span> and <span
+class="math inline">\(q^-\)</span>, respectively, such that <span
+class="math inline">\(R^+\)</span> contains <span
+class="math inline">\(R^-\)</span>. Then <span
+class="math inline">\(R^+\)</span> crosses <span
+class="math inline">\(d\)</span> but <span
+class="math inline">\(R^-\)</span> does not, and <span
+class="math inline">\(R^+\)</span> and <span
+class="math inline">\(R^-\)</span> cross exactly the same edges of <span
+class="math inline">\(P\)</span>.</p>
+</dd>
+<dd>
+<p>[^pasch2] We are invoking the plane separation axion again here.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/diagonal.png" style="width:40.0%"
+alt="Partitioning a polygon with an interior diagonal" />
+<figcaption aria-hidden="true">Partitioning a polygon with an interior
+diagonal</figcaption>
+</figure>
+</dd>
+<dd>
+<p>As above, <span class="math inline">\(R^+\)</span> (and therefore
+<span class="math inline">\(R^-\)</span>) crosses an odd number of edges
+of <span class="math inline">\(P\)</span>. Without loss of generality,
+suppose <span class="math inline">\(R^+\)</span> (and therefore <span
+class="math inline">\(R^-\)</span>) crosses an even number of red edges
+and an odd number of blue edges. Then, because <span
+class="math inline">\(R^+\)</span> crosses <span
+class="math inline">\(d\)</span>, the point <span
+class="math inline">\(q^+\)</span> lies inside <span
+class="math inline">\(P^+\)</span> and outside <span
+class="math inline">\(P^-\)</span>. Similarly, <span
+class="math inline">\(q^-\)</span> lies inside <span
+class="math inline">\(P^-\)</span> and outside <span
+class="math inline">\(P^+\)</span>, because <span
+class="math inline">\(R^-\)</span> does not cross <span
+class="math inline">\(d\)</span>. We conclude (finally!) that the
+interiors of <span class="math inline">\(P^+\)</span> and <span
+class="math inline">\(P^-\)</span> are disjoint subsets of the interior
+of <span class="math inline">\(P\)</span>. Whew!</p>
+</dd>
+<dd>
+<p>The inductive hypothesis implies that <span
+class="math inline">\(P^+\)</span> has a frugal triangulation <span
+class="math inline">\((V^+, E^+, T^+)\)</span> and that <span
+class="math inline">\(P^-\)</span> has a frugal triangulation <span
+class="math inline">\((V^-,E^-,T^-)\)</span>. One can now verify
+mechanically that <span class="math inline">\((V^+\cup V^-,\)</span>
+<span class="math inline">\(E^+\cup E^-, T^+\cup T^-)\)</span> is a
+frugal triangulation of <span class="math inline">\(P\)</span>.</p>
+</dd>
+</dl>
+<h2 data-number="1.5" id="computing-a-triangulation"><span
+class="header-section-number">1.5</span> Computing a Triangulation</h2>
+<p>The proof of the diagonal lemma implies an efficient algorithm to
+triangulate any simple polygon. I’ll only sketch the algorithm here; for
+further details, see your favorite computational geometry textbook.
+First, we construct a trapezoidal decomposition in <span
+class="math inline">\(O(n\log n)\)</span> time using a
+<em>sweepline</em> algorithm. Intuitively, we sweep a vertical line from
+left to right across the plane, maintaining its intersection with the
+polygon in a balanced binary search tree, and inserting a new vertical
+wall whenever the line touches a vertex. (In fact, we only visit the
+vertices in order from left to right.) Second, we insert diagonals
+inside every boring trapezoid; these diagonals decompose <span
+class="math inline">\(P\)</span> into monotone mountains in <span
+class="math inline">\(O(n)\)</span> time. Finally, we triangulate each
+monotone mountain in <span class="math inline">\(O(n)\)</span> time by
+cutting off convex vertices in order from left to right.</p>
+<p>The overall running time is <span class="math inline">\(O(n\log
+n)\)</span>; the running time is dominated by the time to construct the
+trapezoidal decomposition. Theoretically faster algorithms for that
+construction are known—in particular, Chazelle described a famously
+complex <span class="math inline">\(O(n)\)</span>-time algorithm—but it
+is unclear whether any of these improvements is faster in practice, or
+indeed if any of them have actually been implemented.</p>
+<p>I’ll leave the following corollaries of the polygon triangulation
+theorem as exercises.</p>
+<dl>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Every frugal triangulation of a simple <span
+class="math inline">\(n\)</span>-gon contains exactly <span
+class="math inline">\(n-2\)</span> triangles and exactly <span
+class="math inline">\(n-3\)</span> diagonals.</em>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Every simple polygon with at least four vertices has at least two
+<strong>ears</strong>, where an ear is an internal diagonal that cuts
+off a single triangle.</em>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Let <span class="math inline">\(P\)</span> be a simple polygon with
+vertices <span class="math inline">\(p_0, p_1, \dots, p_{n-1}\)</span>.
+Let <span class="math inline">\(i,j,k,l\)</span> be four distinct
+indices with <span class="math inline">\(i&lt;j\)</span> and <span
+class="math inline">\(k&lt;l\)</span>, such that both <span
+class="math inline">\(p_ip_j\)</span> and <span
+class="math inline">\(p_kp_l\)</span> are interior diagonals of <span
+class="math inline">\(P\)</span>. These two diagonals cross if and only
+if either <span class="math inline">\(i&lt;k&lt;j&lt;l\)</span> or <span
+class="math inline">\(k&lt;i&lt;l&lt;j\)</span>.</em>
+</dd>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Any maximal set of non-crossing interior diagonals in a simple
+polygon <span class="math inline">\(P\)</span> yields a frugal
+triangulation of <span class="math inline">\(P\)</span>.</em>
+</dd>
+</dl>
+<h2 data-number="1.6" id="the-dehn-schönflies-theorem"><span
+class="header-section-number">1.6</span> The Dehn-Schönflies
+Theorem</h2>
+<dl>
+<dt><strong>The Dehn-Schönflies Theorem:</strong></dt>
+<dd>
+<em>For any simple polygon <span class="math inline">\(P\)</span>, there
+is a homeomorphism <span class="math inline">\(H \colon \mathbb{R}^2 \to
+\mathbb{R}^2\)</span> that maps <span class="math inline">\(P\)</span>
+to a convex polygon <span class="math inline">\(Q\)</span> and maps the
+interior of <span class="math inline">\(P\)</span> to the interior of
+<span class="math inline">\(Q\)</span>.</em>
+</dd>
+<dt><strong>Proof (Dehn):</strong></dt>
+<dd>
+[to be written]
+</dd>
+</dl>
+<h2 data-number="1.7"
+id="and-the-aptly-named-sir-not-appearing-in-this-film"><span
+class="header-section-number">1.7</span> and the aptly named Sir Not
+Appearing in This Film</h2>
+<ul>
+<li>Basic geometric algorithms:
+<ul>
+<li>Details of sweepline algorithm</li>
+<li>Der Dreigroschenalgorithmus</li>
+<li>Faster decomposition/triangulation algorithms</li>
+</ul></li>
+<li>Triangulating polygons with holes</li>
+<li>Compatible triangulations</li>
+<li>Weakly simple polygons</li>
+<li>Proof (via Hex and Y) of the full Jordan Curve Theorem</li>
+<li>Geodesic polygons on other surfaces (see exercises)</li>
+</ul>
+<h2 data-number="1.8" id="references"><span
+class="header-section-number">1.8</span> References</h2>
+<ol type="1">
+<li><p>Mark de Berg, Otfried Cheong, Marc van Kreveld, and Mark
+Overmars. <em>Computational Geometry: Algorithms and Applications</em>,
+3rd edition. Springer-Verlag, 2008. Your favorite computational geometry
+textbook.</p></li>
+<li><p>Bernard Bolzano. Anti-Euklid. Unpublished manuscript, c. 1840.
+Published posthumously in [10].</p></li>
+<li><p>Max Dehn. Beweis des Satzes, daß jedes geradlinige geschlossene
+Polygon ohne Doppelpunkte ‘die Ebene in zwei Teile teilt’. Unpublished
+manuscript, c.1899. Max Dehn Papers archive, University of Texas at
+Austin. Cited and described in detail by Guggenheimer [4]. Proof of the
+Jordan Polygon Theorem.</p></li>
+<li><p>Heinrich W. Guggenheimer. The Jordan curve theorem and an
+unpublished manuscript of Max Dehn. <em>Arch. History Exact Sci.</em>
+17:193–200, 1977.</p></li>
+<li><p>Camille Jordan. Courbes continues. <em>Cours d’Analyse de l’École
+Polytechnique</em>, 1st edition, vol. 3, 587–594, 1887.</p></li>
+<li><p>Camille Jordan. Lignes continues. <em>Cours d’Analyse de l’École
+Polytechnique</em>, 2nd edition, vol. 1, 90–99, 1893.</p></li>
+<li><p>Nels Johann Lennes. Theorems on the simple finite polygon and
+polyhedron. <em>Amer. J. Math.</em> 33:37–62, 1911. Read to the AMS in
+April, 1903. Proof of the Jordan Polygon Theorem.</p></li>
+<li><p>Joseph O’Rourke. <em>Computational Geometry in C</em>, 2nd
+edition. Cambridge University Press, 1998. Your favorite computational
+geometry textbook.</p></li>
+<li><p>Moritz Pasch. <em>Vorlesung über neuere Geometrie</em>. Teubner,
+1882.</p></li>
+<li><p>Kazimír Večerka. Bernard Bolzano: Anti-Euklid. <em>Sbornik pro
+dějiny přirodnich věd a teckniky / Acta Hist. Rerum Natur. Nec Non
+Tech.</em> 11:203–216, 1967. In Czech, with German summary.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Historically, the definition of “simple closed curve”
+was a point of serious confusion for several decades, starting with
+Bolzano around 1840s. This confusion was finally resolved only when
+Jordan defined closed curves as <em>functions</em> instead of
+<em>subsets of the plane</em>.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The plane separation axiom states that the complement
+<span class="math inline">\(\mathbb{R}^2\setminus \ell\)</span> of any
+<em>straight line</em> <span class="math inline">\(\ell\)</span> in the
+plane has exactly two components. This axiom follows easily from the
+intermediate value theorem; it is also formally equivalent to
+<em>Pasch’s axiom</em>: If a line <span
+class="math inline">\(\ell\)</span> does not contain any vertex of a
+triangle <span class="math inline">\(\triangle\)</span>, then <span
+class="math inline">\(\ell\)</span> intersects an even number of edges
+of <span class="math inline">\(\triangle\)</span>. In 1882, Moritz Pasch
+proved that his axiom is independent of Euclid’s postulates, but that
+some theorems in the <em>Elements</em> require it. Yes, there is such a
+thing as non-Paschian geometry. It’s weeeeeird.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

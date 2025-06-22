@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Fast Shortest Paths in Planar Graphs^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="20-minimum-cutsbeta.html" accesskey="n" rel="next">Minimum Cuts<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="18-branch-decompositionsvarnothing.html" accesskey="p" rel="previous">Branch Decompositions<span class="math inline">\(^\varnothing\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="19" id="fast-shortest-paths-in-planar-graphsbeta"><span
+class="header-section-number">19</span> Fast Shortest Paths in Planar
+Graphs<span class="math inline">\(^\beta\)</span></h1>
+<h2 data-number="19.1" id="dense-distance-graphs"><span
+class="header-section-number">19.1</span> Dense Distance Graphs</h2>
+<p>One of the most important applications of separators and <span
+class="math inline">\(r\)</span>-divisions in planar graphs is faster
+algorithms to computer shortest paths. Most of these faster algorithms
+rely on an implicit representation of shortest-path distances called the
+<em>dense distance graph</em>, first explicitly described by Jittat
+Fakcharoenphol and Satish Rao in 2001, but already implicit in Lipton,
+Rose, and Tarjan’s 1979 nested dissection algorithm, which we will
+discuss shortly.</p>
+<p>Let <span class="math inline">\(\Sigma\)</span> be a simple planar
+map with weighted darts; for now we’ll assume that all edge weights are
+non-negative. If necessary, add infinite-weight edges so that <span
+class="math inline">\(\Sigma\)</span> is a simple triangulation. Recall
+that a <em>good <span class="math inline">\(r\)</span>-division</em> of
+<span class="math inline">\(\Sigma\)</span> is a subdivision of <span
+class="math inline">\(\Sigma\)</span> into <span
+class="math inline">\(O(n/r)\)</span> <em>pieces</em> <span
+class="math inline">\(R_1, R_2, \dots\)</span> satisfying three
+conditions:</p>
+<ul>
+<li>Each piece has <span class="math inline">\(O(r)\)</span>
+vertices.</li>
+<li>Each piece has <span class="math inline">\(O(\sqrt{r})\)</span>
+boundary vertices (that is, vertices that are shared with other
+pieces).</li>
+<li>Each piece has <span class="math inline">\(O(1)\)</span>
+<em>holes</em> (faces of the piece that are not faces of <span
+class="math inline">\(\Sigma\)</span>).</li>
+</ul>
+<p>Fix a good <span class="math inline">\(r\)</span>-division <span
+class="math inline">\(\mathcal{R}\)</span>. For each piece <span
+class="math inline">\(R_i \in \mathcal{R}\)</span>, let <span
+class="math inline">\(X_i\)</span> be a complete directed graph over the
+boundary vertices of <span class="math inline">\(R_i\)</span>, where
+each dart <span class="math inline">\(u{\to} v\)</span> is weighted by
+the shortest-path distance in <span class="math inline">\(R_i\)</span>
+from its tail <span class="math inline">\(u\)</span> to its head <span
+class="math inline">\(v\)</span>. The dense distance graph is the union
+of these <span class="math inline">\(O(n/r)\)</span> weighted cliques.
+Altogether, the dense distance graph has <span class="math inline">\(n’
+= O(n/\sqrt{r})\)</span> vertices—only the boundary vertices of the
+pieces of the <span class="math inline">\(r\)</span>-division—and <span
+class="math inline">\(m’ = O(n)\)</span> weighted darts.</p>
+<p>Assuming all dart weights are non-negative, we can compute all <span
+class="math inline">\(O(r)\)</span> boundary-to-boundary shortest-path
+distances in each piece <span class="math inline">\(R_i\)</span> in
+<span class="math inline">\(O(r\log r)\)</span> time, by running the
+multiple-source shortest-path algorithm once for each hole in <span
+class="math inline">\(R_i\)</span>, using Dijkstra’s algorithm to
+compute the initial shortest-path tree. Thus, the overall time to
+compute the dense-distance graph is <span class="math inline">\(O(n\log
+r)\)</span>.</p>
+<h2 data-number="19.2" id="beating-dijkstra"><span
+class="header-section-number">19.2</span> Beating Dijkstra</h2>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given any planar map <span class="math inline">\(\Sigma\)</span>
+with non-negative lengths on its edges, we can compute the shortest path
+from any vertex <span class="math inline">\(s\)</span> to every other
+vertex of <span class="math inline">\(\Sigma\)</span> in <span
+class="math inline">\(O(n\log\log n)\)</span> time.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+We begin by triangulating <span class="math inline">\(\Sigma\)</span> in
+<span class="math inline">\(O(n)\)</span> time, building a good <span
+class="math inline">\(r\)</span>-division for the resulting
+triangulation in <span class="math inline">\(O(n)\)</span> time, and
+building the dense distance graph for the <span
+class="math inline">\(r\)</span>-division in <span
+class="math inline">\(O(n\log r)\)</span> time, for some parameter <span
+class="math inline">\(r\)</span> to be determined. In the top-level
+recursive call to build the good <span
+class="math inline">\(r\)</span>-division, we artificially declare <span
+class="math inline">\(s\)</span> to be a boundary vertex, so that it
+survives as a vertex in the dense-distance graph.
+</dd>
+<dd>
+<p>Next we compute the shortest-path distance from <span
+class="math inline">\(s\)</span> to every boundary vertex of the <span
+class="math inline">\(r\)</span>-division by running Dijkstra’s
+algorithm in the dense distance graph. If we implement Dijkstra’s
+algorithm using Fibonacci heaps, this step takes <span
+class="math inline">\(O(n’\log n’ + m’) = O((n/\sqrt{r})\log n +
+n)\)</span> time.</p>
+</dd>
+<dd>
+<p>Finally, for each piece <span class="math inline">\(P\)</span>, we
+attach an artificial course <span class="math inline">\(s’\)</span> to
+each boundary vertex <span class="math inline">\(u\)</span> with an edge
+with length <span class="math inline">\(\textsf{dist}(s,u)\)</span>, and
+compute a shortest path tree in <span class="math inline">\(P\)</span>
+from <span class="math inline">\(s’\)</span> using Dijkstra’s algorithm.
+This step takes <span class="math inline">\(O(r\log r)\)</span> time per
+piece, or <span class="math inline">\(O(n\log r)\)</span> time
+overall.</p>
+</dd>
+<dd>
+<p>The overall running time of our algorithm is <span
+class="math inline">\(O(n\log r + (n/\sqrt{r})\log n)\)</span>. In
+particular, if we set <span class="math inline">\(r = O(\log^2
+n)\)</span>, the running time is <span class="math inline">\(O(n\log\log
+n)\)</span>. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>Let me reiterate that this analysis assumes that we are using the
+<em>parametric</em> multiple-source shortest path algorithm to construct
+the dense-distance graph. If we try to use the more recent
+<em>contraction-based</em> MSSP algorithm of Das et al. instead, we end
+up with two mutually recursive algorithms, one computing single-course
+shortest paths, the other computing multiple-source shortest paths. The
+running time of the resulting single-source shortest-path algorithm is
+<span class="math inline">\(O(n\,\log\log n\, \log\log\log n\,
+\log\log\log\log n\cdots)\)</span>.</p>
+<p>The idea to use <span class="math inline">\(r\)</span>-divisions to
+speed up planar shortest paths is due to Greg Frederickson, who
+described an algorithm that runs in <span
+class="math inline">\(O(n\sqrt{\log n})\)</span> time in 1987. Ten years
+later, Monika Henzinger, Philip Klein, Satish Rao, and Sairam
+Subramanian described an algorithm that runs in <span
+class="math inline">\(O(n)\)</span> time. Both of these algorithms
+predate both good <span class="math inline">\(r\)</span>-divisions and
+Klein’s multiple-source shortest-path algorithm. Instead, these
+algorithms are variants of Dijkstra’s algorithm that recursively relax
+pieces of a carefully chosen recursive separator decomposition, instead
+of relaxing individual edges. Unlike the <span
+class="math inline">\(O(n\log\log n)\)</span> algorithm I’ve described
+above, which relies on <em>good</em> <span
+class="math inline">\(r\)</span>-divisions and planarity, the <span
+class="math inline">\(O(n)\)</span>-time algorithm of Henzinger et
+al. generalizes directly to any minor-closed family of graphs with
+bounded vertex degrees; the bounded-degree restriction was later removed
+by Tazari and Müller-Hannemann.</p>
+<h2 data-number="19.3" id="beating-bellman-ford-nested-dissection"><span
+class="header-section-number">19.3</span> Beating Bellman-Ford: Nested
+Dissection</h2>
+<p>Depending on which textbook you read, Dijkstra’s algorithm is either
+no longer correct or no longer efficient when some darts of the input
+graph have negative weight. In particular, if <span
+class="math inline">\(\Sigma\)</span> contains negative darts, we can no
+longer solve the multiple-source shortest-path problem in <span
+class="math inline">\(O(n\log n)\)</span> time, because we don’t know
+how compute the initial shortest-path trees that quickly.<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The standard shortest-paths algorithm for graphs with negative edges
+is <em>Bellman-Ford</em>, which runs in <span
+class="math inline">\(O(mn)\)</span> time; in particular, for simple
+planar graphs with <span class="math inline">\(n\)</span> vertices,
+Bellman-Ford runs in <span class="math inline">\(O(n^2)\)</span> time.
+But just as we beat Dijkstra’s algorithm, we can beat Bellman-Ford when
+the underlying graph is planar.</p>
+<p>The following <em>generalized nested dissection</em> algorithm,
+proposed by Richard Lipton, Donald Rose, and Robert Tarjan in 1979, was
+one of the earliest applications of planar separators. (The original
+nested dissection algorithm, proposed by Alan George in 1973, applied
+only to square grid graphs.) Although their algorithm was originally
+designed for abstract planar <em>graphs</em> rather than planar
+<em>maps</em>, the presentation and analysis are simpler if we use good
+<span class="math inline">\(r\)</span>-divisions, which require a planar
+embedding.</p>
+<p>We are given a simple planar graph (sic) <span
+class="math inline">\(G\)</span> with asymmetrically weighted darts,
+where some of the darts weights may be negative, and a source vertex
+<span class="math inline">\(s\)</span>. At a very high level, our
+strategy is to delete one vertex of <span
+class="math inline">\(G\)</span> using a <em>star-mesh
+transformation</em>, compute shortest-path distances from <span
+class="math inline">\(s\)</span> to every remaining vertex of <span
+class="math inline">\(G\)</span>, and finally compute the shortest-path
+distance from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(v\)</span>. A star-mesh transformation adds or
+reweights edges between the neighbors of the deleted vertex <span
+class="math inline">\(v\)</span> to restore shortest-path distances.
+Specifically, if there is no edge <span
+class="math inline">\(uw\)</span> between two neighbors <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(w\)</span>, we add one with dart weights <span
+class="math display">\[
+    \begin{aligned}
+        \ell(u{\to}w) &amp;\gets \ell(u{\to}v) + \ell(v{\to}w)\\
+        \ell(w{\to}u) &amp;\gets \ell(w{\to}v) + \ell(v{\to}u);
+    \end{aligned}
+\]</span> on the other hand, if edge <span
+class="math inline">\(uw\)</span> already exists, we change its dart
+weights as follows: <span class="math display">\[
+    \begin{aligned}
+        \ell(u{\to}w)
+        &amp;\gets \min \big\{ \ell(u{\to}w),~
+                            \ell(u{\to}v) + \ell(v{\to}w) \big\}
+        \\
+        \ell(w{\to}u)
+        &amp;\gets \min\big\{ \ell(w{\to}u),~
+                            \ell(w{\to}v) + \ell(v{\to}u) \big\}
+    \end{aligned}
+\]</span> These changes preserve shortest-path distances from any vertex
+except <span class="math inline">\(v\)</span> to any other vertex except
+<span class="math inline">\(v\)</span>.<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
+With the appropriate graph data structures, deleting <span
+class="math inline">\(v\)</span> takes <span
+class="math inline">\(O(\deg(v)^2)\)</span> time.</p>
+<p>After the Recursion Fairy computes distances from <span
+class="math inline">\(s\)</span> to all other vertices, we can recover
+the distance from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(v\)</span> by brute force in <span
+class="math inline">\(O(\deg(v))\)</span> time: <span
+class="math display">\[
+    \textsf{dist}(v)
+        \gets \min_{u{\to}v} \big\{\textsf{dist}(u) +
+\ell(u{\to}v)\big\}
+\]</span> In both running times, <span
+class="math inline">\(\deg(v)\)</span> refers to the degree of <span
+class="math inline">\(v\)</span> <em>when <span
+class="math inline">\(v\)</span> is eliminated</em>, not in the original
+graph <span class="math inline">\(G\)</span>. Different elimination
+orders can lead to different vertex degrees and therefore different
+running times. Star-mesh transformations do not preserve planarity, but
+this elimination process works for <em>arbitrary</em> graphs.</p>
+<p>Lipton, Rose, and Tarjan recursively construct an elimination order
+for <em>planar</em> graphs as follows. Let <span
+class="math inline">\(S\)</span> be a balanced separator that contains
+the source vertex <span class="math inline">\(s\)</span>, and let <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> be a partition of the vertices <span
+class="math inline">\(V\setminus S\)</span> so that there is no edge
+directly from <span class="math inline">\(A\)</span> to <span
+class="math inline">\(B\)</span>. We first recursively eliminate all
+vertices in <span class="math inline">\(A\)</span>, then recursively
+eliminate all vertices in <span class="math inline">\(B\)</span>, and
+finally eliminate all vertices in <span class="math inline">\(S\)</span>
+<em>except <span class="math inline">\(s\)</span></em> in arbitrary
+order. Opening up the recursive calls, the algorithm construct a
+complete separator hierarchy, and then eliminates vertices using a
+postorder traversal of the decomposition tree.</p>
+<p>If we only eliminate the interior vertices of each piece of a fixed
+<span class="math inline">\(r\)</span>-division in this hierarchy, the
+result is precisely the dense-distance graph defined by Fakcharoenphol
+and Rao!</p>
+<p>Suppose we build a <em>good</em> separator hierarchy using the
+algorithm of Klein, Mozes, and Sommer. Let <span
+class="math inline">\(T_\downarrow(r)\)</span> denote the worst-case
+time to eliminate all <em>interior</em> vertices in a piece with <span
+class="math inline">\(r\)</span> vertices, and let <span
+class="math inline">\(T_\uparrow(r)\)</span> denote the time to compute
+distances to the interior vertices in a piece with <span
+class="math inline">\(r\)</span> vertices after distances to the
+boundary vertices are known. The separation algorithm guarantees that
+each piece of size <span class="math inline">\(r\)</span> has <span
+class="math inline">\(O(\sqrt{r})\)</span> boundary vertices and a
+separator of size <span class="math inline">\(O(\sqrt{r})\)</span>.
+Thus, after recursively eliminating the interior vertices of the
+subpieces, each interior vertex on the separator has degree <span
+class="math inline">\(O(\sqrt{r})\)</span>. It follows that the
+functions <span class="math inline">\(T_\downarrow\)</span> and <span
+class="math inline">\(T_\uparrow\)</span> satisfy the recurrences <span
+class="math display">\[
+    \begin{aligned}
+    T_\downarrow(r) &amp;= T_\downarrow(r_L) + T_\downarrow(r_R) +
+O(r^{3/2})
+    \\[0.5ex]
+    T_\uparrow(r) &amp;= T_\uparrow(r_L) + T_\uparrow(r_R) + O(r)
+    \end{aligned}
+\]</span> where <span class="math inline">\(r_L + r_R &lt; r\)</span>
+and <span class="math inline">\(\max\{r_L, r_R\} \le 3r/4\)</span>.<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> These recurrences solve to <span
+class="math inline">\(T_\downarrow(r) = O(r^{3/2})\)</span> and <span
+class="math inline">\(T_\uparrow(r) = O(r\log r)\)</span>.</p>
+<p><strong>Theorem:</strong> <em>Given a planar graph <span
+class="math inline">\(G\)</span> with weighted darts, some of which may
+be negative, and a source vertex <span class="math inline">\(s\)</span>,
+we can compute the shortest path from <span
+class="math inline">\(s\)</span> to every other vertex of <span
+class="math inline">\(G\)</span> in <span
+class="math inline">\(O(n^{3/2})\)</span> time.</em></p>
+<h2 data-number="19.4" id="aside-computing-spring-embeddings"><span
+class="header-section-number">19.4</span> Aside: Computing Spring
+Embeddings</h2>
+<p>Almost exactly the same nested-dissection algorithm can be used to
+solve any <span class="math inline">\(n\times n\)</span> system of
+linear equations whose support matrix is the adjacency matrix of a
+planar graph, in <span class="math inline">\(O(n^{3/2})\)</span> time.
+The only differences are that we use stress coefficients instead of
+lengths, addition instead of minimization, and multiplication instead of
+addition.</p>
+<p>In particular, we can compute Tutte spring embeddings in <span
+class="math inline">\(O(n^{3/2})\)</span> time as follows. Recall that
+the input consists of a planar graph <span
+class="math inline">\(G\)</span>, where every dart <span
+class="math inline">\(u{\to}v\)</span> has a positive weight <span
+class="math inline">\(\lambda(u{\to}v)\)</span>. Without loss of
+generality, suppose <span class="math inline">\(\sum_{x{\to}y}
+\lambda(x{\to}y) = 1\)</span> for every vertex <span
+class="math inline">\(y\)</span>. When we eliminate any vertex <span
+class="math inline">\(v\)</span>, we adjust the stress coefficients
+between neighbors of <span class="math inline">\(v\)</span> by setting
+<span class="math display">\[
+    \lambda(u{\to}w)
+    \gets \lambda(u{\to}w) + \lambda(u{\to}v) \cdot \lambda(v{\to}w)
+\]</span> for every pair of neighbors <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(w\)</span>, and setting <span
+class="math inline">\(\lambda(v{\to}w) \gets 0\)</span> for every
+neighbor <span class="math inline">\(w\)</span>. (These adjustments
+preserve the invariant <span class="math inline">\(\sum_{x{\to}y}
+\lambda(x{\to}y) = 1\)</span> at every vertex <span
+class="math inline">\(y\)</span>.) On the way back up, we can recover
+the position of vertex <span class="math inline">\(v\)</span> using the
+equilibrium equation <span class="math display">\[
+    p(v) \gets \sum_{u{\to}v} \lambda(u{\to}v)\cdot p(u).
+\]</span> This elimination and recovery procedure is normally called
+<em>Gaussian elimination</em>.<a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a> Precisely the same
+analysis as the previous theorem immediately implies:</p>
+<p><strong>Theorem:</strong> <em>Given a planar graph <span
+class="math inline">\(G\)</span> with positively weighted darts, with
+one face identified with a convex polygon, we can compute the Tutte
+embedding of <span class="math inline">\(G\)</span> in <span
+class="math inline">\(O(n^{3/2})\)</span> time.</em></p>
+<p>The running time of generalized nested dissection can be further
+improved to <span class="math inline">\(O(n^{\omega/2})\)</span> using a
+fast-matrix multiplication algorithm in place of eliminating separator
+vertices. On the other hand, Lipton, Rose, and Tarjan’s algorithm cannot
+solve <em>arbitrary</em> planar linear systems over arbitrary fields;
+the underlying matrix must satisfy some subtle algebraic restrictions,
+and the field must have characteristic zero (<span
+class="math inline">\(\mathbb{Q}\)</span>, <span
+class="math inline">\(\mathbb{R}\)</span>, or <span
+class="math inline">\(\mathbb{C}\)</span>).<a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> In
+2010 Noga Alon and Raphael Yuster described a more complex variant that
+avoids these restrictions.</p>
+<h2 data-number="19.5" id="repricing"><span
+class="header-section-number">19.5</span> Repricing</h2>
+<p>More recent planar shortest-path algorithms improve Lipton, Rose, and
+Tarjan’s <span class="math inline">\(O(n^{3/2})\)</span> time bound to
+near-linear. One of the key components of these faster algorithms is a
+standard <em>repricing</em> technique first<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>
+proposed independently for minimum-cost flows by Nobuaki Tomizawa in
+1971, and Jack Edmonds and Richard Karp in 1972, but first applied
+specifically to shortest paths by Donald Johnson in 1973.</p>
+<p>Suppose each vertex <span class="math inline">\(v\)</span> has an
+associate <em>price</em> <span class="math inline">\(\pi(v)\)</span>. We
+can assign a new edge-length function <span
+class="math inline">\(\ell’\)</span> as follows: <span
+class="math display">\[
+    \ell’(u\mathord\to v) := \pi(u) + \ell(u\mathord\to v) - \pi(v).
+\]</span> Then for any path <span class="math inline">\(s\leadsto
+t\)</span> in <span class="math inline">\(G\)</span>, we have a
+telescoping sum <span class="math display">\[
+    \ell’(s\leadsto t) := \pi(s) + \ell(s\leadsto t) - \pi(t).
+\]</span> Because the length of every path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> changes by the same amount, the
+shortest paths from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> with respect to <span
+class="math inline">\(\ell\)</span> and <span
+class="math inline">\(\ell’\)</span> coincide! Thus, if we can find a
+pricing function that makes all new edge lengths <span
+class="math inline">\(\ell’(u\mathord\to v)\)</span> non-negative, we
+can compute shortest-path distances with respect to <span
+class="math inline">\(\ell’\)</span> using Dijkstra’s algorithm in <span
+class="math inline">\(O(n\log n)\)</span> time, or its more efficient
+planar replacement in <span class="math inline">\(O(n\log\log
+n)\)</span> time, and then recover distances with respect to <span
+class="math inline">\(\ell\)</span> as follows: <span
+class="math display">\[
+    \textsf{dist}(s, t) := \textsf{dist}’(s,t) - \pi(s) + \pi(t).
+\]</span></p>
+<p>For example, suppose <span class="math inline">\(\pi(v) =
+\textsf{dist}(s, v)\)</span> for some fixed source vertex <span
+class="math inline">\(s\)</span>, where <span
+class="math inline">\(\textsf{dist}\)</span> denotes shortest-path
+distance with respect to <span class="math inline">\(\ell\)</span>. Then
+we have <span class="math display">\[
+    \ell’(u\mathord\to v) := \textsf{dist}(s, u) + \ell(u\mathord\to v)
+- \textsf{dist}(s, v).
+\]</span> Ford’s formulation of shortest paths implies that the
+expression on the right is non-negative. Thus, once we’ve computed
+shortest paths from <em>one</em> source, we can efficiently compute
+shortest paths from any other source in near-linear time.</p>
+<h2 data-number="19.6" id="nested-dissection-revisited"><span
+class="header-section-number">19.6</span> Nested Dissection
+Revisited</h2>
+<p>Now let’s consider a different shortest-path algorithm based on
+nested dissection, based on a 1983 algorithm of Kurt Mehlhorn and Bernd
+Schmidt, but with some optimizations proposed by later authors.</p>
+<p>As before, we are given a simple <span
+class="math inline">\(n\)</span>-vertex planar triangulation <span
+class="math inline">\(\Sigma\)</span> with asymmetrically (and possibly
+negatively) weighted darts and a source vertex <span
+class="math inline">\(s\)</span>, and we want to compute the
+shortest-path distance from <span class="math inline">\(s\)</span> to
+every other vertex in <span class="math inline">\(\Sigma\)</span>. To
+simplify presentation, I’ll assume that no cycle in <span
+class="math inline">\(\Sigma\)</span> has negative total length, so that
+shortest-path distances are well-defined.</p>
+<p>I will use the notation <span
+class="math inline">\(\textsf{dist}_P(X, Y)\)</span> to denote the set
+of all shortest-path distances in subgraph <span
+class="math inline">\(P\)</span> from vertices in <span
+class="math inline">\(X\)</span> to vertices in <span
+class="math inline">\(Y\)</span>; our goal is to compute <span
+class="math inline">\(\textsf{dist}(s, \Sigma)\)</span>.</p>
+<p>The algorithm starts by computing a balanced cycle separator <span
+class="math inline">\(S\)</span> for <span
+class="math inline">\(\Sigma\)</span>. Let <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> be the pieces of <span
+class="math inline">\(\Sigma\)</span> obtained by slicing along <span
+class="math inline">\(S\)</span>, and let <span
+class="math inline">\(r\)</span> be any vertex in <span
+class="math inline">\(S\)</span>. The algorithm has five stages.</p>
+<ol type="1">
+<li><p>Recursively compute <span
+class="math inline">\(\textsf{dist}_A(r, A)\)</span> and <span
+class="math inline">\(\textsf{dist}_B(r, B)\)</span>. How the Recursion
+Fairy does this is none of your business.</p></li>
+<li><p>Compute <span class="math inline">\(\textsf{dist}_A(S,
+S)\)</span> and <span class="math inline">\(\textsf{dist}_B(S,
+S)\)</span>. Because <span class="math inline">\(S\)</span> is a simple
+cycle, we can compute all separator-to-separator distances within each
+piece time using either of our multiple-source shortest-path algorithms.
+There are <span class="math inline">\(O(n)\)</span> vertices in each
+piece, and we want to compute <span class="math inline">\(k = |S|^2 =
+O(n)\)</span> boundary-to-boundary distances within each piece, so our
+MSSP algorithms run in <span class="math inline">\(O(n\log n + k\log n)
+= O(n\log n)\)</span> time.<a href="#fn7" class="footnote-ref"
+id="fnref7" role="doc-noteref"><sup>7</sup></a></p></li>
+</ol>
+<ol start="3" type="1">
+<li><p>Compute <span class="math inline">\(\textsf{dist}_\Sigma(r,
+S)\)</span>. Build a complete directed graph <span
+class="math inline">\(\hat{S}\)</span> with vertices <span
+class="math inline">\(S\)</span>, where each dart <span
+class="math inline">\(u \mathord\to v\)</span> has length <span
+class="math inline">\(\min \{ \textsf{dist}_A(u,v), \textsf{dist}_B(u,v)
+\}\)</span>. The graph <span class="math inline">\(\hat{S}\)</span> has
+<span class="math inline">\(O(\sqrt{n})\)</span> vertices and <span
+class="math inline">\(O(n)\)</span> edges, so we can compute <span
+class="math inline">\(\textsf{dist}_\Sigma(r, S) =
+\textsf{dist}_{\hat{S}}(r, S)\)</span> using Bellman-Ford in <span
+class="math inline">\(O(r^{3/2})\)</span> time.</p></li>
+<li><p>Compute <span class="math inline">\(\textsf{dist}_\Sigma(r,
+\Sigma)\)</span> using Johnson’s repricing trick. We construct a graph
+<span class="math inline">\(H\)</span> from the disjoint union <span
+class="math inline">\(A\sqcup B\)</span> as follows. First we add an
+artificial source vertex <span class="math inline">\(\hat{r}\)</span>.
+Then for each separator vertex <span class="math inline">\(v\in
+S\)</span>, we add directed edges <span
+class="math inline">\(\hat{r}\mathord\to v_A\)</span> and <span
+class="math inline">\(\hat{r}\mathord\to v_B\)</span> to the copies of
+<span class="math inline">\(v\)</span> in <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>, both with length <span
+class="math inline">\(\textsf{dist}_\Sigma(r, v)\)</span>, which we
+computed in step 3. For any target vertex <span
+class="math inline">\(t\)</span>, we have <span
+class="math inline">\(\textsf{dist}_\Sigma(r, t) =
+\textsf{dist}_H(\hat{r}, t)\)</span>. Now we define prices for the
+vertices of <span class="math inline">\(H\)</span> using the distances
+we computed in step 2: <span class="math display">\[
+\pi(v) = \begin{cases}
+     \textsf{dist}_A(r, v)   &amp; \text{if $v$ is a vertex of $A$} \\
+     \textsf{dist}_B(r, v)   &amp; \text{if $v$ is a vertex of $B$} \\
+     \infty                  &amp; \text{if $v = \hat{r}$.}
+\end{cases}
+\]</span> Here <span class="math inline">\(\infty\)</span> is a symbolic
+placeholder for some sufficiently large value.<a href="#fn8"
+class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>
+Straightforward calculation implies that all darts in <span
+class="math inline">\(H\)</span> have non-negative repriced length.
+<span class="math inline">\(H\)</span> is a planar graph with <span
+class="math inline">\(O(n)\)</span> vertices and edges, so we can
+compute shortest paths in <span class="math inline">\(H\)</span> in
+<span class="math inline">\(O(n\log n)\)</span> time via Dijkstra’s
+algorithm, or in <span class="math inline">\(O(n\log\log n)\)</span>
+time using our faster algorithm based on <span
+class="math inline">\(r\)</span>-divisions.<a href="#fn9"
+class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a></p></li>
+</ol>
+<ol start="5" type="1">
+<li>Finally, compute <span class="math inline">\(\textsf{dist}_\Sigma(s,
+\Sigma)\)</span> using Johnson’s repricing trick, this time using the
+prices <span class="math inline">\(\pi(v) =
+\textsf{dist}_\Sigma(r,v)\)</span>. Again, it is not hard to verify that
+every dart in <span class="math inline">\(\Sigma\)</span> has
+non-negative length after repricing. Thus, we can compute <span
+class="math inline">\(\textsf{dist}_\Sigma(s,\Sigma)\)</span> in <span
+class="math inline">\(O(n\log n)\)</span> time using Dijkstra’s
+algorithm, or in <span class="math inline">\(O(n\log\log n)\)</span>
+time using our faster algorithm based on <span
+class="math inline">\(r\)</span>-divisions.</li>
+</ol>
+<figure>
+<img src="Fig/planar-neg-shortest.png" style="width:95.0%"
+alt="Computing planar shortest paths by nested dissection" />
+<figcaption aria-hidden="true">Computing planar shortest paths by nested
+dissection</figcaption>
+</figure>
+<p>The overall running time <span
+class="math inline">\(O(n^{3/2})\)</span> is dominated by the
+application of Bellman-Ford in stage 3. Any further improvements require
+speeding up Bellman-Ford, which is exactly what we’re going to do
+next!</p>
+<h2 data-number="19.7" id="monge-arrays-and-smawk"><span
+class="header-section-number">19.7</span> Monge arrays and SMAWK</h2>
+<p>A two-dimensional array <span class="math inline">\(M\)</span> is
+<em>Monge</em> if <span class="math display">\[
+    M[i, j] + M[i’, j’] \le M[i, j’] + M[i’, j]
+\]</span> for all array indices <span
+class="math inline">\(i&lt;i’\)</span> and <span
+class="math inline">\(j&lt;j’\)</span>. Monge arrays are named after the
+French geometer and civil engineer Gaspard Monge, who described an
+equivalent geometric condition in his 1781 <em>Mémoire sur la Théorie
+des Déblais et des Remblais</em>. Monge observed that if <span
+class="math inline">\(A, B, b, a\)</span> are the vertices of a convex
+quadtrilateral in cyclic order, the triangle inequality implies that
+<span class="math inline">\(|Aa| + |Bb| &lt; |Ab| + |aB|\)</span>.</p>
+<figure>
+<img src="Fig/monge.png" style="width:40.0%"
+alt="Monge’s observation: Non-crossing paths are shorter" />
+<figcaption aria-hidden="true">Monge’s observation: Non-crossing paths
+are shorter</figcaption>
+</figure>
+<dl>
+<dt><strong>Monge Structure Lemma:</strong></dt>
+<dd>
+<em>The following arrays are Monge:</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>Any array with constant rows.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="a">
+<li><em>Any array with constant columns.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="3" type="a">
+<li><em>Any array that is all 0s except for an upper-right rectangular
+block of 1s.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="4" type="a">
+<li><em>Any array that is all 0s except for an lower-left rectangular
+block of 1s.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="5" type="a">
+<li><em>Any positive multiple of any Monge array.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="6" type="a">
+<li><em>The sum of any two Monge arrays.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="7" type="a">
+<li><em>The transpose of any Monge array.</em></li>
+</ol>
+</dd>
+</dl>
+<p>In 1987, Alok Aggarwal, Maria Klawe, Shlomo Moran, Peter Shor, and
+Robert Wilber described an elegant recursive algorithm that finds the
+minimum element in every row of an <span class="math inline">\(n\times
+n\)</span> Monge array in <span class="math inline">\(O(n)\)</span>
+time, now usually called the <em>SMAWK</em> algorithm after the
+suitably-permuted initials of its authors. In 1990, Maria Klawe and
+Daniel Kleitman described an extension to the SMAWK algorithm that finds
+row-minima in <em>partial</em> Monge matrices, where some entries are
+undefined, but the Monge inequality holds whenever all four entries are
+defined. Klawe and Kleitman’s algorithm runs in <span
+class="math inline">\(O(n\,\alpha(n))\)</span> time, where <span
+class="math inline">\(\alpha(n)\)</span> is the slowly-growing inverse
+Ackermann function. Very recently, Timothy Chan described a randomized
+algorithm that find all row-minima in a staircase-Monge matrix in <span
+class="math inline">\(O(n)\)</span> expected time.</p>
+<p>A description of these algorithms is beyond the scope of this class,
+but you can find a complete description and analysis of the basic SMAWK
+algorithm in my <a
+href="https://courses.engr.illinois.edu/cs473/sp2020/notes/D-adv-dynprog.pdf">algorithms
+lecture notes</a>.</p>
+<h2 data-number="19.8"
+id="planar-distance-matrices-are-almost-monge"><span
+class="header-section-number">19.8</span> Planar distance matrices are
+(almost) Monge</h2>
+<p>In the same 2001 paper where they defined dense distance graphs,
+Fakcharoenphol and Rao described how to use SMAWK to compute shortest
+paths in planar maps more quickly.</p>
+<p>Let <span class="math inline">\(\Sigma\)</span> be a planar map with
+weighted edges. Let <span class="math inline">\(s_1, s_2, \dots,
+s_k\)</span> be the sequence of vertices on the boundary of the outer
+face of <span class="math inline">\(\Sigma\)</span>, in cyclic order.
+(If the outer face boundary is not a simple cycle, the same vertex may
+appear multiple times in this list.) Let <span
+class="math inline">\(D\)</span> be the <span
+class="math inline">\(k\times k\)</span> array where <span
+class="math inline">\(D[i,j] = \textsf{dist}_\Sigma(s_i,
+s_j)\)</span>.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>The distance array <span class="math inline">\(D\)</span> can be
+decomposed into two partial Monge matrices.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Fix four vertices <span class="math inline">\(u, v, w, x\)</span> in
+cyclic order around the boundary of the outer face of <span
+class="math inline">\(\Sigma\)</span>. The Jordan curve theorem implies
+that the shortest paths from <span class="math inline">\(u\)</span> to
+<span class="math inline">\(w\)</span> and from <span
+class="math inline">\(v\)</span> to <span
+class="math inline">\(x\)</span> must cross; let <span
+class="math inline">\(z\)</span> be any vertex in the intersection of
+these two shortest paths. The triangle inequality implies <span
+class="math display">\[
+\begin{aligned}
+    \textsf{dist}(u, w) + \textsf{dist}(v, x)
+    &amp; =
+    (\textsf{dist}(u, z) + \textsf{dist}(z, w)) ~+~
+    (\textsf{dist}(v, z) + \textsf{dist}(z, x)) \\
+    &amp; =
+    (\textsf{dist}(u, z) + \textsf{dist}(z, x)) ~+~
+    (\textsf{dist}(v, z) + \textsf{dist}(z, w)) \\
+    &amp; \le
+    \hphantom{(\textsf{dist}(u, z) + {}}
+    \textsf{dist}(u, x)\; ~+~ \;\textsf{dist}(v, w)
+\end{aligned}
+\]</span> (omitting subscript <span
+class="math inline">\(\Sigma\)</span>’s everywhere).
+</dd>
+<dd>
+<p>It follows that the Monge inequality <span class="math display">\[
+M[i, j] + M[i’, j’] \le M[i, j’] + M[i’, j];
+\]</span> holds for any indices <span class="math inline">\(i, i’, j,
+j’\)</span> that appear in that cyclic order (possibly with ties) modulo
+<span class="math inline">\(k\)</span>. In particular, the Monge
+inequality holds whenever <span class="math inline">\(i\le i’\le j\le
+j’\)</span>, which implies that the portion of <span
+class="math inline">\(M\)</span> on or below the main diagonal is Monge.
+Symmetrically, the portion of <span class="math inline">\(M\)</span> on
+or above the main diagonal is Monge. These two partial Monge matrices
+cover <span class="math inline">\(M\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p>Perhaps a better way to express this analysis is that the <span
+class="math inline">\(k\times 2k\)</span> partial array defined by <span
+class="math display">\[
+    D[i,j] := \begin{cases}
+        \textsf{dist}_G(s_i, s_{j \bmod k})
+                &amp; \text{if $i\le j\le i+k$} \\
+        \text{undefined}
+                &amp; \text{otherwise}
+    \end{cases}
+\]</span> is a single partial Monge array.</p>
+<figure>
+<img src="Fig/partial-monge.png" style="width:70.0%"
+alt="For any planar map, the array of boundary-to-boundary distances both splits into two partial Monge arrays (left) and unrolls into a single partial Monge array (right)" />
+<figcaption aria-hidden="true">For any planar map, the array of
+boundary-to-boundary distances both splits into two partial Monge arrays
+(left) and unrolls into a single partial Monge array
+(right)</figcaption>
+</figure>
+<h2 data-number="19.9" id="beating-nested-dissection"><span
+class="header-section-number">19.9</span> Beating Nested Dissection</h2>
+<p>Now recall that the third phase of our nested-dissection algorithm
+computes the distances <span
+class="math inline">\(\textsf{dist}_\Sigma(r, S)\)</span> by running
+Bellman-Ford on a weighted directed clique <span
+class="math inline">\(\hat{S}\)</span> over the vertices in <span
+class="math inline">\(S\)</span>. Let <span class="math inline">\(s_1,
+s_2, \dots, s_k\)</span> denote the vertices of the cycle separator
+<span class="math inline">\(S\)</span>, in order around the cycle. It
+will be more convenient to think of <span
+class="math inline">\(\hat{S}\)</span> as the overlay of two directed
+cliques <span class="math inline">\(\hat{S}_A\)</span> and <span
+class="math inline">\(\hat{S}_B\)</span>, in which each edge <span
+class="math inline">\(s_i\mathord\to s_j\)</span> has lengths <span
+class="math inline">\(\ell_A(s_i\mathord\to s_j) = \textsf{dist}_A(s_i,
+s_j)\)</span> and <span class="math inline">\(\ell_B(s_i\mathord\to s_j)
+= \textsf{dist}_B(s_i, s_j)\)</span>, respectively.</p>
+<p>The Bellman-Ford algorithm has the following simple structure. After
+initializing <span class="math inline">\(\textsf{dist}[r] = 0\)</span>
+and <span class="math inline">\(\textsf{dist}[v] = \infty\)</span> for
+all <span class="math inline">\(v\ne r\)</span>, the algorithm
+repeatedly identifies and then relaxes all tense edges in <span
+class="math inline">\(\hat{S}\)</span>. The algorithm terminates after
+<span class="math inline">\(O(k)\)</span> relaxation phases, where <span
+class="math inline">\(k = O(\sqrt{n})\)</span> is the number of vertices
+in <span class="math inline">\(S\)</span>.</p>
+<p>Here is some pseudo-Python for a single relaxation phase:</p>
+<pre><code>for i in range(k):
+    for j in range(k):
+        if dist[j] &lt; dist[i] + l[i,j]
+            dist[j] = dist[i] + l[i,j]</code></pre>
+<p>As written, this block of code runs in <span
+class="math inline">\(O(k^2)\)</span> time. Because the order that we
+scan the edges doesn’t matter, let’s first scan all edges in <span
+class="math inline">\(\hat{S}_A\)</span> and then all edges in <span
+class="math inline">\(\hat{S}_B\)</span>:</p>
+<pre><code>for i in range(k):
+    for j in range(k):
+        if dist[j] &lt; dist[i] + lA[i,j]
+            dist[j] = dist[i] + lA[i,j]
+for i in range(k):
+    for j in range(k):
+        if dist[j] &lt; dist[i] + lB[i,j]
+            dist[j] = dist[i] + lB[i,j]</code></pre>
+<p>Now I’m going to do something a little weird to the first block of
+code. For each vertex <span class="math inline">\(v\)</span>, I’ll first
+figure out the minimum value of <code>dist[i] + lA[i,j]</code> and only
+compare that minimum value to <code>dist[j]</code> at the end.</p>
+<pre><code>for j in range(k):
+    bestcost = math.inf
+    for i in range(k):
+        if dist[i] + lA[i,j] &lt; bestcost:
+            best[j] = i
+            bestcost = dist[i] + lA[i,j]
+for j in range(k):
+    if dist[j] &lt; bestcost:
+        dist[j] = bestcost</code></pre>
+<p>The first (outer) for-loop is choosing the minimum element in every
+<em>column</em> of a <span class="math inline">\(k\times k\)</span>
+matrix <span class="math inline">\(M\)</span>, where <span
+class="math display">\[
+    M[i,j] := \textsf{dist}(s_i) + \textsf{dist}_A(s_i, s_j)
+\]</span> <span class="math inline">\(M\)</span> is the sum of a matrix
+with constant columns (which is Monge) and the boundary-to-boundary
+distance matrix in <span class="math inline">\(A\)</span>. Thus, <span
+class="math inline">\(M\)</span> can be split into two partial Monge
+arrays, and therefore so can its transpose. It follows that we can
+compute <code>best[j]</code> (and therefore <code>dist[j]</code>) for
+all <span class="math inline">\(j\)</span> in <span
+class="math inline">\(O(k\alpha(k))\)</span> time using Klawe and
+Kleitman’s algorithm, or in <span class="math inline">\(O(k)\)</span>
+expected time using Chan’s algorithm.</p>
+<p>The same modification relaxes every tense edge in <span
+class="math inline">\(\hat{S}_B\)</span> in <span
+class="math inline">\(O(k\alpha(k))\)</span> time, or <span
+class="math inline">\(O(k)\)</span> expected time.</p>
+<p>With this optimization in place, Bellman-Ford computes all
+shortest-path distances <span
+class="math inline">\(\textsf{dist}_\Sigma(r, S)\)</span> in <span
+class="math inline">\(O(k) \cdot O(k\alpha(k)) = O(n\alpha(n))\)</span>
+time, or in <span class="math inline">\(O(n)\)</span> expected time.
+This accelerated version of Bellman-Ford is now commonly called
+“FR-Bellman-Ford” after Fakcharoenphol and Rao, who described a similar
+but slightly slower reduction to the original SMAWK algorithm.[^fr]</p>
+<p>With all these improvements in place, we obtain a shortest-path
+algorithm described by Philip Klein, Shay Mozes, and Oren Weimann in
+2009.</p>
+<ol type="1">
+<li>Recursively compute <span class="math inline">\(\textsf{dist}_A(r,
+A)\)</span> and <span class="math inline">\(\textsf{dist}_B(r,
+B)\)</span></li>
+<li>Compute <span class="math inline">\(\textsf{dist}_A(S,S)\)</span>
+and <span class="math inline">\(\textsf{dist}_B(S,S)\)</span> using MSSP
+in <span class="math inline">\(O(n\log n)\)</span> time.</li>
+<li>Compute <span
+class="math inline">\(\textsf{dist}_\Sigma(r,S)\)</span> using
+FR-Bellman-Ford in <span class="math inline">\(O(n\alpha(n))\)</span>
+time.</li>
+<li>Compute <span
+class="math inline">\(\textsf{dist}_\Sigma(r,\Sigma)\)</span> using
+reweighting and <span class="math inline">\(r\)</span>-divisions in
+<span class="math inline">\(O(n\log\log n)\)</span> time.</li>
+<li>Compute <span
+class="math inline">\(\textsf{dist}_\Sigma(s,\Sigma)\)</span> using
+reweighting and <span class="math inline">\(r\)</span>-divisions in
+<span class="math inline">\(O(n\log\log n)\)</span> time.</li>
+</ol>
+<p>The overall running time satisfies the recurrence <span
+class="math display">\[
+    T(n) \le T(n_A) + T(n_B) ~+~ O(n\log n)
+\]</span> where (after a suitable domain transformation) <span
+class="math inline">\(n_A + n_B = n\)</span> and <span
+class="math inline">\(\max\{n_A, n_B\} \le 3n/4\)</span>. We conclude
+that the algorithm runs in <span class="math inline">\(O(n\log^2
+n)\)</span> time; our invocation of MSSP in stage 2 is (just barely) the
+bottleneck.</p>
+<p>In 2010, Shay Mozes and Christian Wulff-Nilsen improved this
+algorithm even further by using a good <span
+class="math inline">\(r\)</span>-division at each level of recursion
+(with <span class="math inline">\(r \approx n/\log n\)</span>) instead
+of just one separator cycle; their improved algorithm runs in <span
+class="math inline">\(O(n\log^2n /\log\log n)\)</span>. I will describe
+their improvement at the end of the next lecture note.</p>
+<h2 data-number="19.10" id="references-11"><span
+class="header-section-number">19.10</span> References</h2>
+<ol type="1">
+<li><p>Alok Aggarwal, Maria M. Klawe, Shlomo Moran, Peter Shor, and
+Robert Wilber. <a href="https://doi.org/10.1007/BF01840359">Geometric
+applications of a matrix-searching algorithm</a>. <em>Algorithmica</em>
+2(1–4):195–208, 1987. The SMAWK algorithm.</p></li>
+<li><p>Noga Alon and Raphael Yuster. <a
+href="https://doi.org/10.1109/FOCS.2010.28">Solving linear systems
+through nested dissection</a>. <em>Proc. 51st IEEE Symp. Found. Comput.
+Sci.</em>, 225–234, 2010.</p></li>
+<li><p>Bernard A. Carré. <a
+href="https://doi.org/10.1093/imamat/7.3.273">An algebra for network
+routing problems</a>. <em>IMA J. Appl. Math.</em> 7(3):273–294,
+1971.</p></li>
+<li><p>Timothy M. Chan. <a
+href="https://doi.org/10.1137/1.9781611976465.88">(Near-)linear-time
+randomized algorithms for row minima in Monge partial matrices and
+related problems</a>. <em>Proc. 32nd Ann. ACM-SIAM Symp. Discrete
+Algorithms</em>, 1465–1482, 2021.</p></li>
+<li><p>Jack Edmonds and Richard M. Karp. <a
+href="https://doi.org/10.1145/321694.321699">Theoretical improvements in
+algorithmic efficiency of network flow problems</a>. <em>J. Assoc.
+Comput. Mach.</em> 19(2):248–264, 1972.</p></li>
+<li><p>Jittat Fakcharoenphol and Satish Rao. <a
+href="https://doi.org/10.1016/j.jcss.2005.05.007">Planar graphs,
+negative weight edges, shortest paths, and near linear time</a>. <em>J.
+Comput. Syst. Sci.</em> 72(5):868–889, 2006.</p></li>
+<li><p>Greg N. Frederickson. <a
+href="https://doi.org/10.1137/0216064">Fast algorithms for shortest
+paths in planar graphs with applications</a>. <em>SIAM J. Comput.</em>
+16(8):1004–1004, 1987.</p></li>
+<li><p>Alan George. <a href="https://doi.org/10.1137/0710032">Nested
+dissection of a regular finite element mesh</a>. <em>SIAM J. Numer.
+Anal.</em> 10(2):345–363, 1973.</p></li>
+<li><p>Monika R. Henzinger, Philip Klein, Satish Rao, and Sairam
+Subramanian. <a href="https://doi.org/10.1006/jcss.1997.1493">Faster
+shortest-path algorithms for planar graphs</a>. <em>J. Comput. Syst.
+Sci.</em> 55(1):3–23, 1997.</p></li>
+<li><p>Carl Gustav Jacob Jacobi. De aequationum differentialum systemate
+non normali ad formam normalem revocando (Ex Ill. C. G. J. Jacobi
+manuscriptis posthumis in medium protulit A. Clebsch). <em>C. G. J.
+Jacobi’s gesammelte Werke, fünfter Band</em>, 485–513, 1890. Bruck und
+Verlag von Georg Reimer. English translation in [8].</p></li>
+<li><p>Carl Gustav Jacob Jacobi and François Ollivier (translator). <a
+href="https://doi.org/10.1007/s00200-009-0088-2">The reduction to normal
+form of a non-normal system of differential equations</a>. <em>Appl.
+Algebra Eng. Commun. Comput.</em> 20(1):33–64, 2009. English translation
+of [7].</p></li>
+<li><p>Donald B. Johnson. <a
+href="https://doi.org/10.1145/321992.321993">Efficient algorithms for
+shortest paths in sparse networks</a>. <em>J. Assoc. Comput. Mach.</em>
+24(1):1–13, 1977.</p></li>
+<li><p>Maria M. Klawe and Daniel J. Kleitman. <a
+href="https://doi.org/10.1137/0403009">An almost linear time algorithm
+for generalized matrix searching</a>. <em>SIAM J. Discrete Math.</em>
+3(1):81–97, 1990.</p></li>
+<li><p>Philip Klein, Shay Mozes, and Oren Weimann. <a
+href="https://doi.org/10.1145/1721837.1721846">Shortest paths in
+directed planar graphs with negative lengths: A linear-space <span
+class="math inline">\(O(n \log^2 n)\)</span>-time algorithm</a>. <em>ACM
+Trans. Algorithms</em> 6(2):30:1–30:18, 2010.</p></li>
+<li><p>Richard J. Lipton, Donald J. Rose, and Robert Endre Tarjan. <a
+href="https://doi.org/10.1137/0716027">Generalized nested
+dissection</a>. <em>SIAM J. Numer. Anal.</em> 16:346–358, 1979.</p></li>
+<li><p>Kurt Mehlhorn and Bernd H. Schmidt. <a href="">A single shortest
+path algorithm for graphs with separators</a>. <em>Proc. 4th Int. Conf.
+Foundations of Computation Theory</em>, 302–309, 1983. Lecture Notes
+Comput. Sci. 158, Springer.</p></li>
+<li><p>Gaspard Monge. <a
+href="https://gallica.bnf.fr/ark:/12148/bpt6k35800/f796">Mémoire sur la
+théorie des déblais et des remblais</a>. <em>Histoire de l’Académie
+royale des sciences</em> 666–705, 1781.</p></li>
+<li><p>Shay Mozes and Christian Wulff-Nilsen. <a
+href="https://doi.org/10.1007/978-3-642-15781-3_18">Shortest paths in
+planar graphs with real lengths in <span class="math inline">\(O(n
+\log^2 n/\log\log n)\)</span> time</a>. <em>Proc. 18th Ann. Europ. Symp.
+Algorithms</em>, 206–217, 2010. Lecture Notes Comput. Sci. 6347,
+Springer-Verlag. arXiv:<a
+href="https://arxiv.org/abs/0911.4963">0911.4963</a>.</p></li>
+<li><p>Siamak Tazari and Matthias Müller-Hannemann. <a
+href="https://doi.org/10.1016/j.dam.2008.08.002">Shortest paths in
+linear time on minor-closed graph classes, with an application to
+Steiner tree approximation</a>. <em>Discrete Appl. Math.</em>
+157(4):673–684, 2009.</p></li>
+<li><p>Nobuaki Tomizawa. <a
+href="https://doi.org/10.1002/net.3230010206">On some techniques useful
+for solution of transportation network problems</a>. <em>Networks</em>
+1:173–194, 1971.</p></li>
+</ol>
+<h2 data-number="19.11" id="aptly-named-sir-not-2"><span
+class="header-section-number">19.11</span> Aptly Named Sir Not</h2>
+<ul>
+<li>Shortest paths in <span class="math inline">\(O(n)\)</span>
+time.</li>
+</ul>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>If we are <em>given</em> the shortest-path tree rooted
+at any boundary vertex, the remainder of the parametric MSSP algorithm
+runs correctly, without modification, in <span
+class="math inline">\(O(n\log n)\)</span> time.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In particular, the original graph <span
+class="math inline">\(G\)</span> contains a negative cycle if and only
+if, at after eliminating some subset of vertices, <span
+class="math inline">\(G\)</span> contains an edge <span
+class="math inline">\(xy\)</span> such that <span
+class="math inline">\(\ell(x{\to}y) + \ell(y{\to}x) &lt; 0\)</span>.<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I’m playing a little fast and loose here. Recall that
+the Klein-Mozes-Sommer separator hierarchy does not necessarily evenly
+partition vertices at every level of recursion, but only at every third
+level. So formalizing this analysis requires considering eight recursive
+subproblems, not just two.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The formulation of optimal path problems as solving
+linear systems over <span class="math inline">\((\min,+)\)</span>- and
+<span class="math inline">\((\max,+)\)</span>-algebras dates back to at
+least the 1960s. For example, in 1971 Bernard Carré observed that
+different formulations of Bellman-Ford are <span
+class="math inline">\((\min,+)\)</span>-variants of Jacobi and
+Gauss-Seidel iteration, and the Floyd-Warshall all-pairs shortest-path
+algorithm is a <span class="math inline">\((\min,+)\)</span>-variant of
+Jordan elimination.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Specifically, Lipton, Rose, and Tarjan’s elimination
+algorithm assumes that when a row is eliminated, its diagonal entry is
+nonzero. (Recall that the algorithm chooses the elimination order before
+doing any elimination.) This condition is automatically satisfied for
+symmetric positive-definition linear systems over <span
+class="math inline">\(\mathbb{R}\)</span>, but is not satisfied in
+general.<a href="#fnref5" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>At least, first <em>explicitly</em> proposed. Arguably
+the repricing technique is already implicit in Jacobi’s mid-19th-century
+description of the “Hungarian” algorithm for the assignment problem.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Mehlhorn and Schmidt’s algorithm reprices the vertices
+in each piece, and then runs Dijkstra’s algorithm from each separator
+vertex, in <span class="math inline">\(O(n^{3/2}\log n)\)</span> total
+time.<a href="#fnref7" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>If you’re uncomfortable with symbolic infinities, it
+suffices to set <span class="math display">\[
+\pi(\hat{r}) =
+    \max\left\{
+            \textsf{dist}_A(r, u) - \textsf{dist}_\Sigma(r, u), ~
+            \textsf{dist}_B(r, u) - \textsf{dist}_\Sigma(r, u)
+    \bigm| u\in S \right\}
+\]</span><a href="#fnref8" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Mehlhorn and Schmidt compute <span
+class="math inline">\(\textsf{dist}_\Sigma(r, \Sigma)\)</span> by brute
+force in <span class="math inline">\(O(n^{3/2})\)</span> time, by
+observing that <span class="math inline">\(\textsf{dist}_\Sigma(r, v) =
+\min_{u\in S} \{\textsf{dist}_\Sigma(r, u) +
+\textsf{dist}_A(u,v)\}\)</span> for every vertex <span
+class="math inline">\(v\in A\)</span>, and similarly for <span
+class="math inline">\(B\)</span>.<a href="#fnref9" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

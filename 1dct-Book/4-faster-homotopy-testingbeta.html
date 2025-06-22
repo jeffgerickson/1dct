@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Faster Homotopy Testing^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="5-shortest-homotopic-pathsbeta.html" accesskey="n" rel="next">Shortest (Homotopic) Paths<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="3-homotopy-testingbeta.html" accesskey="p" rel="previous">Homotopy Testing<span class="math inline">\(^\beta\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="4" id="faster-homotopy-testingbeta"><span
+class="header-section-number">4</span> Faster Homotopy Testing<span
+class="math inline">\(^\beta\)</span></h1>
+<p>In the previous lecture, we saw an algorithm to decide if one polygon
+is contractible, or if two polygons are homotopic, in the plane with
+several points removed. The algorithm runs in <span
+class="math inline">\(O(k\log k + nk)\)</span> time, where <span
+class="math inline">\(k\)</span> is the number of obstacle points; in
+the worst case, this running time is quadratic in the input size.</p>
+<p>A running time of <span class="math inline">\(\Omega(nk)\)</span> is
+inevitable if we are required to compute an explicit reduced crossing
+sequence; consider the polygon and obstacles below. But if a polygon is
+<em>contractible</em>—homotopic to a single point—its reduced crossing
+sequence is empty. Similarly the (non-reduced) crossing sequence of a
+polygon can have length <span class="math inline">\(\Omega(nk)\)</span>,
+even if the polygon is contractible, but nothing requires us to compute
+explicit crossing sequences!</p>
+<figure>
+<img src="Fig/long-crossing-sequence.png" style="width:30.0%"
+alt="A polygon and obstacles with a long reduced crossing sequence" />
+<figcaption aria-hidden="true">A polygon and obstacles with a long
+reduced crossing sequence</figcaption>
+</figure>
+<p>In this lecture, I’ll describe another algorithm to test
+contractibility of polygons in punctured planes, which is faster either
+when the polygon has few self-intersections or when the number of
+obstacles is significantly larger than the number of polygon vertices.
+This algorithm is based on an algorithm of Cabello et al. [1], with some
+improvements by Efrat et al. [2]. Variations of this algorithm compute
+reduced crossing sequences <em>without</em> explicitly computing
+non-reduced crossing sequences first.</p>
+<p>The key observation is that we are free to modify <em>both</em> the
+polygon <em>and</em> the obstacles, as long as our modifications do not
+change the reduced crossing sequence. In short, we are solving a
+<em>topology</em> problem, so we should feel free to choose whatever
+<em>geometry</em> is most convenient for our purposes.</p>
+<p>To make the following discussion concrete, let <span
+class="math inline">\(O\)</span> be an arbitrary set <span
+class="math inline">\(k\)</span> of obstacle points in the plane, and
+let <span class="math inline">\(P\)</span> be an arbitrary <span
+class="math inline">\(n\)</span>-vertex polygon in <span
+class="math inline">\(\mathbb{R}^2 \setminus O\)</span>. As usual, we
+assume these objects are in <em>general position</em>: no two
+interesting points (obstacles, polygon vertices, or self-intersection
+points) lie on a common vertical line, and no three polygon vertices lie
+on a common line. In particular, no edge of <span
+class="math inline">\(P\)</span> is vertical, and every point where
+<span class="math inline">\(P\)</span> self-intersects is a transverse
+intersection between two edges. This assumption can be enforced with
+probability <span class="math inline">\(1\)</span> by randomly rotating
+the coordinate system and randomly perturbing the vertices.</p>
+<h2 data-number="4.1" id="trapezoidal-decomposition"><span
+class="header-section-number">4.1</span> Trapezoidal decomposition</h2>
+<p>This first stage of our algorithm, like our earlier polygon
+triangulation algorithm, first constructs a <em>trapezoidal
+decomposition</em> of the input. We define the decomposition by
+extending vertical segments, which we call <em>fences</em>, upward and
+downward from each obstacle, from each vertex of <span
+class="math inline">\(P\)</span>, and from each self-intersection point
+of <span class="math inline">\(P\)</span>, until they hit edges of <span
+class="math inline">\(P\)</span> (or escape to infinity). These fences,
+together with the edges of <span class="math inline">\(P\)</span>,
+decompose the plane into trapezoids, some of which are unbounded and
+others degenerate. See Figure 2.</p>
+<figure>
+<img src="Fig/trap-decomp.png" style="width:40.0%"
+alt="A trapezoidal decomposition of a self-intersecting polygon and four obstacles" />
+<figcaption aria-hidden="true">A trapezoidal decomposition of a
+self-intersecting polygon and four obstacles</figcaption>
+</figure>
+<p>A classical sweepline algorithm of Bentley and Ottmann constructs
+this decomposition in <span class="math inline">\(O((n + k + s)\log
+(n+k))\)</span> time, where <span class="math inline">\(s\)</span> is
+the number of self-intersection points. (There are several faster
+algorithms, especially when the number of self-intersections is small,
+but the Bentley-Ottmann algorithm is much simpler to describe and
+implement, and using these faster alternatives would not significantly
+improve the overall running time of our contractibility algorithm.)</p>
+<p>Think of the <span class="math inline">\(n\)</span> polygon edges and
+<span class="math inline">\(k\)</span> obstacle points as <span
+class="math inline">\(n+k\)</span> line segments (<span
+class="math inline">\(k\)</span> of which have length zero). Any
+vertical line intersects t most <span class="math inline">\(n+1\)</span>
+of these segments. The Bentley-Ottman algorithm sweeps a vertical line
+<span class="math inline">\(\ell\)</span> across the plane, maintaining
+the sorted sequence of segments intersecting <span
+class="math inline">\(\ell\)</span> in a balanced binary search tree, so
+that segments can be inserted or deleted in <span
+class="math inline">\(O(\log n)\)</span> time. The <span
+class="math inline">\(x\)</span>-coordinates where this intersection
+sequence changes are called <em>events</em>; there are two types of
+events:</p>
+<ul>
+<li><em>vertex</em> events, where <span
+class="math inline">\(\ell\)</span> passes through a vertex of <span
+class="math inline">\(P\)</span> or a point in <span
+class="math inline">\(O\)</span>, and</li>
+<li><em>intersection</em> events, where <span
+class="math inline">\(\ell\)</span> passes through a self-intersection
+point of <span class="math inline">\(P\)</span>.</li>
+</ul>
+<p>The algorithm processes these events in order from left to right.</p>
+<p>The vertices and obstacles are all known in advance, so after an
+initial <span class="math inline">\(O((n+k)\log(n+k))\)</span> sorting
+phase, it is easy to find the next vertex event. Intersections are
+<em>not</em> known in advance, and computing them by brute force in
+<span class="math inline">\(O(n^2)\)</span> time would take too long.
+Instead, we observe that the <em>next</em> intersection event must occur
+at the intersection of two consecutive segments along <span
+class="math inline">\(\ell\)</span>. Thus, for each consecutive pair of
+segments that intersects to the right of <span
+class="math inline">\(\ell\)</span>, we have a <em>potential</em>
+intersection event. We maintain these <span
+class="math inline">\(O(n)\)</span> potential intersection events in a
+priority queue, so that we can find the next <em>actual</em>
+intersection event in <span class="math inline">\(O(\log n)\)</span>
+time.</p>
+<p>At each event, we insert a single fence, perform <span
+class="math inline">\(O(1)\)</span> binary-tree operations to maintain
+the intersection sequence with <span
+class="math inline">\(\ell\)</span>, and then perform <span
+class="math inline">\(O(1)\)</span> priority-queue operations. There are
+<span class="math inline">\(O(n + k + s)\)</span> events, each requiring
+<span class="math inline">\(O(\log n)\)</span> time, so including the
+initial sort, the overall running time is <span
+class="math inline">\(O((n + k + s)\log (n + k))\)</span>.</p>
+<p>As a by-product of the sweep-line algorithm, we obtain the complete
+list of self-intersection points. We subdivide <span
+class="math inline">\(P\)</span> by introducing two coincident vertices
+at each self-intersection point, increasing the number of vertices from
+<span class="math inline">\(n\)</span> to <span
+class="math inline">\(n+2s\)</span>, and ensuring that the edges of
+<span class="math inline">\(P\)</span> intersect only at vertices.</p>
+<h2 data-number="4.2" id="vertical-and-horizontal-ranks"><span
+class="header-section-number">4.2</span> Vertical and horizontal
+ranks</h2>
+<p>Next, we replace <span class="math inline">\(P\)</span> and <span
+class="math inline">\(O\)</span> with a new <em>orthogonal</em> polygon
+<span class="math inline">\(\bar{P}\)</span> and a new set of obstacles
+<span class="math inline">\(\bar{O}\)</span> that define exactly the
+same crossing sequence. At a high level, we replace each edge of <span
+class="math inline">\(P\)</span> with a horizontal line segment and each
+vertex of <span class="math inline">\(P\)</span> with a vertical line
+segment.</p>
+<p>The <span class="math inline">\(y\)</span>-coordinates of the
+horizontal segments are determined by the following <em>vertical
+ranking</em> of the polygon edges and obstacle points. Let <span
+class="math inline">\(S\)</span> be the set of <span
+class="math inline">\(m = n+2s+k\)</span> interior-disjoint segments,
+consisting of the subdivided edges of <span
+class="math inline">\(P\)</span> and the obstacles <span
+class="math inline">\(O\)</span>. For any two segments <span
+class="math inline">\(\sigma\)</span> and <span
+class="math inline">\(\tau\)</span> in <span
+class="math inline">\(S\)</span>, write <span
+class="math inline">\(\sigma\Uparrow\tau\)</span> (and say “sigma is
+above tau”) if there is a vertical segment with positive length whose
+upper endpoint lies on <span class="math inline">\(\sigma\)</span> and
+whose lower endpoint lies on <span
+class="math inline">\(\tau\)</span>.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+For <strong>any</strong> set <span class="math inline">\(S\)</span> of
+interior-disjoint non-vertical line segments, the <span
+class="math inline">\(\Uparrow\)</span> relation is acyclic.
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+For the sake of argument, let <span class="math inline">\(\sigma_1
+\Uparrow \sigma_2 \Uparrow \cdots \Uparrow \sigma_r \Uparrow
+\sigma_1\)</span> be a minimum-length cycle of segments in <span
+class="math inline">\(S\)</span>. Obviously <span
+class="math inline">\(r \ge 2\)</span>, because no segment is above
+itself. Similarly, <span class="math inline">\(r \ge 3\)</span>, because
+<span class="math inline">\(\sigma_1 \Uparrow \sigma_2\)</span> and
+<span class="math inline">\(\sigma_2 \Uparrow \sigma_1\)</span> would
+imply that <span class="math inline">\(\sigma_1\)</span> and <span
+class="math inline">\(\sigma_2\)</span> have intersecting interiors.
+</dd>
+<dd>
+<p>Rotate the indices if necessary, so that the right endpoint of <span
+class="math inline">\(\sigma_1\)</span> has strictly smaller <span
+class="math inline">\(x\)</span>-coordinate than the right endpoint of
+any other segment <span class="math inline">\(\sigma_i\)</span> in the
+cycle. In particular, the right endpoints of <span
+class="math inline">\(\sigma_2\)</span> and <span
+class="math inline">\(\sigma_r\)</span> are both strictly to the right
+of <span class="math inline">\(\sigma_1\)</span>. Thus, the right
+endpoint of <span class="math inline">\(\sigma_1\)</span> is both
+directly above some point of <span
+class="math inline">\(\sigma_2\)</span> and directly below some point of
+<span class="math inline">\(\sigma_r\)</span>. It follows that <span
+class="math inline">\(\sigma_r \Uparrow \sigma_2\)</span>, which
+contradicts the minimality of the cycle.</p>
+</dd>
+</dl>
+<p>Now write <span class="math inline">\(\sigma\uparrow \tau\)</span>
+(and say “sigma is <em>immediately</em> above tau”) of some fence in the
+trapezoidal decomposition of <span class="math inline">\(S\)</span>
+touches both <span class="math inline">\(\sigma\)</span> and <span
+class="math inline">\(\tau\)</span>, and in particular touches <span
+class="math inline">\(\sigma\)</span> above the point where it touches
+<span class="math inline">\(\tau\)</span>. Because <span
+class="math inline">\(\sigma\uparrow \tau\)</span> immediately implies
+<span class="math inline">\(\sigma\Uparrow \tau\)</span>, the relation
+<span class="math inline">\(\uparrow\)</span> is also acyclic; in fact,
+our earlier relation <span class="math inline">\(\Uparrow\)</span> is
+the transitive closure of <span class="math inline">\(\uparrow\)</span>.
+We can easily extract a directed acyclic graph <span
+class="math inline">\(G^\uparrow\)</span> representing the relation
+<span class="math inline">\(\uparrow\)</span> (and thus its transitive
+closure <span class="math inline">\(\Uparrow\)</span>) directly from the
+trapezoidal decomposition of <span class="math inline">\(S\)</span>.</p>
+<p>(Any linear extension of <span
+class="math inline">\(\Uparrow\)</span> is called a of <span
+class="math inline">\(D\)</span>; the previous lemma implies that such
+an order always exists.)</p>
+<p>Now index the segments <span class="math inline">\(S = \{\sigma_1,
+\sigma_2, \dots, \sigma_m \}\)</span> according to an arbitrary
+topological ordering of the graph <span
+class="math inline">\(G^\uparrow\)</span>, so that <span
+class="math inline">\(\sigma_i \Uparrow \sigma_j\)</span> implies <span
+class="math inline">\(i &lt; j\)</span>. For any segment <span
+class="math inline">\(\sigma_i\)</span>, let <span
+class="math inline">\(\textsf{obsbelow}(\sigma_i)\)</span> denote the
+number of <em>obstacle</em> segments <span
+class="math inline">\(\sigma_j\)</span> such that <span
+class="math inline">\(j &lt; i\)</span>. Finally, we define the
+<em>vertical rank</em> <span
+class="math inline">\(\textsf{vrank}(\sigma_i)\)</span> as follows:</p>
+<ul>
+<li>If <span class="math inline">\(\sigma_i\)</span> is a polygon
+segment, then <span class="math inline">\(\textsf{vrank}(\sigma_i) =
+2\cdot \textsf{obsbelow}(\sigma_i)\)</span>.</li>
+<li>If <span class="math inline">\(\sigma_i\)</span> is an obstacle
+segment, then <span class="math inline">\(\textsf{vrank}(\sigma_i) =
+2\cdot \textsf{obsbelow}(\sigma_i) + 1\)</span>.</li>
+</ul>
+<p>Thus, all vertical ranks are integers between <span
+class="math inline">\(0\)</span> and <span
+class="math inline">\(2k\)</span>, every obstacle has odd vertical rank,
+and every polygon edge has even vertical rank.</p>
+<p>We also define the <em>horizontal rank</em> of any polygon vertex or
+an obstacle point <span class="math inline">\(p\)</span> as follows. Let
+<span class="math inline">\(\textsf{obsleft}(p)\)</span> to be the
+number of obstacles with strictly smaller <span
+class="math inline">\(x\)</span>-coordinates than <span
+class="math inline">\(p\)</span>.</p>
+<ul>
+<li>If <span class="math inline">\(p\)</span> is a polygon vertex, then
+<span class="math inline">\(\textsf{hrank}(p) = 2\cdot
+\textsf{obsleft}(p)\)</span>.</li>
+<li>If <span class="math inline">\(p\)</span> is an obstacle point, then
+<span class="math inline">\(\textsf{hrank}(p) = 2\cdot
+\textsf{obsleft}(p) + 1\)</span>.</li>
+</ul>
+<p>Thus, all horizontal ranks are integers between <span
+class="math inline">\(0\)</span> and <span
+class="math inline">\(2k\)</span>, every obstacle has odd horizontal
+rank, and every polygon vertex has even horizontal rank.</p>
+<h2 data-number="4.3" id="rectification"><span
+class="header-section-number">4.3</span> Rectification</h2>
+<p>Now we define a <em>rectified</em> polygon <span
+class="math inline">\(\bar{P}\)</span> and new obstacles <span
+class="math inline">\(\bar{O}\)</span> as follows:</p>
+<ul>
+<li><p>Replace each edge <span class="math inline">\(pq\)</span> of
+<span class="math inline">\(P\)</span> with a horizontal segment between
+<span class="math inline">\((\textsf{hrank}(p),
+\textsf{vrank}(pq))\)</span> and <span
+class="math inline">\((\textsf{hrank}(q), \textsf{vrank}(pq))\)</span>.
+Similarly, replace each vertex <span class="math inline">\(q\)</span> of
+<span class="math inline">\(P\)</span>, with adjacent edges <span
+class="math inline">\(pq\)</span> and <span
+class="math inline">\(qr\)</span>, with a vertical segment between <span
+class="math inline">\((\textsf{hrank}(q), \textsf{vrank}(pq))\)</span>
+and <span class="math inline">\((\textsf{hrank}(q),
+\textsf{vrank}(qr))\)</span>. Connecting these horizontal and vertical
+segments in sequence around <span class="math inline">\(P\)</span> gives
+us an orthogonal polygon <span
+class="math inline">\(\bar{P}\)</span>.</p></li>
+<li><p>For each obstacle <span class="math inline">\(o\)</span>, let
+<span class="math inline">\(\bar{o} = (\textsf{hrank}(o),
+\textsf{vrank}(o))\)</span>. The set of all such points is our new
+obstacle set <span class="math inline">\(\bar{O}\)</span>.</p></li>
+</ul>
+<p>By construction, every vertex of <span
+class="math inline">\(\bar{P}\)</span> has even integer coordinates, and
+every obstacle in <span class="math inline">\(\bar{O}\)</span> has odd
+integer coordinates, so <span class="math inline">\(\bar{P}\)</span> is
+a polygon in <span class="math inline">\(\mathbb{R}^2\setminus
+\bar{O}\)</span>. Moreover, the crossing sequence of the rectified
+polygon <span class="math inline">\(\bar{P}\)</span> with respect to the
+new obstacles <span class="math inline">\(\bar{O}\)</span> is
+<em>identical</em> to the crossing sequence of the original polygon
+<span class="math inline">\(P\)</span> with respect to the original
+obstacles <span class="math inline">\(O\)</span>. Thus, <span
+class="math inline">\(P\)</span> is contractible in <span
+class="math inline">\(\mathbb{R}^2\setminus O\)</span> if and only if
+<span class="math inline">\(\bar{P}\)</span> is contractible in <span
+class="math inline">\(\mathbb{R}^2\setminus \bar{O}\)</span>.</p>
+<figure>
+<img src="Fig/same-crossing-sequence.png" style="width:75.0%"
+alt="A polygon and its rectification (perturbed to show overlapping and zero-length edges) defining the same (trivial) crossing sequence abdDCBAabcdAaDBA" />
+<figcaption aria-hidden="true">A polygon and its rectification
+(perturbed to show overlapping and zero-length edges) defining the same
+(trivial) crossing sequence <code>abdDCBAabcdAaDBA</code></figcaption>
+</figure>
+<p>It is actually possible to construct an explicit deformation of <span
+class="math inline">\(P\)</span> and <span
+class="math inline">\(O\)</span> into <span
+class="math inline">\(\bar{P}\)</span> and <span
+class="math inline">\(\bar{O}\)</span>, as a sequence of elementary
+moves of two types: safe vertex moves (translate a vertex of <span
+class="math inline">\(P\)</span> without touching any obstacle) and
+“safe obstacle moves” (translate one obstacle in <span
+class="math inline">\(O\)</span> without touching <span
+class="math inline">\(P\)</span>). Moreover, we can guarantee that
+throughout the entire deformation, the crossing sequence of the polygon
+with respect to the obstacles remains unchanged. Fortunately, we don’t
+actually need an explicit homotopy; the invariance of the crossing
+sequence is enough.</p>
+<h2 data-number="4.4" id="reduction"><span
+class="header-section-number">4.4</span> Reduction</h2>
+<p>So why did we go through this madness? We have now reduced our
+problem from <em>arbitrary</em> polygons to particularly well-behaved
+<em>orthogonal</em> polygons. Restricting to orthogonal polygons allows
+us to represent and manipulate the crossing sequence of <span
+class="math inline">\(\bar{P}\)</span> <em>implicitly</em> using
+relatively simple data structures.</p>
+<p>Let <span class="math inline">\(\bar{n} = 2n+4s\)</span> denote the
+number of vertices in the rectified polygon <span
+class="math inline">\(\bar{P}\)</span>. Without loss of generality, we
+can assume that the <span class="math inline">\(i\)</span>th edge <span
+class="math inline">\(\bar{p}_i \bar{p}_{i+1}\)</span> of <span
+class="math inline">\(\bar{P}\)</span> is horizontal if <span
+class="math inline">\(i\)</span> is even and vertical if <span
+class="math inline">\(i\)</span> is odd. Thus, we can represent <span
+class="math inline">\(\bar{P}\)</span> itself using an alternating
+sequence of <span class="math inline">\(x\)</span>- and <span
+class="math inline">\(y\)</span>-coordinates: <span
+class="math display">\[
+    x_0, y_1, x_2, y_3, \dots, x_{\bar{n}-2}, y_{\bar{n}-1},
+\]</span> where <span class="math inline">\(\bar{p}_i = (x_i,
+y_{i+1})\)</span> if <span class="math inline">\(i\)</span> is even, and
+<span class="math inline">\(\bar{p}_i = (x_{i+1}, y_i)\)</span> if <span
+class="math inline">\(i\)</span> is odd. We store these coordinates in
+any data structure that allows us to change one coordinate or remove any
+adjacent pair of coordinates <span class="math inline">\(x_i, y_{i\pm
+1}\)</span> in <span class="math inline">\(O(1)\)</span> time—for
+example, a circular doubly-linked list.</p>
+<p>We now <em>reduce</em> <span class="math inline">\(\bar{P}\)</span>
+by repeatedly applying two operations, called <em>eliding</em> and
+<em>sliding</em>, which simplify the polygon without changing its
+homotopy class. Each operation requires <span
+class="math inline">\(O(\log k)\)</span> time, and the reduction
+requires at most <span class="math inline">\(O(\bar{n})\)</span> of
+these operations, so the overall reduction time is is <span
+class="math inline">\(O(\bar{n}\log k) = O((n+s)\log k)\)</span>. If the
+reduced polygon is <em>empty</em>, we correctly report that <span
+class="math inline">\(P\)</span> is contractible; otherwise, we
+correctly report that <span class="math inline">\(P\)</span> is not
+contractible.</p>
+<h3 data-number="4.4.1" id="eliding-zero-length-edges"><span
+class="header-section-number">4.4.1</span> Eliding Zero-Length
+Edges</h3>
+<p><strong><em>This makes the pictures nicer, but it isn’t actually
+necessary; consider removing.</em></strong></p>
+<p>The rectified polygon <span class="math inline">\(\bar{P}\)</span>
+can contain edges with length zero; we <em>elide</em> (that is, remove)
+all such edges in a preprocessing phase. <em>Geometrically,</em> there
+are two types of zero-length edges:</p>
+<ul>
+<li>A <em>bump</em> is a zero-length edge whose previous and next edges
+have the same orientation. Removing a bump merges the previous and next
+edges into a single edge.</li>
+<li>A <em>spur</em> is a zero-length edge whose previous and next edges
+do overlap. Removing a spur replaces those two edges with their
+<em>difference</em>, which could have length zero, making more elisions
+possible.</li>
+</ul>
+<p>However, our representation of <span
+class="math inline">\(\bar{P}\)</span> as a list of alternating <span
+class="math inline">\(x\)</span>- and <span
+class="math inline">\(y\)</span>-coordinates allows us to treat these
+two cases identically in <span class="math inline">\(O(1)\)</span> time.
+To remove the zero-length edge edge <span
+class="math inline">\(\bar{p}_{i-1}\bar{p}_i\)</span>, we delete the
+<span class="math inline">\((i-1)\)</span>th and <span
+class="math inline">\(i\)</span>th coordinates from our coordinate list.
+Specifically:</p>
+<ul>
+<li>if <span class="math inline">\(i\)</span> is odd, so <span
+class="math inline">\(y_{i-1} = y_{i+1}\)</span> and the zero-length
+edge is “horizontal”, we delete <span
+class="math inline">\(y_{i-1}\)</span> and <span
+class="math inline">\(x_i\)</span>.</li>
+<li>If <span class="math inline">\(i\)</span> is even, so <span
+class="math inline">\(x_{i-1} = x_{i+1}\)</span> and the zero-length
+edge is “vertical”, we delete <span
+class="math inline">\(x_{i-1}\)</span> and <span
+class="math inline">\(y_i\)</span>.</li>
+</ul>
+<p>Equivalently, we can remove any zero-length edge <span
+class="math inline">\(\bar{p}_{i-1}\bar{p}_i\)</span> using two safe
+vertex moves:</p>
+<ul>
+<li>First (formally) move <span
+class="math inline">\(\bar{p}_{i-1}\)</span> to <span
+class="math inline">\(\bar{p}_i\)</span>, merging those two
+vertices.</li>
+<li>Then move <span class="math inline">\(\bar{p}_i\)</span> either
+<span class="math inline">\(\bar{p}_{i-2}\)</span> and <span
+class="math inline">\(\bar{p}_{i+1}\)</span>, whichever is closer. It
+follows that removing a zero-length edge does not change the homotopy
+class of <span class="math inline">\(\bar{P}\)</span>.</li>
+</ul>
+<p>We can remove all zero-length edges from <span
+class="math inline">\(\bar{P}\)</span> in <span
+class="math inline">\(O(\bar{n})\)</span> time using a “left-greedy”
+algorithm similar to the crossing-word reduction algorithm in the
+previous lecture.</p>
+<figure>
+<img src="Fig/rectified-elided.png" style="width:70.0%"
+alt="Eliding all zero-length edges in the rectified polygon" />
+<figcaption aria-hidden="true">Eliding all zero-length edges in the
+rectified polygon</figcaption>
+</figure>
+<h3 data-number="4.4.2" id="sliding-brackets"><span
+class="header-section-number">4.4.2</span> Sliding Brackets</h3>
+<p>We call a positive-length edge of <span
+class="math inline">\(\bar{P}\)</span> a <em>bracket</em> if both of its
+neighboring edges are on the same side of the line through the edge.
+That is, the edge and its neighbors look like <span
+class="math inline">\(\sqcup\)</span>, <span
+class="math inline">\(\sqsubset\)</span>, <span
+class="math inline">\(\sqcap\)</span>, or <span
+class="math inline">\(\sqsupset\)</span>. <em>Sliding</em> a bracket
+moves it as far inward as possible, shortening the neighboring edges,
+until at least one of two conditions is met:</p>
+<ul>
+<li><p>The bracket has distance <span class="math inline">\(1\)</span>
+from an obstacle inside the bracket; we call such a bracket
+<em>frozen</em>. Sliding a frozen bracket further would change the
+crossing sequence of <span class="math inline">\(\bar{P}\)</span> by
+either adding or deleting a <em>single</em> crossing, thereby changing
+the homotopy class.</p></li>
+<li><p>At least one of the edges adjacent to the bracket has length
+zero, which we can safely elide, just as in the previous phase. (If the
+zero-length edge is a spur, several elisions may be required to ensure
+that all edges have positive length.)</p></li>
+</ul>
+<p>Sliding a bracket requires changing exactly one coordinate in our
+alternating coordinate list, and then deleting zero or more pairs of
+coordinates (to elide zero-length edges created by the slide).</p>
+<p>The reduction algorithm ends either when all remaining brackets are
+frozen (and all edges have positive length), or when no edges are left
+at all. For example, if <span class="math inline">\(\bar{P}\)</span> is
+a rectangle that doesn’t not contain any obstacles, the first bracket
+slide creates two zero-length edges; eliding these edges removes
+<em>every</em> edge from the polygon.</p>
+<p>Because each bracket slide (and ensuing elisions) either freezes a
+bracket or decreases the number of polygon vertices, the reduction ends
+after at most after <span class="math inline">\(O(\bar{n})\)</span>
+bracket slides. (A bracket slide can <em>increase</em> the number of
+polygon <em>self-intersections</em>, but we don’t care about that; we
+only needed to find self-intersections so that we could compute vertical
+ranks.) The figure on the next page shows a sequence of bracket slides
+contracting a rectified cycle.</p>
+<figure>
+<img src="Fig/bracket-slide-sequence.png" style="width:95.0%"
+alt="A sequence of bracket slides (and spur elisions). Heavy blue edges are frozen." />
+<figcaption aria-hidden="true">A sequence of bracket slides (and spur
+elisions). Heavy blue edges are frozen.</figcaption>
+</figure>
+<p>The correctness of this algorithm rests on the following lemma.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+The rectified polygon <span class="math inline">\(\bar{P}\)</span> is
+contractible in <span class="math inline">\(\mathbb{R}^2\setminus
+\bar{O}\)</span> if and only if it reduces to a single point.
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+One direction is easy: Every sequence of elisions and bracket slides is
+a homotopy. Thus, if <span class="math inline">\(\bar{P}\)</span>
+reduced to a single point, it must be contractible.
+</dd>
+<dd>
+<p>The other direction is more interesting. We actually need to reason
+about the crossing sequence defined by both upward <em>and downward</em>
+rays from each obstacle. Suppose <span
+class="math inline">\(\bar{P}\)</span> is contractible. Then our earlier
+arguments imply that the mixed crossing sequence of <span
+class="math inline">\(\bar{P}\)</span> can be reduced to the empty
+string, suing exactly the same algorithm as usual. There are two cases
+to consider.</p>
+</dd>
+<dd>
+<p>First suppose both mixed crossing sequences of <span
+class="math inline">\(\bar{P}\)</span> is actually empty. Then <span
+class="math inline">\(\bar{P}\)</span> does not cross the vertical line
+through any obstacle. It follows that every vertex of <span
+class="math inline">\(\bar{P}\)</span> has the same even <span
+class="math inline">\(x\)</span>-coordinate, and thus every “horizontal”
+edge of <span class="math inline">\(\bar{P}\)</span> has length zero. It
+follows by induction that <span class="math inline">\(\bar{P}\)</span>
+can be reduced to a single point by eliding every horizontal edge.</p>
+</dd>
+<dd>
+<p>Otherwise, because <span class="math inline">\(\bar{P}\)</span> is
+contractible, its mixed crossing sequence contains an elementary
+reduction. So there must be a subpath of <span
+class="math inline">\(\bar{P}\)</span> that crosses the same obstacle
+ray twice in a row, without crossing the vertical line through any
+obstacle in between. (These two crossings would be canceled by an
+elementary reduction.) Without loss of generality, suppose this subpath
+crosses some upward obstacle ray from right to left, and then crosses
+that same ray from left to tight. Then the leftmost vertical edge of
+that subpath forms a bracket, and sliding that bracket reduces the
+complexity of either the polygon or its crossing sequence. It follows by
+induction that <span class="math inline">\(\bar{P}\)</span> can be
+reduced to a polygon with an empty crossing sequence, and thus to a
+single point.</p>
+</dd>
+</dl>
+<p>A close reading of this proof reveals that we only ever need to
+perform <em>horizontal</em> bracket slides; even eliding zero-length
+edges is unnecessary.</p>
+<h2 data-number="4.5" id="layered-range-trees"><span
+class="header-section-number">4.5</span> Layered Range Trees</h2>
+<p>To implement bracket slides efficiently, we preprocess the rectified
+obstacles <span class="math inline">\(\bar{O}\)</span> that supports
+fast queries of the following form: Given a horizontal query segment
+<span class="math inline">\(\sigma\)</span>, report the lowest obstacle
+(if any) that lies directly above <span
+class="math inline">\(\sigma\)</span>. Symmetric data structures can
+report the highest sentinel point below a horizontal segment, or the
+closest sentinel points to the left and right of a vertical segment.</p>
+<p><strong>Lemma:</strong> Any set <span
+class="math inline">\(\bar{O}\)</span> of <span
+class="math inline">\(k\)</span> points in the plane can be preprocessed
+in <span class="math inline">\(O(k\log k)\)</span> time into a data
+structure of size <span class="math inline">\(O(k\log k)\)</span>, so
+that the lowest point (if any) above an arbitrary horizontal query
+segment can be computed in <span class="math inline">\(O(\log
+k)\)</span> time.</p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+We use a data structure called a <em>layered range tree</em>, first
+described by Willard [3]. The layered range tree of <span
+class="math inline">\(\bar{O}\)</span> consists of a balanced binary
+search tree <span class="math inline">\(T\)</span> over the <span
+class="math inline">\(x\)</span>-coordinates of <span
+class="math inline">\(\bar{O}\)</span>, with additional information
+stored at each node. To simplify queries, the (odd) <span
+class="math inline">\(x\)</span>-coordinates of <span
+class="math inline">\(\bar{O}\)</span> are stored only at the leaves of
+<span class="math inline">\(T\)</span>; the search keys for internal
+nodes are intermediate (even) <span
+class="math inline">\(x\)</span>-coordinates.
+</dd>
+<dd>
+<p>For each node <span class="math inline">\(v\)</span> of <span
+class="math inline">\(T\)</span>, let <span
+class="math inline">\(l_v\)</span> and <span
+class="math inline">\(r_v\)</span> denote the smallest and largest <span
+class="math inline">\(x\)</span>-coordinates in stored in the subtree
+rooted at <span class="math inline">\(v\)</span>, and let <span
+class="math inline">\(\bar{O}_v\)</span> denote the subset of obstacle
+points with <span class="math inline">\(x\)</span>-coordinates between
+<span class="math inline">\(l_v\)</span> and <span
+class="math inline">\(r_v\)</span>. Each node <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(T\)</span> stores the following information, in
+addition to the search key <span class="math inline">\(x_v\)</span>.</p>
+</dd>
+<dd>
+<ul>
+<li>The <span class="math inline">\(x\)</span>-coordinates <span
+class="math inline">\(l_v\)</span> and <span
+class="math inline">\(r_v\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>The points <span class="math inline">\(\bar{O}_v\)</span>, sorted by
+<span class="math inline">\(y\)</span>-coordinate.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>For each point <span class="math inline">\(\bar{O}_v\)</span>, the
+number of points in <span
+class="math inline">\(\bar{O}_{\textsf{left}(v)}\)</span> with larger
+<span class="math inline">\(y\)</span>-coordinate.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>For each point <span class="math inline">\(\bar{O}_v\)</span>, the
+number of points in <span
+class="math inline">\(\bar{O}_{\textsf{right}(v)}\)</span> with larger
+<span class="math inline">\(y\)</span>-coordinate.</li>
+</ul>
+</dd>
+<dd>
+<p>It is possible to construct a layered range tree for <span
+class="math inline">\(\bar{O}\)</span> in <span
+class="math inline">\(O(k\log k)\)</span> time; the total size of the
+data structure is also <span class="math inline">\(O(k\log
+k)\)</span>.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/layered-range-tree.png" style="width:95.0%"
+alt="A layered range tree for 15 points (with some internal structure omitted)." />
+<figcaption aria-hidden="true">A layered range tree for 15 points (with
+some internal structure omitted).</figcaption>
+</figure>
+</dd>
+<dd>
+<p>Now consider a query segment <span
+class="math inline">\(\sigma\)</span> with endpoints <span
+class="math inline">\((l,b)\)</span> and <span
+class="math inline">\((r,b)\)</span> with <span
+class="math inline">\(l&lt;r\)</span>. We call a node <span
+class="math inline">\(v\)</span> <em>active</em> for this segment if
+<span class="math inline">\(l_v\le l\)</span> and <span
+class="math inline">\(r\le r_v\)</span>, but the parent of <span
+class="math inline">\(v\)</span> is not active. There are at most two
+active nodes at each level of the tree, so there are <span
+class="math inline">\(O(\log k)\)</span> active nodes altogether. We can
+easily find these active nodes in <span class="math inline">\(O(\log
+h)\)</span> time by searching down from the root.</p>
+</dd>
+<dd>
+<p>For any node <span class="math inline">\(v\)</span>, let <span
+class="math inline">\(\textsf{lowest}(v,b)\)</span> denote the index of
+the lowest point in <span class="math inline">\(\bar{O}_v\)</span> that
+lies above the line <span class="math inline">\(y=b\)</span>, or <span
+class="math inline">\(0\)</span> if there is no such point. We can
+compute <span
+class="math inline">\(\textsf{lowest}(\textsf{root}(T),b)\)</span> in
+<span class="math inline">\(O(\log h)\)</span> time by binary search;
+for any other node <span class="math inline">\(v\)</span>, we can
+compute <span class="math inline">\(\textsf{lowest}(v,b)\)</span> in
+<span class="math inline">\(O(1)\)</span> time from <span
+class="math inline">\(\textsf{lowest}(\textsf{parent}(v), b)\)</span>
+and the left or right ranks stored at <span
+class="math inline">\(\textsf{parent}(v)\)</span>. Thus, we can compute
+<span class="math inline">\(\textsf{lowest}(v,b)\)</span> for every
+active node <span class="math inline">\(v\)</span> in <span
+class="math inline">\(O(\log h)\)</span> time. The answer to our query
+is the lowest of these <span class="math inline">\(O(\log h)\)</span>
+points.</p>
+</dd>
+<dd>
+<figure>
+<img src="Fig/layered-range-tree-query.png" style="width:95.0%"
+alt="Answering a query in a layered range tree (with some details omitted." />
+<figcaption aria-hidden="true">Answering a query in a layered range tree
+(with some details omitted.</figcaption>
+</figure>
+</dd>
+</dl>
+<h2 data-number="4.6" id="final-analysis"><span
+class="header-section-number">4.6</span> Final Analysis</h2>
+<p>Now let’s put all the ingredients of the algorithm together. Recall
+that the original input is a set <span class="math inline">\(O\)</span>
+containing <span class="math inline">\(k\)</span> sentinel points, and a
+polygon <span class="math inline">\(P\)</span> in <span
+class="math inline">\(\mathbb{R}^2\setminus O\)</span>.</p>
+<ul>
+<li><p>First we sort the obstacles in <span
+class="math inline">\(O\)</span> from left to right in <span
+class="math inline">\(O(k\log k)\)</span> time.</p></li>
+<li><p>Next we compute the trapezoidal decomposition of <span
+class="math inline">\(P\)</span> and <span
+class="math inline">\(O\)</span> using the Bentley-Ottmann sweepline
+algorithm in <span class="math inline">\(O((n+k+s)\log (n+k))\)</span>
+time, where <span class="math inline">\(s\)</span> is the number of
+self-intersection points of <span class="math inline">\(P\)</span>. We
+subdivide the edges of <span class="math inline">\(P\)</span> at its
+self-intersection points, increasing the number of vertices of <span
+class="math inline">\(P\)</span> to <span class="math inline">\(m = n +
+2s\)</span>.</p></li>
+<li><p>Then we compute the vertical ranks of the obstacles and the edges
+of <span class="math inline">\(P\)</span> in <span
+class="math inline">\(O(m+k) = O(n+k+s)\)</span> time. We also compute
+the horizontal ranks of the obstacles and the vertices of <span
+class="math inline">\(P\)</span> in <span class="math inline">\(O(m \log
+m + k)\)</span> time, by sorting the vertices of <span
+class="math inline">\(P\)</span> and merging them with the sorted list
+of obstacles.</p></li>
+<li><p>Next we compute the rectified polygon <span
+class="math inline">\(\bar{P}\)</span> and obstacles <span
+class="math inline">\(\bar{O}\)</span> in <span
+class="math inline">\(O(m + k)\)</span> time.</p></li>
+<li><p>Then, we reduce <span class="math inline">\(\bar{P}\)</span> as
+much as possible by eliding zero-length edges and sliding brackets.
+After an <span class="math inline">\(O(m)\)</span>-time initial pass,
+each elision takes <span class="math inline">\(O(1)\)</span> time, and
+each bracket slide takes <span class="math inline">\(O(\log k)\)</span>
+time. Each operation either freezes a bracket or reduces the complexity
+of <span class="math inline">\(\bar{P}\)</span>, so after <span
+class="math inline">\(O(m)\)</span> operations, performed in <span
+class="math inline">\(O(m\log k)\)</span> time, <span
+class="math inline">\(\bar{P}\)</span> is reduced as much as
+possible.</p></li>
+<li><p>Finally, we report that <span class="math inline">\(P\)</span> is
+contractible if and only if the reduced rectified polygon is
+empty.</p></li>
+</ul>
+<p>Altogether, this algorithm runs in <span
+class="math inline">\(O((n+k+s)\log(n+k))\)</span> time.</p>
+<p>This is faster than the brute-force reduction algorithm from the
+previous lecture when <em>either</em> the polygon has few
+self-intersections <em>or</em> the number of obstacles is significantly
+larger than the number of polygon vertices. Specifically, the running
+time of the new algorithm is smaller than the old running time <span
+class="math inline">\(O(k\log k + nk)\)</span> whenever <span
+class="math inline">\(s = o(nk/\log(n+k))\)</span>. Even in the worst
+case, when <span class="math inline">\(s = \Theta(n^2)\)</span>, the
+running time of the new algorithm simplifies to <span
+class="math inline">\(O((k+n^2)\log(n+k))\)</span>, which is still
+smaller than <span class="math inline">\(O(k\log k + nk)\)</span> when
+<span class="math inline">\(n = o(k/log n)\)</span>.</p>
+<h2 data-number="4.7"
+id="dots-and-the-aptly-named-et-cetera-ad-nauseam"><span
+class="header-section-number">4.7</span> <span
+class="math inline">\(\dots\)</span> And the Aptly Named Et Cetera Ad
+Nauseam</h2>
+<ul>
+<li><p>Extracting reduced crossing sequences from the reduced rectified
+polygon.</p></li>
+<li><p>Testing if a polygon made from two (almost) simple paths is
+contractible.</p></li>
+<li><p>Testing if two polygons, <em>each</em> with few
+self-intersections, are homotopic.</p></li>
+<li><p>Faster three-sided range query structures for integer points and
+ranges.</p></li>
+<li><p>Avoiding computing self-intersections (Bespanyatnikh)</p></li>
+</ul>
+<h2 data-number="4.8" id="references-2"><span
+class="header-section-number">4.8</span> References</h2>
+<ol type="1">
+<li><p>Sergio Cabello, Yuanxin Liu, Andrea Mantler, and Jack Snoeyink.
+<a href="https://doi.org/10.1007/s00454-003-2949-y">Testing homotopy for
+paths in the plane</a>. <em>Discrete Comput. Geom.</em> 31(1):61–81,
+2004.</p></li>
+<li><p>Alon Efrat, Stephen G. Kobourov, and Anna Lubiw. <a
+href="https://doi.org/10.1016/j.comgeo.2006.03.003">Computing homotopic
+shortest paths efficiently</a>. <em>Comput. Geom. Theory Appl.</em>
+35(3):162–172, 2006. arXiv:<a
+href="http://arxiv.org/abs/cs/0204050">cs/0204050</a>.</p></li>
+<li><p>Dan E. Willard. <a href="https://doi.org/10.1137/0214019">New
+data structures for orthogonal range queries</a>. <em>SIAM J.
+Comput.</em> 24 14(1):232–253, 1985. Layered range trees.</p></li>
+</ol>
+</body>
+</html>

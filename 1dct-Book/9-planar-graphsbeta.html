@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Planar Graphs^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="10-tree-cotree-decompositionsbeta.html" accesskey="n" rel="next">Tree-Cotree Decompositions<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="8-curve-homotopy-and-curve-invariantsalpha.html" accesskey="p" rel="previous">Curve homotopy and curve invariants<span
+class="math inline">\(^\alpha\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="9" id="planar-graphsbeta"><span
+class="header-section-number">9</span> Planar Graphs<span
+class="math inline">\(^\beta\)</span></h1>
+<h2 data-number="9.1" id="abstract-graphs"><span
+class="header-section-number">9.1</span> Abstract graphs</h2>
+<p>A graph is an abstract combinatorial structure that models pairwise
+relationships. You probably have a good intuitive idea what a graph is
+already. Nevertheless, to avoid subtle but pervasive differences in
+terminology, notation, and basic assumptions, I will carefully define
+everything from scratch. In particular, we need a definition that allows
+parallel edges and loops, so we can’t use the standard
+combinatorialist’s definition as a pair of sets <span
+class="math inline">\((V,E)\)</span>, and I don’t want to wander into
+the notational quagmire of multisets. So here we go.</p>
+<p>An <em>abstract graph</em> is a quadruple <span
+class="math inline">\(G := (V, D, \textsf{rev}, \textsf{head})\)</span>,
+where</p>
+<ul>
+<li><span class="math inline">\(V\)</span> is a non-empty set of
+abstract objects called <em>vertices</em>;</li>
+<li><span class="math inline">\(D\)</span> is a set of abstract objects
+called <em>darts</em>;</li>
+<li><span class="math inline">\(\textsf{rev}\)</span> is a permutation
+of the darts <span class="math inline">\(D\)</span> such that <span
+class="math inline">\(\textsf{rev}(\textsf{rev}(d)) = d \ne
+\textsf{rev}(d)\)</span> for every dart <span class="math inline">\(d\in
+D\)</span>;</li>
+<li><span class="math inline">\(\textsf{head}\)</span> is a function
+from the darts <span class="math inline">\(D\)</span> to the vertices
+<span class="math inline">\(V\)</span>.</li>
+</ul>
+<p>Darts are also called <em>half-edges</em> or <em>arcs</em> or
+<em>brins</em> (French for “strands”).</p>
+<p>For any dart <span class="math inline">\(d\)</span>, we call the dart
+<span class="math inline">\(\textsf{rev}(d)\)</span> the
+<em>reversal</em> of <span class="math inline">\(d\)</span>, and we call
+the vertex <span class="math inline">\(\textsf{head}(d)\)</span> the
+<em>head</em> of <span class="math inline">\(d\)</span>. The
+<em>tail</em> of a dart is the head of its reversal: <span
+class="math inline">\(\textsf{tail}(d) :=
+\textsf{head}(\textsf{rev}(d))\)</span>. The head and tail of a dart are
+its <em>endpoints</em>. Intuitively, a dart is a directed path from its
+tail to its head; in keeping with this intuition, we say that a dart
+<span class="math inline">\(d\)</span> <em>leaves</em> its tail and
+<em>enters</em> its head. I often write <span
+class="math inline">\(u\mathord\to v\)</span> to denote a dart with tail
+<span class="math inline">\(u\)</span> and head <span
+class="math inline">\(v\)</span>, even (at the risk of confusing the
+reader) when there is more than one such dart.</p>
+<p>For any dart <span class="math inline">\(d\in D\)</span>, the
+unordered pair <span class="math inline">\(|d| =
+\{d,\textsf{rev}(d)\}\)</span> is called an <em>edge</em> of the graph.
+We often write <span class="math inline">\(E\)</span> to denote the set
+of edges of a graph. The constituent darts of an edge <span
+class="math inline">\(e\)</span> are arbitrarily denoted <span
+class="math inline">\(e^+\)</span> and <span
+class="math inline">\(e^-\)</span>. The <em>endpoints</em> of an edge
+<span class="math inline">\(e = \{ e^+, e^- \}\)</span> are the
+endpoints (equivalently, just the heads) of its constituent darts.
+Intuitively, each dart is an orientation of some edge from one of its
+endpoints to the other.</p>
+<p>A vertex <span class="math inline">\(v\)</span> and an edge <span
+class="math inline">\(e\)</span> are <em>incident</em> if <span
+class="math inline">\(v\)</span> is an endpoint of <span
+class="math inline">\(e\)</span>; two vertices are <em>neighbors</em> if
+they are endpoints of the same edge. We often write <span
+class="math inline">\(uv\)</span> to denote an edge with endpoints <span
+class="math inline">\(u\)</span> and <span
+class="math inline">\(v\)</span>, even (at the risk of confusing the
+reader) when there is more than one such edge.</p>
+<p>A <em>loop</em> is an edge <span class="math inline">\(e\)</span>
+with only one endpoint, that is, <span
+class="math inline">\(\textsf{head}(e^+) = \textsf{tail}(e^+)\)</span>.
+Two edges are <em>parallel</em> if they have the same endpoints. A graph
+is <em>simple</em> if it has no loops or parallel edges, and
+<em>non-simple</em> otherwise. Non-simple graphs are sometimes called
+“generalized graphs” or “multigraphs”; I will just call them
+“graphs”.</p>
+<p>Let me repeat this louder for the kids in the back:
+<strong><em>Graphs are not necessarily simple.</em></strong></p>
+<p>The degree of a vertex <span class="math inline">\(v\)</span>,
+denoted <span class="math inline">\(\deg_G(v)\)</span> (or just <span
+class="math inline">\(\deg(v)\)</span> if the graph <span
+class="math inline">\(G\)</span> is clear from context), is the number<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> of darts whose head is <span
+class="math inline">\(v\)</span>, or equivalently, the number of
+incident edges plus the number of incident loops. A vertex is
+<em>isolated</em> if it is not incident to any edge.</p>
+<h2 data-number="9.2" id="data-structures"><span
+class="header-section-number">9.2</span> Data structures</h2>
+<p>Here is an equivalent definition that might be clearer to computer
+scientists: <strong>A (finite) graph is whatever can be stored in a
+standard graph data structure.</strong></p>
+<p>The canonical textbook graph data structure is the <em>incidence
+list</em>. (For simple graphs, the same data structure is more commonly
+called an <em>adjacency list</em>.) The <span
+class="math inline">\(n\)</span> vertices of the graph are represented
+by distinct integers between <span class="math inline">\(1\)</span> and
+<span class="math inline">\(n\)</span>. A standard incidence list
+consists of an array indexed by the vertices; each array entry in the
+array points to a linked list of the darts leaving the corresponding
+vertex. (The order of darts in these linked lists is unimportant; we use
+linked lists only because they support certain operations quickly.) The
+record for each dart <span class="math inline">\(d\)</span> contains the
+index of <span class="math inline">\(\textsf{head}(d)\)</span> and a
+pointer to the record for <span
+class="math inline">\(\textsf{rev}(d)\)</span>. Storing a graph with
+<span class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(m\)</span> edges in an incidence list requires
+<span class="math inline">\(O(n + m)\)</span> space.</p>
+<p>If a graph is stored in an incidence list, we can insert a new edge
+in <span class="math inline">\(O(1)\)</span> time, delete an edge in
+<span class="math inline">\(O(1)\)</span> time (given a pointer to one
+of its darts), and visit all the edges incident to any vertex <span
+class="math inline">\(v\)</span> in <span
+class="math inline">\(O(1)\)</span> time per edge, or <span
+class="math inline">\(O(\deg(v))\)</span> time altogether. There are a
+few standard operations that incidence lists do not support on <span
+class="math inline">\(O(1)\)</span> time, the most glaring of which is
+testing whether two vertices are neighbors. Surprisingly, however, most
+efficient graph algorithms do not require this operation, and for those
+few that do, we can replace the linked lists with hash tables.</p>
+<figure>
+<img src="Fig/incidence-list.png" style="width:70.0%"
+alt="An incidence list, with the dart records for two edges emphasized. For clarity, most reversal pointers are omitted." />
+<figcaption aria-hidden="true">An incidence list, with the dart records
+for two edges emphasized. For clarity, most reversal pointers are
+omitted.</figcaption>
+</figure>
+<p>More generally, “array” and “linked list” can be replaced by any
+suitable data structures that allow random access and fast iteration,
+respectively. A particularly simple and efficient implementation keeps
+<em>all</em> data in standard arrays. For a graph with <span
+class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(m\)</span> edges, we represent vertices by
+integers between <span class="math inline">\(0\)</span> and <span
+class="math inline">\(n-1\)</span>, edges by integers from <span
+class="math inline">\(0\)</span> to <span
+class="math inline">\(m-1\)</span>, and darts by integers between <span
+class="math inline">\(0\)</span> and <span
+class="math inline">\(2m-1\)</span>. Each edge <span
+class="math inline">\(e\)</span> is composed of darts <span
+class="math inline">\(e^- = 2e\)</span> and <span
+class="math inline">\(e^+ = 2e+1\)</span>; thus, the reversal of any
+dart <span class="math inline">\(d\)</span> is obtained by flipping its
+least significant bit: <span class="math inline">\(d\oplus 1\)</span>.
+The actual data structure consists of three arrays:</p>
+<ul>
+<li><span class="math inline">\(\textsf{first}[0..n-1]\)</span>, where
+<span class="math inline">\(\textsf{first}[v]\)</span> is any dart
+leaving vertex <span class="math inline">\(v\)</span>.</li>
+<li><span class="math inline">\(\textsf{head}[0..2m-1]\)</span>, where
+<span class="math inline">\(\textsf{head}[d]\)</span> is the head of
+dart <span class="math inline">\(d\)</span>.</li>
+<li><span class="math inline">\(\textsf{next}[0..2m-1]\)</span>, where
+<span class="math inline">\(\textsf{next}[d]\)</span> is the successor
+of <span class="math inline">\(d\)</span> in the list of darts leaving
+<span class="math inline">\(\textsf{tail}(d)\)</span>.</li>
+</ul>
+<p>It is convenient to treat the list of darts leaving each vertex as a
+<em>circular</em> list; then <span
+class="math inline">\(\textsf{next}\)</span> stores a permutation of the
+darts, each of whose cycles is the set of darts leaving a vertex. We may
+also want to store a predecessor array <span
+class="math inline">\(\textsf{prev}[0..2m-1]\)</span> that stores the
+inverse of this permutation. We do not need a separate <span
+class="math inline">\(\textsf{tail}\)</span> array, because <span
+class="math inline">\(\textsf{tail}(d) = \textsf{head}[d \oplus
+1]\)</span>.</p>
+<figure>
+<img src="Fig/incidence-array.png" style="width:95.0%"
+alt="An incidence array representation of the same graph as Figure 1." />
+<figcaption aria-hidden="true">An incidence array representation of the
+same graph as Figure 1.</figcaption>
+</figure>
+<p>For algorithms that make frequent changes to the graph (adding and/or
+deleting vertices and/or edges), we should use dynamic hash tables
+instead of raw arrays. Finally, we can easily store algorithm-dependent
+auxiliary data such as vertex coordinates, edge weights, distances, or
+flow capacities in separate arrays (or hash tables) indexed by vertices,
+edges, or darts, as appropriate.</p>
+<h2 data-number="9.3" id="topological-graphs"><span
+class="header-section-number">9.3</span> Topological graphs</h2>
+<p>Graphs can also be formalized as topological structures rather than
+purely combinatorial structures. Informally, a <em>topological
+graph</em> consists of a set of distinct points called
+<em>vertices</em>, together with a collection of vertex-to-vertex paths
+called <em>edges</em>, which are disjoint and simple, except possibly at
+their endpoints.</p>
+<p>More formally, a topological graph <span
+class="math inline">\(G^\top\)</span> is the quotient space of a set of
+disjoint closed intervals, with respect to an equivalence relation over
+the intervals’ endpoints. The projections of the intervals are the
+<em>edges</em> of <span class="math inline">\(G^\top\)</span>; the
+projections (or equivalence classes) of interval endpoints are the
+<em>vertices</em> of <span class="math inline">\(G^\top\)</span>. Again,
+for the kids in the back, topological graphs are not required to be
+simple; they can contain loops and parallel edges.<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Mechanical definition-chasing implies that any topological graph
+<span class="math inline">\(G^\top\)</span> can be described by a unique
+abstract graph <span class="math inline">\(G\)</span>, For example, the
+darts of <span class="math inline">\(G\)</span> are orientations of the
+edges of <span class="math inline">\(G^\top\)</span>. Conversely, any
+abstract graph describes a unique (up to homeomorphism) topological
+graph <span class="math inline">\(G^\top\)</span>.<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<h2 data-number="9.4" id="planar-graphs-and-planar-maps"><span
+class="header-section-number">9.4</span> Planar graphs and planar
+maps</h2>
+<p>A <em>planar embedding</em> of a graph <span
+class="math inline">\(G\)</span> represents its vertices as distinct
+points in the plane (typically <em>drawn</em> as small circles) and its
+edges as simple interior-disjoint paths between their endpoints.
+Equivalently, a planar embedding of <span
+class="math inline">\(G\)</span> is a continuous injective function from
+the corresponding topological graph <span
+class="math inline">\(G^\top\)</span> into the plane. A graph is
+<em>planar</em> it it has at least one planar embedding. Somewhat
+confusingly, the image of a planar embedding of a planar graph is also
+called a <em>plane graph</em>.</p>
+<figure>
+<img src="Fig/planar-graph.png" style="width:85.0%"
+alt="A planar graph G and two planar embeddings of G." />
+<figcaption aria-hidden="true">A planar graph <span
+class="math inline">\(G\)</span> and two planar embeddings of <span
+class="math inline">\(G\)</span>.</figcaption>
+</figure>
+<p>The components of the complement of the image of a planar embedding
+are called the <em>faces</em> of the embedding. Assuming the embedded
+graph is connected, the Jordan curve theorem implies that every bounded
+face is homeomorphic to an open disk, and the unique unbounded face is
+homeomorphic to the complement of a closed disk. For disconnected
+graphs, at least one face is homeomorphic to an open disk with a finite
+number of closed disks removed.</p>
+<p>The faces on either side of an edge of a planar embedding are called
+the <em>shores</em> of that edge. For any dart <span
+class="math inline">\(d\)</span>, the face just to the left of the image
+of <span class="math inline">\(d\)</span> in the embedding is the
+<em>left shore</em> of <span class="math inline">\(d\)</span>, denoted
+<span class="math inline">\(\textsf{left}(d)\)</span>; symmetrically,
+the face just to the right is the <em>right shore</em> <span
+class="math inline">\(\textsf{right}(d)\)</span>. The left and right
+shores of a dart can be the same face. An edge <span
+class="math inline">\(e\)</span> and a face <span
+class="math inline">\(f\)</span> are <em>incident</em> if <span
+class="math inline">\(f\)</span> is one of the shores of <span
+class="math inline">\(e^+\)</span>; similarly, an vertex <span
+class="math inline">\(v\)</span> and a face <span
+class="math inline">\(f\)</span> are incident if <span
+class="math inline">\(v\)</span> and <span
+class="math inline">\(f\)</span> have a common incident edge. The
+<em>degree</em> of a face <span class="math inline">\(f\)</span>,
+denoted <span class="math inline">\(\deg_G(f)\)</span> (or just <span
+class="math inline">\(\deg(f)\)</span> if <span
+class="math inline">\(G\)</span> is clear from context), is the number
+of darts whose right shore is <span
+class="math inline">\(f\)</span>.</p>
+<p>Let <span class="math inline">\(F\)</span> be the set of faces of a
+planar embedding of a connected graph with vertices <span
+class="math inline">\(V\)</span> and edges <span
+class="math inline">\(E\)</span>. The decomposition of the plane into
+vertices, edges, and faces, typically written as a triple <span
+class="math inline">\((V,E,F)\)</span>, is called a <em>planar map</em>.
+Trapezoidal decompositions and triangulations of polygons are both
+examples of planar maps. A planar map is called a <em>triangulation</em>
+if every face, including the outer face, has degree <span
+class="math inline">\(3\)</span>. The underlying graph <span
+class="math inline">\((V, E)\)</span> of a planar triangulation is
+<em>not</em> necessarily simple.<a href="#fn4" class="footnote-ref"
+id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<figure>
+<img src="Fig/nonsimple-triangulation.png" style="width:30.0%"
+alt="A nonsimple planar triangulation." />
+<figcaption aria-hidden="true">A nonsimple planar
+triangulation.</figcaption>
+</figure>
+<h2 data-number="9.5" id="rotation-systems"><span
+class="header-section-number">9.5</span> Rotation systems</h2>
+<p>As usual in topology, we are not really interested in
+<em>particular</em> embeddings or maps, but rather topological
+equivalence classes of embeddings or maps. Two planar embeddings of the
+same graph <span class="math inline">\(G\)</span> are considered
+<em>equivalent</em> if there is an orientation-preserving homeomorphism
+of the plane to itself that carries one embedding to the other, or
+equivalently, if one embedding can be continuously deformed to the other
+through a continuous family of embeddings. Fortunately, every
+equivalence class of embeddings has a concrete combinatorial
+representation, called a <em>rotation system</em>.</p>
+<p>Recall that a <em>permutation</em> of a finite set <span
+class="math inline">\(X\)</span> is a bijection <span
+class="math inline">\(\pi\colon X \to X\)</span>. For any permutation
+<span class="math inline">\(\pi\)</span> and any element <span
+class="math inline">\(x\in X\)</span>, let <span
+class="math inline">\(\pi^0(x) := x\)</span> and <span
+class="math inline">\(\pi^k(x) := \pi(\pi^{k-1}(x))\)</span> for any
+integer <span class="math inline">\(k &gt; 0\)</span>. The
+<em>orbit</em> of an element <span class="math inline">\(x\)</span> is
+the set <span class="math inline">\(\{\pi^k(x) \mid k\in\mathbb{N}\} =
+\{x, \pi(x), \pi^2(x), \dots\}\)</span>. The restriction of <span
+class="math inline">\(\pi\)</span> to any of its orbits is a cyclic
+permutation; the infinite sequence <span
+class="math inline">\(x,\pi(x),\pi^2(x),\dots\)</span> repeatedly cycles
+through the elements of the orbit of <span
+class="math inline">\(x\)</span>. Thus, the orbits of any two elements
+of <span class="math inline">\(X\)</span> are either identical or
+disjoint.</p>
+<p>The <em>successor permutation</em> or an embedding of <span
+class="math inline">\(G\)</span> is a permutation of the darts of <span
+class="math inline">\(G\)</span>; specifically, the successor <span
+class="math inline">\(\textsf{succ}(d)\)</span> of any dart <span
+class="math inline">\(d\)</span> is the successor of <span
+class="math inline">\(d\)</span> in the <em>clockwise</em> sequence of
+darts entering <span class="math inline">\(\textsf{head}(d)\)</span>.<a
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a></p>
+<p>Finally, the <em>rotation system</em> of an embedding is a triple
+<span class="math inline">\(\Sigma = (D, \textsf{rev},
+\textsf{succ})\)</span>, where</p>
+<ul>
+<li><span class="math inline">\(D\)</span> is the set of darts,</li>
+<li><span class="math inline">\(\textsf{rev}\)</span> is is the reversal
+permutation of <span class="math inline">\(D\)</span>, and</li>
+<li><span class="math inline">\(\textsf{succ}\)</span> is the successor
+permutation of <span class="math inline">\(D\)</span>.</li>
+</ul>
+<p>More generally, a <em>rotation system</em> or <em>combinatorial
+map</em> is any triple <span class="math inline">\((D, \textsf{rev},
+\textsf{succ})\)</span> where <span class="math inline">\(D\)</span> is
+a set, <span class="math inline">\(\textsf{rev}\)</span> is a
+fixed-point-free involution of <span class="math inline">\(D\)</span>,
+and <span class="math inline">\(\textsf{succ}\)</span> is another
+permutation of <span class="math inline">\(D\)</span>. The
+<em>vertices</em> of a combinatorial map are the orbits of <span
+class="math inline">\(\textsf{succ}\)</span>, its <em>edges</em> are the
+orbits of <span class="math inline">\(\textsf{rev}\)</span>, and its
+<em>faces</em> are the orbits of <span
+class="math inline">\(\textsf{rev}(\textsf{succ})\)</span>. The vertices
+and edges define the <em>1-skeleton</em> or <em>underlying graph</em> of
+<span class="math inline">\(\Sigma\)</span>.</p>
+<p>In other words, a rotation system is (almost) an incidence list where
+the order of darts in each list actually matters! The only annoying
+discrepancy is that rotation systems order darts <em>into</em> each
+vertex, while incidence lists order darts <em>out</em> of each vertex,
+but we can easily translate between these two standards using the
+identity <span class="math inline">\(\textsf{next}(d) =
+\textsf{rev}(\textsf{succ}(\textsf{rev}(d)))\)</span>.</p>
+<p>The of any connected graph embedding are also implicitly encoded in
+its rotation system. Recall that <span
+class="math inline">\(\textsf{rev}\)</span> is the reversal permutation
+of the darts of a graph. For any dart <span
+class="math inline">\(d\)</span>, the <em>dual successor</em> <span
+class="math inline">\(\textsf{succ}^*(d):=
+\textsf{rev}(\textsf{succ}(d))\)</span> is the next dart after <span
+class="math inline">\(d\)</span> in <em>counterclockwise</em> order
+around the boundary of <span
+class="math inline">\(\textsf{left}(d)\)</span>.</p>
+<figure>
+<img src="Fig/planar-darts2.png" style="width:50.0%"
+alt="The successor and dual successor of a dart in a planar map." />
+<figcaption aria-hidden="true">The successor and dual successor of a
+dart in a planar map.</figcaption>
+</figure>
+<figure>
+<img src="Fig/planar-navigate.png" style="width:45.0%"
+alt="Navigating around a dart. To simplify the figure, negation is used to indicate dart reveral." />
+<figcaption aria-hidden="true">Navigating around a dart. To simplify the
+figure, negation is used to indicate dart reveral.</figcaption>
+</figure>
+<h2 data-number="9.6" id="formalities-and-trivialities"><span
+class="header-section-number">9.6</span> Formalities and
+Trivialities</h2>
+<p>Formally, rotation systems (and their equivalent incidence lists)
+describe embeddings onto the <em>sphere</em> <span
+class="math inline">\(S^2 = \{ (x,y,z) \mid x^2+y^2+z^2=1 \}\)</span>,
+not onto the plane. Indeed, for many results about planar graphs, it is
+actually more natural to consider spherical embeddings on the sphere
+instead the plane. Fortunately, we can transfer embeddings back and
+forth between the sphere and the plane using <em>stereographic
+projection</em>.</p>
+<p>Stereographic projection is the function <span
+class="math inline">\(\textsf{st}\colon S^2\setminus(0,0,1) \to
+\mathbb{R}^2\)</span> where <span
+class="math inline">\(\textsf{st}(x,y,z) := \big(\! \frac{x}{1-z},
+\frac{y}{1-z} \!\big)\)</span>. The projection <span
+class="math inline">\(\textsf{st}(p)\)</span> of any point <span
+class="math inline">\(p\in S^2\setminus(0,0,1)\)</span> is the
+intersection of the line through <span class="math inline">\(p\)</span>
+and the “north pole” <span class="math inline">\((0,0,1)\)</span> with
+the <span class="math inline">\(xy\)</span>-plane. Points in the
+northern hemisphere project outside the unit circle; points in the
+southern hemisphere project inside the unit circle. Given any spherical
+embedding, if we rotate the sphere so that the embedding avoids <span
+class="math inline">\((0,0,1)\)</span>, stereographic projection gives
+us a planar embedding; conversely, given any planar embedding, inverse
+stereographic projection immediately gives us a spherical embedding.
+Thus, a graph is planar if and only if it has an embedding on the
+sphere.</p>
+<figure>
+<img src="Fig/stereographic.png" style="width:50.0%"
+alt="Stereographic projection." />
+<figcaption aria-hidden="true">Stereographic projection.</figcaption>
+</figure>
+<p>To fully specify an embedding on the plane using a rotation system,
+we must somehow also indicate which face of the embedding is the
+<em>outer face</em>, or equivalently, which face of the corresponding
+spherical embedding contains the north pole. The outer face can be
+chosen arbitrarily.</p>
+<p>Most of the exposition in these notes implicitly considers only
+embeddings of graphs with at least one edge. Exactly one map violates
+this assumption, namely the <em>trivial map</em>, which has one vertex,
+one face, and no edges. The trivial map is represented by the
+<em>empty</em> rotation system <span class="math inline">\((\varnothing,
+\varnothing, \varnothing)\)</span>.</p>
+<figure>
+<img src="Fig/trivial-map.png" style="width:15.0%"
+alt="The trivial map of the sphere." />
+<figcaption aria-hidden="true">The trivial map of the
+sphere.</figcaption>
+</figure>
+<h2 data-number="9.7" id="caveat-lector"><span
+class="header-section-number">9.7</span> Caveat Lector</h2>
+<blockquote>
+<p>“There are dinner jackets and dinner jackets. This is the
+latter.”<br />
+— Vesper Lynd [Eva Green], <em>Casino Royale</em> (2006)</p>
+</blockquote>
+<p>It is somewhat confusing standard practice to use the same symbol
+<span class="math inline">\(G\)</span> (and the same word “graph”) to
+simultaneously denote at least six formally different structures:</p>
+<ul>
+<li>an abstract planar graph <span
+class="math inline">\(G\)</span>,</li>
+<li>the corresponding topological graph <span
+class="math inline">\(G^\top\)</span>,</li>
+<li>an embedding of <span class="math inline">\(G^\top\)</span> into the
+plane,<a href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a></li>
+<li>the image of that embedding (which by definition is homeomorphic to
+<span class="math inline">\(G^\top\)</span>),</li>
+<li>the rotation system <span
+class="math inline">\((D,\textsf{rev},\textsf{succ})\)</span> of that
+embedding, and</li>
+<li>the planar map <span class="math inline">\((V,E,F)\)</span> induced
+by that embedding.</li>
+</ul>
+<p>Even when authors do distinguish between <em>graphs</em> and
+<em>maps</em>, it is standard practice to conflate abstract graphs, the
+corresponding topological graphs, and images of embeddings as “graphs”.
+In particular, the image of a planar graph embedding is commonly called
+a <em>plane graph</em>. Even the phrases “abstract graph” and
+“topological graph” are non-standard; the standard names for these
+objects are “graph” (spoken by a combinatorialist) and “graph” (spoken
+by a topologist), respectively.<a href="#fn7" class="footnote-ref"
+id="fnref7" role="doc-noteref"><sup>7</sup></a> It is also standard
+practice to use the word “embedding” to mean <em>both</em> an injective
+function from <span class="math inline">\(G^\top\)</span> to the plane
+<em>and</em> the image of such a function, and to use the word “map” to
+mean <em>both</em> the decomposition of the plane induced by an
+embedding <em>and</em> the rotation system of that embedding.</p>
+<p>I will <em>try</em> to carefully distinguish between these various
+objects when the distinction matters, but there is a serious tension
+here between formality and clarity, so I am very likely to slip
+occasionally.</p>
+<h2 data-number="9.8" id="duality"><span
+class="header-section-number">9.8</span> Duality</h2>
+<p>Recall that a combinatorial map is a triple <span
+class="math inline">\(\Sigma = (D, \textsf{rev},
+\textsf{succ})\)</span>, where <span class="math inline">\(D\)</span> is
+a set of darts, is an involution of <span
+class="math inline">\(D\)</span>, and is a permutation of <span
+class="math inline">\(D\)</span>. For any such triple, the triple <span
+class="math inline">\(\Sigma^* = (D, \textsf{rev},
+\textsf{rev}\circ\textsf{succ})\)</span> is also a well-defined
+combinatorial map, called the <em>dual map</em> of <span
+class="math inline">\(\Sigma\)</span>.<a href="#fn8"
+class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<ul>
+<li>The <em>vertices</em> of <span
+class="math inline">\(\Sigma^*\)</span> are the orbits of <span
+class="math inline">\(\textsf{rev}\circ\textsf{succ}\)</span>, which are
+also the faces of <span class="math inline">\(\Sigma\)</span>.</li>
+<li>The <em>edges</em> of <span class="math inline">\(\Sigma^*\)</span>
+are the orbits of , which are also the edges of <span
+class="math inline">\(\Sigma\)</span>.</li>
+<li>The <em>faces</em> of <span class="math inline">\(\Sigma^*\)</span>
+are the orbits of <span
+class="math inline">\(\textsf{rev}\circ\textsf{rev}\circ\textsf{succ} =
+\textsf{succ}\)</span>, which are also the vertices of <span
+class="math inline">\(\Sigma\)</span>!</li>
+</ul>
+<p>In other words, each vertex <span class="math inline">\(v\)</span>,
+edge <span class="math inline">\(e\)</span>, dart <span
+class="math inline">\(d\)</span>, or face <span
+class="math inline">\(f\)</span> of the original map <span
+class="math inline">\(\Sigma\)</span> corresponds to—or more
+evocatively, “is dual to”—or more formally,
+<strong><em>IS</em></strong>—a face <span
+class="math inline">\(v^*\)</span>, edge <span
+class="math inline">\(e^*\)</span>, dart <span
+class="math inline">\(d^*\)</span>, or vertex <span
+class="math inline">\(f^*\)</span> of the dual map <span
+class="math inline">\(\Sigma^*\)</span>, respectively.</p>
+<p>The endpoints of any primal edge <span
+class="math inline">\(e\)</span> are dual to the shores of the
+corresponding dual edge <span class="math inline">\(e^*\)</span>, and
+vice versa. Specifically, for any dart <span
+class="math inline">\(d\)</span>, we have <span
+class="math inline">\(\textsf{head}(d^*) = \textsf{left}(d)^*\)</span>
+and <span class="math inline">\(\textsf{tail}(d^*) =
+\textsf{right}(d)^*\)</span>. Intuitively, the dual of a dart is
+obtained by rotating it a quarter-turn counterclockwise.</p>
+<p>Duality is trivially an involution: <span
+class="math inline">\((\Sigma^*)^* = \Sigma\)</span>, because <span
+class="math inline">\(\textsf{rev}\circ\textsf{rev}\circ\textsf{succ} =
+\textsf{succ}\)</span>. It immediately follows that for any dart <span
+class="math inline">\(d\)</span>, we have <span
+class="math inline">\(\textsf{left}(d^*) = \textsf{head}(d)^*\)</span>
+and <span class="math inline">\(\textsf{right}(d^*) =
+\textsf{tail}(d)^*\)</span>.</p>
+<p>We can also directly define the dual of a <em>topological</em> map
+<span class="math inline">\(\Sigma\)</span> as follows. Choose an
+arbitrary point <span class="math inline">\(f^*\)</span> in the interior
+of each face <span class="math inline">\(f\)</span> of <span
+class="math inline">\(\Sigma\)</span>. Let <span
+class="math inline">\(F^*\)</span> denote the collection of all such
+points. For each edge <span class="math inline">\(e\)</span> of <span
+class="math inline">\(\Sigma\)</span>, choose a simple path <span
+class="math inline">\(e^*\)</span> between the chosen points in the
+shores of <span class="math inline">\(e\)</span>, such that <span
+class="math inline">\(e^*\)</span> intersects <span
+class="math inline">\(e\)</span> once transversely and does not
+intersect any other edge of <span class="math inline">\(\Sigma\)</span>.
+Let <span class="math inline">\(E^*\)</span> denote the collection of
+all such paths. These paths partition the plane into regions <span
+class="math inline">\(V^*\)</span>, each of which contains a unique
+vertex.<a href="#fn9" class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a> The dual map <span
+class="math inline">\(\Sigma^*\)</span> is the decomposition of the
+plane into vertices <span class="math inline">\(F^*\)</span>, edges
+<span class="math inline">\(E^*\)</span>, and faces <span
+class="math inline">\(V^*\)</span>.</p>
+<figure>
+<img src="Fig/planar-duality.png" style="width:55.0%"
+alt="A planar map and its dual; one dart and its dual are emphasized." />
+<figcaption aria-hidden="true">A planar map and its dual; one dart and
+its dual are emphasized.</figcaption>
+</figure>
+<figure>
+<img src="Fig/derived-maps/primal+dual.png" style="width:75.0%"
+alt="A portion of a planar map \Sigma, and the corresponding portion of the dual map \Sigma^*" />
+<figcaption aria-hidden="true">A portion of a planar map <span
+class="math inline">\(\Sigma\)</span>, and the corresponding portion of
+the dual map <span class="math inline">\(\Sigma^*\)</span></figcaption>
+</figure>
+<p><strong><em>[[ add dual navigation figure ]]</em></strong></p>
+<p>When <span class="math inline">\(G\)</span> is an <em>embedded</em>
+graph, it is extremely common to define the <em>dual graph</em> <span
+class="math inline">\(G^*\)</span> as the 1-skeleton of the dual map of
+the embedding. This habit is a bit misleading, however; duality is a
+correspondence between <em>maps</em> or <em>embeddings</em>, not between
+abstract graphs. An abstract planar graph can have many non-isomorphic
+planar embeddings, each of which defines a different “dual graph”.
+Moreover, the dual of a <em>simple</em> embedded graph is not necessary
+simple; any vertex of degree <span class="math inline">\(2\)</span> in
+<span class="math inline">\(G\)</span> gives rise to parallel edges in
+<span class="math inline">\(G^*\)</span>, and any bridge in <span
+class="math inline">\(G\)</span> is dual to a loop in <span
+class="math inline">\(G^*\)</span>. This is why we don’t want graphs to
+be simple by definition!</p>
+<figure>
+<img src="Fig/two-embeddings.png" style="width:50.0%"
+alt="Two planar embeddings of a simple planar graph, with non-simple, non-isomorphic dual graphs." />
+<figcaption aria-hidden="true">Two planar embeddings of a simple planar
+graph, with non-simple, non-isomorphic dual graphs.</figcaption>
+</figure>
+<h2 data-number="9.9" id="self-dual-data-structures"><span
+class="header-section-number">9.9</span> Self-dual data structures</h2>
+<p><strong><em>[[Duality is not a transformation; it’s just a
+type-cast]]</em></strong></p>
+<table>
+<caption>A (partial) duality dictionary.</caption>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 25%" />
+<col style="width: 24%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Primal <span
+class="math inline">\(\Sigma\)</span></th>
+<th style="text-align: center;">Dual <span
+class="math inline">\(\Sigma^*\)</span></th>
+<th style="text-align: center;">Primal <span
+class="math inline">\(\Sigma\)</span></th>
+<th style="text-align: center;">Dual <span
+class="math inline">\(\Sigma^*\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">vertex <span
+class="math inline">\(v\)</span></td>
+<td style="text-align: center;">face <span
+class="math inline">\(v^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{head}(d)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{left}(d^*)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">dart <span
+class="math inline">\(d\)</span></td>
+<td style="text-align: center;">dart <span
+class="math inline">\(d^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{tail}(d)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{right}(d^*)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">edge <span
+class="math inline">\(e\)</span></td>
+<td style="text-align: center;">edge <span
+class="math inline">\(e^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{left}(d)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{head}(d^*)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">face <span
+class="math inline">\(f\)</span></td>
+<td style="text-align: center;">vertex <span
+class="math inline">\(f^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{right}(d)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{tail}(d^*)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{succ}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{rev}\circ\textsf{succ}\)</span></td>
+<td style="text-align: center;">clockwise</td>
+<td style="text-align: center;">counterclockwise</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{rev}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\textsf{rev}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h2 data-number="9.10" id="endianity"><span
+class="header-section-number">9.10</span> Endianity</h2>
+<p>There are several apparently arbitrary choices to make in the
+definitions of incidence lists, rotation systems, and duality. Should we
+store cycles of darts with the same head or the same tail? Should darts
+be ordered in clockwise or counterclockwise order around vertices? Or
+around faces? Should <span
+class="math inline">\(\textsf{head}(d^*)\)</span> be defined as <span
+class="math inline">\(\textsf{left}(d)^*\)</span> or <span
+class="math inline">\(\textsf{right}(d)^*\)</span>? Different standards
+are used by different authors, by the same authors in different papers,
+and sometimes even within the same paper.<a href="#fn10"
+class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>
+(Mea culpa!)</p>
+<p>Let me attempt to justify, motivate, or at least provide mnemonics
+for the specific choices I use in these notes. Some of these rules will
+only make sense later.</p>
+<ul>
+<li>Dualizing a dart should look (and act?) like multiplying a complex
+number by the imaginary unit <span class="math inline">\(i\)</span>: a
+quarter turn <em>counterclockwise</em>. Thus, <span
+class="math inline">\(\textsf{head}(d^*) = \textsf{left}(d)^*\)</span>
+and <span class="math inline">\(\textsf{tail}(d^*) =
+\textsf{right}(d)^*\)</span>.</li>
+<li>Duality is an involution, dammit. Thus, <span
+class="math inline">\(\textsf{left}(d^*) = \textsf{head}(d)^*\)</span>
+and <span class="math inline">\(\textsf{right}(d^*) =
+\textsf{tail}(d)^*\)</span>. It follows that primal and dual planes must
+have opposite orientations!</li>
+<li>Simple <em>counterclockwise</em> cycles have winding number <span
+class="math inline">\(+1\)</span>. So the dual successor function should
+order darts <em>counterclockwise</em> around their <em>left</em> shores.
+Thus, the primal successor function should order darts
+<em>clockwise</em> around their <em>heads</em>.</li>
+<li>Derivatives measure how much a function <em>increases</em>, so <span
+class="math inline">\(\delta\omega(d) = \omega(\textsf{head}(d)) -
+\omega(\textsf{tail}(d))\)</span>. On the other hand, the directed
+boundary of a face should be a counterclockwise cycle, so <span
+class="math inline">\(\partial\alpha(d) = \alpha(\textsf{left}(d)) -
+\alpha(\textsf{right}(d))\)</span>. Hey, look, consistency!</li>
+</ul>
+<p>This standard creates an annoying discrepancy between the
+mathematical abstraction of a rotation system and its implementation as
+an incidence list. Rotation systems order darts around their heads
+because that makes the math cleaner, but incidence lists (typically)
+order darts around their tails because that better fits our intuition
+about searching graphs by following directed edges outward. Rather than
+give up either useful intuition, we’ll rely on (and if necessary
+implement) the identity <span class="math inline">\(\textsf{next}(d) =
+\textsf{rev}(\textsf{succ}(\textsf{rev}(d)))\)</span>.</p>
+<h2 data-number="9.11" id="other-derived-maps"><span
+class="header-section-number">9.11</span> Other derived maps</h2>
+<p>Let <span class="math inline">\(\Sigma = (V, E, F)\)</span> be an
+arbitrary planar map. In addition to the dual map <span
+class="math inline">\(\Sigma^*\)</span>, there are several other useful
+maps that can be derived from <span
+class="math inline">\(\Sigma\)</span> in terms of two local
+features.</p>
+<ul>
+<li><p>A <em>flag</em> of <span class="math inline">\(\Sigma\)</span> is
+a vertex-edge-face triple <span class="math inline">\((v,e,f)\)</span>
+such that <span class="math inline">\(v\)</span> is an endpoint of <span
+class="math inline">\(e\)</span> and <span
+class="math inline">\(f\)</span> is a shore of <span
+class="math inline">\(e\)</span>.
+<!-- Every dart $d$ is naturally associated with two flags $(\textsf{head}(d), |d|, \textsf{left}(d))$ and $(\textsf{head}(d), |d|, \textsf{right}(d))$ with the same vertex and edge.  Similarly, every corner is naturally associated with two flags $(\textsf{head}(d), |d|, \textsf{left}(d))$ and $(\textsf{head}(d), |\textsf{succ}(d)|, \textsf{left}(d))$ with the same vertex and face. --></p></li>
+<li><p>A <em>corner</em> of <span class="math inline">\(\Sigma\)</span>
+is a pair of flags that share the same vertex and the same face.
+Intuitively, a corner is an incidence between a vertex and a face, or if
+you prefer, a pair of edges whose darts are consecutive around a vertex,
+or around a face. (Formally, a corner is just a nickname for a dart; for
+each dart <span class="math inline">\(d\)</span>, the corresponding
+corner is the incidence between the vertex <span
+class="math inline">\(\textsf{head}(d)\)</span> and the face <span
+class="math inline">\(\textsf{left}(d)\)</span>, or equivalently,
+between the vertex <span
+class="math inline">\(\textsf{tail}(\textsf{succ}^*(d))\)</span> and the
+face <span
+class="math inline">\(\textsf{right}(\textsf{succ}(d))\)</span>.)</p></li>
+</ul>
+<p>The <em>medial map</em> <span class="math inline">\(\Sigma^\times =
+(E, C, V\cup F)\)</span> is the map whose vertices correspond to the
+edges of <span class="math inline">\(\Sigma\)</span>, whose edges
+correspond to the corners of <span
+class="math inline">\(\Sigma\)</span>, and whose faces correspond to
+vertices and faces of <span class="math inline">\(\Sigma\)</span>. The
+medial map of <span class="math inline">\(\Sigma\)</span> is the image
+graph of a generic planar multicurve. Specifically, two vertices are
+connected by an edge in <span
+class="math inline">\(\Sigma^\times\)</span> if the corresponding edges
+in <span class="math inline">\(\Sigma\)</span> are adjacent in cyclic
+order around any vertex (or equivalently, around any face). Every map
+<span class="math inline">\(\Sigma\)</span> and its dual <span
+class="math inline">\(\Sigma^*\)</span> share the same medial map <span
+class="math inline">\(\Sigma^\times\)</span>.</p>
+<p>The dual of the medial map is called the <em>radial</em> map <span
+class="math inline">\(\Sigma^\diamond = (V\cup F, C, E)\)</span>. The
+radial map can be constructed from <span
+class="math inline">\(\Sigma\)</span> by placing a new vertex in the
+interior of each face <span class="math inline">\(f\)</span> of <span
+class="math inline">\(\Sigma\)</span>, connecting each face-vertex <span
+class="math inline">\(f\)</span> to each vertex incident to <span
+class="math inline">\(f\)</span> (with the appropriate multiplicity),
+and then erasing the original edges. Thus, each edge of <span
+class="math inline">\(\Sigma\)</span> becomes a quadrilateral face of
+<span class="math inline">\(\Sigma^\diamond\)</span>. Again, every map
+<span class="math inline">\(\Sigma\)</span> and its dual <span
+class="math inline">\(\Sigma^*\)</span> share the same radial map <span
+class="math inline">\(\Sigma^\diamond\)</span>.</p>
+<figure>
+<img src="Fig/derived-maps/medial+radial.png" style="width:75.0%"
+alt="Corresponding portions of the medial map \Sigma^\times and radial map \Sigma^\diamond of the planar map in Figure 8." />
+<figcaption aria-hidden="true">Corresponding portions of the medial map
+<span class="math inline">\(\Sigma^\times\)</span> and radial map <span
+class="math inline">\(\Sigma^\diamond\)</span> of the planar map in
+Figure 8.</figcaption>
+</figure>
+<p>The <em>band decomposition</em> or <em>ribbon decomposition</em> of
+<span class="math inline">\(\Sigma\)</span> is a map <span
+class="math inline">\(\Sigma^\square\)</span> whose vertices correspond
+to the flags of <span class="math inline">\(\Sigma\)</span>. Two flags
+define an edge in <span class="math inline">\(\Sigma^\square\)</span> if
+they differ in exactly one component: the same vertex and edge but a
+different face, the same vertex and face but a different edge, or the
+sane edge and face bu a different vertex. Every vertex of <span
+class="math inline">\(\Sigma^\square\)</span> has degree <span
+class="math inline">\(3\)</span>. The faces of <span
+class="math inline">\(\Sigma^\square\)</span> correspond to the
+vertices, edges, and faces of <span
+class="math inline">\(\Sigma\)</span>. Every map <span
+class="math inline">\(\Sigma\)</span> and its dual <span
+class="math inline">\(\Sigma^*\)</span> share the same band
+decomposition <span class="math inline">\(\Sigma^\square\)</span>.</p>
+<p>The dual of the band decomposition is the <em>barycentric
+subdivision</em> <span class="math inline">\(\Sigma^+\)</span>. This map
+can be constructed by adding a new vertex in the interior of each edge,
+subdividing it into two edges, adding a new vertex in the interior of
+every face, and finally connecting each face-vertex to its vertices and
+edge midpoints. Thus, the vertices of <span
+class="math inline">\(\Sigma^+\)</span> correspond to the vertices,
+edges, and faces of <span class="math inline">\(\Sigma\)</span>, and the
+faces of <span class="math inline">\(\Sigma^+\)</span> correspond to the
+flags of <span class="math inline">\(\Sigma\)</span>. Every face of
+<span class="math inline">\(\Sigma^+\)</span> is a triangle. Again,
+every map <span class="math inline">\(\Sigma\)</span> and its dual <span
+class="math inline">\(\Sigma^*\)</span> share the same barycentric
+subdivision <span class="math inline">\(\Sigma^+\)</span>.</p>
+<figure>
+<img src="Fig/derived-maps/band+bary.png" style="width:75.0%"
+alt="Corresponding portions of the band decomposition \Sigma^\square and the barycentric subdivision \Sigma^+ of the planar map in Figure 8." />
+<figcaption aria-hidden="true">Corresponding portions of the band
+decomposition <span class="math inline">\(\Sigma^\square\)</span> and
+the barycentric subdivision <span
+class="math inline">\(\Sigma^+\)</span> of the planar map in Figure
+8.</figcaption>
+</figure>
+<p>These four derived maps are formally well-defined if and only only if
+the original map <span class="math inline">\(\Sigma\)</span> has at
+least one edge. It is sometimes convenient, for example in base cases of
+inductive arguments, to informally extend the definitions to the trivial
+map <span class="math inline">\(\bullet\)</span> as follows:</p>
+<ul>
+<li><p>The trivial medial map <span
+class="math inline">\(\bullet^\times\)</span> and the trivial band
+decomposition <span class="math inline">\(\bullet^\square\)</span> both
+consist of a single closed curve on the sphere, with no vertices and two
+faces, corresponding to the vertex and face of <span
+class="math inline">\(\bullet\)</span>. I recommend thinking of this
+object as the result of gluing two flat circular disks together around
+their boundary.</p></li>
+<li><p>The trivial radial map <span
+class="math inline">\(\bullet^\diamond\)</span> and the trivial
+barycentric subdivision <span class="math inline">\(\bullet^+\)</span>
+both consist of a single “edge”, with no faces and two vertices, again
+corresponding to the vertex and face of <span
+class="math inline">\(\bullet\)</span>. I recommend thinking of this
+object as an infinitely thin cylinder with its ends pinched to
+points.</p></li>
+</ul>
+<p>But let me emphasize that these extensions are informal; the objects
+I’ve just described are not maps at all!</p>
+<h2 data-number="9.12" id="aptly-yadda-yadda-1"><span
+class="header-section-number">9.12</span> Aptly Yadda Yadda</h2>
+<ul>
+<li>References!
+<ul>
+<li>planar graphs, duality, etc</li>
+<li>combinatorial maps / rotation systems</li>
+<li>map data structures (half-edge, winged-edge, quad-edge, gem,
+etc.)</li>
+<li>derived maps (Tait, Steinitz, Conway, etc.)</li>
+</ul></li>
+<li>Directed duality: Acyclic <span
+class="math inline">\(\leftrightharpoons\)</span> strongly
+connected</li>
+<li>Whitney’s theorem: Every 3-connected planar graph has a unique
+planar embedding</li>
+</ul>
+<h2 data-number="9.13" id="revision"><span
+class="header-section-number">9.13</span> Revision?</h2>
+<p>Consider using more mnemonic <span
+class="math inline">\(\textsf{hnext}\)</span> instead of <span
+class="math inline">\(\textsf{succ}\)</span>, and similar for other
+nearby darts:</p>
+<ul>
+<li><span class="math inline">\(\textsf{hprev} =
+\textsf{hnext}^{-1}\)</span></li>
+<li><span class="math inline">\(\textsf{tnext} =
+\textsf{rev}(\textsf{hnext}(\textsf{rev})))\)</span></li>
+<li><span class="math inline">\(\textsf{tprev} = \textsf{tnext}^{-1} =
+\textsf{rev}(\textsf{hprev}(\textsf{rev})))\)</span></li>
+<li><span class="math inline">\(\textsf{lnext} =
+\textsf{rev}(\textsf{hnext}) = \textsf{succ}^*\)</span></li>
+<li><span class="math inline">\(\textsf{lprev} = \textsf{lnext}^{-1} =
+\textsf{hprev}(\textsf{rev})\)</span></li>
+<li><span class="math inline">\(\textsf{rnext} =
+\textsf{rev}(\textsf{hprev})\)</span></li>
+<li><span class="math inline">\(\textsf{rprev} = \textsf{rnext}^{-1} =
+\textsf{hnext}(\textsf{rev})\)</span></li>
+</ul>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Our definition of graphs allows graphs with infinitely
+(even uncountably) many vertices and edges, and in particular, vertices
+with infinite (even uncountable) degree. Most of the graphs we consider
+in this course are finite, and obviously algorithms can only
+<em>explicitly</em> construct finite graphs. However, we do sometimes
+implicitly represent infinite graphs with certain symmetries using
+finite graphs. For example, any triangulation of a polygon with holes (a
+finite planar map, whose dual is another planar map) is an implicit
+representation of its universal over (an infinite planar map whose dual
+is an infinite tree).<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>And again, the definition allows topological graphs with
+infinitely (even uncountably) many vertices and edges, and infinite
+(even uncountable) vertex degrees.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Even worse, graph theorists use the phrase “topological
+graph” to mean a <em>generic drawing</em> or <em>immersion</em> of a
+graph in the plane. In a generic drawing, vertices are represented by
+distinct points; edges are represented by paths between their endpoints;
+no edge passes through a vertex except its endpoints; all
+(self-)intersections between edge interiors are transverse; and all
+pairwise (self-)intersection points are distinct.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>For readers familiar with topology, a triangulation is
+<em>not</em> necessarily a simplicial complex, but rather what Hatcher
+calls a <em><span class="math inline">\(\Delta\)</span>-complex.</em><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Because the edges of a planar embedding can be
+<em>arbitrary</em> paths, it is not immediately obvious that this cyclic
+order is well-defined. In fact, the existence of a consistent order
+follows from careful application of the Jordan-Schönflies theorem.<a
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>or into the sphere, or an isotopy/homeomorphism class of
+such embeddings<a href="#fnref6" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Even worse, graph theorists use the phrase “topological
+graph” to mean a <em>generic drawing</em> or <em>immersion</em> of a
+graph in the plane. In a generic drawing, vertices are represented by
+distinct points; edges are represented by paths between their endpoints;
+no edge passes through a vertex except its endpoints; all
+(self-)intersections between edge interiors are transverse; and all
+pairwise (self-)intersection points are distinct.<a href="#fnref7"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>The dual rotation system of a planar map is sometimes
+also called a <em>polygonal schema</em>, because it describes how to
+construct the map from a collection of disjoint planar polygons (the
+faces) by identifying pairs of boundary edges.<a href="#fnref8"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>You should verify this claim!<a href="#fnref9"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>I can’t resist quoting Herodotus’ <em>Histories</em>,
+written around 440BCE: “The ordinary [Greek] practice at sea is to make
+sheets fast to ring-bolts fitted outboard; the Egyptians fit them
+inboard. The Greeks write and calculate from left to right; the
+Egyptians do the opposite. Yet they say that their way of writing is
+toward the right, and the Greek way toward the left.” Herodotus was
+strangely silent on which end of the egg the Egyptians ate first, or
+whether they preferred to fight a hundred duck-sized horses or one
+horse-sized duck.<a href="#fnref10" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

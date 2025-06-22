@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Multiple-Source Shortest Paths^\alpha</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="16-multiple-source-shortest-paths-revisitedalpha.html" accesskey="n" rel="next">Multiple-Source Shortest Paths, Revisited<span
+class="math inline">\(^\alpha\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="14-circle-packingvarnothing.html" accesskey="p" rel="previous">Circle Packing<span class="math inline">\(^\varnothing\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="15" id="multiple-source-shortest-pathsalpha"><span
+class="header-section-number">15</span> Multiple-Source Shortest
+Paths<span class="math inline">\(^\alpha\)</span></h1>
+<h2 data-number="15.1" id="problem-statement"><span
+class="header-section-number">15.1</span> Problem Statement</h2>
+<p>Let <span class="math inline">\(\Sigma = (V, E, F)\)</span> be a
+planar map with outer face <span class="math inline">\(o\)</span>, where
+each edge <span class="math inline">\(e\)</span> is assigned a
+non-negative weight <span class="math inline">\(w(e)\)</span>.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> Call any vertex incident to <span
+class="math inline">\(o\)</span> a <em>boundary</em> vertex of <span
+class="math inline">\(\Sigma\)</span>. The <em>multiple-source
+shortest-path</em> problem asks for an implicit representation of the
+shortest paths from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>, for all boundary vertices <span
+class="math inline">\(s\)</span> and all vertices <span
+class="math inline">\(t\)</span>. An explicit representation of these
+shortest paths, for example as a shortest-path tree rooted at every node
+on the outer face, requires <span
+class="math inline">\(\Omega(n^2)\)</span> space in the worst case.
+Nevertheless, the multiple-source shortest-path problem can be solved in
+only <span class="math inline">\(O(n\log n)\)</span> time, in any of the
+following forms:</p>
+<ul>
+<li><p>Given a collection of <span class="math inline">\(k\)</span>
+vertex pairs <span class="math inline">\((s_i, t_i)\)</span>, where each
+<span class="math inline">\(s_i\)</span> is a boundary vertex, we can
+report all <span class="math inline">\(k\)</span> shortest-path
+distances <span class="math inline">\(\textsf{dist}(s_i, t_i)\)</span>
+in <span class="math inline">\(O(n \log n + k\log n)\)</span>
+time.</p></li>
+<li><p>Assuming the outer face <span class="math inline">\(o\)</span>
+has <span class="math inline">\(k\)</span> vertices, we can report the
+<span class="math inline">\(O(k^2)\)</span> shortest-paths distances
+between every pair of boundary vertices in <span
+class="math inline">\(O(n\log n + k^2)\)</span> time.</p></li>
+<li><p>We can preprocess <span class="math inline">\(\Sigma\)</span> in
+<span class="math inline">\(O(n\log n)\)</span> time into a data
+structure using <span class="math inline">\(O(n\log n)\)</span> space,
+that can report the shortest-path distance from an arbitrary boundary
+vertex to an arbitrary vertex in <span class="math inline">\(O(\log
+n)\)</span> time.</p></li>
+</ul>
+<p>The multiple-source shortest-path problem was first posed and solved
+by Philip Klein in 2005. Here I’m describing a variant of Klein’s
+algorithm published by Sergio Cabello and Erin Chambers in 2007, which
+more easily generalizes to graphs on non-planar surface maps. This
+algorithm plays an essential role in several efficient algorithms for
+planar maps and surface maps.</p>
+<p>To ease presentation, I will make two simplifying assumptions about
+the input graph:</p>
+<ol type="1">
+<li>The boundary of the outer face <span
+class="math inline">\(o\)</span> is a simple cycle. This assumption can
+be enforced if necessary by inserting additional edges with very large
+weight.</li>
+<li>For every vertex <span class="math inline">\(s\)</span> and every
+vertex <span class="math inline">\(t\)</span>, there is
+<strong><em>exactly one</em></strong> shortest path from <span
+class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span>. (Thus, the algorithm I’ll describe
+here cannot be used verbatim on unweighted graphs.) I’ll describe two
+easy methods to enforce this assumption at the end of this note.</li>
+</ol>
+<h2 data-number="15.2" id="shortest-paths-and-slacks"><span
+class="header-section-number">15.2</span> Shortest paths and slacks</h2>
+<p>The MSSP algorithm relies on a characterization of shortest paths
+developed by Lester Ford in the mid-1950s. Fix a <em>source</em> vertex
+<span class="math inline">\(s\)</span>. For each vertex <span
+class="math inline">\(v\)</span>, let <span
+class="math inline">\(\textsf{dist}(v)\)</span> denote the shortest-path
+distance from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(v\)</span>. Let <span
+class="math inline">\(\textsf{pred}(v)\)</span> denote the predecessor
+of vertex <span class="math inline">\(v\)</span> (if any) in the unique
+shortest path from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(v\)</span>. Let <span
+class="math inline">\(T_s\)</span> denote the tree of shortest paths
+from <span class="math inline">\(s\)</span> to other vertices, defined
+so that <span class="math inline">\(\textsf{pred}(v)\)</span> is the
+parent of <span class="math inline">\(v\)</span> in <span
+class="math inline">\(T_s\)</span>. Finally, define the <em>slack</em>
+of each dart <span class="math inline">\(u\mathord\to v\)</span> as
+<span class="math display">\[  
+    \textsf{slack}(u\mathord\to v) :=
+        \textsf{dist}(u) + w(u\mathord\to v) - \textsf{dist}(v)
+\]</span> A dart whose slack is negative is called <em>tense</em>.</p>
+<p>Ford’s generic single-source shortest path algorithm starts by
+assigning <span class="math inline">\(\textsf{dist}(s) = 0\)</span> and
+<em>tentatively</em> assigning <span
+class="math inline">\(\textsf{dist}(v) = \infty\)</span> for every
+vertex <span class="math inline">\(v\ne s\)</span>. Then as long as the
+graph contains at least one tense dart, the algorithm <em>relaxes</em>
+one tense dart <span class="math inline">\(u\mathord\to v\)</span> by
+reassigning <span class="math inline">\(\textsf{dist}(v) \gets
+\textsf{dist}(u) + w(u\mathord\to v)\)</span> and <span
+class="math inline">\(\textsf{pred}(v) \gets u\)</span>. When no more
+darts are tense, every value <span
+class="math inline">\(\textsf{dist}(v)\)</span> is the correct
+shortest-path distance, and the predecessor pointers define a correct
+shortest-path tree <span class="math inline">\(T_s\)</span>.</p>
+<dl>
+<dt><strong>Lemma (Ford 1956):</strong></dt>
+<dd>
+<em>The following invariants hold for any shortest-path tree <span
+class="math inline">\(T_s\)</span> in any edge-weighted graph <span
+class="math inline">\(G\)</span>:</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>Every dart in <span class="math inline">\(G\)</span> has
+non-negative slack.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="a">
+<li><em>Every dart in a shortest path tree <span
+class="math inline">\(T_s\)</span> (directed away from <span
+class="math inline">\(s\)</span>) has slack zero.</em></li>
+</ol>
+</dd>
+<dd>
+<ol start="3" type="a">
+<li><em>If shortest paths are unique, then every dart that is not in the
+unique shortest-path tree <span class="math inline">\(T_s\)</span> has
+positive slack.</em></li>
+</ol>
+</dd>
+</dl>
+<h2 data-number="15.3" id="compact-output"><span
+class="header-section-number">15.3</span> Compact Output</h2>
+<dl>
+<dt><strong>Disk-tree Lemma:</strong></dt>
+<dd>
+<em>Let <span class="math inline">\(T\)</span> be any tree embedded on a
+disk with boundary cycle <span class="math inline">\(B\)</span>; call
+any vertex in <span class="math inline">\(T\cap B\)</span> a boundary
+vertex. Let <span class="math inline">\(e\)</span> be any edge of <span
+class="math inline">\(T\)</span>, and let <span
+class="math inline">\(U\)</span> and <span
+class="math inline">\(W\)</span> be the components of <span
+class="math inline">\(T\setminus e\)</span>. Either <span
+class="math inline">\(U\)</span> contains no vertices, or <span
+class="math inline">\(U\)</span> contains every boundary vertex, or
+boundary vertices in <span class="math inline">\(U\)</span> induce a
+path in <span class="math inline">\(B\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\Sigma\)</span> be the planar map
+induced by <span class="math inline">\(T \cup B\)</span>. Trivially,
+<span class="math inline">\(T\)</span> is a spanning tree of <span
+class="math inline">\(\Sigma\)</span>. The complementary dual spanning
+tree <span class="math inline">\(C^*\)</span> of <span
+class="math inline">\(\Sigma^*\)</span> is a star, with the outer face
+of <span class="math inline">\(\Sigma\)</span> at the center and other
+faces of <span class="math inline">\(\Sigma\)</span> at the leaves.
+</dd>
+<dd>
+<p>The dual subgraph <span class="math inline">\(C^* / e^*\)</span>
+contains a cycle <span class="math inline">\(\gamma\)</span> of length
+<span class="math inline">\(2\)</span> that separates all vertices in
+<span class="math inline">\(U\)</span> from all vertices in <span
+class="math inline">\(W\)</span>. If <span
+class="math inline">\(\gamma\)</span> does not intersect <span
+class="math inline">\(B\)</span>, then <span
+class="math inline">\(U\)</span> either contains every boundary vertex
+or none. Otherwise, <span class="math inline">\(\gamma\)</span>
+intersects <span class="math inline">\(B\)</span> exactly twice, so
+<span class="math inline">\(U\)</span> contains an interval of boundary
+vertices. <span class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<figure>
+<img src="Fig/disk-tree.png" style="width:75.0%"
+alt="The disk-tree lemma." />
+<figcaption aria-hidden="true">The disk-tree lemma.</figcaption>
+</figure>
+<p>Now suppose our original planar map <span
+class="math inline">\(\Sigma\)</span> has <span
+class="math inline">\(h\)</span> boundary vertices, indexed <span
+class="math inline">\(s_0, s_1, s_2, \dots, s_{h-1}\)</span> in cyclic
+order. For each index <span class="math inline">\(i\)</span>, let <span
+class="math inline">\(T_i\)</span> denote the shortest-path tree rooted
+at <span class="math inline">\(s_i\)</span>.</p>
+<dl>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>Every directed edge <span class="math inline">\(x\mathord\to
+y\)</span> is either in every shortest path tree <span
+class="math inline">\(T_i\)</span>, in no shortest path tree <span
+class="math inline">\(T_i\)</span>, or in an interval of shortest path
+trees <span class="math inline">\(T_i, T_{i+1 \bmod h}, \dots, T_{i+j
+\bmod h}\)</span></em>.
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(T\)</span> be the unique tree of
+directed shortest paths <em>into</em> vertex <span
+class="math inline">\(y\)</span>, and apply the disk-tree lemma to the
+components of <span class="math inline">\(T - xy\)</span>. <span
+class="math inline">\(\qquad\square\)</span>.
+</dd>
+</dl>
+<p>It follows that we can encode all <span
+class="math inline">\(k\)</span> shortest paths using only <span
+class="math inline">\(O(n)\)</span> space, either by recording the first
+and last trees <span class="math inline">\(T_i\)</span> that contain
+each directed edge, or by recording the initial tree <span
+class="math inline">\(T_1\)</span> followed by the differences <span
+class="math inline">\(T_2\setminus T_1, T_3\setminus T_2\dots
+T_h\setminus T_{h-1}\)</span>.</p>
+<h2 data-number="15.4" id="parametric-shortest-paths"><span
+class="header-section-number">15.4</span> Parametric Shortest Paths</h2>
+<p><strong><em>[[Double- and triple-check directions for consistency:
+Source vertex <span class="math inline">\(x\)</span> moves ccw around
+boundary. Darts pivoting into <span
+class="math inline">\(T_\lambda\)</span> point from new parent to child.
+Dual dart <span class="math inline">\(d^*\)</span> is <span
+class="math inline">\(\textsf{right}(d) \mathord\to
+\textsf{left}(d)\)</span>. But left and right are reversed in the dual
+plane!]]</em></strong></p>
+<p>To solve the multiple-source shortest path problem, imagine moving
+the source vertex <span class="math inline">\(s\)</span>
+<em>continuously</em> around the outer face and maintaining the
+shortest-path tree <span class="math inline">\(T_s\)</span> rooted at
+<span class="math inline">\(s\)</span>. Although the shortest-path
+<em>distances</em> vary continuously as <span
+class="math inline">\(s\)</span> moves, the <em>structure</em> of the
+shortest-path tree changes only at discrete events. (This approach is a
+variant of the <em>parametric shortest-path</em> problem first proposed
+by Karp and Orlin (1981).)</p>
+<p>Now consider a single edge <span class="math inline">\(uv\)</span> on
+the outer face. Suppose we have already computed the shortest-path tree
+<span class="math inline">\(T_u\)</span> rooted at <span
+class="math inline">\(u\)</span>, and we want to maintain the shortest
+path tree <span class="math inline">\(T_s\)</span> as the source vertex
+<span class="math inline">\(s\)</span> moves along <span
+class="math inline">\(uv\)</span> from <span
+class="math inline">\(u\)</span> to <span
+class="math inline">\(v\)</span>. We insert <span
+class="math inline">\(s\)</span> as a new vertex, partitioning <span
+class="math inline">\(uv\)</span> into two edges <span
+class="math inline">\(us\)</span> and <span
+class="math inline">\(sv\)</span> with parametric weights <span
+class="math display">\[
+    w_\lambda(us) = \lambda \cdot w(uv)
+    \qquad\text{and}\qquad
+    w_\lambda(sv) = (1-\lambda) w(uv)
+\]</span> Every other edge <span class="math inline">\(xy\)</span> has
+constant parametric weight <span class="math inline">\(w_\lambda(xy) =
+xy\)</span>. We then maintain the shortest-path tree <span
+class="math inline">\(T_\lambda\)</span> rooted at <span
+class="math inline">\(s\)</span>, with respect to the weight function
+<span class="math inline">\(w_\lambda\)</span>, as the parameter <span
+class="math inline">\(\lambda\)</span> increases continuously from <span
+class="math inline">\(0\)</span> to <span
+class="math inline">\(1\)</span>. The initial shortest-path tree <span
+class="math inline">\(T_0\)</span> is equal to <span
+class="math inline">\(T_u\)</span>, and the final tree <span
+class="math inline">\(T_1\)</span> is equal to <span
+class="math inline">\(T_v\)</span>.</p>
+<p>Fix a parameter value <span class="math inline">\(\lambda \in
+[0,1]\)</span>. For any vertex <span class="math inline">\(x\)</span>,
+let <span class="math inline">\(\textsf{dist}_\lambda(x)\)</span> denote
+the shortest-path distance from <span class="math inline">\(s\)</span>
+to <span class="math inline">\(x\)</span> with respect to the weight
+function <span class="math inline">\(w_\lambda\)</span>. Similarly, for
+any dart <span class="math inline">\(x\mathord\to y\)</span>, let <span
+class="math display">\[
+    \textsf{slack}_\lambda(x\mathord\to y) =
+        \textsf{dist}_\lambda(x)
+            + w_\lambda(x\mathord\to y)
+            - \textsf{dist}_\lambda(y).
+\]</span> Color each vertex <span class="math inline">\(x\)</span>
+<em>red</em> if <span
+class="math inline">\(\textsf{dist}_\lambda(x)\)</span> is an increasing
+function of <span class="math inline">\(\lambda\)</span> (with
+derivative <span class="math inline">\(1\)</span>), and <em>blue</em> if
+<span class="math inline">\(\textsf{dist}_\lambda(x)\)</span> is an
+decreasing function of <span class="math inline">\(\lambda\)</span>
+(with derivative <span class="math inline">\(-1\)</span>). For generic
+values of <span class="math inline">\(\lambda\)</span>, every vertex
+except <span class="math inline">\(s\)</span> is either red or blue.
+Finally, call a dart <span class="math inline">\(x\mathord\to y\)</span>
+<em>active</em> if <span
+class="math inline">\(\textsf{slack}_\lambda(x\mathord\to y)\)</span> is
+a decreasing function of <span
+class="math inline">\(\lambda\)</span>.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>The following invariants hold for all <span
+class="math inline">\(\lambda\in [0,1]\)</span>:</em>
+</dd>
+<dd>
+<ol type="a">
+<li><em>If <span class="math inline">\(s\mathord\to v \not\in
+T_\lambda\)</span>, then every vertex except <span
+class="math inline">\(s\)</span> is red, and the only active dart is
+<span class="math inline">\(s\mathord\to v\)</span>.</em></li>
+</ol>
+</dd>
+<dd>
+<ol type="a">
+<li><em>If <span class="math inline">\(s\mathord\to u \not\in
+T_\lambda\)</span>, then every vertex except <span
+class="math inline">\(s\)</span> is blue, and there are no active
+darts.</em></li>
+</ol>
+</dd>
+<dd>
+<ol type="a">
+<li><em>Otherwise, every descendant of <span
+class="math inline">\(u\)</span> is red, every descendant of <span
+class="math inline">\(v\)</span> is blue, and <span
+class="math inline">\(x\mathord\to y\)</span> is active if and only if
+<span class="math inline">\(x\)</span> is blue and <span
+class="math inline">\(y\)</span> is red.</em></li>
+</ol>
+</dd>
+</dl>
+<p>Without loss of generality, assume <span class="math inline">\(o =
+\textsf{right}(u\mathord\to v)\)</span> is the outer face of <span
+class="math inline">\(\Sigma\)</span>. Let <span class="math inline">\(p
+= \textsf{left}(u\mathord\to v)\)</span> be the other face incident to
+<span class="math inline">\(uv\)</span>. Let <span
+class="math inline">\(C^*_\lambda = (E\setminus T_\lambda)^*\)</span>
+denote the spanning tree of <span
+class="math inline">\(\Sigma^*\)</span> complementary to <span
+class="math inline">\(T_\lambda\)</span>. Finally, let <span
+class="math inline">\(\pi_\lambda\)</span> denote the unique directed
+path in <span class="math inline">\(C^*_\lambda\)</span> from <span
+class="math inline">\(o^*\)</span> to <span
+class="math inline">\(p^*\)</span>.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>If <span class="math inline">\(T_\lambda\)</span> has both red and
+blue vertices, then a dart is active if and only if its dual is in the
+directed path <span class="math inline">\(\pi_\lambda\)</span>.</em>
+</dd>
+</dl>
+<figure>
+<img src="Fig/planar-shortest-pivot.png" style="width:75.0%"
+alt="A single pivot in a planar shortest-path tree." />
+<figcaption aria-hidden="true">A single pivot in a planar shortest-path
+tree.</figcaption>
+</figure>
+<dl>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>If <span class="math inline">\(T_\lambda\)</span> has both red and
+blue vertices, the next dart to become tense (if any) is the dart with
+minimum slack whose dual is in the directed path <span
+class="math inline">\(\pi_\lambda\)</span>.</em>
+</dd>
+</dl>
+<p>Thus, we can execute a single phase of the MSSP algorithm as follows.
+Initially, we set <span class="math inline">\(s = u\)</span>. We
+repeatedly find the tensest active dart <span class="math inline">\(d =
+x\mathord\to y\)</span>, move <span class="math inline">\(s\)</span>
+distance <span class="math inline">\(\textsf{slack}(d)/2\)</span> along
+<span class="math inline">\(uv\)</span>, increase all red distances and
+decrease all blue distances by <span
+class="math inline">\(\textsf{slack}(d)/2\)</span>, decrease the slacks
+of all active darts and increase the slacks of their reversals by <span
+class="math inline">\(\textsf{slack}(d)\)</span>, and finally pivot
+<span class="math inline">\(d\)</span> into the tree by assigning <span
+class="math inline">\(\textsf{pred}(y) \gets x\)</span>. The loop ends
+either when there are no more active darts, or when the source vertex
+<span class="math inline">\(s\)</span> reaches <span
+class="math inline">\(v\)</span>.</p>
+<p>Each pivot changes at least one node <span
+class="math inline">\(y\)</span> from red to blue, and no pivot changes
+any node from blue to red. Thus, once a dart is pivoted into the
+shortest-path tree, it is not pivoted out during that phase. Thus, the
+darts that are pivoted into the tree are precisely the darts in <span
+class="math inline">\(T_v \setminus T_u\)</span>. The disk-tree lemma
+now immediately implies that the <em>total</em> number of pivots over
+all phases is only linear.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>The MSSP algorithm performs a total of <span
+class="math inline">\(O(n)\)</span> pivots.</em>
+</dd>
+</dl>
+<h2 data-number="15.5" id="dynamic-forest-data-structures"><span
+class="header-section-number">15.5</span> Dynamic Forest Data
+Structures</h2>
+<p>To achieve a running time of <span class="math inline">\(O(n\log
+n)\)</span>, we need to perform each pivot quickly. We maintain both the
+shortest-path tree <span class="math inline">\(T_\lambda\)</span> and
+the complementary dual spanning tree <span
+class="math inline">\(C^*_\lambda\)</span> in data <em>dynamic
+forest</em> data structures that implicitly maintain dart values
+(slacks) or vertex values (distances) under edge insertions, edge
+deletions, and updates to the values in certain substructures.</p>
+<p>We maintain the shortest path tree <span
+class="math inline">\(T_\lambda\)</span> as a directed tree rooted at
+<span class="math inline">\(s\)</span>, with <span
+class="math inline">\(\textsf{dist}\)</span> values associated with each
+vertex, in a data structure that supports the following operations:</p>
+<ul>
+<li><p><span class="math inline">\(\textsf{Cut}(x\mathord\to
+y)\)</span>: Remove the edge <span class="math inline">\(x\mathord\to
+y\)</span> from <span class="math inline">\(T_\lambda\)</span>, breaking
+it into two rooted trees. The component containing <span
+class="math inline">\(x\)</span> is still rooted at <span
+class="math inline">\(s\)</span>; the other component is rooted at <span
+class="math inline">\(y\)</span>.</p></li>
+<li><p><span class="math inline">\(\textsf{Link}(x, y)\)</span>: Add a
+directed edge from <span class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span>. This operation assumes that <span
+class="math inline">\(y\)</span> a root. We always call <span
+class="math inline">\(\textsf{Link}\)</span> immediately after <span
+class="math inline">\(\textsf{Cut}\)</span> so that <span
+class="math inline">\(T_\lambda\)</span> remains a single spanning
+tree.</p></li>
+<li><p><span class="math inline">\(\textsf{GetDist}(x)\)</span>: Return
+the distance value associated with vertex <span
+class="math inline">\(x\)</span>.</p></li>
+<li><p><span class="math inline">\(\textsf{AddSubtreeDist}(x)\)</span>:
+For every descendant <span class="math inline">\(y\)</span> of <span
+class="math inline">\(x\)</span>, add <span
+class="math inline">\(\Delta\)</span> to <span
+class="math inline">\(\textsf{dist}(y)\)</span>.</p></li>
+</ul>
+<p>Similarly, we maintain the complementary dual spanning tree <span
+class="math inline">\(C^*_\lambda\)</span> as an undirected unrooted
+tree, with <span class="math inline">\(\textsf{slack}\)</span> values
+associated with every dart, in a data structure that supports the
+following operations.</p>
+<ul>
+<li><p><span class="math inline">\(\textsf{Cut}(xy)\)</span>: Remove the
+edge <span class="math inline">\(xy\)</span> from <span
+class="math inline">\(C^*_\lambda\)</span>, breaking it into two
+trees.</p></li>
+<li><p><span class="math inline">\(\textsf{Link}(x, y, \alpha,
+\beta)\)</span>: Add the edge <span class="math inline">\(xy\)</span>
+and assign <span class="math inline">\(\textsf{slack}(x\mathord\to y) =
+\alpha\)</span> and <span
+class="math inline">\(\textsf{slack}(y\mathord\to x) = \beta\)</span>.
+We always call <span class="math inline">\(\textsf{Link}\)</span>
+immediately after <span class="math inline">\(\textsf{Cut}\)</span> so
+that <span class="math inline">\(C^*_\lambda\)</span> remains a single
+dual spanning tree.</p></li>
+<li><p><span class="math inline">\(\textsf{GetSlack}(x\mathord\to
+y)\)</span>: Return the slack value associated with dart <span
+class="math inline">\(x\mathord\to y\)</span>.</p></li>
+<li><p><span class="math inline">\(\textsf{MinPathSlack}(\Delta, x,
+y)\)</span>: Return the <span class="math inline">\(d\)</span> on the
+directed path from <span class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span> such that <span
+class="math inline">\(\textsf{slack}(d)\)</span> is minimized.</p></li>
+<li><p><span class="math inline">\(\textsf{AddPathSlack}(\Delta, x,
+y)\)</span>: For each dart <span class="math inline">\(d\)</span> on the
+directed path from <span class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span>, add <span
+class="math inline">\(\Delta\)</span> to <span
+class="math inline">\(\textsf{slack}(d)\)</span> and subtract <span
+class="math inline">\(\Delta\)</span> from <span
+class="math inline">\(\textsf{slack}(\textsf{rev}(d))\)</span>.</p></li>
+</ul>
+<p>There are several dynamic-forest data structures that support the
+operations we need in <span class="math inline">\(O(\log n)\)</span>
+amortized time each; my favorite is Tarjan and Werneck’s
+<em>self-adjusting top tree</em>. (Most of the others also have Tarjan’s
+name on them.) A description of self-adjusting top trees (or the
+<em>splay trees</em> they use under the hood) is unfortunately beyond
+the scope of this note (or this course).</p>
+<h2 data-number="15.6" id="the-pivoting-algorithm"><span
+class="header-section-number">15.6</span> The Pivoting Algorithm</h2>
+<p>With these data structures in hand, we can identify the tensest
+active dart and perform the necessary updates to pivot it into <span
+class="math inline">\(T_\lambda\)</span> in <span
+class="math inline">\(O(\log n)\)</span> amortised time. The following
+figure shows the algorithm to perform the next pivot, with all data
+structure operations in place.</p>
+<figure>
+<img src="Fig/MSSP-pseudocode.png" style="width:80.0%"
+alt="The MSSP pivoting algorithm." />
+<figcaption aria-hidden="true">The MSSP pivoting algorithm.</figcaption>
+</figure>
+<p>As we already argued, the total number of pivots is <span
+class="math inline">\(O(n)\)</span>, so the overall MSSP algorithm runs
+in <span class="math inline">\(O(n\log n)\)</span> time, as claimed.</p>
+<h2 data-number="15.7" id="applications"><span
+class="header-section-number">15.7</span> Applications</h2>
+<p>Computing all <span class="math inline">\(k^2\)</span>
+boundary-to-boundary distances <span class="math inline">\(O((n +
+k^2)\log n)\)</span> time is straightforward.</p>
+<p><strong><em>[[More detail. Reduce time to <span
+class="math inline">\(\boldsymbol{O(n\log n + k^2)}\)</span>. Say
+anything at all about persistence?]]</em></strong></p>
+<h2 data-number="15.8" id="enforcing-unique-shortest-paths"><span
+class="header-section-number">15.8</span> Enforcing Unique Shortest
+Paths</h2>
+<p>So far our presentation has assumed that there is a <em>unique</em>
+shortest path between any two vertices of <span
+class="math inline">\(\Sigma\)</span>; in particular, for any source
+vertex <span class="math inline">\(s\)</span>, there is a
+<em>unique</em> shortest-path tree <span
+class="math inline">\(T_s\)</span>. More subtly, we have also assumes
+that there is always a unique tensest active dart. These assumption
+obviously do not hold in general, but we can enforce them if necessary
+using any of several standard <em>perturbation</em> techniques. I’ll
+describe two such techniques here, but there are other
+possibilities.</p>
+<p>Standard perturbation methods either explicitly or implicitly define
+a secondary weight <span class="math inline">\(w’(u\mathord\to
+v)\)</span> for each each dart <span class="math inline">\(u\mathord\to
+v\)</span> in <span class="math inline">\(\Sigma\)</span>. The
+<em>perturbed weight</em> of a dart <span
+class="math inline">\(d\)</span> is then defined as <span
+class="math display">\[  
+    \tilde{w}(d) :=
+        w(d) + w’(d)\cdot \varepsilon
+\]</span> for some sufficiently small real number <span
+class="math inline">\(\varepsilon&gt;0\)</span>. Rather than computing a
+particular value of <span class="math inline">\(\varepsilon\)</span>, we
+consider the limiting behavior as <span
+class="math inline">\(\varepsilon\)</span> approaches zero. Thus, we can
+consider each perturbed weight <span
+class="math inline">\(\tilde{w}(d)\)</span> to be an ordered pair or
+vector <span class="math display">\[
+    \tilde{w}(d) := ( w(d), w’(d) ).
+\]</span> We compute lengths of paths by summing these vectors normally,
+but we compare path lengths <em>lexicographically</em>. That is, we
+consider one path <span class="math inline">\(\pi\)</span> to be shorter
+than another path <span class="math inline">\(\pi’\)</span> if either of
+the following conditions holds:</p>
+<ol type="a">
+<li><span class="math inline">\(w(\pi) &lt; w(\pi’)\)</span></li>
+<li><span class="math inline">\(w(\pi) = w(\pi’)\)</span> and <span
+class="math inline">\(w’(\pi) &lt; w’(\pi’)\)</span></li>
+</ol>
+<h3 data-number="15.8.1" id="random-perturbation"><span
+class="header-section-number">15.8.1</span> Random Perturbation</h3>
+<p>The simplest perturbation method chooses <em>random</em> secondary
+weights for each edge. For example, if we choose each secondary weight
+<span class="math inline">\(w’(e)\)</span> uniformly at random from the
+real interval <span class="math inline">\([0,1]\)</span>, then the
+lengths of all simple paths (indeed, the lengths of all finite walks)
+are distinct with probability <span
+class="math inline">\(1\)</span>.</p>
+<p>Somewhat more realistically, the following lemma implies that we can
+choose small random <em>integers</em> for the secondary weights.</p>
+<p><strong>Isolation Lemma (Mulmuley, Vazirani, and Vazirani
+1987):</strong> <em>Let <span class="math inline">\(\mathcal{F}\)</span>
+be any family of subsets of <span class="math inline">\([n]\)</span>.
+For each index <span class="math inline">\(i\in [n]\)</span>, let <span
+class="math inline">\(w’(i)\)</span> be chosen independently and
+uniformly at random from <span class="math inline">\([N]\)</span>.
+Define the weight <span class="math inline">\(w’(S)\)</span> of any
+subset <span class="math inline">\(S\subseteq[n]\)</span> as <span
+class="math inline">\(w’(S) = \sum_{i\in S} w’(i)\)</span>. With
+probability at least <span class="math inline">\(1-n/N\)</span>, the
+minimum-weight set in <span class="math inline">\(\mathcal{F}\)</span>
+is unique.</em></p>
+<p><strong><em>[[Include the proof, which is relatively
+straightforward]]</em></strong></p>
+<p><strong>Corollary:</strong> <em>If each perturbation weight <span
+class="math inline">\(w’(e)\)</span> is chosen independently and
+uniformly at random from <span class="math inline">\([n^4]\)</span>,
+then with probability <span class="math inline">\(1 - 1/O(n)\)</span>,
+all shortest paths with respect to the perturbed weight function <span
+class="math inline">\((w, w’)\)</span> are unique.</em></p>
+<p>Let me emphasize that the Isolation Lemma <em>only</em> implies that
+<em>shortest</em> paths are distinct; other pairs of paths may still
+have equal length, even after perturbation.</p>
+<p><strong><em>[[We also need unique tensest darts!!]]</em></strong></p>
+<h3 data-number="15.8.2" id="cotree-perturbation"><span
+class="header-section-number">15.8.2</span> Cotree Perturbation</h3>
+<p>Let <span class="math inline">\(T\sqcup C\)</span> be a tree-cotree
+decomposition of <span class="math inline">\(\Sigma\)</span>. Root the
+dual spanning tree <span class="math inline">\(C^*\)</span> at the dual
+of the outer face <span class="math inline">\(o^*\)</span>, and direct
+all edges of <span class="math inline">\(C^*\)</span> away from the
+root. We define the weight <span class="math inline">\(w’(d)\)</span> of
+each dart <span class="math inline">\(d\)</span> of <span
+class="math inline">\(\Sigma\)</span> as follows:</p>
+<ul>
+<li>If <span class="math inline">\(d^*\in C^*\)</span>, let <span
+class="math inline">\(w’(d)\)</span> be the number of descendants of
+<span class="math inline">\(\textsf{head}(d^*) =
+\textsf{left}(d)^*\)</span> in <span
+class="math inline">\(C^*\)</span>.</li>
+<li>If <span class="math inline">\(\textsf{rev}(d^*)\in C^*\)</span>,
+let <span class="math inline">\(w’(d) =
+-w’(\textsf{rev}(d))\)</span>.</li>
+<li>Otherwise, let <span class="math inline">\(w’(d) = 0\)</span>.</li>
+</ul>
+<p>Equivalently, for any dart <span class="math inline">\(d\not\in
+T\)</span>, let <span class="math inline">\(\textsf{cycle}_T(d)\)</span>
+be the unique directed cycle in <span class="math inline">\(T +
+d\)</span>. Then <span class="math inline">\(w’(d)\)</span> is the
+number of faces of <span class="math inline">\(\Sigma\)</span> inside
+<span class="math inline">\(\textsf{cycle}_T(d)\)</span> if that cycle
+is oriented counterclockwise, the negation of the number of interior
+cycles if the cycle is clockwise, and zero if <span
+class="math inline">\(d\)</span> is in <span
+class="math inline">\(T\)</span>.</p>
+<dl>
+<dt><strong>Winding Lemma:</strong></dt>
+<dd>
+<em>For any closed walk <span class="math inline">\(W\)</span> in <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math inline">\(\sum_{d\in W} w’(d) = \sum_{f\in F}
+\textsf{wind}(W, f)\)</span>.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+This is essentially the shoelace algorithm. We can compute the winding
+number of <span class="math inline">\(W\)</span> around <span
+class="math inline">\(f\)</span> by traversing the path in <span
+class="math inline">\(C^*\)</span> from <span
+class="math inline">\(f^*\)</span> to <span
+class="math inline">\(o^*\)</span> and counting crossings. We can write
+<span class="math inline">\(W\)</span> as the sum of the fundamental
+directed cycles determined by the non-tree edges of <span
+class="math inline">\(W\)</span>.
+<strong><em>[[Incomplete]]</em></strong>
+</dd>
+</dl>
+<p>The previous lemma implies that although the secondary weights <span
+class="math inline">\(w’\)</span> depend on the choice of tree-cotree
+decomposition, the resulting shortest paths do not!</p>
+<dl>
+<dt><strong>Corollary:</strong></dt>
+<dd>
+<em>For any two paths <span class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> with the same endpoints, and any two
+spanning trees <span class="math inline">\(T\)</span> and <span
+class="math inline">\(T’\)</span>, we have <span
+class="math inline">\(w’_T(\pi) &lt; w’_T(\pi’)\)</span> if and only if
+<span class="math inline">\(w’_{T’}(\pi) &lt; w’_{T’}(\pi’)\)</span>.
+Thus, shortest paths with respect to <span
+class="math inline">\(w’_T\)</span> and <span
+class="math inline">\(w’_{T’}\)</span> coincide.</em>
+</dd>
+</dl>
+<p><strong><em>[[Figure!]]</em></strong></p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Cotree perturbation makes shortest paths unique.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> be two shortest paths from some
+vertex <span class="math inline">\(s\)</span> to some other vertex <span
+class="math inline">\(t\)</span>. By definition, we have <span
+class="math inline">\(w(\pi) = w(\pi’)\)</span> and <span
+class="math inline">\(w’(\pi) = w’(\pi’)\)</span>. The latter condition
+implies that <span class="math inline">\(\sum_{f\in F}
+\textsf{wind}(\pi-\pi’, f) = 0\)</span>. There are two cases to
+consider.
+</dd>
+<dd>
+<p>First, suppose <span class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> do not cross. Then the closed walk
+<span class="math inline">\(\pi - \pi’\)</span> is a weakly simple
+closed curve, which implies that the non-zero winding numbers <span
+class="math inline">\(\textsf{wind}(\pi-\pi’, f)\)</span> are either all
+<span class="math inline">\(1\)</span> or all <span
+class="math inline">\(-1\)</span>. It follows that <span
+class="math inline">\(\textsf{wind}(\pi-\pi’, f) = 0\)</span> for
+<em>every</em> face <span class="math inline">\(f\)</span>, which is
+only possible if <span class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> use the same subset of edges. In
+other words, <span class="math inline">\(\pi = \pi’\)</span>.</p>
+</dd>
+<dd>
+<p>Now suppose <span class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> cross at some vertex <span
+class="math inline">\(x\)</span>. The prefixes <span
+class="math inline">\(\alpha = \pi[s, x]\)</span> and <span
+class="math inline">\(\alpha’ = \pi’[s, x]\)</span> must be shortest
+paths, otherwise we could shorten one of <span
+class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span>. Similarly, the suffixes <span
+class="math inline">\(\beta = \pi[x,t]\)</span> and <span
+class="math inline">\(\beta’ = \pi’[x,t]\)</span> must be shortest
+paths. The inductive hypothesis now implies that <span
+class="math inline">\(\alpha = \alpha’\)</span> and <span
+class="math inline">\(\beta = \beta’\)</span>. Again, we conclude that
+<span class="math inline">\(\pi = \pi’\)</span>. <span
+class="math inline">\(\qquad\square\)</span></p>
+</dd>
+</dl>
+<p><strong><em>[[We also need unique tensest darts!!]]</em></strong></p>
+<h2 data-number="15.9" id="leftmost-shortest-paths"><span
+class="header-section-number">15.9</span> Leftmost shortest paths</h2>
+<p>In fact, we can implement cotree perturbation without explicit
+secondary weights. Suppose <span class="math inline">\(\pi\)</span> and
+<span class="math inline">\(\pi’\)</span> are two paths with the same
+endpoints. We say that <span class="math inline">\(\pi\)</span> is
+<em>to the left</em> of <span class="math inline">\(\pi’\)</span> if the
+closed walk <span class="math inline">\(\pi-\pi’\)</span> winds
+negatively (clockwise) around at least one face, but does not wind
+positively (counterclockwise) around any face. If <span
+class="math inline">\(\pi\)</span> is to the left of <span
+class="math inline">\(\pi’\)</span>, we immediately have <span
+class="math inline">\(w’(\pi) &lt; w’(\pi’)\)</span>.</p>
+<p>It is not hard to show that for any two paths <span
+class="math inline">\(\pi\)</span> and <span
+class="math inline">\(\pi’\)</span> with the same endpoints, either one
+path is the left of the other, or a third path is to the left of both of
+them. Thus, shortest paths with respect to cotree perturbation are
+always <em>leftmost</em> shortest paths.</p>
+<p>We can simulate cotree perturbation by always breaking ties to the
+left. In the MSSP algorithm, we always pivot the <em>leafmost</em>
+tensest active dart.</p>
+<p><strong><em>[[Need more details here]]</em></strong></p>
+<h3 data-number="15.9.1" id="caveat-emptor"><span
+class="header-section-number">15.9.1</span> Caveat Emptor!</h3>
+<p>Cotree perturbation is attractive both because it is deterministic
+and because it can often be implemented implicitly, but its asymmetry
+can be a disadvantage. Unless shortest paths are already unique, cotree
+perturbation yields shortest paths that are not symmetric, even when the
+original graph is undirected. The reversal of the <em>leftmost</em>
+shortest path from <span class="math inline">\(s\)</span> to <span
+class="math inline">\(t\)</span> is the <em>rightmost</em> shortest path
+from <span class="math inline">\(t\)</span> to <span
+class="math inline">\(u\)</span>. Thus, algorithms that rely on the
+usual behavior of undirected shortest paths cannot automatically use
+this technique.</p>
+<p>As a simple example, consider the <em>non-crossing</em> shortest
+paths problem. Given an undirected planar map <span
+class="math inline">\(\Sigma\)</span> with weighted edges and several
+pairs of vertices <span class="math inline">\((s_1, t_1), \dots, (s_k,
+t_k)\)</span> on the outer face, we want to compute shortest paths
+between each pair <span class="math inline">\(s_i\)</span> and <span
+class="math inline">\(t_i\)</span> that are pairwise non-crossing. If
+shortest paths in <span class="math inline">\(\Sigma\)</span> are
+already unique, then it suffices to independently compute the shortest
+path in <span class="math inline">\(\Sigma\)</span> from <span
+class="math inline">\(s_i\)</span> to <span
+class="math inline">\(t_i\)</span> for each index <span
+class="math inline">\(i\)</span>. But suppose the terminals appear in
+order <span class="math inline">\(s_1, t_1, s_2, t_2\)</span> on the
+outer face, and we use cotree perturbation to <em>enforce</em>
+uniqueness. Then the shortest path from <span
+class="math inline">\(s_1\)</span> to <span
+class="math inline">\(t_1\)</span> might cross the shortest path from
+<span class="math inline">\(s_2\)</span> to <span
+class="math inline">\(t_2\)</span>.</p>
+<figure>
+<img src="Fig/crossing-leftmost-paths.png" style="width:30.0%"
+alt="Leftmost shortest paths in undirected planar graphs can cross" />
+<figcaption aria-hidden="true">Leftmost shortest paths in undirected
+planar graphs can cross</figcaption>
+</figure>
+<h2 data-number="15.10" id="references-8"><span
+class="header-section-number">15.10</span> References</h2>
+<ol type="1">
+<li><p>Sergio Cabello and Erin W. Chambers. <a
+href="https://dl.acm.org/doi/10.5555/1283383.1283394">Multiple source
+shortest paths in a genus <span class="math inline">\(g\)</span>
+graph</a>. <em>Proc. 18th Ann. ACM-SIAM Symp. Discrete Algorithms</em>,
+89–97, 2007.</p></li>
+<li><p>Sergio Cabello, Erin W. Chambers, and Jeff Erickson. <a
+href="https://doi.org/10.1137/12086427">Multiple-source shortest paths
+in embedded graphs</a>. <em>SIAM J. Comput.</em> 42(4):1542–1571, 2013.
+arXiv:1202.0314.</p></li>
+<li><p>David Eisenstat and Philip N. Klein. <a
+href="http://doi.org/10.1145/2488608.2488702">Linear-time algorithms for
+maxflow and multiple-source shortest paths in unit-weight planar
+graphs</a>. <em>Proc. 45th Ann. ACM Symp. Theory Comput.</em>, 735–744,
+2013.</p></li>
+<li><p>Lester R. Ford. <a
+href="http://www.rand.org/pubs/papers/P923.html">Network flow
+theory</a>. Paper P-923, The RAND Corporation, Santa Monica, California,
+August 14, 1956.</p></li>
+<li><p>Richard M. Karp and James B. Orlin. <a
+href="https://doi.org/10.1016/0166-218X(81)90026-3">Parametric shortest
+path algorithms with an application to cyclic staffing</a>. <em>Discrete
+Appl. Math.</em> 3:37–45, 1981.</p></li>
+<li><p>Philip N. Klein. <a
+href="https://dl.acm.org/doi/abs/10.5555/1070432.1070454">Multiple-source
+shortest paths in planar graphs</a>. <em>Proc. 16th Ann. ACM-SIAM Symp.
+Discrete Algorithms</em>, 146–155, 2005.</p></li>
+<li><p>Yaowei Long and Seth Pettie. <a
+href="http://doi.org/10.1137/1.9781611976465.149">Planar distance
+oracles with better time-space tradeoffs</a>. <em>Proc. 32nd Ann.
+ACM-SIAM Symp. Discrete Algorithms</em>, 2517–2537, 2021. arXiv:<a
+href="https://arxiv.org/abs/2007.08585">2007.08585</a>.</p></li>
+<li><p>Ketan Mulmuley, Umesh Vazirani, and Vijay Vazirani. <a
+href="https://doi.org/10.1007/BF02579206">Matching is as easy as matrix
+inversion</a>. <em>Combinatorica</em> 7:105–113, 1987.</p></li>
+<li><p>Robert E. Tarjan and Renato F. Werneck. <a
+href="https://dl.acm.org/doi/10.5555/1070432.1070547">Self-adjusting top
+trees</a>. <em>Proc. 16th Ann. ACM-SIAM Symp. Discrete Algorithms</em>,
+813–822, 2005.</p></li>
+</ol>
+<h2 data-number="15.11" id="sir-not-appearing"><span
+class="header-section-number">15.11</span> Sir not appearing</h2>
+<ul>
+<li>Subtleties for directed graphs and/or graphs with negative edge
+lengths.</li>
+<li>Post-hoc distance and path queries via persistence</li>
+<li>Klein’s leafmost pivot strategy</li>
+<li>Unweighted MSSP in linear time [Eisenstat Klein]</li>
+<li><span class="math inline">\(\Omega(n\log n)\)</span> lower bound
+[Eisenstat Klein]</li>
+<li>Space-time tradeoff for Klein’s algorithm (but <em>not</em> CCE)
+using different dynamic-forest data structures: <span
+class="math inline">\(O(kn^{1+1/k})\)</span> preprocessing time and
+<span class="math inline">\(O(k\log\log n)\)</span> query time. [Long
+Pettie 2021]</li>
+</ul>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In fact the algorithm I’m about to describe can be
+extended to directed graphs, where a dart and its reversal may have
+different weights, but for ease of exposition, I’ll stick to undirected
+graphs in this lecture.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

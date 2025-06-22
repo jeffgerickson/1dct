@@ -10,7 +10,7 @@ I think I’m about 2/3 of the way to a complete draft of an actual textbook, bu
 
 ***You are welcome to use these notes, but I would not recommend citing them as a definitive source for ANYTHING.***
 
-I honestly don't know when I'll be able to work on these notes again in earnest, or when (if ever) they're likely to be complete.  I'll fiddle with them a bit over the summer, but I'm going to be swamped with my real job during the academic year, especially in the fall,  I won't teach this class again until 2025 at the absolute earliest.
+I honestly don't know when I'll be able to work on these notes again in earnest, or when (if ever) they're likely to be complete.  I'll fiddle with them a bit over the summer, but I'm going to be swamped with my real job during the academic year, especially in the fall.  I won't teach this class again until 2025 at the absolute earliest.
 
 These notes (and other course materials) are available under a [Creative Commons Attribution license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 

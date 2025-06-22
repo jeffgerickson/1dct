@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Generic Planar Curves^\alpha</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="7-unsigned-gauss-codesbeta.html" accesskey="n" rel="next">Unsigned Gauss codes<span class="math inline">\(^\beta\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="5-shortest-homotopic-pathsbeta.html" accesskey="p" rel="previous">Shortest (Homotopic) Paths<span class="math inline">\(^\beta\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="6" id="generic-planar-curvesalpha"><span
+class="header-section-number">6</span> Generic Planar Curves<span
+class="math inline">\(^\alpha\)</span></h1>
+<p>Recall that a <em>closed curve</em> in the plane is any continuous
+function from the circle to the plane. Previously we considered a common
+representation of closed curves as <em>polygons</em>: circular sequences
+of line segments joined at common endpoints. Polygons are convenient for
+reasoning about intersections with other simple geometric structures
+like vertical rays, trapezoidal decompositions, and triangulations, but
+in other ways the geometry of the representation is irrelevant. Starting
+with this lecture, I’ll consider a more abstract representation that
+records only how the curve intersects <em>itself</em>.</p>
+<p>A self-intersection <span class="math inline">\(\gamma(t) =
+\gamma(t&#39;)\)</span> of a closed curve <span
+class="math inline">\(\gamma\)</span> is <em>transverse</em> if, for all
+sufficiently small <span class="math inline">\(\varepsilon &gt;
+0\)</span> the subpaths <span
+class="math inline">\(\gamma(t-\varepsilon, t+\varepsilon)\)</span> and
+<span class="math inline">\(\gamma(t&#39;-\varepsilon,
+t&#39;+\varepsilon)\)</span> are homeomorphic to two orthogonal lines. A
+closed curve is <em>generic</em> if every self-intersection is
+transverse (in particular, there are no self-tangencies or repeated
+curve <em>segments</em>) and there are no triple self-intersections
+<span class="math inline">\(\gamma(t) = \gamma(t&#39;) =
+\gamma(t&#39;&#39;)\)</span>.</p>
+<figure>
+<img src="Fig/Gauss-curve.png" style="width:40.0%"
+alt="A generic closed curve with eleven crossings" />
+<figcaption aria-hidden="true">A generic closed curve with eleven
+crossings</figcaption>
+</figure>
+<p>Two generic curves are <em>isotopic</em> if one can be continuously
+deformed to the other without ever changing the number of
+self-intersections. For example, all simple closed curves are isotopic
+to each other. A homotopy that always preserves the number of
+self-intersections is called an <em>isotopy</em>. In fact, two planar
+curves <span class="math inline">\(\gamma\)</span> and <span
+class="math inline">\(\gamma’\)</span> are isotopic if and only if there
+is an orientation-preserving homeomorphism <span
+class="math inline">\(h\colon \mathbb{R}^2 \to \mathbb{R}^2\)</span>
+such that <span class="math inline">\(\gamma’ = h\circ \gamma\)</span>.
+At least in the next few lectures, we really don’t care about the
+<em>geometry</em> of these curves, so we won’t distinguish between
+isotopic curves.</p>
+<h2 data-number="6.1" id="technicalities"><span
+class="header-section-number">6.1</span> Technicalities</h2>
+<p>Generic closed curves are sometimes called <em>immersions</em> or
+<em>regular</em> curves, but the latter term more commonly refers to
+closed curves with continuous non-zero derivatives. In fact, the most
+common word used to describe this class of closed curves is “curve”! The
+definition of generic curves does <em>not</em> require continuous,
+non-zero, or even well-defined derivatives at <em>any</em> point, much
+less at <em>every</em> point. Despite this freedom, the following
+standard <em>compactness argument</em> implies that generic curves are
+well-behaved.</p>
+<p><strong>Lemma:</strong> <em>Every generic closed curve has a finite
+number of self-intersection points.</em></p>
+<dl>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Call a point <span class="math inline">\(t\in S^1\)</span>
+<em>singular</em> if <span class="math inline">\(\gamma(t) =
+\gamma(t&#39;)\)</span> for some <span class="math inline">\(t&#39;\ne
+t\)</span>, and <em>regular</em> otherwise. For each point <span
+class="math inline">\(t\in S^1\)</span>, we define an open interval
+<span class="math inline">\(U_t\)</span> as follows:
+</dd>
+<dd>
+<ul>
+<li>If <span class="math inline">\(t\)</span> is singular, let <span
+class="math inline">\(U_t = (t-\varepsilon, t+\varepsilon)\)</span>,
+such that <span class="math inline">\(\gamma(t-\varepsilon,
+t+\varepsilon)\)</span> and some other arc <span
+class="math inline">\(\gamma(t&#39;-\varepsilon,
+t&#39;+\varepsilon)\)</span> are homeomorphic to two orthogonal
+lines.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If <span class="math inline">\(t\)</span> is regular, let <span
+class="math inline">\(U_t\)</span> be any open interval that contains
+<span class="math inline">\(t\)</span> but no singular points.</li>
+</ul>
+</dd>
+<dd>
+<p>The open sets <span class="math inline">\(\mathcal{C} = \{ U_t \mid
+t\in S^1 \}\)</span> clearly <em>cover</em> the circle, meaning <span
+class="math inline">\(\bigcup_{t\in S^1} U_t = S^1\)</span>. Because
+<span class="math inline">\(S^1\)</span> is compact, there must be a
+finite subset <span class="math inline">\(\mathcal{F} \subset
+\mathcal{C}\)</span> that also covers <span
+class="math inline">\(S^1\)</span>. Let <span class="math inline">\(F
+\subset S^1\)</span> be the (necessarily finite) index set of the finite
+subcover <span class="math inline">\(\mathcal{F}\)</span>, meaning <span
+class="math inline">\(\mathcal{F} = \{ U_t \mid t\in F \}\)</span>.</p>
+</dd>
+<dd>
+<p>The only set in <span class="math inline">\(\mathcal{U}\)</span> that
+contains a singular point <span class="math inline">\(t\)</span> is its
+own interval <span class="math inline">\(U_t\)</span>. Thus, the finite
+set <span class="math inline">\(T\)</span> must contain every singular
+point.</p>
+</dd>
+</dl>
+<p>The adjective “generic” is justified by the observation that
+<em>every</em> closed curve can be approximated arbitrarily closely by a
+generic closed curve. Previously we argued that every closed curve can
+be approximated arbitrarily closely by a <em>polygon</em>. (This is the
+<em>simplicial approximation theorem</em>.) An arbitrarily small
+perturbation of any polygon ensures that all vertices are distinct, no
+vertex lies in the interior of an edge, and no three edges share a
+common point. Any polygon satisfying these conditions <em>is</em> a
+generic closed curve.</p>
+<p>A more careful application of simplicial approximation and
+compactness implies that any generic closed curve <span
+class="math inline">\(\gamma\)</span> can be approximated arbitrarily
+closely by a polygon that is <em>isotopic</em> to <span
+class="math inline">\(\gamma\)</span>. Thus, even though generic curves
+are not polygons <em>by definition</em>, they are polygons <em>without
+loss of generality</em>. In fact, results in future lectures imply that
+each generic curve with <span class="math inline">\(n\)</span>
+self-intersection points is isotopic to a polygon with only <span
+class="math inline">\(O(n)\)</span> vertices.</p>
+<h2 data-number="6.2" id="image-graphs"><span
+class="header-section-number">6.2</span> Image graphs</h2>
+<p>Any non-simple generic closed curve can be naturally represented by
+its <em>image graph</em>, which is a connected 4-regular plane graph<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> whose vertices are the
+self-intersection points of the curve, and whose edges are curve
+segments between vertices. Image graphs are not necessary
+<em>simple</em>; they can contain loops and parallel edges. The image
+graph of a <em>simple</em> closed curve is obviously a simple cycle.</p>
+<figure>
+<img src="Fig/Gauss-curve-graph.png" style="width:40.0%"
+alt="The image graph of the curve in Figure 1" />
+<figcaption aria-hidden="true">The image graph of the curve in Figure
+1</figcaption>
+</figure>
+<p>However, not every 4-regular plane graph is the image graph of a
+generic closed curve. Any generic curve is a particular Euler tour of
+its image graph. Recall that an <em>Euler tour</em> of a graph <span
+class="math inline">\(G\)</span> is any closed walk that traverses each
+edge of <span class="math inline">\(G\)</span> exactly once. A closed
+walk is <em>Gaussian</em> if, whenever the walk visits a vertex <span
+class="math inline">\(v\)</span>, it enters and exits <span
+class="math inline">\(v\)</span> along <em>opposing</em> edges. A
+4-regular graph is <em>unicursal</em> if it contains a Gaussian Euler
+tour; every <em>unicursal</em> 4-regular plane graph is the image of a
+non-simple generic curve.</p>
+<p>Any generic planar curve partitions the plane into regions called the
+<em>faces</em> of the curve. The Jordan-Schönflies theorem implies that
+every planar curve has one unbounded face that is homeomorphic to the
+complement of a closed disk, and every other face is homeomorphic to an
+open disk. The faces of a curve are also the faces of its image graph. A
+face is called a <em>monogon</em> if it has only one edge on its
+boundary, a <em>bigon</em> if it has two boundary edges, and a
+<em>triangle</em> if it has three boundary edges.<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>More generally, a <em>multicurve</em> is a continuous map of the
+disjoint union of circles into the plane; a multicurve is
+<em>generic</em> if it has only transverse pairwise self-intersections.
+The restriction of a multicurve to one of its circles is a generic
+closed curve called a <em>constituent</em> of the multicurve. Every
+4-regular plane graph <span class="math inline">\(G\)</span> is the
+image graph of a generic multicurve, whose constituents are the Gaussian
+walks in <span class="math inline">\(G\)</span>. Most of the results
+I’ll discuss in this set of lectures extend easily to multicurves, but
+for ease of exposition I’ll discuss only curves explicitly.</p>
+<h2 data-number="6.3" id="gauss-codes-and-gauss-diagrams"><span
+class="header-section-number">6.3</span> Gauss codes and Gauss
+diagrams</h2>
+<p>In the mid-1800s, Gauss developed a symbolic representation of closed
+curves similar to the crossing sequences that we previously used for
+homotopy testing.</p>
+<p>Assign a unique label to each vertex of the image graph of the curve.
+The <em>Gauss code</em> of a curve is the sequence of labels encountered
+by a point moving once around the curve, starting at an arbitrary
+<em>basepoint</em> and moving in an arbitrary direction. In other words,
+a Gauss code is a <em>self-crossing</em> sequence. Different choices of
+basepoint and direction lead to different Gauss codes. Specifically,
+changing the basepoint cyclically shifts the Gauss code, and changing
+direction reverses the Gauss code.</p>
+<p>A <em>signed</em> Gauss code also records <em>how</em> the curve
+crosses itself at each vertex. Imagine a point moving along the curve in
+the chosen direction, starting at the chosen basepoint. The signed Gauss
+code records a <em>positive</em> crossing whenever the point crosses the
+curve from right to left, and a <em>negative</em> crossing whenever the
+point crosses the curve from left to right. (This is exactly the same
+sign convention that we used to compute winding number, <em>from the
+point of view of the polygon</em>.) Each vertex of the image graph of a
+curve appears twice in the curve’s signed Gauss code, once with each
+sign. I’ll typically indicate positive and negative crossings using
+upper- and lower-case letters, respectively. Again, different choices of
+basepoint and direction lead to different signed Gauss codes.</p>
+<figure>
+<img src="Fig/sign-convention.png" style="width:15.0%"
+alt="Gauss’s sign convention for positive and negative crossings." />
+<figcaption aria-hidden="true">Gauss’s sign convention for positive and
+negative crossings.</figcaption>
+</figure>
+<p>Figure 4 shows the curve from Figure 1, with a direction indicated by
+arrows and a basepoint on the far left indicated by a white arrowhead.
+Each vertex is labeled positive or negative according to the sign of the
+<em>first</em> crossing through that vertex. The resulting signed Gauss
+code is <code>ABcdeFGChaIgDjKHbifEJK</code>; by forgetting the signs, we
+recover the unsigned Gauss code <code>ABCDEFGCHAIGDJKHBIFEJK</code>.</p>
+<figure>
+<img src="Fig/Gauss-code-curve.png" style="width:40.0%"
+alt="A based directed curve with signed Gauss code ABcdeFGChaIgDjKHbifEJK." />
+<figcaption aria-hidden="true">A based directed curve with signed Gauss
+code <code>ABcdeFGChaIgDjKHbifEJK</code>.</figcaption>
+</figure>
+<p><em>Gauss diagrams</em> are an equivalent graphical representation of
+Gauss codes. A Gauss diagram for a curve with <span
+class="math inline">\(n\)</span> self-intersections consists of an
+undirected cycle of <span class="math inline">\(2n\)</span> nodes
+labeled by crossings, in the order they appear along the curve, along
+with edges joining the two appearances of each crossing point, directed
+from the negative crossing to the positive crossing. (Using directed
+edges here is slightly non-standard.)</p>
+<figure>
+<img src="Fig/directed-Gauss-diagram.png" style="width:40.0%"
+alt="A Gauss diagram for the signed Gauss code ABcdeFGChaIgDjKHbifEJK." />
+<figcaption aria-hidden="true">A Gauss diagram for the signed Gauss code
+<code>ABcdeFGChaIgDjKHbifEJK</code>.</figcaption>
+</figure>
+<h2 data-number="6.4" id="tracing-faces"><span
+class="header-section-number">6.4</span> Tracing Faces</h2>
+<p>Perhaps surprisingly, we can completely recover the combinatorial
+structure of a curve from its signed Gauss code. I’ll justify this claim
+in more generality later, when we’ve built up more background on planar
+graphs, but we can already show one example, observed by Carter in the
+early 1990s [2]: The signed Gauss code implicitly encodes the
+<em>faces</em> of the curve.</p>
+<p>Imagine a point moving counterclockwise around the boundary of some
+face (or clockwise if the face is unbounded); the face always lies just
+to the left of the moving point. Between vertices, the point is either
+moving forward or backward along some edge of the image graph. At each
+crossing, the point turns to the <em>left</em>, as follows:</p>
+<ul>
+<li>After entering a positive crossing forward, leave the corresponding
+negative crossing backward.</li>
+<li>After entering a negative crossing forward, leave the corresponding
+positive crossing forward.</li>
+<li>After entering a positive crossing backward, leave the corresponding
+negative crossing forward.</li>
+<li>After entering a negative crossing backward, leave the corresponding
+positive crossing backward.</li>
+</ul>
+<p>Similar case analysis allows us to trace a face to the right of a
+moving point, in clockwise order around the face, by turning right at
+every vertex.</p>
+<figure>
+<img src="Fig/face-tracing.png" style="width:40.0%"
+alt="Turning left or turning right at a vertex." />
+<figcaption aria-hidden="true">Turning left or turning right at a
+vertex.</figcaption>
+</figure>
+<p>(Pseudo)python (pseudo)code for Cater’s face-tracing algorithm is
+shown below. The first function computes the matching between different
+occurrences of the same crossing point; obviously this matching only
+needs to be extracted once if we want to trace several faces. With
+careful bookkeeping, we can extract <em>all</em> the faces of the curve
+directly from the signed Gauss code in <span
+class="math inline">\(O(n)\)</span> time. Different Gauss codes for the
+same curve yield the same set of faces (but possibly with the vertices
+of each face rotated and/or reflected).</p>
+<pre><code># extract matching between crossings from a signed Gauss code
+#   input:  code = signed Gauss code
+#           = permutation of list(range(-n,0)) + list(range(1,n+1))
+#   output:  array match, defined by code[match[i]] = -code[i]
+def indexCode(code):
+    N = len(code)/2
+    posindex = [0] * (N/2)
+    match = [0} * N
+    for i in range(N):
+        if code[i] &gt; 0:
+            posindex[code[i] - 1] = i
+    for i in range(N):
+        if code[i] &lt; 0:
+            match[i] = posindex[1 - code[i]]
+            match[match[i]] = i
+    return match    </code></pre>
+<pre><code># trace the face to the right of a moving point
+#   code = signed Gauss code (integers)
+#   start = index of starting edge (basepoint edge = 0) 
+#   forward = boolean indicating starting direction
+def traceFace(code, starti, forward):
+    match = matchCode(code)
+    N = len(code)
+    i = starti
+    while True:
+        next = forward ? i : (i + N - 1)%N
+        print(code[next])
+        if code[next] &gt; 0:
+            forward = !forward
+        i = match[next]
+        if i = starti:
+            break</code></pre>
+<p>The clockwise tracing process can be visualized on the Gauss diagram
+as follows. We start by tracing just inside an arc of the outer circle.
+Whenever we reach a crossing, we follow the interior edge across the
+diagram to its partner. If the crossing is positive, we stay on the same
+side of the interior edge; if the crossing is negative, we switch to the
+opposite side of the interior edge. Again, we can visualize
+counterclockwise tracing by a symmetric case analysis.</p>
+<figure>
+<img src="Fig/directed-Gauss-diagram-face.png" style="width:40.0%"
+alt="Tracing the outer face of our example curve (to the right of the basepoint)" />
+<figcaption aria-hidden="true">Tracing the outer face of our example
+curve (to the right of the basepoint)</figcaption>
+</figure>
+<h2 data-number="6.5" id="homotopy-moves"><span
+class="header-section-number">6.5</span> Homotopy moves</h2>
+<p>Every closed curve in the plane is homotopic to a point, and
+therefore to every other closed curve in the plane. However, it is still
+useful to study the <em>structure</em> of homotopies between generic
+curves. Recall that the simplicial approximation theorem let us
+approximate any homotopy between <em>polygons</em> as a finite sequence
+of <em>vertex</em> moves. If we make sufficiently small vertex moves
+that preserve genericity, each move incurs only a small local change in
+the pattern of self-intersections.</p>
+<p>Careful case analysis implies that every homotopy between generic
+curves can be approximated by a finite sequence of <em>homotopy
+moves</em> of five different types. Each homotopy move modifies the
+curve only within a small neighborhood containing at most three
+vertices, leaving the rest of the curve unchanged outside this
+neighborhood.</p>
+<ul>
+<li><span class="math inline">\(1\mathord\to 0\)</span>: remove a
+monogon</li>
+<li><span class="math inline">\(0\mathord\to 1\)</span>: create a
+monogon</li>
+<li><span class="math inline">\(2\mathord\to 0\)</span>: remove a bigon
+by separating two subpaths.</li>
+<li><span class="math inline">\(0\mathord\to 2\)</span>: create a bigon
+by overlapping two subpaths.</li>
+<li><span class="math inline">\(3\mathord\to 3\)</span>: flip a triangle
+by moving one subpath over the opposite crossing.</li>
+</ul>
+<figure>
+<img src="Fig/homotopy-moves.png" style="width:90.0%"
+alt="1\mathord\to 0, 2\mathord\to 0, and 3\mathord\to 3 homotopy moves" />
+<figcaption aria-hidden="true"><span class="math inline">\(1\mathord\to
+0\)</span>, <span class="math inline">\(2\mathord\to 0\)</span>, and
+<span class="math inline">\(3\mathord\to 3\)</span> homotopy
+moves</figcaption>
+</figure>
+<p>In particular, we have the following:</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Every generic closed curve in the plane can be transformed into a
+simple closed curve by a finite sequence of homotopy moves.</em>
+</dd>
+</dl>
+<figure>
+<img src="Fig/Gauss-curve-homotopy.png" style="width:95.0%"
+alt="A sequence of homotopy moves simplifying the curve in Figure 1" />
+<figcaption aria-hidden="true">A sequence of homotopy moves simplifying
+the curve in Figure 1</figcaption>
+</figure>
+<p>The proof of this theorem (via simplicial approximation) follows from
+the foundational work of Alexander and Briggs [1] and Reidemeister [2]
+on knot diagrams.<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> This proof is fundamentally
+non-constructive; the number of homotopy moves we need depends on the
+geometric structure of the “given” homotopy. In a future lecture, we
+will see an <em>algorithm</em>, implicit in the work of Steinitz [3,4] a
+decade before Alexander, Briggs, or Reidemeister, that contracts any
+closed curve with <span class="math inline">\(n\)</span> vertices using
+at most <span class="math inline">\(O(n^2)\)</span> homotopy moves.</p>
+<p>Each homotopy move can be implemented by locally modifying the Gauss
+code/diagram, or the equivalent data structures, as follows.</p>
+<ul>
+<li><span class="math inline">\(1\mathord\to 0\)</span>: remove a
+consecutive pair of crossings of the same vertex, for example:
+<code>···Aa···</code></li>
+<li><span class="math inline">\(2\mathord\to 0\)</span>: remove two
+consecutive pairs, each with opposing signs, that cover two vertices,
+for eaxmple: <code>···Ab···Ba···</code> or
+<code>···aB···Ab···</code></li>
+<li><span class="math inline">\(3\mathord\to 3\)</span>: reverse three
+consecutive pairs that cover exactly three vertices, for example:
+<code>···AB···bc···aC···</code> <span
+class="math inline">\(\mapsto\)</span>
+<code>···BA···cb···Ca···</code>.</li>
+</ul>
+<h2 data-number="6.6" id="planarity-testing"><span
+class="header-section-number">6.6</span> Planarity testing</h2>
+<p>Every signed Gauss code is a <em>signed double-permutation</em>: A
+string of even length, in which each symbol appears exactly twice, once
+positive and once negative. However, not every signed double-permutation
+is the signed Gauss code of a planar curve. For example, no planar curve
+has the signed Gauss code <code>ABab</code>. (This is in fact the signed
+Gauss code of a closed curve on the <em>torus</em>!) However, signed
+Gauss codes of planar curves have a very simple characterization.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Every generic closed curve in the plane with <span
+class="math inline">\(n\)</span> vertices has exactly <span
+class="math inline">\(n+2\)</span> faces.</em>
+</dd>
+<dt><strong>Proof (via homotopy):</strong></dt>
+<dd>
+Consider two generic closed curves <span
+class="math inline">\(\gamma\)</span> and <span
+class="math inline">\(\gamma&#39;\)</span> that differ by one homotopy
+move. Suppose <span class="math inline">\(\gamma\)</span> has <span
+class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(f\)</span> faces, and <span
+class="math inline">\(\gamma&#39;\)</span> has <span
+class="math inline">\(n&#39;\)</span> vertices and <span
+class="math inline">\(f&#39;\)</span> faces.
+</dd>
+<dd>
+<ul>
+<li>If the move has type <span class="math inline">\(1\mathord\to
+0\)</span>, then <span class="math inline">\(n&#39; = n-1\)</span> and
+<span class="math inline">\(f&#39; = f-1\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If the move has type <span class="math inline">\(0\mathord\to
+1\)</span>, then <span class="math inline">\(n&#39; = n+1\)</span> and
+<span class="math inline">\(f&#39; = f+1\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If the move has type <span class="math inline">\(2\mathord\to
+0\)</span>, then <span class="math inline">\(n&#39; = n-2\)</span> and
+<span class="math inline">\(f&#39; = f-2\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If the move has type <span class="math inline">\(0\mathord\to
+2\)</span>, then <span class="math inline">\(n&#39; = n+2\)</span> and
+<span class="math inline">\(f&#39; = f+2\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<ul>
+<li>If the move has type <span class="math inline">\(3\mathord\to
+3\)</span>, then <span class="math inline">\(n&#39; = n\)</span> and
+<span class="math inline">\(f&#39; = f\)</span>.</li>
+</ul>
+</dd>
+<dd>
+<p>In all five cases, we have <span class="math inline">\(f-n =
+f&#39;-n&#39;\)</span>.</p>
+</dd>
+<dd>
+<p>It follows by induction that if <span
+class="math inline">\(\gamma&#39;\)</span> is any curve reachable from
+<span class="math inline">\(\gamma\)</span> by a finite sequence of
+homotopy moves, then <span class="math inline">\(f-n =
+f&#39;-n&#39;\)</span>. In particular, if <span
+class="math inline">\(\gamma&#39;\)</span> is simple, then <span
+class="math inline">\(n&#39;=0\)</span> and (by the Jordan curve
+theorem!) <span class="math inline">\(f&#39;=2\)</span>, and therefore
+<span class="math inline">\(f-n = 2\)</span>.</p>
+</dd>
+<dt><strong>Proof (sketch, via smoothing):</strong></dt>
+<dd>
+<strong><em>[[Define smoothing!]]</em></strong> Consider two generic
+closed curves <span class="math inline">\(\gamma\)</span> and <span
+class="math inline">\(\gamma’\)</span> where <span
+class="math inline">\(\gamma’\)</span> is the result of smoothing one
+vertex of <span class="math inline">\(\gamma\)</span>. If <span
+class="math inline">\(\gamma\)</span> has <span
+class="math inline">\(n\)</span> vertices and <span
+class="math inline">\(f\)</span> faces, then <span
+class="math inline">\(\gamma&#39;\)</span> has <span
+class="math inline">\(n-1\)</span> vertices and <span
+class="math inline">\(f-1\)</span> faces. Every simple curve has <span
+class="math inline">\(0\)</span> vertices and <span
+class="math inline">\(2\)</span> faces. The lemma follows immediately by
+induction on the number of vertices.
+</dd>
+</dl>
+<p>In fact, the converse of this lemma is also true, although we don’t
+yet have the tools to prove it:</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>A signed double-permutation is the signed Gauss code of a planar
+curve if and only if it has two more faces than vertices.</em>
+</dd>
+</dl>
+<p>If you have played with played with planar graphs before, you might
+recognize this theorem as an avatar of <em>Euler’s formula</em> <span
+class="math inline">\(V-E+F = 2\)</span>. Because every vertex in the
+image graph of any non-simple curve has degree <span
+class="math inline">\(4\)</span>, the number of edges is exactly twice
+the number of vertices.</p>
+<h2 data-number="6.7" id="dotsand-the-aptly-named-yadda-yadda-1"><span
+class="header-section-number">6.7</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda Yadda</h2>
+<ul>
+<li>Knots and knot diagrams</li>
+<li>Carter surfaces of non-planar Gauss codes</li>
+</ul>
+<h2 data-number="6.8" id="references-4"><span
+class="header-section-number">6.8</span> References</h2>
+<ol type="1">
+<li><p>James W. Alexander and Garland B. Briggs. <a
+href="https://doi.org/10.2307/1968399">On types of knotted curves</a>.
+<em>Ann. Math.</em> 28(1/4):562–586, 1926–1927. <em>Reidemeister moves,
+with pictures.</em></p></li>
+<li><p>J. Scott Carter. <a
+href="https://doi.org/10.1090/S0002-9939-1991-1043406-7">Classifying
+immersed curves</a>. Proc. Amer. Math. Soc. 111(1):281–287, 1991.
+<em>The face-tracing algorithm to reconstruct curves from signed Gauss
+codes.</em></p></li>
+<li><p>Kurt Reidemeister. Elementare Begründung der Knotentheorie.
+<em>Abh. Math. Sem. Hamburg</em> 5:24–32, 1927. <em>Reidemeister moves,
+without pictures.</em></p></li>
+<li><p>Ernst Steinitz. <a
+href="http://gdz.sub.uni-goettingen.de/dms/load/img/?PPN=PPN360609767&amp;DMDID=dmdlog203">Polyeder
+und Raumeinteilungen.</a> <em>Enzyklopädie der mathematischen
+Wissenschaften mit Einschluss ihrer Anwendungen</em> III.AB(12):1–139,
+1916. <em>Proof of “Steinitz’s theorem” — Every 3-connected planar graph
+is the 1-skeleton of a convex polyhedron — using <span
+class="math inline">\(3\mathord\to 3\)</span> homotopy moves in the
+medial graph. I promise those words will eventually make
+sense.</em></p></li>
+<li><p>Ernst Steinitz and Hans Rademacher. <em>Vorlesungen über die
+Theorie der Polyeder: unter Einschluß der Elemente der Topologie</em>.
+Grundlehren der mathematischen Wissenschaften 41. Springer-Verlag, 1934.
+Reprinted 1976. <em>More detailed proof of “Steinitz’s theorem”, with
+pictures.</em></p></li>
+</ol>
+<h2 data-number="6.9" id="possible-reorganization"><span
+class="header-section-number">6.9</span> Possible reorganization</h2>
+<p>Consider shuffling the topics in lectures 6–8:</p>
+<ul>
+<li>Generic curves intro
+<ul>
+<li>image graphs</li>
+<li>oriented and connected smoothing</li>
+<li>winding numbers</li>
+<li>signed crossings</li>
+<li>rotation numbers: smiles and frowns, writhe (via smoothing)</li>
+</ul></li>
+<li>Gauss codes
+<ul>
+<li>motivation for studying these things!</li>
+<li>signed: Gauss diagrams, face tracing, Euler’s formula (via
+smoothing)</li>
+<li>unsigned: Nagy graphs, Dehn codes, interlacement</li>
+</ul></li>
+<li>Homotopy
+<ul>
+<li>homotopy moves</li>
+<li>Steinitz’s contraction</li>
+<li>regular homotopy, Whitney-Graustein, Nowik’s algorithm</li>
+<li>defect and strangeness</li>
+</ul></li>
+</ul>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>We’re admittedly getting a little ahead of ourselves
+here. A <em>plane graph</em> is any graph whose vertices are points in
+the plane, and whose edges are <em>interior-disjoint</em> paths between
+their endpoints.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Stop trying to make “digon” and “trigon” happen,
+Gretchen. They’re not going to happen.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A knot diagram is generic closed curve with additional
+data at each crossing, indicating which branch of the curve passes in
+front of the other. Homotopy moves that sensibly preserves this crossing
+data are called <em>Reidemeister moves</em>.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

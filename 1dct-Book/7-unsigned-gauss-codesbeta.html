@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jeff Erickson" />
+  <title>Unsigned Gauss codes^\beta</title>
+  <style>
+    div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
+    span.navlink { flex: 1; }
+    span.navlink-label { display: inline-block; min-width: 4em; }
+    html {
+      font-size: 18px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<nav id="sitenav">
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Up:</span> <a href="index.html" accesskey="u" rel="up">One-Dimensional Computational Topology</a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Top:</span> <a href="index.html" accesskey="t" rel="top">One-Dimensional Computational Topology</a>
+</span>
+</div>
+<div class="sitenav">
+<span class="navlink">
+<span class="navlink-label">Next:</span> <a href="8-curve-homotopy-and-curve-invariantsalpha.html" accesskey="n" rel="next">Curve homotopy and curve invariants<span
+class="math inline">\(^\alpha\)</span></a>
+</span>
+<span class="navlink">
+<span class="navlink-label">Previous:</span> <a href="6-generic-planar-curvesalpha.html" accesskey="p" rel="previous">Generic Planar Curves<span class="math inline">\(^\alpha\)</span></a>
+</span>
+</div>
+</nav>
+<h1 data-number="7" id="unsigned-gauss-codesbeta"><span
+class="header-section-number">7</span> Unsigned Gauss codes<span
+class="math inline">\(^\beta\)</span></h1>
+<p>In the last lecture, we saw a simple algorithm to test whether a
+signed Gauss code is consistent with a generic curve in the plane: Count
+the faces (by symbol-chasing) and return true if and only if the number
+of faces is exactly two more than the number of crossings.</p>
+<p>In his unpublished notes, written around 1840, Gauss was asked how to
+determine whether an <em>unsigned</em> Gauss code is consistent with a
+planar curve [3]. The same question was published about 40 years later
+by Tait [8]. I regard this as the first problem in computational
+topology. (Euler’s famous Bridges of Königsberg is the <em>zeroth</em>
+problem in computational topology.) B oht Gauss and Tait described a
+<em>partial</em> solution to his problem. The first complete solution
+was proposed by Julius Nagy almost a century later [4].<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<figure>
+<img src="Fig/Nagy-census.png" style="width:60.0%"
+alt="Nagy’s 1927 census of unsigned Gauss codes of lengths 6 through 10" />
+<figcaption aria-hidden="true">Nagy’s 1927 census of unsigned Gauss
+codes of lengths 6 through 10</figcaption>
+</figure>
+<p>In this lecture, I’ll describe an <span
+class="math inline">\(O(n^2)\)</span>-time <em>algorithm</em> originally
+described by Max Dehn in 1936 [1], with some simplifications suggested
+by Nagy’s solution and more modern graph algorithms, as suggested by
+Read and Rosenstiehl [11], Rosenstiehl and Tarjan [12], and de Fraysseix
+and Ossona de Mendez [3].<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a> My presentation of Dehn’s algorithm
+also closely follows Kaufmann. <strong><em>[[Fix reference
+numbers]]</em></strong></p>
+<h2 data-number="7.1" id="winding-numbers-again"><span
+class="header-section-number">7.1</span> Winding numbers again</h2>
+<p>Recall that the winding number of a polygon <span
+class="math inline">\(P\)</span> around a point <span
+class="math inline">\(o\)</span> can be computed by shooting a vertical
+ray from <span class="math inline">\(o\)</span> and counting positive
+and negative crossings with the polygon. The same characterization
+extends to generic curves, but it’s a little unsatisfying, for a couple
+of reasons. First, we only care about curves <em>up to isotopy</em>, but
+the ray-shooting algorithm requires choosing a specific (arbitrary)
+curve in the isotopy class. We can soften this objection somewhat by
+observing that we don’t really need to count crossings with a
+<em>ray</em>; any path from <span class="math inline">\(o\)</span> to
+infinity that crosses the curve a finite number of times will work.</p>
+<p>But there’s a more serious objection. Our representation of closed
+curves (signed Gauss codes) doesn’t include any geometric information.
+But how do we represent the point? We can’t give <em>coordinates</em>,
+because different curves with the same representation have different
+winding numbers around any <em>fixed</em> point!</p>
+<p>Instead, we specify the obstacle point <span
+class="math inline">\(o\)</span> by declaring which <em>face</em> of the
+curve contains it. More cleanly, we define the winding number of a curve
+<span class="math inline">\(\gamma\)</span> around each of its
+<em>faces</em> using an <em>Alexander numbering</em>, we defined in
+Lecture 2 for polygons. For any directed edge <span
+class="math inline">\(e\)</span> of the image graph, let <span
+class="math inline">\(\textsf{left}(e)\)</span> and <span
+class="math inline">\(\textsf{right}(e)\)</span> denote the faces
+immediately to the left and right of <span
+class="math inline">\(e\)</span> (relative to the orientation of <span
+class="math inline">\(e\)</span>).</p>
+<ul>
+<li>If <span class="math inline">\(f\)</span> is the outer face, then
+<span class="math inline">\(\textsf{wind}(\gamma, f) = 0\)</span>.</li>
+<li>For every directed edge <span class="math inline">\(e\)</span>, we
+have <span class="math inline">\(\textsf{wind}(\textsf{left}(e)) =
+\textsf{wind}(\textsf{right}(e)) + 1\)</span></li>
+</ul>
+<figure>
+<img src="Fig/Listing-Alexander-numbering.png" style="width:30.0%"
+alt="The Alexander numbering of a curve; bars indicate negation (Listing 1847)" />
+<figcaption aria-hidden="true">The Alexander numbering of a curve; bars
+indicate negation (Listing 1847)</figcaption>
+</figure>
+<h2 data-number="7.2" id="smoothing"><span
+class="header-section-number">7.2</span> Smoothing</h2>
+<p>Gauss observed that we can also define winding numbers by
+<em>smoothing</em> the curve at each vertex. Smoothing replaces a
+neighborhood of a single vertex with a pair of disjoint curve segments.
+In fact there are two different smoothing operations, depending on how
+the disjoint curve segments are attached. One smoothing operation
+disconnects the curve (or connects two constituents of a multicurve) but
+preserves the direction of both subcurves. The other keeps the curve
+connected, but requires the direction of part of the curve to be
+reversed.</p>
+<figure>
+<img src="Fig/Gauss-curve-smooth.png" style="width:95.0%"
+alt="Smoothing a curve at a vertex. Left: preserving direction. Right: preserving connection." />
+<figcaption aria-hidden="true">Smoothing a curve at a vertex. Left:
+preserving direction. Right: preserving connection.</figcaption>
+</figure>
+<p>Gauss observed that by smoothing <em>every</em> vertex of a curve to
+preserve direction, we can decompose the curve into a finite set of
+disjoint <em>simple</em> curves. This collection of simple curves is
+called the <em>Seifert</em> decomposition of the curve. Each of these
+simple curves has winding number <span class="math inline">\(+1\)</span>
+or <span class="math inline">\(-1\)</span> around its interior,
+depending whether the curve is oriented counterclockwise or
+clockwise.</p>
+<p>The winding number of a curve <span
+class="math inline">\(\gamma\)</span> around any point <span
+class="math inline">\(o\)</span> (far from the vertices) is equal to the
+sum of the winding numbers of the curves in the Seifert decomposition of
+<span class="math inline">\(\gamma\)</span> around <span
+class="math inline">\(o\)</span>. Equivalently, <span
+class="math inline">\(\textsf{wind}(\gamma, 0)\)</span> is equal to the
+number of counterclockwise cycles that contain <span
+class="math inline">\(o\)</span> minus the number of clockwise cycles
+that contain <span class="math inline">\(o\)</span>.</p>
+<figure>
+<img src="Fig/Gauss-Nachlass-example.png" style="width:35.0%"
+alt="Gauss’s example of a Seifert decomposition" />
+<figcaption aria-hidden="true">Gauss’s example of a Seifert
+decomposition</figcaption>
+</figure>
+<h2 data-number="7.3" id="gausss-parity-condition"><span
+class="header-section-number">7.3</span> Gauss’s parity condition</h2>
+<p>Gauss observed without proof that the unsigned Gauss code of every
+planar curve satisfies a simple parity condition: Every substring that
+starts and ends with the same symbol has even length, or equivalently,
+each symbol appears once at an even index and once at an odd index. This
+parity condition was first proved necessary by Nagy. The following
+simpler combinatorial proof is due to Rademacher and Toeplitz.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Every pair of generic closed curves that intersect only transversely
+intersect at an even number of points.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> be a transverse pair of generic
+closed curves, directed arbitrarily. Imagine a point moving around <span
+class="math inline">\(\alpha\)</span>. Each time this point crosses
+<span class="math inline">\(\beta\)</span>, the winding number of <span
+class="math inline">\(\beta\)</span> around that point changes by <span
+class="math inline">\(1\)</span>, and therefore changes from even to odd
+or vice versa. The moving point starts and ends in the same face of
+<span class="math inline">\(\beta\)</span>, so its winding number change
+parity an even number of times.
+</dd>
+</dl>
+<p>Now let <span class="math inline">\(X\)</span> be a string of length
+2n, in which each of the <span class="math inline">\(n\)</span> unique
+symbols appears twice.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>If <span class="math inline">\(X\)</span> is the Gauss code of a
+planar curve, then every substring of <span
+class="math inline">\(X\)</span> that starts and ends with the same
+symbol has even length.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Let <span class="math inline">\(\gamma\)</span> be a planar closed
+curve. Smoothing <span class="math inline">\(\gamma\)</span> at any
+vertex produces two subcurves <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>. Up to a cyclic shift (reflecting a
+change of basepoint), the Gauss code for <span
+class="math inline">\(\gamma\)</span> can be written as <span
+class="math inline">\(axay\)</span>, where <span
+class="math inline">\(a\)</span> is the label of the vertex, substring
+<span class="math inline">\(x\)</span> encodes the crossings along <span
+class="math inline">\(\alpha\)</span>, and string <span
+class="math inline">\(y\)</span> encodes the crossings along <span
+class="math inline">\(\beta\)</span>. Each self-intersection point of
+<span class="math inline">\(\alpha\)</span> is encoded in <span
+class="math inline">\(x\)</span> twice, and the other symbols of <span
+class="math inline">\(x\)</span> encode the intersections between <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span> We conclude that <span
+class="math inline">\(x\)</span> has even length, which completes the
+proof.
+</dd>
+</dl>
+<p>We can test this parity condition in <span
+class="math inline">\(O(n^2)\)</span> time by brute force, but in fact,
+there is a simple linear-time algorithm. Given the Gauss code <span
+class="math inline">\(X\)</span>, we can define a directed graph <span
+class="math inline">\(G(X)\)</span>, which I’ll call the <em>Nagy
+graph</em> of <span class="math inline">\(X\)</span>, as follows:</p>
+<ul>
+<li>The vertices of <span class="math inline">\(G(X)\)</span> correspond
+to the <span class="math inline">\(n\)</span> distinct symbols in <span
+class="math inline">\(X\)</span>.</li>
+<li>The edges of <span class="math inline">\(G(x)\)</span> correspond to
+(cyclic) substrings of <span class="math inline">\(X\)</span> with
+length <span class="math inline">\(2\)</span>, alternately directed
+forward and backward. That is, the Nagy graph contains a forward edge
+<span class="math inline">\(x_i\to x_{i+1}\)</span> for every even index
+<span class="math inline">\(i\)</span> and a backward edge and <span
+class="math inline">\(x_{i+1}\to x_i\)</span> for every odd index <span
+class="math inline">\(i\)</span>. For example, the Nagy graph of the
+string <code>abcdefgchaigdjkhbifejk</code> contains the following edges:
+<span class="math display">\[
+  a\mathord\rightarrow b\mathord\leftarrow
+  c\mathord\rightarrow d\mathord\leftarrow
+  e\mathord\rightarrow f\mathord\leftarrow
+  g\mathord\rightarrow c\mathord\leftarrow
+  h\mathord\rightarrow a\mathord\leftarrow
+  i\mathord\rightarrow g\mathord\leftarrow
+  d\mathord\rightarrow j\mathord\leftarrow
+  k\mathord\rightarrow h\mathord\leftarrow
+  b\mathord\rightarrow i\mathord\leftarrow
+  f\mathord\rightarrow e\mathord\leftarrow
+  j\mathord\rightarrow k\mathord\leftarrow a
+\]</span></li>
+</ul>
+<p>Let me emphasize (despite the figure below) that the Nagy graph of a
+string is an <em>abstract graph</em>, which may or may not be
+planar.</p>
+<figure>
+<img src="Fig/Gauss-code-alternating.png" style="width:35.0%"
+alt="The Nagy graph of Gauss code abcdefgchaigdjkhbifejk; compare with Figure 6." />
+<figcaption aria-hidden="true">The Nagy graph of Gauss code
+<code>abcdefgchaigdjkhbifejk</code>; compare with Figure 6.</figcaption>
+</figure>
+<p>Now imagine a point moving around the Nagy graph <span
+class="math inline">\(G(X)\)</span>, alternately traversing edges
+forward and backward in the order they appear in <span
+class="math inline">\(X\)</span>. Whenever the point passes through a
+vertex of <span class="math inline">\(G(X)\)</span>, it either traverses
+two inward edges <span class="math inline">\(u\mathord\rightarrow
+v\mathord\leftarrow w\)</span> (one forward and one backward) or two
+outward edges <span class="math inline">\(u\mathord\leftarrow
+v\mathord\rightarrow w\)</span> (one backward and one forward). The
+parity condition implies that if we leave any vertex <span
+class="math inline">\(v\)</span> along a forward edge <span
+class="math inline">\(v\mathord\to w\)</span>, we will next enter <span
+class="math inline">\(v\)</span> along a backward edge <span
+class="math inline">\(x\mathord\leftarrow v\)</span> and v vice versa.
+In fact, these two conditions are equivalent.</p>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>A Gauss code <span class="math inline">\(X\)</span> satisfies the
+parity condition if and only if every vertex of its Nagy graph <span
+class="math inline">\(G(X)\)</span> has in-degree 2 and out-degree <span
+class="math inline">\(2\)</span>.</em>
+</dd>
+</dl>
+<p>If a Gauss code does <em>not</em> satisfy the parity condition, then
+its Nagy graph will contain at least one vertex with in-degree 0 and
+out-degree 4, and an equal number of vertices with in-degree <span
+class="math inline">\(4\)</span> and out-degree <span
+class="math inline">\(0\)</span>.</p>
+<p>We can easily construct the Nagy graph and check the degree of each
+vertex in <span class="math inline">\(O(n)\)</span> time, where <span
+class="math inline">\(X\)</span> is the length of the given Gauss code.
+(There are simpler algorithms to check the parity condition in <span
+class="math inline">\(O(n)\)</span> time, but we’ll need the Nagy graph
+later, so we might as well build it now.)</p>
+<p>Gauss also observed that the sequences <code>abcadcedbe</code> and
+<code>abcabdecde</code> satisfy his parity condition but cannot be
+realized by planar curves, so the parity condition is not sufficient.
+Tait later gave a third example <code>abcadebdec</code>.</p>
+<h2 data-number="7.4" id="dehns-non-crossing-condition"><span
+class="header-section-number">7.4</span> Dehn’s non-crossing
+condition</h2>
+<p>About 100 years after Gauss, Dehn [1] described <em>das Gaussische
+Problem der Trakte</em> and proposed an algorithm to solve it. Dehn
+observed that smoothing every vertex of a curve <em>to keep the curve
+connected</em> results in a simple closed curve that <em>touches</em>
+itself at every vertex. The same closed curve <span
+class="math inline">\(\gamma\)</span> can have several different
+connected smoothings.</p>
+<figure>
+<img src="Fig/Gauss-code-curve-uncrossed.png" style="width:35.0%"
+alt="A smoothed curve with Dehn code ahkjdchbcgibaifefgdejk" />
+<figcaption aria-hidden="true">A smoothed curve with Dehn code
+<code>ahkjdchbcgibaifefgdejk</code></figcaption>
+</figure>
+<dl>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>Every connected smoothing of a planar curve <span
+class="math inline">\(\gamma\)</span> is an Euler tour of the Nagy graph
+<span class="math inline">\(G(X(\gamma))\)</span>, and vice versa.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+Consider two consecutive edges <span class="math inline">\(u\mathord\to
+v\mathord\to w\)</span> of <span class="math inline">\(\gamma\)</span>
+(<em>not</em> edges of <span
+class="math inline">\(G(X(\gamma))\)</span>). Imagine smoothing the
+vertices of <span class="math inline">\(\gamma\)</span> one at a time.
+Each smoothing reverses one of the subcurves from the smoothed vertex to
+itself. The edges <span class="math inline">\(uv\)</span> and <span
+class="math inline">\(vw\)</span> are reversed by all these same
+smoothing <em>except</em> at their common vertex <span
+class="math inline">\(x\)</span>. Thus, exactly one of the two subpaths
+<span class="math inline">\(u\mathord\to v\)</span> or <span
+class="math inline">\(v\mathord\to w\)</span> is revised in the final
+Dehn smoothing. It follows that every Dehn smoothing of <span
+class="math inline">\(\gamma\)</span> is an Euler tour of <span
+class="math inline">\(G(X(\gamma))\)</span>.
+</dd>
+<dd>
+<p>On the other hand, the edges incident to any vertex of <span
+class="math inline">\(G(X(\gamma))\)</span> alternative in, out, in, out
+in cyclic order. Thus, every Euler tour of <span
+class="math inline">\(G(X(\gamma))\)</span> touches itself at every
+vertex, but never crosses itself. It follows that every Euler tour of
+<span class="math inline">\(G(X(\gamma))\)</span> is a connected
+smoothing of <span class="math inline">\(\gamma\)</span>.</p>
+</dd>
+<dt><strong>Lemma:</strong></dt>
+<dd>
+<em>A Gauss code <span class="math inline">\(X\)</span> is realized by a
+planar curve if and only if its Nagy graph <span
+class="math inline">\(G(X)\)</span> has a planar embedding in which at
+least one (and therefore every) Euler tour is weakly simple.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+An Euler tour of a planar graph can cross itself only at vertices. If
+<span class="math inline">\(X\)</span> is the Gauss code of a planar
+curve <span class="math inline">\(\gamma\)</span>, the edges incident to
+any vertex of <span class="math inline">\(G(X)\)</span>, embedded on top
+of <span class="math inline">\(\gamma\)</span> in the obvious way,
+alternate in-out-in-out in cyclic order, which makes a crossing at that
+vertex impossible.
+</dd>
+<dd>
+<p>On the other hand, suppose <span class="math inline">\(G(X)\)</span>
+has a planar embedding with a weakly simple Euler tour. Then the edges
+incident to each vertex in that embedding must alternate in-out-in-out
+in cyclic order. The original Gauss code <span
+class="math inline">\(X\)</span> defines an <em>undirected</em> Euler
+tour <span class="math inline">\(U\)</span> of <span
+class="math inline">\(G(X)\)</span>, which traverses edges of <span
+class="math inline">\(G(X)\)</span> alternately forward and backward.
+<span class="math inline">\(U\)</span> crosses itself at every vertex of
+<span class="math inline">\(G(X)\)</span>. It follows immediately that
+<span class="math inline">\(U\)</span> is a closed curve with Gauss code
+<span class="math inline">\(X\)</span>.</p>
+</dd>
+</dl>
+<h2 data-number="7.5" id="tree-onion-figures"><span
+class="header-section-number">7.5</span> Tree-onion figures</h2>
+<p>Dehn described a symbolic algorithm to test his non-crossing
+condition in terms of the sequence of <em>self-touching</em> points in
+order along the smoothed curve <span
+class="math inline">\(\tilde\gamma\)</span>. Just like Gauss codes, this
+sequence contains exactly two occurrences of every symbol. To
+distinguish this sequence from the Gauss code of a curve, I’ll refer to
+this new string as a <em>Dehn code</em>. We can similarly define the
+<em>Dehn diagram</em> of <span
+class="math inline">\(\tilde\gamma\)</span> as a cycle of <span
+class="math inline">\(2n\)</span> vertices, corresponding to the labels
+in the Dehn code, plus chords connecting identical labels.<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Dehn observed that the Dehn diagram of any connected smoothing <span
+class="math inline">\(\tilde\gamma\)</span> of any planar curve <span
+class="math inline">\(\gamma\)</span> is a <em>planar</em> graph; that
+is, we can embed some of the chords of the diagram inside the circle and
+the rest outside the circle, so that no pair of chords intersects.
+Specifically, if we perturb <span
+class="math inline">\(\tilde\gamma\)</span> slightly into a simple
+curve, the neighborhood of each vertex either has connected intersection
+with the interior of <span class="math inline">\(\tilde\gamma\)</span>
+or connected intersection with the exterior of <span
+class="math inline">\(\tilde\gamma\)</span>. These vertices correspond
+to inner and outer chords, respectively.</p>
+<figure>
+<img src="Fig/outer-Gauss-diagram.png" style="width:40.0%"
+alt="A planar Dehn diagram for the Dehn code ahkjdchbcgibaifefgdejk; compare with the previous figure!" />
+<figcaption aria-hidden="true">A planar Dehn diagram for the Dehn code
+<code>ahkjdchbcgibaifefgdejk</code>; compare with the previous
+figure!</figcaption>
+</figure>
+<p>Dehn playfully referred to these planar diagrams as “Baum-Zwiebel
+Figuren” [“tree-onion diagrams”] and their corresponding Gauss codes as
+“Baum-Zwiebel Reihen” [“tree-onion strings”]. Tree onions, also known as
+walking onions or Egyptian onions, are onion cultivars that grow
+clusters of small bulbs at the top of the stem, where other
+<em>Allium</em> species have flowers. The chords of a tree-onion figure
+(loosely) resemble clusters of onion layers. Coincidentally(?), the dual
+graph of the inner chords (or the outer chords) of any tree-onion figure
+is a tree.<a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></p>
+<figure>
+<img src="Fig/Dehn-BZ-Figur.png" style="width:30.0%"
+alt="A tree-onion figure [Dehn 1936]" />
+<figcaption aria-hidden="true">A tree-onion figure [Dehn
+1936]</figcaption>
+</figure>
+<figure>
+<img src="Fig/tree-onion-photo.jpg" style="width:40.0%"
+alt="Tree onion bulblets. [Kurt Stüber 2004, CC BY-SA 3.0, via Wikimedia Commons]" />
+<figcaption aria-hidden="true">Tree onion bulblets. [Kurt Stüber 2004,
+<a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA
+3.0</a>, via <a
+href="https://commons.wikimedia.org/wiki/File:Allium_fistulosum_bulbifera0.jpg">Wikimedia
+Commons</a>]</figcaption>
+</figure>
+<figure>
+<img src="Fig/childs-tree-onion.jpg" style="width:40.0%"
+alt="Egyptian tree onion. From Child’s Rare Flowers, Vegetables &amp; Fruits (1894)" />
+<figcaption aria-hidden="true">Egyptian tree onion. From <em>Child’s
+Rare Flowers, Vegetables &amp; Fruits</em> (1894)</figcaption>
+</figure>
+<p>(Petersen [9] used similar diagrams in 1891 to study abstract regular
+graphs. Consider a connected <span
+class="math inline">\(4\)</span>-regular graph <span
+class="math inline">\(G\)</span> with <span
+class="math inline">\(n\)</span> vertices. Petersen defined a “stretched
+graph” by representing any Euler tour of <span
+class="math inline">\(G\)</span> as a cycle of length <span
+class="math inline">\(2n\)</span>, with additional edges connecting the
+two occurrence of each vertex of <span class="math inline">\(G\)</span>.
+If we alternately color the edges this cycle red and blue, every vertex
+of <span class="math inline">\(G\)</span> is incident to two edges of
+each color. Thus, every <span class="math inline">\(4\)</span>-regular
+graph can be decomposed into two 2-factors. Applying Petersen’s
+construction to any curve, as an Euler tour of its image graph, recovers
+the forward and backward cycles in the curve’s Nagy graph.)</p>
+<figure>
+<img src="Fig/Petersen-diagram.png" style="width:50.0%"
+alt="Petersen’s diagram of an Euler tour (Petersen 1891)" />
+<figcaption aria-hidden="true">Petersen’s diagram of an Euler tour
+(Petersen 1891)</figcaption>
+</figure>
+<h2 data-number="7.6" id="bipartite-interlacement"><span
+class="header-section-number">7.6</span> Bipartite interlacement</h2>
+<p>Read and Rosenstiehl [6] observed that Dehn’s planarity condition can
+verified efficiently by constructing yet another graph, called the
+<em>interlacement graph</em> of the Dehn code. The interlacement graph
+has <span class="math inline">\(n\)</span> vertices, one for each
+symbol, and an edge between any two symbols <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> whose appearances are interlaced <span
+class="math inline">\(x\dots y \dots x\dots y\)</span> in the Dehn code.
+Partitioning the chords of a Dehn diagram into pairwise disjoint inner
+and outer chords is equivalent to partitioning the vertices of the
+interlacement graph into two independent sets. In other words, a Dehn
+diagram is planar if and only if its interlacement graph is
+bipartite.</p>
+<figure>
+<img src="Fig/interleave-graph.png" style="width:40.0%"
+alt="The bipartite interlacement graph for the Dehn code ahkjdchbcgibaifefgdejk" />
+<figcaption aria-hidden="true">The bipartite interlacement graph for the
+Dehn code <code>ahkjdchbcgibaifefgdejk</code></figcaption>
+</figure>
+<h2 data-number="7.7" id="recrossing"><span
+class="header-section-number">7.7</span> Recrossing</h2>
+<p>To complete his algorithm, Dehn observed that we can transform the
+Dehn diagram of any Euler tour of <span
+class="math inline">\(G(X)\)</span> into a 4-regular graph by replacing
+each chord with a pair of crossing chords with a crossing, as shown
+below. Assuming the interlacement graph of the Dehn code is bipartite,
+the corresponding Dehn diagram is planar, so this recrossing process
+yields a single closed curve consistent with our original Gauss code
+<span class="math inline">\(X\)</span>.</p>
+<figure>
+<img src="Fig/Dehn-recross.png" style="width:25.0%"
+alt="Building a closed curve from a tree-onion-diagram (Dehn 1936)" />
+<figcaption aria-hidden="true">Building a closed curve from a
+tree-onion-diagram (Dehn 1936)</figcaption>
+</figure>
+<figure>
+<img src="Fig/Dehn-Gauss-retangle.png" style="width:65.0%"
+alt="A planar curve consistent with the original Gauss code abcdefgchaigdjkhbifejk" />
+<figcaption aria-hidden="true">A planar curve consistent with the
+original Gauss code <code>abcdefgchaigdjkhbifejk</code></figcaption>
+</figure>
+<p>Putting all the pieces together, we conclude:</p>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>A Gauss code <span class="math inline">\(X\)</span> can be realized
+by a planar closed curve if and only if at least one (and therefore
+every) Euler tour of <span class="math inline">\(G(X)\)</span> has a
+bipartite interlacement graph.</em>
+</dd>
+</dl>
+<h2 data-number="7.8" id="algorithm-summary"><span
+class="header-section-number">7.8</span> Algorithm summary</h2>
+<dl>
+<dt><strong>Theorem:</strong></dt>
+<dd>
+<em>Given a Gauss code <span class="math inline">\(X\)</span> of length
+<span class="math inline">\(2n\)</span>, we can either construct a
+planar curve consistent with <span class="math inline">\(X\)</span> or
+correctly report that no such curve exists, in <span
+class="math inline">\(O(n^2)\)</span> time.</em>
+</dd>
+<dt><strong>Proof:</strong></dt>
+<dd>
+The algorithm proceeds as follows:
+</dd>
+<dd>
+<ol type="1">
+<li>Construct the Nagy graph <span class="math inline">\(G(X)\)</span>
+of <span class="math inline">\(X\)</span>. This can be done in <span
+class="math inline">\(O(n)\)</span> time by brute force. If any vertex
+of <span class="math inline">\(G(X)\)</span> has no outgoing edges, halt
+and report that <span class="math inline">\(X\)</span> is not
+realizable. Otherwise, <span class="math inline">\(G(X)\)</span> is
+Eulerian, and thus <span class="math inline">\(X\)</span> satisfies
+Gauss’s parity condition.</li>
+</ol>
+</dd>
+<dd>
+<ol start="2" type="1">
+<li>Compute any Euler tour of <span class="math inline">\(G(X)\)</span>.
+This can be done in <span class="math inline">\(O(n)\)</span> time using
+the well-known algorithm of Hierholzer (not Euler!).</li>
+</ol>
+</dd>
+<dd>
+<ol start="3" type="1">
+<li>Construct the Dehn code <span
+class="math inline">\(\tilde{X}\)</span> of this Euler tour. This can be
+done in <span class="math inline">\(O(n)\)</span> time by brute
+force.</li>
+</ol>
+</dd>
+<dd>
+<ol start="4" type="1">
+<li>Construct the interlacement graph <span
+class="math inline">\(I(\tilde{X})\)</span> of <span
+class="math inline">\(\tilde{X}\)</span>. This can be done in <span
+class="math inline">\(O(n^2)\)</span> time by brute force.</li>
+</ol>
+</dd>
+<dd>
+<ol start="5" type="1">
+<li>Verify that the interlacement graph is bipartite. The interlacement
+graph has <span class="math inline">\(n\)</span> vertices and at most
+<span class="math inline">\(O(n^2)\)</span> edges, so we can verify
+bipartiteness in <span class="math inline">\(O(n^2)\)</span> time uysing
+whatever-first search. If the interlacement graph is not bipartite, halt
+and report that <span class="math inline">\(X\)</span> is not
+realizable.</li>
+</ol>
+</dd>
+<dd>
+<ol start="6" type="1">
+<li>Build a tree-onion figure for <span
+class="math inline">\(\tilde{X}\)</span> from any partition of nodes in
+the interlacement graph. This can be done in <span
+class="math inline">\(O(n)\)</span> time by brute force.</li>
+</ol>
+</dd>
+<dd>
+<ol start="7" type="1">
+<li>Transform the plane Dehn diagram into a 4-regular plane graph by
+replacing each chord with a pair of crossing chords, as shown in Figures
+13 and 14. This can be done in <span class="math inline">\(O(n)\)</span>
+time by brute force; the result is a closed curve consistent with our
+original Gauss code <span class="math inline">\(X\)</span>.</li>
+</ol>
+</dd>
+</dl>
+<figure>
+<img src="Fig/Gauss-code-algorithm-examples.png" style="width:100.0%"
+alt="Two examples of Dehn’s Gauss-code algorithm in action" />
+<figcaption aria-hidden="true">Two examples of Dehn’s Gauss-code
+algorithm in action</figcaption>
+</figure>
+<h2 data-number="7.9" id="faster-faster"><span
+class="header-section-number">7.9</span> Faster! Faster!</h2>
+<p>There are several linear-time algorithms to test the interlacement
+condition <em>without</em> explicitly constructing the interlacement
+graph, but we’re out of time.</p>
+<h2 data-number="7.10" id="dotsand-the-aptly-named-yadda-yadda-2"><span
+class="header-section-number">7.10</span> <span
+class="math inline">\(\dots\)</span>and the Aptly Named Yadda Yadda</h2>
+<ul>
+<li>Tait-Dowker-Thistlethwaite codes</li>
+<li>Pile of twin stacks algorithm</li>
+<li>Left-right graph planarity test</li>
+</ul>
+<h2 data-number="7.11" id="references-5"><span
+class="header-section-number">7.11</span> References</h2>
+<ol type="1">
+<li><p>Max Dehn. <a href="https://doi.org/10.1007/BF02401740">Über
+kombinatorishe Topologie</a>. <em>Acta Math.</em> 67:123–168,
+1936.</p></li>
+<li><p>Clifford H. Dowker and Morwen B. Thistlethwaite. <a
+href="https://doi.org/10.1016/0166-8641(83)90004-4">Classification of
+knot projections</a>. <em>Topology Appl.</em> 16(1):19–31,
+1983.</p></li>
+<li><p>Hubert de Fraysseix and Patrice Ossona de Mendez. <a
+href="https://doi.org/10.1007/3-540-63938-1_65">A short proof of a Gauss
+problem</a>. <em>Proc. 5th Int. Symp. Graph Drawing</em>, 230–235, 1997.
+Lecture Notes Comput. Sci. 1353, Springer.</p></li>
+<li><p>Carl Friedrich Gauß. Nachlass. I. Zur Geometria situs.
+<em>Werke</em>, vol. 8, 271–281, 1900. Teubner. Originally written
+between 1823 and 1840.</p></li>
+<li><p>Carl Hierholzer. <a
+href="https://doi.org/10.1007/BF01442866">Über die Möglichkeit, einen
+Linienzug Ohne Wiederholung und ohne Unterbrech nung zu umfahren.</a>
+<em>Math. Ann.</em> 6:30–32, 1873.</p></li>
+<li><p>Louis H. Kauffman. <a
+href="https://doi.org/10.1142/S0129055X93000231">Gauss codes, quantum
+groups and ribbon Hopf algebras</a>. <em>Rev. Math, Phys.</em>
+5(4):735–773, 1993.</p></li>
+<li><p>Louis H. Kauffman. <a
+href="https://doi.org/10.1006/eujc.1999.0314">Virtual knot theory</a>.
+<em>Europ. J. Combin.</em> 20(7):663–691, 1999. arXiv:<a
+href="https://arxiv.org/abs/math/9811028">math/9811028</a>.</p></li>
+<li><p>Julius v. Sz. Nagy. <a
+href="https://doi.org/10.1007/BF01475475">Über ein topologisches Problem
+von Gauß</a>. <em>Math. Z.</em> 26(1):579–592, 1927.</p></li>
+<li><p>Julius Petersen. <a href="https://doi.org/10.1007/BF02392606">Die
+Theorie der regulären graphs.</a> <em>Acta Math.</em> 15:193–220, 1891.
+Yes, really, “graphs” not “Graphen”.</p></li>
+<li><p>Hans Rademacher and Otto Toeplitz. On closed self-intersecting
+curves. <em>The Enjoyment of Mathematics: Selections from Mathematics
+for the Amateur</em>, chapter 10, 61–66, 1990. Dover Publ. Originally
+published by Princeton Univ. Press, 1957.</p></li>
+<li><p>Ronald C. Read and Pierre Rosenstiehl. On the Gauss crossing
+problem. <em>Combinatorics</em>, 843–876, 1976. Colloq. Math. Soc. János
+Bolyai 18, North-Holland. Modern description of Dehn’s solution to the
+Gauss code problem.</p></li>
+<li><p>Pierre Rosenstiehl and Robert E. Tarjan. <a
+href="https://doi.org/10.1016/0196-6774(84)90018-X">Gauss codes, planar
+Hamiltonian graphs, and stack-sortable permutations</a>. <em>J.
+Algorithms</em> 5(3):375–390, 1984. Linear-time implementation of Dehn’s
+solution to the Gauss code problem.</p></li>
+<li><p>Peter Guthrie Tait. <a
+href="https://babel.hathitrust.org/cgi/pt?id=njp.32101074834365&amp;seq=199">On
+knots I.</a> <em>Trans. Royal Soc. Edinburgh</em> 28(1):145–190,
+1876–7.</p></li>
+</ol>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Nagy’s algorithm attempts to construct a <em>Seifert
+decomposition</em> of the encoded curve. I’m afraid I don’t understand
+Nagy’s solution well enough to describe it, or even to be confident that
+it is correct.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong><em>Dozens</em></strong> of other combinatorial
+and algebraic characterizations of planar Gauss codes have been
+published since Dehn’s solution, but as far as I know, none lead to a
+simpler or more efficient algorithm (except through the use of
+linear-time algorithms to test graph planarity, which is cheating).<a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The terms “Dehn code” and “Dehn diagram” are
+nonstandard.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Tree-onion figures are also closely related to
+tree-cotree decompositions of planar maps. Specifically, there is a
+bijection between tree-cotree decompositions of a planar map <span
+class="math inline">\(\Sigma\)</span> and tree-onion figures of
+non-crossing Euler tours of the medial map <span
+class="math inline">\(\Sigma^\times\)</span>. (Don’t worry; those words
+will make sense soon.) So it’s really tempting to refer to the partition
+of inner and outer chords in a tree-onion figure as a <em>coonion-onion
+decomposition</em>.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</body>
+</html>

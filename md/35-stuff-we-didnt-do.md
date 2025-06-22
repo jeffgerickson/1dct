@@ -24,7 +24,9 @@ As we’ve already seen, the Jordan curve theorem does not generalize to surface
 To properly generalize _polygons_ in the plane to more complex surfaces, we need an appropriate generalization of _line segments_, which in turn relies on appropriate generalizations of _lengths_ and _angles_.
 
 **Theorem:**
-_Any geodesic embedding of a graph on any surface with constant Gaussian curvature can be extended to a  geodesic triangulation without adding vertices._
+_Any geodesic embedding of a graph on any surface with constant non-negative Gaussian curvature can be extended to a geodesic triangulation without adding vertices._
+
+The restriction to non-positive curvature is necessary; this theorem does _not_ extend to geodesic graphs or even geodesic _polygons_ on the sphere!  The least restricted analogue of this theorem is due to Brehm and Kühnel.  Let $P$ be a spherical geodesic polygon whose edges all have length less than $\pi$, no three of whose three vertices lie on a common great circle.  Treating $P$ as a spherical map, let $S$ be any face that does not contain a great circle; there must be at least one such face.  Using a natural spherical extension of ear-cutting, Brehn and Kühnel prove that $S$ can be triangulated without additional vertices, again using only geodesics of length less than $\pi$.  Halperin observed that both sides of $P$ can be triangulated with short geodesics using at most one additional vertex, most likely using a generalization of trapezoidal decompositions.  Brehm and Kühnel’s theorem does not extend to spherical polygons with edges of length greater than $\pi$; O’Rourke describes several counterexamples.
 
 ## Winding Numbers
 
@@ -82,12 +84,11 @@ Not every equilibrium stress on a framework induces a reciprocal framework.  Fir
 **Theorem:**
 _An equilibrium stress $\omega$ for an ordered framework $(\Sigma,p)$ induces a reciprocal framework $(\Sigma^*, p^*)$ if and only if $\omega$ is a reciprocal stress for $(\Sigma,p)$.  Conversely, any reciprocal framework $(\Sigma^*,p^*)$ defines a unique reciprocal stress $\omega$ for $(\Sigma, p)$._
 
-Notice that this theorem describes restrictions on both the stress $\omega$ and the rotation system defining $\Sigma$.  The same stress $\omega$ can be reciprocal for some rotation systems but not others.
+Let me emphasize this theorem describes restrictions on both the stress $\omega$ and the rotation system defining $\Sigma$.  The same stress $\omega$ can be reciprocal for some rotation systems but not others.
 
 ### Polyhedral Lifts of Non-planar Frameworks {-}
 
-What about the correspondence between reciprocal diagrams and polyhedral lifts?
-
+The theory of polyhedral lifts was recently extended to non-planar frameworks by Cooperband, Ghrist, and Hansen (using the language of cosheaves) and by Karpenkov, Servatius, and Servatius (using more combinatorial language).  Specifically, Cooperband, Ghrist, and Hansen prove that an ordered framework with $n$ vertices, $m$ edges, and genus $g$ admits a reciprocal stress if and only if $m-2n+3 > 4g$, and admits a polyhedral lift into $\mathbb{R}^3$ if and only of $m-2n+3 > 6g$.  (Here $m-2n+3$ is the dimension of the vector space of equilibrium stresses.)  Karpenkov, Servatius, and Servatius extend these results to frameworks defined by projecting *nonorientable* surface maps into the plane.
 
 
 ### Toroidal Frameworks {-}
@@ -97,8 +98,13 @@ What about the correspondence between reciprocal diagrams and polyhedral lifts?
 ## References
 
 
+1. Ulrich Brehm and Wolfgang Kühnel. Smooth approximation of polyhedral surfaces regarding curvatures. _Geom. Dedicata_ 12:435–461, 1982.
+
+2. Zoe Cooperband, Robert Ghrist, Jakob Hansen.  A cosheaf theory of reciprocal figures: Planar and higher genus graphic statics.  Preprint, November 2003.  arXiv:2311.12946.
+
+3. Oleg Karpenkov, Brigitte Servatius, and Herman Servatius.  Liftings of surfaces in the plane.  Preprint, May 2025.  arXiv:2505.18841.
 
 
-
+4. Joseph O’Rourke. Computational geometry column 51. _SIGACT News_ 39(3):58–62, 2008.
 
 
