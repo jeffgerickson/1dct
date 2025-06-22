@@ -88,7 +88,7 @@ Let me emphasize this theorem describes restrictions on both the stress $\omega$
 
 ### Polyhedral Lifts of Non-planar Frameworks {-}
 
-The theory of polyhedral lifts was recently extended to non-planar frameworks by Cooperband, Ghrist, and Hansen (using the language of cosheaves) and by Karpenkov, Servatius, and Servatius (using more combinatorial language).  Specifically, Cooperband, Ghrist, and Hansen prove that an ordered framework with $n$ vertices, $m$ edges, and genus $g$ admits a reciprocal stress if and only if $m-2n+3 > 4g$, and admits a polyhedral lift into $\mathbb{R}^3$ if and only of $m-2n+3 > 6g$.  (Here $m-2n+3$ is the dimension of the vector space of equilibrium stresses.)  Karpenkov, Servatius, and Servatius extend these results to frameworks defined by projecting *nonorientable* surface maps into the plane.
+The theory of polyhedral lifts was recently extended to non-planar frameworks by Cooperband, Ghrist, and Hansen (using the language of sheaves and cosheaves) and by Karpenkov, Servatius, and Servatius.  Specifically, Cooperband, Ghrist, and Hansen prove that an ordered framework with $n$ vertices, $m$ edges, and genus $g$ admits a reciprocal stress if and only if $m-2n+3 > 4g$, and admits a polyhedral lift into $\mathbb{R}^3$ if and only of $m-2n+3 > 6g$.  (Here $m-2n+3$ is the dimension of the vector space of equilibrium stresses.)  Karpenkov, Servatius, and Servatius extend these results, using more combinatorial language, to frameworks defined by projecting *nonorientable* surface maps into the plane.
 
 
 ### Toroidal Frameworks {-}
