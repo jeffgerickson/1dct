@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>12-spring-embedding</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -61,6 +64,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -104,8 +111,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -164,13 +171,9 @@
     }
   </style>
   
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 data-number="1" id="tuttes-spring-embedding-theorembeta"><span
@@ -179,7 +182,8 @@ Theorem<span class="math inline">\(^\beta\)</span></h1>
 <p>In 1963, William Tutte published a paper ambitiously entitled “How to
 Draw a Graph”. Let <span class="math inline">\(\Sigma\)</span> be any
 planar embedding of any simple planar graph <span
-class="math inline">\(G\)</span>.</p>
+class="math inline">\(G\)</span>, and consider the following simple
+physical process:</p>
 <ul>
 <li>Nail the vertices of the outer face of <span
 class="math inline">\(\Sigma\)</span> to the vertices of an arbitrary
@@ -206,7 +210,7 @@ conditions:</p>
 class="math inline">\(f_\infty\)</span> of some planar embedding of
 <span class="math inline">\(G\)</span> are mapped to the vertices of a
 strictly convex polygon in cyclic order. In particular, the boundary of
-<span class="math inline">\(F_\infty\)</span> must be a simple
+<span class="math inline">\(f_\infty\)</span> must be a simple
 cycle.</li>
 <li>Each vertex <span class="math inline">\(v\)</span> that is not in
 <span class="math inline">\(f_\infty\)</span> maps to a point in the
@@ -244,13 +248,13 @@ embedding.</em>
 </dl>
 <p>It is not hard to see that 3-connectivity is required. If <span
 class="math inline">\(G\)</span> has an articulation vertex <span
-class="math inline">\(v\)</span>, that is, a vertex whose deleting
-leaves a disconnected subgraph, then a Tutte drawing of <span
+class="math inline">\(v\)</span>, that is, a vertex whose deletion
+disconnected the graph, then a Tutte drawing of <span
 class="math inline">\(G\)</span> can map an entire component of <span
 class="math inline">\(G\setminus v\)</span> to the point <span
 class="math inline">\(p_v\)</span>. Similarly, if <span
 class="math inline">\(G\)</span> has two vertices <span
-class="math inline">\(v\)</span> and <span
+class="math inline">\(u\)</span> and <span
 class="math inline">\(v\)</span> such that <span
 class="math inline">\(G\setminus \{u,v\}\)</span> is disconnected, a
 Tutte drawing of <span class="math inline">\(G\)</span> can map an
@@ -260,13 +264,14 @@ class="math inline">\(p_up_v\)</span>. In both cases, the Tutte drawing
 is not even an embedding, much less a strictly convex embedding.</p>
 <h2 data-number="1.1" id="outer-face-is-outer"><span
 class="header-section-number">1.1</span> Outer Face is Outer</h2>
-<p>Whitney (1932) proved that every simple 3-connected graph <span
-class="math inline">\(G\)</span> has a unique embedding on the sphere
-(up to homeomorphism), or equivalently, a unique planar rotation system.
-I will describe Whitney’s proof later in this note. Thus, in every
-planar embedding of <span class="math inline">\(G\)</span>, the faces
-are bounded by the same set of cycles; we can reasonably call these
-cycles the <em>faces of <span class="math inline">\(G\)</span></em>.</p>
+<p>Whitney (1932) proved that every simple 3-connected planar graph
+<span class="math inline">\(G\)</span> has a <em>unique</em> embedding
+on the sphere (up to homeomorphism), or equivalently, a <em>unique</em>
+planar rotation system (up to a global reflection). I will describe
+Whitney’s proof later in this note. Thus, in every planar embedding of
+<span class="math inline">\(G\)</span>, the faces are bounded by the
+same set of cycles; we can reasonably call these cycles the <em>faces of
+<span class="math inline">\(G\)</span></em>.</p>
 <p>The definition of a Tutte drawing requires choosing one of the faces
 of <span class="math inline">\(G\)</span> to be the outer face <span
 class="math inline">\(f_\infty\)</span>. We call the vertices of <span
@@ -299,7 +304,7 @@ class="math inline">\(G\)</span> can directly reach at least three
 boundary vertices of <span class="math inline">\(G\)</span>.
 </dd>
 <dd>
-<p>We prove the lemma by applying Gaussian elimination to the system of
+We prove the lemma by applying Gaussian elimination to the system of
 linear equations defined by condition (2). Linear system (2) expresses
 the position <span class="math inline">\(p_v\)</span> of any vertex
 <span class="math inline">\(v\)</span> as a strict convex combination of
@@ -307,10 +312,10 @@ the positions of its neighbors in <span
 class="math inline">\(G\)</span>, that is, a weighted average where
 every neighbor of <span class="math inline">\(v\)</span> has positive
 weight. By pivoting on that row, we can remove the variables <span
-class="math inline">\(p_v\)</span> from the system.</p>
+class="math inline">\(p_v\)</span> from the system.
 </dd>
 <dd>
-<p>Such a pivot is equivalent to deleting vertex <span
+Such a pivot is equivalent to deleting vertex <span
 class="math inline">\(v\)</span> from the graph and adding new edges
 between the neighbors of <span class="math inline">\(v\)</span>, with
 appropriate positive coefficients on their darts.<a href="#fn2"
@@ -320,7 +325,7 @@ vertex does not change which boundary vertices are directly reachable
 from any other interior vertex. Thus, if we eliminate all but one
 interior vertex <span class="math inline">\(w\)</span>, the remaining
 constraint expresses <span class="math inline">\(w\)</span> as a strict
-convex combination of at least three boundary vertices.</p>
+convex combination of at least three boundary vertices.
 </dd>
 </dl>
 <p>The same elimination argument implies that <em>every</em> assignment
@@ -345,16 +350,22 @@ dart coefficients are symmetric.</p>
 <p>Suppose each edge <span class="math inline">\(uv\)</span> is to a
 (first-order linear) spring with spring constant <span
 class="math inline">\(\omega_{uv} = \lambda_{u\mathord\to v} =
-\lambda_{v\mathord\to u}\)</span>. For any vertex placement <span
-class="math inline">\(p \in (\mathbb{R}^2)^V\)</span>, the total
-potential energy in the network of springs is <span
-class="math display">\[
+\lambda_{v\mathord\to u}\)</span>. Hooke’s Law<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+states that extending this spring to length <span
+class="math inline">\(\ell\)</span> requires force proportional to <span
+class="math inline">\(\omega_{uv}\ell\)</span>, and therefore (by
+integration) the potential energy stored in the spring is <span
+class="math inline">\(\omega_{uv}\ell^2/2\)</span>.</p>
+<p>For any vertex placement <span class="math inline">\(p \in
+(\mathbb{R}^2)^V\)</span>, the total potential energy in the network of
+springs is <span class="math display">\[
     \Phi(p) := \frac{1}{2} \sum_{u, v}
                     \omega_{uv} \| p_u - p_v \|^2.
 \]</span> If we fix the positions of the outer vertices, <span
 class="math inline">\(\Phi\)</span> becomes a strictly convex<a
-href="#fn4" class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a> function of the interior vertex
+href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a> function of the interior vertex
 coordinates. If we let the interior vertex positions vary, the network
 of springs will come to rest at a configuration with locally minimal
 potential energy. The unique minimum of <span
@@ -364,11 +375,13 @@ and solving for the interior coordinates; thus we recover the original
 linear constraints <span class="math display">\[
     \sum_v \omega_{uv} (p_u - p_v) = 0
 \]</span> for every interior vertex <span
-class="math inline">\(u\)</span>. The underlying matrix of this linear
-system is called a weighted <em>Laplacian</em> matrix of <span
-class="math inline">\(G\)</span>. This matrix is positive definite<a
-href="#fn5" class="footnote-ref" id="fnref5"
-role="doc-noteref"><sup>5</sup></a> and therefore non-singular, so a
+class="math inline">\(u\)</span>. In other words, all the forces on
+<span class="math inline">\(u\)</span> from the springs incident to
+<span class="math inline">\(u\)</span> cancel. The underlying matrix of
+this linear system is called a weighted <em>Laplacian</em> matrix of
+<span class="math inline">\(G\)</span>. This matrix is positive
+definite<a href="#fn6" class="footnote-ref" id="fnref6"
+role="doc-noteref"><sup>6</sup></a> and therefore non-singular, so a
 unique equilibrium configuration always exists.</p>
 <p>When the dart coefficients are not symmetric, this physical intuition
 goes out the window; the linear system of balance equations is no longer
@@ -497,8 +510,8 @@ class="math inline">\(G\)</span> to be 3-connected. The main technical
 challenge in proving Tutte’s theorem is showing that if <span
 class="math inline">\(G\)</span> is 3-connected, then every Tutte
 drawing of <span class="math inline">\(G\)</span> is non-degenerate. The
-assumption of 3-connectivity is necessary<a href="#fn6"
-class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>—if
+assumption of 3-connectivity is necessary<a href="#fn7"
+class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>—if
 <span class="math inline">\(G\)</span> is 2-connected but not
 3-connected, then some subgraphs of <span
 class="math inline">\(G\)</span> can degenerate to line segments in the
@@ -537,7 +550,7 @@ By definition, no three boundary vertices are collinear, and thus no
 boundary vertex is collinear with all of its neighbors.
 </dd>
 <dd>
-<p>For the sake of argument, suppose some vertex <span
+For the sake of argument, suppose some vertex <span
 class="math inline">\(u\)</span> and all of its neighbors lies on a
 common line <span class="math inline">\(\ell\)</span>, which without
 loss of generality is horizontal. Let <span
@@ -552,10 +565,10 @@ class="math inline">\(G[V^+]\)</span> and <span
 class="math inline">\(G[V^-]\)</span> are connected, and the induced
 subgraph <span class="math inline">\(G[U]\)</span> is connected by
 definition. Fix arbitrary vertices <span class="math inline">\(v^+\in
-V^+\)</span> and <span class="math inline">\(v^-\in V^-\)</span>.</p>
+V^+\)</span> and <span class="math inline">\(v^-\in V^-\)</span>.
 </dd>
 <dd>
-<p>Finally, let <span class="math inline">\(W\)</span> denote the set of
+Finally, let <span class="math inline">\(W\)</span> denote the set of
 all vertices that lie on line <span class="math inline">\(\ell\)</span>
 and are adjacent to vertices in <span class="math inline">\(U\)</span>,
 but are not in <span class="math inline">\(U\)</span> themselves. Every
@@ -568,11 +581,10 @@ class="math inline">\(W\)</span> disconnects <span
 class="math inline">\(U\)</span> from the rest of the graph. Thus,
 <strong>because <span class="math inline">\(G\)</span> is
 3-connected</strong>, <span class="math inline">\(W\)</span> contains at
-least three vertices <span class="math inline">\(w_1, w_2,
-w_3\)</span>.</p>
+least three vertices <span class="math inline">\(w_1, w_2, w_3\)</span>.
 </dd>
 <dd>
-<p>Now suppose we contract the induced subgraphs <span
+Now suppose we contract the induced subgraphs <span
 class="math inline">\(G[V^+]\)</span>, <span
 class="math inline">\(G[V^-]\)</span>, and <span
 class="math inline">\(G[U]\)</span> to the vertices <span
@@ -584,7 +596,7 @@ graph <span class="math inline">\(\{v^+, v^-, u\}\times \{w_1, w_2,
 w_3\} = K_{3,3}\)</span>. But this is impossible, <strong>because <span
 class="math inline">\(G\)</span> is planar</strong> and therefore every
 minor of <span class="math inline">\(G\)</span> is planar. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <figure>
@@ -613,15 +625,15 @@ triangulation.</p>
 <em>Let <span class="math inline">\(uv\)</span> be any edge of <span
 class="math inline">\(G\)</span>, let <span
 class="math inline">\(f\)</span> and <span
-class="math inline">\(f’\)</span> be the faces incident to <span
+class="math inline">\(f&#39;\)</span> be the faces incident to <span
 class="math inline">\(uv\)</span>, and let <span
 class="math inline">\(S\)</span> and <span
-class="math inline">\(S’\)</span> be the vertices of these two faces
+class="math inline">\(S&#39;\)</span> be the vertices of these two faces
 other than <span class="math inline">\(u\)</span> and <span
 class="math inline">\(v\)</span>. Let <span
 class="math inline">\(P\)</span> be any path that starts at a vertex in
 <span class="math inline">\(S\)</span> and ends at a vertex of <span
-class="math inline">\(S’\)</span>. Then every path from <span
+class="math inline">\(S&#39;\)</span>. Then every path from <span
 class="math inline">\(u\)</span> to <span
 class="math inline">\(v\)</span> in <span
 class="math inline">\(G\)</span> either consists of the edge <span
@@ -638,12 +650,12 @@ on either side of <span class="math inline">\(uv\)</span>. Let <span
 class="math inline">\(s\)</span> and <span
 class="math inline">\(t\)</span> be the endpoints of <span
 class="math inline">\(P\)</span>. Let <span
-class="math inline">\(P’\)</span> be a path from <span
+class="math inline">\(P&#39;\)</span> be a path from <span
 class="math inline">\(l\)</span> to <span
 class="math inline">\(r\)</span> through the union of the faces incident
 to <span class="math inline">\(uv\)</span>, crossing the edge <span
 class="math inline">\(uv\)</span> once. The closed curve <span
-class="math inline">\(C = P + P’\)</span> separates <span
+class="math inline">\(C = P + P&#39;\)</span> separates <span
 class="math inline">\(u\)</span> from <span
 class="math inline">\(v\)</span>. Thus, by the Jordan curve theorem,
 every path <span class="math inline">\(Q\)</span> from <span
@@ -666,19 +678,19 @@ class="math inline">\(\qquad\square\)</span>
 <em>Let <span class="math inline">\(uv\)</span> be any interior edge of
 <span class="math inline">\(G\)</span>, let <span
 class="math inline">\(f\)</span> and <span
-class="math inline">\(f’\)</span> be the faces incident to <span
+class="math inline">\(f&#39;\)</span> be the faces incident to <span
 class="math inline">\(uv\)</span>, and let <span
 class="math inline">\(S\)</span> and <span
-class="math inline">\(S’\)</span> be the vertices of these two faces
+class="math inline">\(S&#39;\)</span> be the vertices of these two faces
 other than <span class="math inline">\(u\)</span> and <span
 class="math inline">\(v\)</span>. Finally, let <span
 class="math inline">\(\ell\)</span> be any line through <span
 class="math inline">\(p_u\)</span> and <span
 class="math inline">\(p_v\)</span>. Then <span
 class="math inline">\(S\)</span> and <span
-class="math inline">\(S’\)</span> lie on opposite sides of <span
+class="math inline">\(S&#39;\)</span> lie on opposite sides of <span
 class="math inline">\(\ell\)</span>; in particular, no vertex in <span
-class="math inline">\(S\cup S’\)</span> lies on <span
+class="math inline">\(S\cup S&#39;\)</span> lies on <span
 class="math inline">\(\ell\)</span>.</em>
 </dd>
 <dt><strong>Proof:</strong></dt>
@@ -686,55 +698,56 @@ class="math inline">\(\ell\)</span>.</em>
 Without loss of generality, assume <span
 class="math inline">\(\ell\)</span> is horizontal. For the sake of
 argument, suppose both <span class="math inline">\(S\)</span> and <span
-class="math inline">\(S’\)</span> contain vertices <span
+class="math inline">\(S&#39;\)</span> contain vertices <span
 class="math inline">\(s\)</span> and <span
 class="math inline">\(t\)</span> that lie on or below <span
 class="math inline">\(\ell\)</span>. If <span
 class="math inline">\(s\)</span> lies on <span
 class="math inline">\(\ell\)</span>, the nondegeneracy lemma implies
 that <span class="math inline">\(s\)</span> has a neighbor <span
-class="math inline">\(s’\)</span> strictly below <span
+class="math inline">\(s&#39;\)</span> strictly below <span
 class="math inline">\(\ell\)</span>; otherwise, let <span
-class="math inline">\(s’ = s\)</span>. Similarly, if <span
+class="math inline">\(s&#39; = s\)</span>. Similarly, if <span
 class="math inline">\(t\)</span> lies on <span
 class="math inline">\(\ell\)</span>, the nondegeneracy lemma implies
 that <span class="math inline">\(t\)</span> has a neighbor <span
-class="math inline">\(t’\)</span> strictly below <span
+class="math inline">\(t&#39;\)</span> strictly below <span
 class="math inline">\(\ell\)</span>; otherwise, let <span
-class="math inline">\(t’ = t\)</span>. The halfspace lemma implies that
-there is a path <span class="math inline">\(P’\)</span> in <span
-class="math inline">\(G\)</span> from <span
-class="math inline">\(s’\)</span> to <span
-class="math inline">\(t’\)</span> that lies entirely below <span
+class="math inline">\(t&#39; = t\)</span>. The halfspace lemma implies
+that there is a path <span class="math inline">\(P&#39;\)</span> in
+<span class="math inline">\(G\)</span> from <span
+class="math inline">\(s&#39;\)</span> to <span
+class="math inline">\(t&#39;\)</span> that lies entirely below <span
 class="math inline">\(\ell\)</span>. Let <span
 class="math inline">\(P\)</span> be the path from <span
 class="math inline">\(s\)</span> to <span
 class="math inline">\(t\)</span> consisting of the edge <span
-class="math inline">\(ss’\)</span> (if <span class="math inline">\(s\ne
-s’\)</span>), the path <span class="math inline">\(P’\)</span>, and the
-edge <span class="math inline">\(t’t\)</span> (if <span
-class="math inline">\(t\ne t’\)</span>).
+class="math inline">\(ss&#39;\)</span> (if <span
+class="math inline">\(s\ne s&#39;\)</span>), the path <span
+class="math inline">\(P&#39;\)</span>, and the edge <span
+class="math inline">\(t&#39;t\)</span> (if <span
+class="math inline">\(t\ne t&#39;\)</span>).
 </dd>
 <dd>
-<p>The nondegeneracy lemma also implies that <span
+The nondegeneracy lemma also implies that <span
 class="math inline">\(u\)</span> and <span
 class="math inline">\(v\)</span> have respective neighbors <span
-class="math inline">\(u’\)</span> and <span
-class="math inline">\(v’\)</span> strictly above <span
+class="math inline">\(u&#39;\)</span> and <span
+class="math inline">\(v&#39;\)</span> strictly above <span
 class="math inline">\(\ell\)</span>, and the halfspace lemma implies
-that there is a path <span class="math inline">\(Q’\)</span> from <span
-class="math inline">\(u’\)</span> to <span
-class="math inline">\(v’\)</span> that lies strictly above <span
+that there is a path <span class="math inline">\(Q&#39;\)</span> from
+<span class="math inline">\(u&#39;\)</span> to <span
+class="math inline">\(v&#39;\)</span> that lies strictly above <span
 class="math inline">\(\ell\)</span>. Let <span
 class="math inline">\(Q\)</span> be the path from <span
 class="math inline">\(u\)</span> to <span
 class="math inline">\(v\)</span> consisting of the edge <span
-class="math inline">\(uu’\)</span>, the path <span
-class="math inline">\(Q’\)</span>, and the edge <span
-class="math inline">\(v’v\)</span>.</p>
+class="math inline">\(uu&#39;\)</span>, the path <span
+class="math inline">\(Q&#39;\)</span>, and the edge <span
+class="math inline">\(v&#39;v\)</span>.
 </dd>
 <dd>
-<p>The edge <span class="math inline">\(uv\)</span> and the path <span
+The edge <span class="math inline">\(uv\)</span> and the path <span
 class="math inline">\(P\)</span> satisfy the conditions of Geelen’s
 lemma. The path <span class="math inline">\(Q\)</span> clearly avoids
 the edge <span class="math inline">\(uv\)</span>, so <span
@@ -743,8 +756,7 @@ class="math inline">\(P\)</span>. But <span
 class="math inline">\(P\)</span> and <span
 class="math inline">\(Q\)</span> lie on opposite sides of <span
 class="math inline">\(\ell\)</span>. We have reached a contradiction,
-completing the proof.<span
-class="math inline">\(\qquad\square\)</span></p>
+completing the proof.<span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <figure>
@@ -816,7 +828,7 @@ When the moving point reaches infinity, it is only in the outer face.
 Thus, every generic point lies in exactly one face.
 </dd>
 <dd>
-<p>For the sake of argument, suppose two edges <span
+For the sake of argument, suppose two edges <span
 class="math inline">\(uv\)</span> and <span
 class="math inline">\(xy\)</span> intersect in the Tutte drawing. Then
 any generic point near the intersection <span
@@ -824,7 +836,7 @@ class="math inline">\(uv\cap xy\)</span> must lie in two different
 faces, which we just showed is impossible. We conclude that the Tutte
 drawing is an embedding; in particular, every face is a simple polygon.
 We already proved that every face in this embedding is strictly convex.
-<span class="math inline">\(\qquad\square\)</span></p>
+<span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="1.6" id="whitneys-uniqueness-theorem"><span
@@ -847,9 +859,9 @@ Fix a planar embedding <span class="math inline">\(\Sigma\)</span> of
 some graph <span class="math inline">\(G\)</span>.
 </dd>
 <dd>
-<p>Suppose the boundary of some face <span
-class="math inline">\(f\)</span> is not a simple cycle. The boundary of
-<span class="math inline">\(f\)</span> must have a repeated vertex <span
+Suppose the boundary of some face <span class="math inline">\(f\)</span>
+is not a simple cycle. The boundary of <span
+class="math inline">\(f\)</span> must have a repeated vertex <span
 class="math inline">\(v\)</span>. So the radial map <span
 class="math inline">\(\Sigma^\diamond\)</span> contains a cycle of
 length <span class="math inline">\(2\)</span> through <span
@@ -857,10 +869,10 @@ class="math inline">\(v\)</span> and <span
 class="math inline">\(f\)</span>, which has at least one other vertex of
 <span class="math inline">\(\Sigma\)</span> on either side. It follows
 that <span class="math inline">\(G\setminus v\)</span> must be
-disconnected.</p>
+disconnected.
 </dd>
 <dd>
-<p>Suppose two faces <span class="math inline">\(f\)</span> and <span
+Suppose two faces <span class="math inline">\(f\)</span> and <span
 class="math inline">\(g\)</span> have two vertices <span
 class="math inline">\(u\)</span> and <span
 class="math inline">\(v\)</span> in common, but not the edge <span
@@ -869,12 +881,12 @@ class="math inline">\(\Sigma^\diamond\)</span> contains a simple cycle
 with vertices <span class="math inline">\(f, u, g, v\)</span>, which has
 at least one other vertex of <span class="math inline">\(G\)</span> on
 either side. It follows that <span class="math inline">\(G\setminus
-\{u,v\}\)</span> is disconnected.</p>
+\{u,v\}\)</span> is disconnected.
 </dd>
 <dd>
-<p>We conclude that if <span class="math inline">\(\Sigma\)</span> is
-not polyhedral, then <span class="math inline">\(G\)</span> is not
-3-connected. <span class="math inline">\(\qquad\square\)</span></p>
+We conclude that if <span class="math inline">\(\Sigma\)</span> is not
+polyhedral, then <span class="math inline">\(G\)</span> is not
+3-connected. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Lemma:</strong> <em>If a graph <span
@@ -912,9 +924,9 @@ class="math inline">\(v\)</span> on their boundaries, but not the edge
 </ul>
 </dd>
 <dd>
-<p>In both cases, we conclude that <span
+In both cases, we conclude that <span
 class="math inline">\(\Sigma\)</span> is not polyhedral. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Lemma:</strong> <em>The dual <span
@@ -936,9 +948,8 @@ boundary of <span class="math inline">\(v^*\)</span> is not a simple
 cycle.
 </dd>
 <dd>
-<p>On the other hand, suppose <span
-class="math inline">\(\Sigma\)</span> has two faces <span
-class="math inline">\(f\)</span> and <span
+On the other hand, suppose <span class="math inline">\(\Sigma\)</span>
+has two faces <span class="math inline">\(f\)</span> and <span
 class="math inline">\(g\)</span> that share two vertices <span
 class="math inline">\(v\)</span> and <span
 class="math inline">\(w\)</span>, but there is no dart with endpoints
@@ -954,13 +965,13 @@ class="math inline">\(g^*\)</span>, but there is no dart with endpoints
 <span class="math inline">\(f^*\)</span> and <span
 class="math inline">\(g^*\)</span> and shores <span
 class="math inline">\(v^*\)</span> and <span
-class="math inline">\(w^*\)</span>.</p>
+class="math inline">\(w^*\)</span>.
 </dd>
 <dd>
-<p>We conclude that if <span class="math inline">\(\Sigma\)</span> is
-not polyhedral, then neither is <span
+We conclude that if <span class="math inline">\(\Sigma\)</span> is not
+polyhedral, then neither is <span
 class="math inline">\(\Sigma^*\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Lemma (Whitney):</strong> <em>Every planar graph has at most
@@ -985,7 +996,7 @@ class="math inline">\(\textsf{succ}&#39;\)</span> is not equal to either
 class="math inline">\(\textsf{succ}^{-1}\)</span>.
 </dd>
 <dd>
-<p>First, suppose there is a dart <span class="math inline">\(d\)</span>
+First, suppose there is a dart <span class="math inline">\(d\)</span>
 such that <span class="math inline">\(\textsf{succ}&#39;(d)\)</span> is
 not equal to either <span
 class="math inline">\(\textsf{succ}(d)\)</span> or <span
@@ -1004,11 +1015,11 @@ another dart <span class="math inline">\(d&#39;\)</span> that is red or
 blue, whose successor <span
 class="math inline">\(\textsf{succ}&#39;(d)\)</span> in <span
 class="math inline">\(\Sigma&#39;\)</span> is either blue or red,
-respectively.</p>
+respectively.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(C\)</span> be the simple cycle in
-<span class="math inline">\(G\)</span> that bounds face <span
+Let <span class="math inline">\(C\)</span> be the simple cycle in <span
+class="math inline">\(G\)</span> that bounds face <span
 class="math inline">\(f = \textsf{left}&#39;(d) =
 \textsf{right}&#39;(\textsf{succ}&#39;(d))\)</span> in <span
 class="math inline">\(\Sigma&#39;\)</span>. (If the boundary of <span
@@ -1031,8 +1042,7 @@ class="math inline">\(\Sigma&#39;\)</span> share vertices <span
 class="math inline">\(v\)</span> and <span
 class="math inline">\(w\)</span>, but do not share the edge <span
 class="math inline">\(vw\)</span> (if that edge exists). We conclude
-that <span class="math inline">\(\Sigma&#39;\)</span> is not
-polyhedral.</p>
+that <span class="math inline">\(\Sigma&#39;\)</span> is not polyhedral.
 </dd>
 <dd>
 <figure>
@@ -1043,7 +1053,7 @@ at least one embedding is not polyhedral</figcaption>
 </figure>
 </dd>
 <dd>
-<p>On the other hand, suppose are two darts <span
+On the other hand, suppose are two darts <span
 class="math inline">\(d\)</span> and <span
 class="math inline">\(d&#39;\)</span> such that <span
 class="math inline">\(\textsf{succ}&#39;(d) = \textsc{succ}(d)\)</span>
@@ -1057,10 +1067,10 @@ is reversed from one embedding to the other. Without loss of generality,
 class="math inline">\(w\)</span> are adjacent, and we can assume <span
 class="math inline">\(d = v\mathord\to w\)</span> and <span
 class="math inline">\(d&#39; = \textsf{rev}(d) = w\mathord\to
-v\)</span>.</p>
+v\)</span>.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(C\)</span> and <span
+Let <span class="math inline">\(C\)</span> and <span
 class="math inline">\(C&#39;\)</span> be the cycles in <span
 class="math inline">\(G\)</span> that bound faces <span
 class="math inline">\(f = \textsf{left}&#39;(d) =
@@ -1079,7 +1089,7 @@ class="math inline">\(f&#39;\)</span> in <span
 class="math inline">\(\Sigma&#39;\)</span> have disconnected
 intersection, and therefore <span
 class="math inline">\(\Sigma&#39;\)</span> is not polyhedral. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 <dd>
 <figure>
@@ -1109,7 +1119,7 @@ class="header-section-number">1.7</span> Not Appearing</h2>
 <li>Colin de Verdière matrices and spherical spectral embeddings</li>
 <li>More spectral graph algorithms!</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1133,18 +1143,32 @@ with the physical spring analogy, but instead treats weights as
 transition probabilities of a (backward) random walk. Both
 formalizations lead to the same Tutte drawing.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>The Hessian of <span class="math inline">\(\Phi\)</span>
+<li id="fn4"><p>Robert Hooke time-stamped his “true Theory of Elasticity
+or Springiness” in 1676 using the anagram <em>ceiiinosssttuv</em>; two
+years later he reveelad the unscrambled Theory <em>ut tensio, sic
+vis</em> (“As the extension, so the force”). Another anagram
+<em>abcccddeeeeefggiiiiiiiillmmmmnnnnnooprrsssttttttuuuuuuuux</em> in
+the same 1676 publication was only revealed after Hooke’s death to
+encode the observation <em>Ut pendet continuum flexile, sic stabit
+contiguum rigidum inversum</em> (“As hangs a flexible cable so,
+inverted, stand the touching pieces of an arch.”) Anagrams and codes
+were a common method for 17th- and 18th-century scientists to establish
+priority for their results before publishing them in detail; Hooke most
+likely published these anagrams to avoid being scooped by Isaac
+Newton.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The Hessian of <span class="math inline">\(\Phi\)</span>
 is positive definite, meaning all of its eigenvalues are positive.<a
-href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>The Laplacian matrix is just the Hessian of <span
-class="math inline">\(\Phi\)</span>.<a href="#fnref5"
+href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The Laplacian matrix is just the Hessian of <span
+class="math inline">\(\Phi\)</span>.<a href="#fnref6"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>In fact, we only need the weaker assumption that <span
+<li id="fn7"><p>In fact, we only need the weaker assumption that <span
 class="math inline">\(G\)</span> is <em>internally</em> 3-connected,
 meaning each interior vertex has three vertex-disjoint paths to the
-outer face.<a href="#fnref6" class="footnote-back"
+outer face.<a href="#fnref7" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>
