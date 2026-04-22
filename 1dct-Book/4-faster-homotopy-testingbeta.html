@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -372,7 +379,7 @@ imply that <span class="math inline">\(\sigma_1\)</span> and <span
 class="math inline">\(\sigma_2\)</span> have intersecting interiors.
 </dd>
 <dd>
-<p>Rotate the indices if necessary, so that the right endpoint of <span
+Rotate the indices if necessary, so that the right endpoint of <span
 class="math inline">\(\sigma_1\)</span> has strictly smaller <span
 class="math inline">\(x\)</span>-coordinate than the right endpoint of
 any other segment <span class="math inline">\(\sigma_i\)</span> in the
@@ -385,7 +392,7 @@ directly above some point of <span
 class="math inline">\(\sigma_2\)</span> and directly below some point of
 <span class="math inline">\(\sigma_r\)</span>. It follows that <span
 class="math inline">\(\sigma_r \Uparrow \sigma_2\)</span>, which
-contradicts the minimality of the cycle.</p>
+contradicts the minimality of the cycle.
 </dd>
 </dl>
 <p>Now write <span class="math inline">\(\sigma\uparrow \tau\)</span>
@@ -682,17 +689,17 @@ a homotopy. Thus, if <span class="math inline">\(\bar{P}\)</span>
 reduced to a single point, it must be contractible.
 </dd>
 <dd>
-<p>The other direction is more interesting. We actually need to reason
+The other direction is more interesting. We actually need to reason
 about the crossing sequence defined by both upward <em>and downward</em>
 rays from each obstacle. Suppose <span
 class="math inline">\(\bar{P}\)</span> is contractible. Then our earlier
 arguments imply that the mixed crossing sequence of <span
 class="math inline">\(\bar{P}\)</span> can be reduced to the empty
 string, suing exactly the same algorithm as usual. There are two cases
-to consider.</p>
+to consider.
 </dd>
 <dd>
-<p>First suppose both mixed crossing sequences of <span
+First suppose both mixed crossing sequences of <span
 class="math inline">\(\bar{P}\)</span> is actually empty. Then <span
 class="math inline">\(\bar{P}\)</span> does not cross the vertical line
 through any obstacle. It follows that every vertex of <span
@@ -700,10 +707,10 @@ class="math inline">\(\bar{P}\)</span> has the same even <span
 class="math inline">\(x\)</span>-coordinate, and thus every “horizontal”
 edge of <span class="math inline">\(\bar{P}\)</span> has length zero. It
 follows by induction that <span class="math inline">\(\bar{P}\)</span>
-can be reduced to a single point by eliding every horizontal edge.</p>
+can be reduced to a single point by eliding every horizontal edge.
 </dd>
 <dd>
-<p>Otherwise, because <span class="math inline">\(\bar{P}\)</span> is
+Otherwise, because <span class="math inline">\(\bar{P}\)</span> is
 contractible, its mixed crossing sequence contains an elementary
 reduction. So there must be a subpath of <span
 class="math inline">\(\bar{P}\)</span> that crosses the same obstacle
@@ -716,7 +723,7 @@ that subpath forms a bracket, and sliding that bracket reduces the
 complexity of either the polygon or its crossing sequence. It follows by
 induction that <span class="math inline">\(\bar{P}\)</span> can be
 reduced to a polygon with an empty crossing sequence, and thus to a
-single point.</p>
+single point.
 </dd>
 </dl>
 <p>A close reading of this proof reveals that we only ever need to
@@ -757,7 +764,7 @@ nodes are intermediate (even) <span
 class="math inline">\(x\)</span>-coordinates.
 </dd>
 <dd>
-<p>For each node <span class="math inline">\(v\)</span> of <span
+For each node <span class="math inline">\(v\)</span> of <span
 class="math inline">\(T\)</span>, let <span
 class="math inline">\(l_v\)</span> and <span
 class="math inline">\(r_v\)</span> denote the smallest and largest <span
@@ -769,7 +776,7 @@ points with <span class="math inline">\(x\)</span>-coordinates between
 class="math inline">\(r_v\)</span>. Each node <span
 class="math inline">\(v\)</span> in <span
 class="math inline">\(T\)</span> stores the following information, in
-addition to the search key <span class="math inline">\(x_v\)</span>.</p>
+addition to the search key <span class="math inline">\(x_v\)</span>.
 </dd>
 <dd>
 <ul>
@@ -801,11 +808,10 @@ class="math inline">\(\bar{O}_{\textsf{right}(v)}\)</span> with larger
 </ul>
 </dd>
 <dd>
-<p>It is possible to construct a layered range tree for <span
+It is possible to construct a layered range tree for <span
 class="math inline">\(\bar{O}\)</span> in <span
 class="math inline">\(O(k\log k)\)</span> time; the total size of the
-data structure is also <span class="math inline">\(O(k\log
-k)\)</span>.</p>
+data structure is also <span class="math inline">\(O(k\log k)\)</span>.
 </dd>
 <dd>
 <figure>
@@ -816,9 +822,8 @@ some internal structure omitted).</figcaption>
 </figure>
 </dd>
 <dd>
-<p>Now consider a query segment <span
-class="math inline">\(\sigma\)</span> with endpoints <span
-class="math inline">\((l,b)\)</span> and <span
+Now consider a query segment <span class="math inline">\(\sigma\)</span>
+with endpoints <span class="math inline">\((l,b)\)</span> and <span
 class="math inline">\((r,b)\)</span> with <span
 class="math inline">\(l&lt;r\)</span>. We call a node <span
 class="math inline">\(v\)</span> <em>active</em> for this segment if
@@ -828,10 +833,10 @@ class="math inline">\(v\)</span> is not active. There are at most two
 active nodes at each level of the tree, so there are <span
 class="math inline">\(O(\log k)\)</span> active nodes altogether. We can
 easily find these active nodes in <span class="math inline">\(O(\log
-h)\)</span> time by searching down from the root.</p>
+h)\)</span> time by searching down from the root.
 </dd>
 <dd>
-<p>For any node <span class="math inline">\(v\)</span>, let <span
+For any node <span class="math inline">\(v\)</span>, let <span
 class="math inline">\(\textsf{lowest}(v,b)\)</span> denote the index of
 the lowest point in <span class="math inline">\(\bar{O}_v\)</span> that
 lies above the line <span class="math inline">\(y=b\)</span>, or <span
@@ -849,7 +854,7 @@ class="math inline">\(\textsf{parent}(v)\)</span>. Thus, we can compute
 active node <span class="math inline">\(v\)</span> in <span
 class="math inline">\(O(\log h)\)</span> time. The answer to our query
 is the lowest of these <span class="math inline">\(O(\log h)\)</span>
-points.</p>
+points.
 </dd>
 <dd>
 <figure>

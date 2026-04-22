@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -379,7 +386,7 @@ alt="Left trapezoids" />
 </figure>
 </dd>
 <dd>
-<p>Now imagine imagine walking once around the polygon, facing directly
+Now imagine imagine walking once around the polygon, facing directly
 forward along edges and turning at vertices, and consider the sequence
 of trapezoids immediately to our left, as suggested by the white arrows
 in Figure 2 above. Without loss of generality, start at the leftmost
@@ -394,11 +401,11 @@ the left of <span class="math inline">\(p_i\)</span>. The other cases
 are symmetric. The resulting sequence of trapezoids contains every left
 trapezoid at least once (and at most four times); moreover, any adjacent
 pair of trapezoids in this sequence share a wall and thus have a
-connected union. So the union of the left trapezoids is connected.</p>
+connected union. So the union of the left trapezoids is connected.
 </dd>
 <dd>
-<p>A symmetric argument implies that the union of the right trapezoids
-is also connected, which completes the proof.</p>
+A symmetric argument implies that the union of the right trapezoids is
+also connected, which completes the proof.
 </dd>
 </dl>
 <p>It’s worth noting here that Lemma <span
@@ -421,7 +428,7 @@ trapezoids alternate between even and odd. For example, in Figure 1, the
 blue slabs are even, and the orange slabs are odd.
 </dd>
 <dd>
-<p>Consider any path <span class="math inline">\(\pi\)</span> that
+Consider any path <span class="math inline">\(\pi\)</span> that
 intersects exactly two trapezoids <span
 class="math inline">\(\tau\)</span> and <span
 class="math inline">\(\tau’\)</span>. If <span
@@ -435,10 +442,10 @@ id="fnref2" role="doc-noteref"><sup>2</sup></a>) Otherwise, <span
 class="math inline">\(\tau\)</span> and <span
 class="math inline">\(\tau’\)</span> must lie in adjacent slabs, because
 <span class="math inline">\(\pi\)</span> is continuous, and therefore
-must share a vertical wall.</p>
+must share a vertical wall.
 </dd>
 <dd>
-<p>Suppose this wall lies on the vertical line <span
+Suppose this wall lies on the vertical line <span
 class="math inline">\(\ell\)</span> through <span
 class="math inline">\(p_i\)</span>, and without loss of generality,
 <span class="math inline">\(\tau\)</span> lies on the left of <span
@@ -462,13 +469,13 @@ arise when <span class="math inline">\(p_{i-1}\)</span> and <span
 class="math inline">\(p_{i+1}\)</span> both lie to the right of <span
 class="math inline">\(\ell\)</span>. In all cases, <span
 class="math inline">\(\tau\)</span> and <span
-class="math inline">\(\tau’\)</span> have the same parity.</p>
+class="math inline">\(\tau’\)</span> have the same parity.
 </dd>
 <dd>
 
 </dd>
 <dd>
-<p>More generally, consider any two trapezoids <span
+More generally, consider any two trapezoids <span
 class="math inline">\(\tau\)</span> and <span
 class="math inline">\(\tau’\)</span> in the same component of <span
 class="math inline">\(\mathbb{R}^2\setminus P\)</span>. There must be a
@@ -492,12 +499,12 @@ two trapezoids have the same parity. It follows by induction that every
 trapezoid <span class="math inline">\(\tau_i\)</span> has the same
 parity as <span class="math inline">\(\tau_0\)</span>; in particular,
 <span class="math inline">\(\tau\)</span> and <span
-class="math inline">\(\tau’\)</span> have the same parity.</p>
+class="math inline">\(\tau’\)</span> have the same parity.
 </dd>
 <dd>
-<p>We conclude that any two trapezoids in the same component of <span
+We conclude that any two trapezoids in the same component of <span
 class="math inline">\(\mathbb{R}^2\setminus P\)</span> have the same
-parity, which completes the proof.</p>
+parity, which completes the proof.
 </dd>
 </dl>
 <p>It’s worth noting here that Lemma <span
@@ -689,14 +696,14 @@ polygon</figcaption>
 </figure>
 </dd>
 <dd>
-<p>Every trapezoid in the decomposition has exactly two polygon vertices
-on its boundary. Call a trapezoid <em>boring</em> if the line segment
+Every trapezoid in the decomposition has exactly two polygon vertices on
+its boundary. Call a trapezoid <em>boring</em> if the line segment
 between these two vertices cuts through the interior of the trapezoid,
 and therefore is a diagonal of <span class="math inline">\(P\)</span>,
 and <em>interesting</em> otherwise. Every interesting trapezoid either
 has two vertices of <span class="math inline">\(P\)</span> on its
 ceiling, or two vertices of <span class="math inline">\(P\)</span> on
-its floor.</p>
+its floor.
 </dd>
 <dd>
 <figure>
@@ -706,22 +713,21 @@ alt="Boring diagonals" />
 </figure>
 </dd>
 <dd>
-<p>If any of the trapezoids is boring, we immediately have a diagonal.
-Yawn.</p>
+If any of the trapezoids is boring, we immediately have a diagonal.
+Yawn.
 </dd>
 <dd>
-<p>Any path through the interior of <span
-class="math inline">\(P\)</span> that starts in a ceiling trapezoid and
-ends in a floor trapezoid must pass through a boring trapezoid. So if
-every trapezoid is interesting, then every trapezoid is interesting
-<em>the same way</em>—either every trapezoid has two vertices on its
-ceiling, or every trapezoid has two vertices on its floor. Thus, <span
-class="math inline">\(P\)</span> is a special type of polygon we call a
-<em>monotone mountain</em>: any vertical line intersects at most two
-edges of <span class="math inline">\(P\)</span>, and the leftmost and
-rightmost vertices of <span class="math inline">\(P\)</span> are
-connected by a single edge of <span
-class="math inline">\(P\)</span>.</p>
+Any path through the interior of <span class="math inline">\(P\)</span>
+that starts in a ceiling trapezoid and ends in a floor trapezoid must
+pass through a boring trapezoid. So if every trapezoid is interesting,
+then every trapezoid is interesting <em>the same way</em>—either every
+trapezoid has two vertices on its ceiling, or every trapezoid has two
+vertices on its floor. Thus, <span class="math inline">\(P\)</span> is a
+special type of polygon we call a <em>monotone mountain</em>: any
+vertical line intersects at most two edges of <span
+class="math inline">\(P\)</span>, and the leftmost and rightmost
+vertices of <span class="math inline">\(P\)</span> are connected by a
+single edge of <span class="math inline">\(P\)</span>.
 </dd>
 <dd>
 <figure>
@@ -732,7 +738,7 @@ mountain</figcaption>
 </figure>
 </dd>
 <dd>
-<p>Without loss of generality, suppose <span
+Without loss of generality, suppose <span
 class="math inline">\(p_0\)</span> is the leftmost vertex, <span
 class="math inline">\(p_{n-1}\)</span> is the rightmost vertex, and
 every other vertex is above the edge <span
@@ -749,7 +755,7 @@ class="math inline">\(p_{n-1}\)</span>; take, for example, the vertex
 furthest above the floor <span
 class="math inline">\(p_0p_{n-1}\)</span>. For any such vertex <span
 class="math inline">\(p_i\)</span>, the line segment <span
-class="math inline">\(p_{i-1}p_{i+1}\)</span> is a diagonal.</p>
+class="math inline">\(p_{i-1}p_{i+1}\)</span> is a diagonal.
 </dd>
 </dl>
 <!---
@@ -773,7 +779,7 @@ diagonal and then recursively triangulate each of the two resulting
 smaller polygons.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(P\)</span> be a simple polygon with
+Let <span class="math inline">\(P\)</span> be a simple polygon with
 <span class="math inline">\(n\)</span> vertices <span
 class="math inline">\(p_0, p_1, p_2, \dots, p_{n-1}\)</span>. If <span
 class="math inline">\(P\)</span> is a triangle, it has a trivial
@@ -791,18 +797,18 @@ class="math inline">\(P^+\)</span> and <span
 class="math inline">\(P^-\)</span> are simple. Color each edge of <span
 class="math inline">\(P\)</span> <em>red</em> if it is an edge of <span
 class="math inline">\(P^+\)</span> and <em>blue</em> otherwise; every
-blue edge is an edge of <span class="math inline">\(P^-\)</span>.</p>
+blue edge is an edge of <span class="math inline">\(P^-\)</span>.
 </dd>
 <dd>
-<p>Now we need to prove that the diagonal <span
+Now we need to prove that the diagonal <span
 class="math inline">\(d\)</span> partitions the interior of <span
 class="math inline">\(P\)</span> into the interiors of <span
 class="math inline">\(P^+\)</span> and <span
 class="math inline">\(P^-\)</span>. Proving this claim is surprisingly
-subtle.</p>
+subtle.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(U\)</span> be any open disk in the
+Let <span class="math inline">\(U\)</span> be any open disk in the
 interior of <span class="math inline">\(P\)</span> that intersects <span
 class="math inline">\(d\)</span>; such a disk exists because <span
 class="math inline">\(d\)</span> is an <em>interior</em> diagonal. (We
@@ -822,10 +828,10 @@ class="math inline">\(d\)</span> but <span
 class="math inline">\(R^-\)</span> does not, and <span
 class="math inline">\(R^+\)</span> and <span
 class="math inline">\(R^-\)</span> cross exactly the same edges of <span
-class="math inline">\(P\)</span>.</p>
+class="math inline">\(P\)</span>.
 </dd>
 <dd>
-<p>[^pasch2] We are invoking the plane separation axion again here.</p>
+[^pasch2] We are invoking the plane separation axion again here.
 </dd>
 <dd>
 <figure>
@@ -836,9 +842,9 @@ diagonal</figcaption>
 </figure>
 </dd>
 <dd>
-<p>As above, <span class="math inline">\(R^+\)</span> (and therefore
-<span class="math inline">\(R^-\)</span>) crosses an odd number of edges
-of <span class="math inline">\(P\)</span>. Without loss of generality,
+As above, <span class="math inline">\(R^+\)</span> (and therefore <span
+class="math inline">\(R^-\)</span>) crosses an odd number of edges of
+<span class="math inline">\(P\)</span>. Without loss of generality,
 suppose <span class="math inline">\(R^+\)</span> (and therefore <span
 class="math inline">\(R^-\)</span>) crosses an even number of red edges
 and an odd number of blue edges. Then, because <span
@@ -854,17 +860,17 @@ class="math inline">\(R^-\)</span> does not cross <span
 class="math inline">\(d\)</span>. We conclude (finally!) that the
 interiors of <span class="math inline">\(P^+\)</span> and <span
 class="math inline">\(P^-\)</span> are disjoint subsets of the interior
-of <span class="math inline">\(P\)</span>. Whew!</p>
+of <span class="math inline">\(P\)</span>. Whew!
 </dd>
 <dd>
-<p>The inductive hypothesis implies that <span
+The inductive hypothesis implies that <span
 class="math inline">\(P^+\)</span> has a frugal triangulation <span
 class="math inline">\((V^+, E^+, T^+)\)</span> and that <span
 class="math inline">\(P^-\)</span> has a frugal triangulation <span
 class="math inline">\((V^-,E^-,T^-)\)</span>. One can now verify
 mechanically that <span class="math inline">\((V^+\cup V^-,\)</span>
 <span class="math inline">\(E^+\cup E^-, T^+\cup T^-)\)</span> is a
-frugal triangulation of <span class="math inline">\(P\)</span>.</p>
+frugal triangulation of <span class="math inline">\(P\)</span>.
 </dd>
 </dl>
 <h2 data-number="1.5" id="computing-a-triangulation"><span
@@ -995,7 +1001,7 @@ geometry textbook.</p></li>
 dějiny přirodnich věd a teckniky / Acta Hist. Rerum Natur. Nec Non
 Tech.</em> 11:203–216, 1967. In Czech, with German summary.</p></li>
 </ol>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1020,6 +1026,6 @@ some theorems in the <em>Elements</em> require it. Yes, there is such a
 thing as non-Paschian geometry. It’s weeeeeird.<a href="#fnref2"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

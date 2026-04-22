@@ -61,7 +61,7 @@ pdf : $(PDF_FILES)
 # Whole book
 
 bookhtml : $(SOURCE_DOCS)
-	rm -rf Book
+	rm -rf 1dct-Book
 	$(PANDOC) -t chunkedhtml $(PANDOC_OPTIONS) ${PANDOC_BOOK_OPTIONS} ${PANDOC_HTML_OPTIONS} -o 1dct-Book $(MD_FILES)
 
 bookpdf : ${SOURCE_DOCS}

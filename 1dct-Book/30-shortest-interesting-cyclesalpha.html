@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -503,8 +510,8 @@ of <span class="math inline">\(\Sigma\)</span> with the given spanning
 tree <span class="math inline">\(T\)</span>.
 </dd>
 <dd>
-<p>Consider the subgraph <span class="math inline">\(X^* = C^*\cup L^*
-\cup \{e^*\}\)</span> of the dual map <span
+Consider the subgraph <span class="math inline">\(X^* = C^*\cup L^* \cup
+\{e^*\}\)</span> of the dual map <span
 class="math inline">\(\Sigma^*\)</span>. The induced embedding of <span
 class="math inline">\(X^*\)</span> has exactly two faces, each
 containing (the faces of <span class="math inline">\(\Sigma^*\)</span>
@@ -524,7 +531,7 @@ class="math inline">\(B\)</span> into at most <span
 class="math inline">\(2g+2\)</span> intervals, which alternate between
 vertices of <span class="math inline">\(U\)</span> and vertices of <span
 class="math inline">\(W\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h3 class="unnumbered" id="recursive">Recursive</h3>
@@ -614,7 +621,7 @@ class="math inline">\(v\)</span> of <span
 class="math inline">\(\gamma\)</span>.
 </dd>
 <dd>
-<p>Now let <span class="math inline">\(\sigma\)</span> be the shortest
+Now let <span class="math inline">\(\sigma\)</span> be the shortest
 cycle in <span class="math inline">\(\Sigma\)</span> that crosses <span
 class="math inline">\(\gamma\)</span> once. This cycle appears in <span
 class="math inline">\(\Sigma’\)</span> as a shortest path from <span
@@ -626,7 +633,7 @@ paths in <span class="math inline">\(O(\bar{g}^2 n\log n)\)</span> time
 using either MSSP algorithm, using either <span
 class="math inline">\(\gamma^+\)</span> or <span
 class="math inline">\(\gamma^\pm\)</span> as the “outer” face. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Theorem:</strong> <em>The shortest nonseparating cycle in a
@@ -648,17 +655,15 @@ of cycles induced by <span class="math inline">\(T\)</span> and <span
 class="math inline">\(L\)</span>.
 </dd>
 <dd>
-<p>For each cycle <span class="math inline">\(\gamma_i\)</span>, we
-compute the shortest cycle in <span
-class="math inline">\(\Sigma\)</span> that crosses <span
-class="math inline">\(\gamma_i\)</span> exactly once, in <span
-class="math inline">\(O(\bar{g}n\log n)\)</span> time, by running a
-multiple-source shortest-path algorithm in <span
+For each cycle <span class="math inline">\(\gamma_i\)</span>, we compute
+the shortest cycle in <span class="math inline">\(\Sigma\)</span> that
+crosses <span class="math inline">\(\gamma_i\)</span> exactly once, in
+<span class="math inline">\(O(\bar{g}n\log n)\)</span> time, by running
+a multiple-source shortest-path algorithm in <span
 class="math inline">\(\Sigma \mathbin{\backslash\!\!\backslash}
 \gamma_i\)</span>. The shortest of these <span
 class="math inline">\(\bar{g}\)</span> cycles is the shortest
-nonseparating cycle. <span
-class="math inline">\(\qquad\square\)</span></p>
+nonseparating cycle. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="30.6"
@@ -741,8 +746,8 @@ class="math inline">\(T\)</span> and <span
 class="math inline">\(L\)</span>.
 </dd>
 <dd>
-<p>First, for each cycle <span class="math inline">\(\gamma_i\)</span>,
-we compute the shortest cycle in <span
+First, for each cycle <span class="math inline">\(\gamma_i\)</span>, we
+compute the shortest cycle in <span
 class="math inline">\(\Sigma\)</span> that crosses <span
 class="math inline">\(\gamma_i\)</span> exactly once, in <span
 class="math inline">\(O(\bar{g}^2 n\log n)\)</span> time, by running a
@@ -756,12 +761,12 @@ class="math inline">\(\bar{g}\)</span> cycles is the shortest
 noncontractible cycle. Otherwise, we need to compute the shortest
 noncontractible cycle in the sliced surface <span
 class="math inline">\(\Sigma’ = \Sigma
-\mathbin{\backslash\!\!\backslash} \mathcal{C}\)</span>.</p>
+\mathbin{\backslash\!\!\backslash} \mathcal{C}\)</span>.
 </dd>
 <dd>
-<p>The surface <span class="math inline">\(\Sigma’\)</span> has genus 0
-and <span class="math inline">\(b\)</span> boundary cycles, for some
-<span class="math inline">\(1\le b\le \bar{g}\)</span>. If <span
+The surface <span class="math inline">\(\Sigma’\)</span> has genus 0 and
+<span class="math inline">\(b\)</span> boundary cycles, for some <span
+class="math inline">\(1\le b\le \bar{g}\)</span>. If <span
 class="math inline">\(b=1\)</span>, then <span
 class="math inline">\(\Sigma’\)</span> is a disk, so every cycle in
 <span class="math inline">\(\Sigma’\)</span> is contractible. Otherwise,
@@ -775,16 +780,16 @@ class="math inline">\(\Sigma’ \mathbin{\backslash\!\!\backslash}
 \pi\)</span>. The algorithm halts after computing <span
 class="math inline">\(b-1\)</span> cycles; the shortest of these is the
 shortest noncontractible cycle in <span
-class="math inline">\(\Sigma’\)</span>.</p>
+class="math inline">\(\Sigma’\)</span>.
 </dd>
 <dd>
-<p>Altogether the algorithm runs multiple-source shortest paths <span
+Altogether the algorithm runs multiple-source shortest paths <span
 class="math inline">\(\bar{g} + b = O(\bar{g})\)</span> times, each on a
 surface map with complexity <span class="math inline">\(O(n)\)</span>
 and genus less than <span class="math inline">\(\bar{g}\)</span>. So the
 overall running time is <span class="math inline">\(O(\bar{g}^3 n\log
 n)\)</span>, as claimed. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <!--
@@ -861,7 +866,7 @@ class="header-section-number">30.8</span> Aptly Named Sir</h2>
 <li>Shortest <em>homotopic</em> paths, cycles, systems of loops, pants
 decompositions</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -876,6 +881,6 @@ was born in England. It’s a minor miracle that they have never been
 coauthors.<a href="#fnref2" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

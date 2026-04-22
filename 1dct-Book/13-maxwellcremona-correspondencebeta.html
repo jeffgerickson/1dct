@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -441,8 +448,8 @@ diagrams are <em>equivalent</em> if one is a translation of the other.
 For any vector <span class="math inline">\(v\in \mathbb{R}^2\)</span>,
 let <span class="math inline">\(v^\perp\)</span> denote the result of
 rotating <span class="math inline">\(v\)</span> a quarter turn
-counterclockwise: <span class="math inline">\(\binom{x}{y}^\perp =
-\binom{-y}{x}\)</span>.</p>
+counterclockwise: <span class="math inline">\(\binom{x}{y}^\perp
+=  \binom{-y}{x}\)</span>.</p>
 <dl>
 <dt><strong>Theorem [Maxwell, Whiteley]:</strong></dt>
 <dd>
@@ -464,22 +471,22 @@ stress for <span class="math inline">\((G,p)\)</span>. Define a 1-form
 <span class="math inline">\(\Delta^*\colon
 D(G^*)\to\mathbb{R}^2\)</span>, which might be called the <em>dual
 displacement function</em>, by setting <span class="math display">\[
-\Delta^*(d^*)
-:= \omega(d)\cdot \Delta(d)^\perp
+  \Delta^*(d^*)
+  := \omega(d)\cdot \Delta(d)^\perp
 \]</span> for every dart <span class="math inline">\(d\)</span> of <span
 class="math inline">\(G\)</span>. For any face <span
 class="math inline">\(v^*\)</span> of the dual graph <span
 class="math inline">\(G^*\)</span>, equilibrium implies that <span
 class="math display">\[\begin{aligned}
-\sum_{d^* \colon v^* = \textsf{left}(d^*)} \Delta^*(d^*)
-&amp;=
-\sum_{d \colon v = \textsf{head}(d)} \omega(d)\cdot\Delta(d)^\perp
+  \sum_{d^* \colon v^* = \textsf{left}(d^*)} \Delta^*(d^*)
+  &amp;=
+  \sum_{d \colon v = \textsf{head}(d)} \omega(d)\cdot\Delta(d)^\perp
 \\  &amp;=
-\sum_{u} \omega(uv) \cdot \Delta(u\mathord\to v)^\perp
-=
-\binom{0}{0}^\perp
-=
-\binom{0}{0}.
+  \sum_{u} \omega(uv) \cdot \Delta(u\mathord\to v)^\perp
+  =
+  \binom{0}{0}^\perp
+  =
+  \binom{0}{0}.
 \end{aligned}\]</span> Thus, the function <span
 class="math inline">\(\Delta^*\)</span> is a closed 1-form in the dual
 graph <span class="math inline">\(G^*\)</span>. , it follows that <span
@@ -496,18 +503,18 @@ p^*)\)</span> is a reciprocal diagram of <span
 class="math inline">\((G,p)\)</span>.
 </dd>
 <dd>
-<p>On the other hand, let <span class="math inline">\((G^*,
-p^*)\)</span> be any reciprocal diagram for <span
+On the other hand, let <span class="math inline">\((G^*, p^*)\)</span>
+be any reciprocal diagram for <span
 class="math inline">\((G,p)\)</span>. For each dart <span
 class="math inline">\(d = \langle uv | ab \rangle\)</span>, there is a
 unique real number <span class="math inline">\(\omega(d)\)</span> such
 that <span class="math display">\[
-p^*(b) - p^*(a) = \omega(d) \cdot ( p(v) - p(u) )^\perp.
+  p^*(b) - p^*(a) = \omega(d) \cdot ( p(v) - p(u) )^\perp.
 \]</span> Kirchoff’s voltage law in <span class="math inline">\((G^*,
 p^*)\)</span> immediately implies that <span
 class="math inline">\(\omega\)</span> is an equilibrium stress for <span
 class="math inline">\((G, p)\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="13.3" id="polyhedral-lifts"><span
@@ -568,9 +575,9 @@ id="fnref4" role="doc-noteref"><sup>4</sup></a>
 
 </dd>
 <dd>
-<p>Let <span class="math inline">\(z\)</span> be any non-trivial
-polyhedral lift of <span class="math inline">\((G,p)\)</span>. For each
-face <span class="math inline">\(f\)</span> of <span
+Let <span class="math inline">\(z\)</span> be any non-trivial polyhedral
+lift of <span class="math inline">\((G,p)\)</span>. For each face <span
+class="math inline">\(f\)</span> of <span
 class="math inline">\(G\)</span>, let the equation <span
 class="math inline">\(z = x^*(f)\cdot x + y^*(f)\cdot y -
 z^*(f)\)</span> denote the plane supporting the lifted face <span
@@ -581,27 +588,27 @@ class="math inline">\(G\)</span> (or equivalently, every edge <span
 class="math inline">\(vf\)</span> of the radial map <span
 class="math inline">\(G^\diamond\)</span>) we immediately have <span
 class="math display">\[
-z(v) + z^*(f)
-~=~ x^*(f)\cdot x(v) + y^*(f)\cdot y(v)
-~=~ p(v) \cdot p^*(f)
+  z(v) + z^*(f)
+  ~=~ x^*(f)\cdot x(v) + y^*(f)\cdot y(v)
+  ~=~ p(v) \cdot p^*(f)
 \]</span> Thus, for every dart <span class="math inline">\(d = \langle
 uv | ab \rangle\)</span> of <span class="math inline">\(G\)</span>, we
 have four identities: <span class="math display">\[
-\begin{aligned}
-    p(u)\cdot p^*(a) &amp;= z(u) + z^*(a) \\
-    p(u)\cdot p^*(b) &amp;= z(u) + z^*(b) \\
-    p(v)\cdot p^*(a) &amp;= z(v) + z^*(a) \\
-    p(v)\cdot p^*(b) &amp;= z(v) + z^*(b)
-\end{aligned}
+  \begin{aligned}
+      p(u)\cdot p^*(a) &amp;= z(u) + z^*(a) \\
+      p(u)\cdot p^*(b) &amp;= z(u) + z^*(b) \\
+      p(v)\cdot p^*(a) &amp;= z(v) + z^*(a) \\
+      p(v)\cdot p^*(b) &amp;= z(v) + z^*(b)
+  \end{aligned}
 \]</span> It follows that <span
 class="math inline">\((p(u)-p(v))\cdot(p^*(a)-p^*(b)) = 0\)</span>. We
 conclude that each edge of <span class="math inline">\((G,p)\)</span> is
 orthogonal to its dual edge in <span class="math inline">\((G^*,
-p^*)\)</span>.</p>
+p^*)\)</span>.
 </dd>
 <dd>
-<p>On the other hand, let <span class="math inline">\((G^*,
-p^*)\)</span> be any reciprocal diagram for <span
+On the other hand, let <span class="math inline">\((G^*, p^*)\)</span>
+be any reciprocal diagram for <span
 class="math inline">\((G,p)\)</span>. For each face <span
 class="math inline">\(f\)</span> of <span
 class="math inline">\(G\)</span> we interpret the dual position vector
@@ -611,11 +618,11 @@ the lifted face <span class="math inline">\(\hat{p}(f)\)</span>. We
 simultaneously compute vertical offsets <span
 class="math inline">\(z^*(f)\)</span> for those support planes and
 heights <span class="math inline">\(z(v)\)</span> for the vertices to
-obtain a consistent polyhedral lift.</p>
+obtain a consistent polyhedral lift.
 </dd>
 <dd>
-<p>We can assign values <span class="math inline">\(z(v)\)</span> and
-<span class="math inline">\(z^*(f)\)</span> to the vertices <span
+We can assign values <span class="math inline">\(z(v)\)</span> and <span
+class="math inline">\(z^*(f)\)</span> to the vertices <span
 class="math inline">\(v\)</span> and faces <span
 class="math inline">\(f\)</span> of <span
 class="math inline">\(G\)</span> by integrating a closed <span
@@ -632,16 +639,17 @@ class="math inline">\(G\)</span>. For each dart <span
 class="math inline">\(d = \langle uv | ab \rangle\)</span> of <span
 class="math inline">\(G\)</span>, reciprocality implies <span
 class="math display">\[
-\begin{aligned}
-    \phi^\diamond(a\mathord\to v) + \phi^\diamond(v\mathord\to b)
+  \begin{aligned}
+      \phi^\diamond(a\mathord\to v) + \phi^\diamond(v\mathord\to b)
 &amp;{}
-        + \phi^\diamond(b\mathord\to u) + \phi^\diamond(u\mathord\to a)
-\\  &amp;=
-    p(v)\cdot p^*(a) - p(v)\cdot p^*(b)
-        + p(u)\cdot p^*(b) - p(u)\cdot p^*(a)
-\\  &amp;=
-    (p(v)-p(u)) \cdot (p^*(a) - p^*(b)) = 0.
-\end{aligned}
+          + \phi^\diamond(b\mathord\to u) + \phi^\diamond(u\mathord\to
+a)
+  \\  &amp;=
+      p(v)\cdot p^*(a) - p(v)\cdot p^*(b)
+          + p(u)\cdot p^*(b) - p(u)\cdot p^*(a)
+  \\  &amp;=
+      (p(v)-p(u)) \cdot (p^*(a) - p^*(b)) = 0.
+  \end{aligned}
 \]</span> Thus, <span class="math inline">\(\phi^\diamond\)</span> is a
 closed, and therefore exact, 1-form on the radial graph <span
 class="math inline">\(G^\diamond\)</span>. It follows that there is a
@@ -658,9 +666,9 @@ class="math inline">\(z^*(f) := -\pi^\diamond(f)\)</span>. By
 construction, for any corner <span class="math inline">\((v, f)\)</span>
 of <span class="math inline">\(G\)</span>, we have <span
 class="math display">\[
-z(v) + z^*(f) = p(v)\cdot p^*(f)
+  z(v) + z^*(f) = p(v)\cdot p^*(f)
 \]</span> and therefore <span class="math display">\[
-z(v) = x(v)\cdot x^*(f) + y(v)\cdot y^*(f) - z^*(f).
+  z(v) = x(v)\cdot x^*(f) + y(v)\cdot y^*(f) - z^*(f).
 \]</span> Thus, the point <span class="math inline">\(\hat{p}(v) =
 (x(v), y(v), z(v))\)</span> lies on the supporting plane of <span
 class="math inline">\(\hat{p}(f)\)</span>, which has equation <span
@@ -669,7 +677,7 @@ z^*(f)\)</span>. We conclude that the vertex heights <span
 class="math inline">\(z(v)\)</span> and facet-plane offsets <span
 class="math inline">\(z^*(f)\)</span> are consistent with a polyhedral
 lift of <span class="math inline">\(G\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="13.4" id="a-non-obvious-example-the-anticube"><span
@@ -1059,7 +1067,7 @@ class="header-section-number">13.9</span> Aptly Named</h2>
 <li>Resolving force loads [Rote and Schulz]</li>
 <li>Rigidity (via LP duality)</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1090,6 +1098,6 @@ it has only one combinatorial embedding, its radial <em>graph</em> and
 the faces thereof are well-defined.<a href="#fnref4"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

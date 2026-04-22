@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -457,7 +464,7 @@ class="math inline">\(\textsl{tail}(d)\)</span> to <span
 class="math inline">\(\textsl{head}(d)\)</span>.
 </dd>
 <dd>
-<p>Consider the fundamental domain <span class="math inline">\(\Delta =
+Consider the fundamental domain <span class="math inline">\(\Delta =
 \Sigma \mathbin{\backslash\!\!\backslash} (T\cup L)\)</span>. The dart
 <span class="math inline">\(d\)</span> is a boundary-to-boundary chord
 through the interior of <span class="math inline">\(\Delta\)</span>.
@@ -471,7 +478,7 @@ path <span class="math inline">\(\pi\)</span> projects to a walk in the
 cut graph <span class="math inline">\(T\cup L\)</span> from <span
 class="math inline">\(\textsf{tail}_\Sigma(d)\)</span> to <span
 class="math inline">\(\textsf{head}_\Sigma(d)\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>Let <span class="math inline">\(\mathcal{L}^*\)</span> denote the set
@@ -510,31 +517,31 @@ v_0{\to}v_1{\to}v_2{\to}\cdots{\to}v_L\)</span>, where <span
 class="math inline">\(v_0 = v_L = x\)</span>. We easily observe that
 <span class="math inline">\(w\)</span> is homotopic to the concatenation
 of paths <span class="math display">\[
-\begin{aligned}
-\textsf{path}(v_0)
-    \cdot v_0{\to}v_1
-    \cdot \textsf{rev}(\textsf{path}(v_1))
-&amp;\cdot
-    \textsf{path}(v_1)
-    \cdot v_1{\to}v_2
-    \cdot \textsf{rev}(\textsf{path}(v_2))
-\cdots
-\\
-&amp;\cdots
-    \textsf{path}(v_{i-1})
-    \cdot v_{i-1}{\to}v_i
-    \cdot \textsf{rev}(\textsf{path}(v_i)) \cdots
-\\
-&amp;\cdots
-\textsf{path}(v_{L-1})
-    \cdot v_{L-1}{\to}v_L
-    \cdot \textsf{rev}(\textsf{path}(v_L))
-\\
-= \textsf{loop}(v_0{\to}v_1)
-    \cdot \textsf{loop}(v_1{\to}v_2)
-    \cdots &amp; \textsf{loop}(v_{i-1}{\to}v_i)
-    \cdots \textsf{loop}(v_{L-1}{\to}v_L)
-\end{aligned}
+  \begin{aligned}
+  \textsf{path}(v_0)
+      \cdot v_0{\to}v_1
+      \cdot \textsf{rev}(\textsf{path}(v_1))
+  &amp;\cdot
+      \textsf{path}(v_1)
+      \cdot v_1{\to}v_2
+      \cdot \textsf{rev}(\textsf{path}(v_2))
+  \cdots
+  \\
+  &amp;\cdots
+      \textsf{path}(v_{i-1})
+      \cdot v_{i-1}{\to}v_i
+      \cdot \textsf{rev}(\textsf{path}(v_i)) \cdots
+  \\
+  &amp;\cdots
+  \textsf{path}(v_{L-1})
+      \cdot v_{L-1}{\to}v_L
+      \cdot \textsf{rev}(\textsf{path}(v_L))
+  \\
+  = \textsf{loop}(v_0{\to}v_1)
+      \cdot \textsf{loop}(v_1{\to}v_2)
+      \cdots &amp; \textsf{loop}(v_{i-1}{\to}v_i)
+      \cdots \textsf{loop}(v_{L-1}{\to}v_L)
+  \end{aligned}
 \]</span> because the initial path <span
 class="math inline">\(\textsf{path}(v_0)\)</span> and final path <span
 class="math inline">\(\textsf{rev}(\textsf{path}(v_L))\)</span> are both
@@ -543,10 +550,10 @@ class="math inline">\(T\)</span> is immediately followed by its
 reversal.
 </dd>
 <dd>
-<p>Thus, it suffices to argue that every fundamental loop <span
+Thus, it suffices to argue that every fundamental loop <span
 class="math inline">\(\textsf{loop}(d)\)</span> is homotopic to a loop
 in <span class="math inline">\(\mathcal{L}^*\)</span>. Again, in light
-of the previous lemma, there are only two cases to consider:</p>
+of the previous lemma, there are only two cases to consider:
 </dd>
 <dd>
 <ul>
@@ -586,7 +593,7 @@ class="header-section-number">26.7</span> Aptly Named Sir</h2>
 <ul>
 <li>Pants decompositions (except possibly in passing)</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -600,6 +607,6 @@ of the unit square (or any other parallelogram) in the plane. Homotopy
 testing on the flat torus is nearly trivial.<a href="#fnref2"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

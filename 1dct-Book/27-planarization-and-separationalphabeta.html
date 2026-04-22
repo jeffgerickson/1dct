@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -261,7 +268,7 @@ class="math inline">\(\Sigma\mathbin{\backslash\!\!\backslash}
 the number of vertices in <span class="math inline">\(\sigma\)</span>.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(S\)</span> be the smallest subset of
+Let <span class="math inline">\(S\)</span> be the smallest subset of
 vertices of <span
 class="math inline">\(\Sigma\mathbin{\backslash\!\!\backslash}
 \sigma\)</span> that separates <span
@@ -278,11 +285,11 @@ class="math inline">\(m\)</span> vertex-disjoint paths from <span
 class="math inline">\(\sigma^\flat\)</span> to <span
 class="math inline">\(\sigma^\sharp\)</span> in <span
 class="math inline">\(\Sigma\mathbin{\backslash\!\!\backslash}
-\sigma\)</span>.</p>
+\sigma\)</span>.
 </dd>
 <dd>
-<p>On the other hand, let <span class="math inline">\(\pi\)</span> be
-the shortest path in <span
+On the other hand, let <span class="math inline">\(\pi\)</span> be the
+shortest path in <span
 class="math inline">\(\Sigma\mathbin{\backslash\!\!\backslash}
 \sigma\)</span> from a node in <span
 class="math inline">\(\sigma^\flat\)</span> to its clone in <span
@@ -298,11 +305,11 @@ class="math inline">\(\sigma^\flat\)</span> or <span
 class="math inline">\(\sigma^\sharp\)</span>. Thus, every path from
 <span class="math inline">\(\sigma^\flat\)</span> to <span
 class="math inline">\(\sigma^\sharp\)</span> has at least <span
-class="math inline">\(m/2\)</span> edges.</p>
+class="math inline">\(m/2\)</span> edges.
 </dd>
 <dd>
-<p>We conclude that <span class="math inline">\(n\ge m^2/2\)</span>.
-<span class="math inline">\(\qquad\square\)</span></p>
+We conclude that <span class="math inline">\(n\ge m^2/2\)</span>. <span
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>Alberston and Hutchinson’s proof requires orientability. If <span
@@ -428,24 +435,23 @@ class="math inline">\(\Sigma’\)</span> be the surface map obtained from
 each boundary cycle.
 </dd>
 <dd>
-<p>The intersection <span class="math inline">\(T’ = T \cap
+The intersection <span class="math inline">\(T’ = T \cap
 \Sigma’\)</span> is a breadth-first spanning tree of <span
 class="math inline">\(\Sigma[0,j]\)</span>, consisting of the first
 <span class="math inline">\(j\)</span> levels of the global
-breadth-first spanning tree tree <span
-class="math inline">\(T\)</span>.</p>
+breadth-first spanning tree tree <span class="math inline">\(T\)</span>.
 </dd>
 <dd>
-<p>The intersection <span class="math inline">\(C \cap \Sigma’\)</span>
+The intersection <span class="math inline">\(C \cap \Sigma’\)</span>
 defines a forest in the dual map <span
 class="math inline">\((\Sigma’)^*\)</span>, which spans every face
 except the caps. We can extend this coforest to a spanning cotree <span
 class="math inline">\(C’\)</span> by adding edges that are not in <span
 class="math inline">\(T’\)</span> (in fact, only edges on the boundary
-of <span class="math inline">\(\Sigma[0,j]\)</span>).</p>
+of <span class="math inline">\(\Sigma[0,j]\)</span>).
 </dd>
 <dd>
-<p>Thus, we have a tree-cotree decomposition <span
+Thus, we have a tree-cotree decomposition <span
 class="math inline">\((T’, L’, C’)\)</span> of <span
 class="math inline">\(\Sigma’\)</span>, where <span
 class="math inline">\(L’ = E(\Sigma’) \setminus (C’ \cup T’) \subseteq
@@ -454,7 +460,7 @@ Q(L’)\)</span> is a cut graph for <span
 class="math inline">\(\Sigma’\)</span>. On the other hand, <span
 class="math inline">\(Q’\)</span> is a subgraph of <span
 class="math inline">\(Q[i,j]\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>For any integers <span class="math inline">\(0 \le i &lt; k\)</span>,
@@ -495,18 +501,18 @@ all <span class="math inline">\(\bar{g}\)</span> such subpaths with
 <span class="math inline">\(L\)</span>. It follows that for any fixed
 <span class="math inline">\(k\)</span>, we have <span
 class="math display">\[
-\sum_{i=0}^{k-1} |V(Q(i,k))|
-\le
-\sum_{v\in V(L)} \sum_{i=0}^{k-1} (\textsl{depth}(v) - i)\bmod k
-=
-\bar{g} k(k-1) &lt; \bar{g}k^2.
+  \sum_{i=0}^{k-1} |V(Q(i,k))|
+  \le
+  \sum_{v\in V(L)} \sum_{i=0}^{k-1} (\textsl{depth}(v) - i)\bmod k
+  =
+  \bar{g} k(k-1) &lt; \bar{g}k^2.
 \]</span> Each vertex and edge of <span
 class="math inline">\(\Sigma\)</span> belongs to at most one depth
 contour <span class="math inline">\(D_i\)</span>, so <span
 class="math display">\[
-\sum_{i=0}^{k-1} |V(D(i,k))| \le n.
+  \sum_{i=0}^{k-1} |V(D(i,k))| \le n.
 \]</span> We conclude that <span class="math display">\[
-\sum_{i=0}^{k-1} |V(P(i,k))| \le \bar{g}k^2 + n
+  \sum_{i=0}^{k-1} |V(P(i,k))| \le \bar{g}k^2 + n
 \]</span> which implies that for some index <span
 class="math inline">\(i\)</span>, the subgraph <span
 class="math inline">\(P(i,k)\)</span> has at most <span
@@ -797,7 +803,7 @@ class="header-section-number">27.6</span> Aptly Named Sir</h2>
 <ul>
 <li>Local approximation (Baker-Eppstein)</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -809,6 +815,6 @@ class="math inline">\(\sqrt{\bar{g} n} = \sqrt{2gn}\)</span> when <span
 class="math inline">\(\Sigma\)</span> is orientable.<a href="#fnref2"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

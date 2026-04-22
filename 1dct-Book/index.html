@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,6 +175,9 @@
     }
   </style>
   
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
 </head>
 <body>
 <nav id="sitenav">
@@ -191,9 +201,10 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="-forewardalpha.html" id="toc-forewardalpha">Foreward<span
+<li><a href="-forewardalpha.html#forewardalpha"
+id="toc-forewardalpha">Foreward<span
 class="math inline">\(^\alpha\)</span></a></li>
-<li><a href="1-simple-polygonsbeta.html"
+<li><a href="1-simple-polygonsbeta.html#simple-polygonsbeta"
 id="toc-simple-polygonsbeta"><span class="toc-section-number">1</span>
 Simple Polygons<span class="math inline">\(^\beta\)</span></a>
 <ul>
@@ -228,7 +239,7 @@ Appearing in This Film</a></li>
 id="toc-references"><span class="toc-section-number">1.8</span>
 References</a></li>
 </ul></li>
-<li><a href="2-winding-numbersbeta.html"
+<li><a href="2-winding-numbersbeta.html#winding-numbersbeta"
 id="toc-winding-numbersbeta"><span class="toc-section-number">2</span>
 Winding Numbers<span class="math inline">\(^\beta\)</span></a>
 <ul>
@@ -267,7 +278,7 @@ Appearing in This Film</a></li>
 id="toc-references-1"><span class="toc-section-number">2.9</span>
 References</a></li>
 </ul></li>
-<li><a href="3-homotopy-testingbeta.html"
+<li><a href="3-homotopy-testingbeta.html#homotopy-testingbeta"
 id="toc-homotopy-testingbeta"><span class="toc-section-number">3</span>
 Homotopy Testing<span class="math inline">\(^\beta\)</span></a>
 <ul>
@@ -289,7 +300,8 @@ id="toc-and-the-aptly-named-sir-not-appearing-in-this-film-2"><span
 class="toc-section-number">3.5</span> …and the Aptly Named Sir Not
 Appearing in This Film</a></li>
 </ul></li>
-<li><a href="4-faster-homotopy-testingbeta.html"
+<li><a
+href="4-faster-homotopy-testingbeta.html#faster-homotopy-testingbeta"
 id="toc-faster-homotopy-testingbeta"><span
 class="toc-section-number">4</span> Faster Homotopy Testing<span
 class="math inline">\(^\beta\)</span></a>
@@ -325,7 +337,8 @@ Nauseam</a></li>
 id="toc-references-2"><span class="toc-section-number">4.8</span>
 References</a></li>
 </ul></li>
-<li><a href="5-shortest-homotopic-pathsbeta.html"
+<li><a
+href="5-shortest-homotopic-pathsbeta.html#shortest-homotopic-pathsbeta"
 id="toc-shortest-homotopic-pathsbeta"><span
 class="toc-section-number">5</span> Shortest (Homotopic) Paths<span
 class="math inline">\(^\beta\)</span></a>
@@ -368,7 +381,8 @@ Yadda</a></li>
 id="toc-references-3"><span class="toc-section-number">5.10</span>
 References</a></li>
 </ul></li>
-<li><a href="6-generic-planar-curvesalpha.html"
+<li><a
+href="6-generic-planar-curvesalpha.html#generic-planar-curvesalpha"
 id="toc-generic-planar-curvesalpha"><span
 class="toc-section-number">6</span> Generic Planar Curves<span
 class="math inline">\(^\alpha\)</span></a>
@@ -406,7 +420,7 @@ References</a></li>
 id="toc-possible-reorganization"><span
 class="toc-section-number">6.9</span> Possible reorganization</a></li>
 </ul></li>
-<li><a href="7-unsigned-gauss-codesbeta.html"
+<li><a href="7-unsigned-gauss-codesbeta.html#unsigned-gauss-codesbeta"
 id="toc-unsigned-gauss-codesbeta"><span
 class="toc-section-number">7</span> Unsigned Gauss codes<span
 class="math inline">\(^\beta\)</span></a>
@@ -450,7 +464,8 @@ Yadda</a></li>
 id="toc-references-5"><span class="toc-section-number">7.11</span>
 References</a></li>
 </ul></li>
-<li><a href="8-curve-homotopy-and-curve-invariantsalpha.html"
+<li><a
+href="8-curve-homotopy-and-curve-invariantsalpha.html#curve-homotopy-and-curve-invariantsalpha"
 id="toc-curve-homotopy-and-curve-invariantsalpha"><span
 class="toc-section-number">8</span> Curve homotopy and curve
 invariants<span class="math inline">\(^\alpha\)</span></a>
@@ -480,9 +495,9 @@ href="8-curve-homotopy-and-curve-invariantsalpha.html#aptly-yadda-yadda"
 id="toc-aptly-yadda-yadda"><span class="toc-section-number">8.6</span>
 Aptly Yadda Yadda</a></li>
 </ul></li>
-<li><a href="9-planar-graphsbeta.html" id="toc-planar-graphsbeta"><span
-class="toc-section-number">9</span> Planar Graphs<span
-class="math inline">\(^\beta\)</span></a>
+<li><a href="9-planar-graphsbeta.html#planar-graphsbeta"
+id="toc-planar-graphsbeta"><span class="toc-section-number">9</span>
+Planar Graphs<span class="math inline">\(^\beta\)</span></a>
 <ul>
 <li><a href="9-planar-graphsbeta.html#abstract-graphs"
 id="toc-abstract-graphs"><span class="toc-section-number">9.1</span>
@@ -524,7 +539,8 @@ class="toc-section-number">9.12</span> Aptly Yadda Yadda</a></li>
 <li><a href="9-planar-graphsbeta.html#revision" id="toc-revision"><span
 class="toc-section-number">9.13</span> Revision?</a></li>
 </ul></li>
-<li><a href="10-tree-cotree-decompositionsbeta.html"
+<li><a
+href="10-tree-cotree-decompositionsbeta.html#tree-cotree-decompositionsbeta"
 id="toc-tree-cotree-decompositionsbeta"><span
 class="toc-section-number">10</span> Tree-Cotree Decompositions<span
 class="math inline">\(^\beta\)</span></a>
@@ -567,7 +583,8 @@ class="toc-section-number">10.8</span> Historical Digression</a></li>
 id="toc-aptly-named"><span class="toc-section-number">10.9</span> Aptly
 Named</a></li>
 </ul></li>
-<li><a href="11-straight-line-planar-mapsbeta.html"
+<li><a
+href="11-straight-line-planar-mapsbeta.html#straight-line-planar-mapsbeta"
 id="toc-straight-line-planar-mapsbeta"><span
 class="toc-section-number">11</span> Straight-line Planar Maps<span
 class="math inline">\(^\beta\)</span></a>
@@ -599,7 +616,8 @@ References</a></li>
 id="toc-not-appearing"><span class="toc-section-number">11.7</span> Not
 Appearing</a></li>
 </ul></li>
-<li><a href="12-tuttes-spring-embedding-theorembeta.html"
+<li><a
+href="12-tuttes-spring-embedding-theorembeta.html#tuttes-spring-embedding-theorembeta"
 id="toc-tuttes-spring-embedding-theorembeta"><span
 class="toc-section-number">12</span> Tutte’s Spring Embedding
 Theorem<span class="math inline">\(^\beta\)</span></a>
@@ -636,7 +654,8 @@ href="12-tuttes-spring-embedding-theorembeta.html#not-appearing-1"
 id="toc-not-appearing-1"><span class="toc-section-number">12.7</span>
 Not Appearing</a></li>
 </ul></li>
-<li><a href="13-maxwellcremona-correspondencebeta.html"
+<li><a
+href="13-maxwellcremona-correspondencebeta.html#maxwellcremona-correspondencebeta"
 id="toc-maxwellcremona-correspondencebeta"><span
 class="toc-section-number">13</span> Maxwell–Cremona Correspondence<span
 class="math inline">\(^\beta\)</span></a>
@@ -677,11 +696,12 @@ References</a></li>
 id="toc-aptly-named-1"><span class="toc-section-number">13.9</span>
 Aptly Named</a></li>
 </ul></li>
-<li><a href="14-circle-packingvarnothing.html"
+<li><a href="14-circle-packingvarnothing.html#circle-packingvarnothing"
 id="toc-circle-packingvarnothing"><span
 class="toc-section-number">14</span> Circle Packing<span
 class="math inline">\(^\varnothing\)</span></a></li>
-<li><a href="15-multiple-source-shortest-pathsalpha.html"
+<li><a
+href="15-multiple-source-shortest-pathsalpha.html#multiple-source-shortest-pathsalpha"
 id="toc-multiple-source-shortest-pathsalpha"><span
 class="toc-section-number">15</span> Multiple-Source Shortest Paths<span
 class="math inline">\(^\alpha\)</span></a>
@@ -732,7 +752,8 @@ href="15-multiple-source-shortest-pathsalpha.html#sir-not-appearing"
 id="toc-sir-not-appearing"><span class="toc-section-number">15.11</span>
 Sir not appearing</a></li>
 </ul></li>
-<li><a href="16-multiple-source-shortest-paths-revisitedalpha.html"
+<li><a
+href="16-multiple-source-shortest-paths-revisitedalpha.html#multiple-source-shortest-paths-revisitedalpha"
 id="toc-multiple-source-shortest-paths-revisitedalpha"><span
 class="toc-section-number">16</span> Multiple-Source Shortest Paths,
 Revisited<span class="math inline">\(^\alpha\)</span></a>
@@ -766,7 +787,7 @@ href="16-multiple-source-shortest-paths-revisitedalpha.html#references-9"
 id="toc-references-9"><span class="toc-section-number">16.7</span>
 References</a></li>
 </ul></li>
-<li><a href="17-planar-separatorsbeta.html"
+<li><a href="17-planar-separatorsbeta.html#planar-separatorsbeta"
 id="toc-planar-separatorsbeta"><span
 class="toc-section-number">17</span> Planar Separators<span
 class="math inline">\(^\beta\)</span></a>
@@ -802,7 +823,8 @@ References</a></li>
 id="toc-aptly-named-sir-not"><span
 class="toc-section-number">17.8</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="18-branch-decompositionsvarnothing.html"
+<li><a
+href="18-branch-decompositionsvarnothing.html#branch-decompositionsvarnothing"
 id="toc-branch-decompositionsvarnothing"><span
 class="toc-section-number">18</span> Branch Decompositions<span
 class="math inline">\(^\varnothing\)</span></a>
@@ -826,7 +848,8 @@ href="18-branch-decompositionsvarnothing.html#aptly-named-sir-not-1"
 id="toc-aptly-named-sir-not-1"><span
 class="toc-section-number">18.5</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="19-fast-shortest-paths-in-planar-graphsbeta.html"
+<li><a
+href="19-fast-shortest-paths-in-planar-graphsbeta.html#fast-shortest-paths-in-planar-graphsbeta"
 id="toc-fast-shortest-paths-in-planar-graphsbeta"><span
 class="toc-section-number">19</span> Fast Shortest Paths in Planar
 Graphs<span class="math inline">\(^\beta\)</span></a>
@@ -880,9 +903,9 @@ href="19-fast-shortest-paths-in-planar-graphsbeta.html#aptly-named-sir-not-2"
 id="toc-aptly-named-sir-not-2"><span
 class="toc-section-number">19.11</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="20-minimum-cutsbeta.html" id="toc-minimum-cutsbeta"><span
-class="toc-section-number">20</span> Minimum Cuts<span
-class="math inline">\(^\beta\)</span></a>
+<li><a href="20-minimum-cutsbeta.html#minimum-cutsbeta"
+id="toc-minimum-cutsbeta"><span class="toc-section-number">20</span>
+Minimum Cuts<span class="math inline">\(^\beta\)</span></a>
 <ul>
 <li><a href="20-minimum-cutsbeta.html#duality-shortest-essential-cycle"
 id="toc-duality-shortest-essential-cycle"><span
@@ -913,7 +936,8 @@ References</a></li>
 id="toc-aptly-named-sir-not-3"><span
 class="toc-section-number">20.8</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="21-faster-minimum-cuts-fr-dijkstraalpha.html"
+<li><a
+href="21-faster-minimum-cuts-fr-dijkstraalpha.html#faster-minimum-cuts-fr-dijkstraalpha"
 id="toc-faster-minimum-cuts-fr-dijkstraalpha"><span
 class="toc-section-number">21</span> Faster Minimum Cuts
 (FR-Dijkstra)<span class="math inline">\(^\alpha\)</span></a>
@@ -938,7 +962,8 @@ href="21-faster-minimum-cuts-fr-dijkstraalpha.html#aptly-named-sir-not-4"
 id="toc-aptly-named-sir-not-4"><span
 class="toc-section-number">21.5</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="22-distributive-flow-latticesvarnothing.html"
+<li><a
+href="22-distributive-flow-latticesvarnothing.html#distributive-flow-latticesvarnothing"
 id="toc-distributive-flow-latticesvarnothing"><span
 class="toc-section-number">22</span> Distributive Flow Lattices<span
 class="math inline">\(^\varnothing\)</span></a>
@@ -953,7 +978,8 @@ href="22-distributive-flow-latticesvarnothing.html#aptly-named-sir-not-5"
 id="toc-aptly-named-sir-not-5"><span
 class="toc-section-number">22.2</span> Aptly Named Sir Not</a></li>
 </ul></li>
-<li><a href="23-maximum-flowvarnothingalpha.html"
+<li><a
+href="23-maximum-flowvarnothingalpha.html#maximum-flowvarnothingalpha"
 id="toc-maximum-flowvarnothingalpha"><span
 class="toc-section-number">23</span> Maximum Flow<span
 class="math inline">\(^{\varnothing/\alpha}\)</span></a>
@@ -996,9 +1022,9 @@ References</a></li>
 id="toc-aptly-not"><span class="toc-section-number">23.10</span> Aptly
 Not</a></li>
 </ul></li>
-<li><a href="24-surface-mapsbeta.html" id="toc-surface-mapsbeta"><span
-class="toc-section-number">24</span> Surface Maps<span
-class="math inline">\(^\beta\)</span></a>
+<li><a href="24-surface-mapsbeta.html#surface-mapsbeta"
+id="toc-surface-mapsbeta"><span class="toc-section-number">24</span>
+Surface Maps<span class="math inline">\(^\beta\)</span></a>
 <ul>
 <li><a
 href="24-surface-mapsbeta.html#surfaces-polygonal-schemata-and-cellular-embeddings"
@@ -1032,7 +1058,8 @@ References</a></li>
 id="toc-sir-not-appearing-1"><span
 class="toc-section-number">24.9</span> Sir Not Appearing</a></li>
 </ul></li>
-<li><a href="25-surface-classificationbeta.html"
+<li><a
+href="25-surface-classificationbeta.html#surface-classificationbeta"
 id="toc-surface-classificationbeta"><span
 class="toc-section-number">25</span> Surface Classification<span
 class="math inline">\(^\beta\)</span></a>
@@ -1066,7 +1093,8 @@ References</a></li>
 id="toc-aptly-named-sir"><span class="toc-section-number">25.8</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="26-homotopy-in-surface-mapsalpha.html"
+<li><a
+href="26-homotopy-in-surface-mapsalpha.html#homotopy-in-surface-mapsalpha"
 id="toc-homotopy-in-surface-mapsalpha"><span
 class="toc-section-number">26</span> Homotopy in Surface Maps<span
 class="math inline">\(^\alpha\)</span></a>
@@ -1096,7 +1124,8 @@ References</a></li>
 id="toc-aptly-named-sir-1"><span class="toc-section-number">26.7</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="27-planarization-and-separationalphabeta.html"
+<li><a
+href="27-planarization-and-separationalphabeta.html#planarization-and-separationalphabeta"
 id="toc-planarization-and-separationalphabeta"><span
 class="toc-section-number">27</span> Planarization and Separation<span
 class="math inline">\(^{\alpha/\beta}\)</span></a>
@@ -1126,7 +1155,8 @@ href="27-planarization-and-separationalphabeta.html#aptly-named-sir-2"
 id="toc-aptly-named-sir-2"><span class="toc-section-number">27.6</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="28-homotopy-testing-on-surface-mapsbeta.html"
+<li><a
+href="28-homotopy-testing-on-surface-mapsbeta.html#homotopy-testing-on-surface-mapsbeta"
 id="toc-homotopy-testing-on-surface-mapsbeta"><span
 class="toc-section-number">28</span> Homotopy Testing on Surface
 Maps<span class="math inline">\(^\beta\)</span></a>
@@ -1165,7 +1195,8 @@ References</a></li>
 id="toc-sir-not"><span class="toc-section-number">28.9</span> Sir
 Not</a></li>
 </ul></li>
-<li><a href="29-systems-of-cycles-and-homologyalpha.html"
+<li><a
+href="29-systems-of-cycles-and-homologyalpha.html#systems-of-cycles-and-homologyalpha"
 id="toc-systems-of-cycles-and-homologyalpha"><span
 class="toc-section-number">29</span> Systems of Cycles and Homology<span
 class="math inline">\(^\alpha\)</span></a>
@@ -1207,7 +1238,8 @@ href="29-systems-of-cycles-and-homologyalpha.html#aptly-named-sir-3"
 id="toc-aptly-named-sir-3"><span class="toc-section-number">29.9</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="30-shortest-interesting-cyclesalpha.html"
+<li><a
+href="30-shortest-interesting-cyclesalpha.html#shortest-interesting-cyclesalpha"
 id="toc-shortest-interesting-cyclesalpha"><span
 class="toc-section-number">30</span> Shortest Interesting Cycles<span
 class="math inline">\(^\alpha\)</span></a>
@@ -1248,7 +1280,8 @@ References</a></li>
 id="toc-aptly-named-sir-4"><span class="toc-section-number">30.8</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="31-surfaces-with-boundaryvarnothing.html"
+<li><a
+href="31-surfaces-with-boundaryvarnothing.html#surfaces-with-boundaryvarnothing"
 id="toc-surfaces-with-boundaryvarnothing"><span
 class="toc-section-number">31</span> Surfaces with Boundary<span
 class="math inline">\(^\varnothing\)</span></a>
@@ -1278,7 +1311,8 @@ References</a></li>
 id="toc-aptly-named-sir-5"><span class="toc-section-number">31.6</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="32-minimum-cuts-in-surface-graphsvarnothing.html"
+<li><a
+href="32-minimum-cuts-in-surface-graphsvarnothing.html#minimum-cuts-in-surface-graphsvarnothing"
 id="toc-minimum-cuts-in-surface-graphsvarnothing"><span
 class="toc-section-number">32</span> Minimum Cuts in Surface Graphs<span
 class="math inline">\(^\varnothing\)</span></a>
@@ -1317,7 +1351,8 @@ href="32-minimum-cuts-in-surface-graphsvarnothing.html#aptly-named-sir-6"
 id="toc-aptly-named-sir-6"><span class="toc-section-number">32.7</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="33-maximum-flows-in-surface-graphsvarnothing.html"
+<li><a
+href="33-maximum-flows-in-surface-graphsvarnothing.html#maximum-flows-in-surface-graphsvarnothing"
 id="toc-maximum-flows-in-surface-graphsvarnothing"><span
 class="toc-section-number">33</span> Maximum Flows in Surface
 Graphs<span class="math inline">\(^\varnothing\)</span></a>
@@ -1353,7 +1388,8 @@ href="33-maximum-flows-in-surface-graphsvarnothing.html#aptly-named-sir-7"
 id="toc-aptly-named-sir-7"><span class="toc-section-number">33.7</span>
 Aptly Named Sir</a></li>
 </ul></li>
-<li><a href="34-geodesic-embeddingsvarnothing.html"
+<li><a
+href="34-geodesic-embeddingsvarnothing.html#geodesic-embeddingsvarnothing"
 id="toc-geodesic-embeddingsvarnothing"><span
 class="toc-section-number">34</span> Geodesic Embeddings<span
 class="math inline">\(^\varnothing\)</span></a>
@@ -1378,7 +1414,8 @@ References</a></li>
 id="toc-named-sir-not"><span class="toc-section-number">34.5</span>
 Named Sir Not</a></li>
 </ul></li>
-<li><a href="35-closing-the-loopvarnothing.html"
+<li><a
+href="35-closing-the-loopvarnothing.html#closing-the-loopvarnothing"
 id="toc-closing-the-loopvarnothing"><span
 class="toc-section-number">35</span> Closing the Loop<span
 class="math inline">\(^\varnothing\)</span></a>

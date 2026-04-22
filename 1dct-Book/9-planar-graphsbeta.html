@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -782,7 +789,7 @@ type-cast]]</em></strong></p>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">Primal <span
 class="math inline">\(\Sigma\)</span></th>
 <th style="text-align: center;">Dual <span
@@ -794,7 +801,7 @@ class="math inline">\(\Sigma^*\)</span></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">vertex <span
 class="math inline">\(v\)</span></td>
 <td style="text-align: center;">face <span
@@ -804,7 +811,7 @@ class="math inline">\(\textsf{head}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{left}(d^*)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">dart <span
 class="math inline">\(d\)</span></td>
 <td style="text-align: center;">dart <span
@@ -814,7 +821,7 @@ class="math inline">\(\textsf{tail}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{right}(d^*)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">edge <span
 class="math inline">\(e\)</span></td>
 <td style="text-align: center;">edge <span
@@ -824,7 +831,7 @@ class="math inline">\(\textsf{left}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{head}(d^*)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">face <span
 class="math inline">\(f\)</span></td>
 <td style="text-align: center;">vertex <span
@@ -834,7 +841,7 @@ class="math inline">\(\textsf{right}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{tail}(d^*)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{succ}\)</span></td>
 <td style="text-align: center;"><span
@@ -842,7 +849,7 @@ class="math inline">\(\textsf{rev}\circ\textsf{succ}\)</span></td>
 <td style="text-align: center;">clockwise</td>
 <td style="text-align: center;">counterclockwise</td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{rev}\)</span></td>
 <td style="text-align: center;"><span
@@ -1072,7 +1079,7 @@ nearby darts:</p>
 <li><span class="math inline">\(\textsf{rprev} = \textsf{rnext}^{-1} =
 \textsf{hnext}(\textsf{rev})\)</span></li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1137,6 +1144,6 @@ whether they preferred to fight a hundred duck-sized horses or one
 horse-sized duck.<a href="#fnref10" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

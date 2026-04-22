@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -625,7 +632,7 @@ class="math inline">\(P_0 = h(0,\cdot)\)</span> and <span
 class="math inline">\(P_1 = h(1,\cdot)\)</span>.
 </dd>
 <dd>
-<p>For any parameters <span class="math inline">\(t\)</span> and <span
+For any parameters <span class="math inline">\(t\)</span> and <span
 class="math inline">\(\theta\)</span>, let <span
 class="math inline">\(d(t, \theta)\)</span> be the Euclidean distance
 from <span class="math inline">\(h(t, \theta)\)</span> to the origin
@@ -633,10 +640,10 @@ from <span class="math inline">\(h(t, \theta)\)</span> to the origin
 class="math inline">\(\varepsilon = \min_{t,\theta}
 d(t,\theta)\)</span>. Because the cylinder <span
 class="math inline">\([0,1]\times S^1\)</span> is compact, this minimum
-is well-defined and positive.</p>
+is well-defined and positive.
 </dd>
 <dd>
-<p>We subdivide the cylinder <span class="math inline">\([0,1]\times
+We subdivide the cylinder <span class="math inline">\([0,1]\times
 S^1\)</span> into triangles as follows. First, cut the cylinder into a
 grid of <span class="math inline">\(\delta\times\delta\)</span> squares
 <span class="math inline">\(\square(i,j) = [i\delta, (i+1)\delta] \times
@@ -651,10 +658,10 @@ generality, assume each vertex of <span
 class="math inline">\(P_0\)</span> and <span
 class="math inline">\(P_1\)</span> the image of some vertex on the
 boundary of the resulting triangle mesh <span
-class="math inline">\(\Delta\)</span>.</p>
+class="math inline">\(\Delta\)</span>.
 </dd>
 <dd>
-<p>The homotopy <span class="math inline">\(h\)</span> maps any cycle in
+The homotopy <span class="math inline">\(h\)</span> maps any cycle in
 this mesh to a closed curve, which consists of <span
 class="math inline">\(O(1/\delta)\)</span> curve segments, each with
 diameter at most <span class="math inline">\(\varepsilon/2\)</span>, and
@@ -667,21 +674,20 @@ class="math inline">\(h\)</span> at every grid vertex and linearly
 interpolates within each grid triangle. Changing from <span
 class="math inline">\(h\)</span> to <span
 class="math inline">\(h’\)</span> changes the image of any grid cycle by
-replacing each short curve segment with a straight line segment.</p>
+replacing each short curve segment with a straight line segment.
 </dd>
 <dd>
 
 </dd>
 <dd>
-<p>We can easily construct a sequence of <span class="math inline">\(1 +
+We can easily construct a sequence of <span class="math inline">\(1 +
 2/\delta^2\)</span> cycles in <span
 class="math inline">\(\Delta\)</span> that starts with one boundary
 <span class="math inline">\(0\times S^1\)</span> and ends with the other
 boundary <span class="math inline">\(1\times S^1\)</span>, such that the
 symmetric difference between two adjacent cycles is the boundary of one
 triangle in <span class="math inline">\(\Delta\)</span>. Two adjacent
-cycles in this sequence are shown on the right in the following
-fugure.</p>
+cycles in this sequence are shown on the right in the following fugure.
 </dd>
 <dd>
 <figure>
@@ -691,7 +697,7 @@ alt="A grid on the unit cylinder." />
 </figure>
 </dd>
 <dd>
-<p>The piecewise-linear homotopy <span class="math inline">\(h’\)</span>
+The piecewise-linear homotopy <span class="math inline">\(h’\)</span>
 maps any two adjacent cycles in this sequence to a pair of polygons
 <span class="math inline">\(P_t\)</span> and <span
 class="math inline">\(P_{t+1}\)</span> that differ by a single vertex
@@ -701,13 +707,13 @@ edge has length at most <span
 class="math inline">\(\varepsilon/2\)</span>, and each vertex move
 translates its vertex a distance of at most <span
 class="math inline">\(\varepsilon/2\)</span>. It follows that every
-vertex move in this sequence is safe.</p>
+vertex move in this sequence is safe.
 </dd>
 <dd>
-<p>We conclude that <span class="math inline">\(P_0\)</span> can be
+We conclude that <span class="math inline">\(P_0\)</span> can be
 transformed into <span class="math inline">\(P_1\)</span> by a sequence
 of <span class="math inline">\(1 + 2/\delta^2\)</span> safe vertex
-moves.</p>
+moves.
 </dd>
 </dl>
 <p>This lemma is a special case of a more general <em>simplicial
@@ -750,9 +756,9 @@ induction, <span class="math inline">\(P_0\)</span> and <span
 class="math inline">\(P_1\)</span> have the same winding number.
 </dd>
 <dd>
-<p>To prove the converse, I’ll describe a sequence of safe triangle
-moves that transforms any polygon <span class="math inline">\(P\)</span>
-into a <em>canonical</em> polygon <span
+To prove the converse, I’ll describe a sequence of safe triangle moves
+that transforms any polygon <span class="math inline">\(P\)</span> into
+a <em>canonical</em> polygon <span
 class="math inline">\(\Diamond^w\)</span> with the same winding number
 <span class="math inline">\(w\)</span> around the origin. (The notation
 <span class="math inline">\(\Diamond^w\)</span> will make sense later,
@@ -764,12 +770,12 @@ class="math inline">\(P_1\)</span> by concatenating the move sequence
 that takes <span class="math inline">\(P_0\)</span> to <span
 class="math inline">\(\lozenge^w\)</span> and the reverse of the move
 sequence that takes <span class="math inline">\(P_1\)</span> to <span
-class="math inline">\(\lozenge^w\)</span>.</p>
+class="math inline">\(\lozenge^w\)</span>.
 </dd>
 <dd>
-<p>Our homotopy consists of several stages. First let’s consider the
-case where the winding number of <span class="math inline">\(P\)</span>
-around <span class="math inline">\(0\)</span> is not zero.</p>
+Our homotopy consists of several stages. First let’s consider the case
+where the winding number of <span class="math inline">\(P\)</span>
+around <span class="math inline">\(0\)</span> is not zero.
 </dd>
 <dd>
 <ul>
@@ -836,12 +842,12 @@ canonical</figcaption>
 </figure>
 </dd>
 <dd>
-<p>The special case where <span class="math inline">\(P\)</span> has
+The special case where <span class="math inline">\(P\)</span> has
 winding number <span class="math inline">\(0\)</span> is even simpler.
 The first phase (removing redundant vertices) actually reduces <span
 class="math inline">\(P\)</span> to a single point; we can then
 translate this point to <span class="math inline">\(\diamond^0 =
-(1,0)\)</span> using one more safe vertex move.</p>
+(1,0)\)</span> using one more safe vertex move.
 </dd>
 </dl>
 <p>This theorem immediately implies a linear-time algorithm to decide if
@@ -882,7 +888,7 @@ Polyëders. <em>Ber. Sächs. Akad. Wiss. Leipzig, Math.-Phys. Kl.</em>
 17:31–68, 1865. <em>Gesammelte Werke</em> 2:473–512, Liepzig, 1886. An
 earlier appearance of Alexander numbering.</p></li>
 </ol>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -898,6 +904,6 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 measure angles, as opposed to radians or degrees or some other heresy.<a
 href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

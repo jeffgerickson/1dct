@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -494,13 +501,13 @@ class="math inline">\(\gamma\)</span> is an Euler tour of <span
 class="math inline">\(G(X(\gamma))\)</span>.
 </dd>
 <dd>
-<p>On the other hand, the edges incident to any vertex of <span
+On the other hand, the edges incident to any vertex of <span
 class="math inline">\(G(X(\gamma))\)</span> alternative in, out, in, out
 in cyclic order. Thus, every Euler tour of <span
 class="math inline">\(G(X(\gamma))\)</span> touches itself at every
 vertex, but never crosses itself. It follows that every Euler tour of
 <span class="math inline">\(G(X(\gamma))\)</span> is a connected
-smoothing of <span class="math inline">\(\gamma\)</span>.</p>
+smoothing of <span class="math inline">\(\gamma\)</span>.
 </dd>
 <dt><strong>Lemma:</strong></dt>
 <dd>
@@ -520,8 +527,8 @@ alternate in-out-in-out in cyclic order, which makes a crossing at that
 vertex impossible.
 </dd>
 <dd>
-<p>On the other hand, suppose <span class="math inline">\(G(X)\)</span>
-has a planar embedding with a weakly simple Euler tour. Then the edges
+On the other hand, suppose <span class="math inline">\(G(X)\)</span> has
+a planar embedding with a weakly simple Euler tour. Then the edges
 incident to each vertex in that embedding must alternate in-out-in-out
 in cyclic order. The original Gauss code <span
 class="math inline">\(X\)</span> defines an <em>undirected</em> Euler
@@ -531,7 +538,7 @@ class="math inline">\(G(X)\)</span> alternately forward and backward.
 <span class="math inline">\(U\)</span> crosses itself at every vertex of
 <span class="math inline">\(G(X)\)</span>. It follows immediately that
 <span class="math inline">\(U\)</span> is a closed curve with Gauss code
-<span class="math inline">\(X\)</span>.</p>
+<span class="math inline">\(X\)</span>.
 </dd>
 </dl>
 <h2 data-number="7.5" id="tree-onion-figures"><span
@@ -823,7 +830,7 @@ href="https://babel.hathitrust.org/cgi/pt?id=njp.32101074834365&amp;seq=199">On
 knots I.</a> <em>Trans. Royal Soc. Edinburgh</em> 28(1):145–190,
 1876–7.</p></li>
 </ol>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -852,6 +859,6 @@ of inner and outer chords in a tree-onion figure as a <em>coonion-onion
 decomposition</em>.<a href="#fnref4" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

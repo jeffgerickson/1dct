@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -287,7 +294,7 @@ the same crossing sequence. (With more care, the homotopy can be
 described explicitly as a sequence of safe vertex moves.)
 </dd>
 <dd>
-<p>First, we define two new <em>sentinel</em> points <span
+First, we define two new <em>sentinel</em> points <span
 class="math inline">\(a^\flat\)</span> and <span
 class="math inline">\(a^\sharp\)</span> just above and on either side of
 each obstacle <span class="math inline">\(a\)</span>. These points are
@@ -295,13 +302,13 @@ close enough to <span class="math inline">\(a\)</span> that no vertex of
 <span class="math inline">\(P\)</span>, no other obstacle, and no other
 sentinel point lies on or between the vertical lines through <span
 class="math inline">\(a^\flat\)</span> and <span
-class="math inline">\(a^\sharp\)</span>.</p>
+class="math inline">\(a^\sharp\)</span>.
 </dd>
 <dd>
-<p>Next, we <em>divert</em> edges through the sentinel points, by adding
+Next, we <em>divert</em> edges through the sentinel points, by adding
 two additional vertices near each intersection between <span
 class="math inline">\(P\)</span> and any fence, and then moving those
-new vertices to the sentinel points near the corresponding obstacle.</p>
+new vertices to the sentinel points near the corresponding obstacle.
 </dd>
 <dd>
 <ul>
@@ -327,10 +334,10 @@ class="math inline">\(P&#39;\)</span> has the same crossing sequence as
 the original polygon <span class="math inline">\(P\)</span>.
 </dd>
 <dd>
-<p>Finally, we divert the rest of the polygon to a single point far
-below any obstacle. First we add a new vertex at the midpoint of each
-edge of <span class="math inline">\(P&#39;\)</span> between two sentinel
-points of different obstacles. Then we choose a point <span
+Finally, we divert the rest of the polygon to a single point far below
+any obstacle. First we add a new vertex at the midpoint of each edge of
+<span class="math inline">\(P&#39;\)</span> between two sentinel points
+of different obstacles. Then we choose a point <span
 class="math inline">\(z\)</span> sufficiently far below the polygon and
 the sentinel points that for any polygon vertex <span
 class="math inline">\(p\)</span>, the segment <span
@@ -339,14 +346,14 @@ Finally, we move every vertex of <span
 class="math inline">\(P&#39;\)</span> that is <em>not</em> a sentinel
 point directly to this new bottom point <span
 class="math inline">\(z\)</span>. Again, this deformation does not
-change the polygon’s crossing sequence.</p>
+change the polygon’s crossing sequence.
 </dd>
 <dd>
-<p>The resulting canonical polygon <span
+The resulting canonical polygon <span
 class="math inline">\(P&#39;&#39;\)</span> is a concatenation of loops
-of the form <span class="math inline">\(z a^\flat a^\sharp z\)</span>
+of the form <span class="math inline">\(z a^\flat a^\sharp  z\)</span>
 (for each negative crossing) or <span class="math inline">\(z a^\sharp
-a^\flat z\)</span> (for each positive crossing).</p>
+a^\flat z\)</span> (for each positive crossing).
 </dd>
 </dl>
 <figure>
@@ -495,20 +502,20 @@ class="math inline">\(x = y = (a \cdot w&#39;)\)</span>.</li>
 </ul>
 </dd>
 <dd>
-<p>It follows that applying <em>only</em> elementary reductions leads to
-a unique reduced string; however, equivalence also allows elementary
+It follows that applying <em>only</em> elementary reductions leads to a
+unique reduced string; however, equivalence also allows elementary
 <em>expansions</em>. Consider two equivalent but distinct cyclic strings
-<span class="math inline">\(x\ne y\)</span>, and let <span
-class="math inline">\(x = w_1 \leftrightarrow w_2 \leftrightarrow \cdots
-\leftrightarrow w_n = y\)</span> be a sequence of strings, each
-connected to its success by an elementary reduction in one direction
-<span class="math inline">\(w_i \mapsto w_{i+1}\)</span> or the other
-<span class="math inline">\(w_{i+1} \mapsto w_i\)</span>.</p>
+<span class="math inline">\(x\ne  y\)</span>, and let <span
+class="math inline">\(x = w_1 \leftrightarrow w_2
+\leftrightarrow  \cdots \leftrightarrow w_n = y\)</span> be a sequence
+of strings, each connected to its success by an elementary reduction in
+one direction <span class="math inline">\(w_i \mapsto w_{i+1}\)</span>
+or the other <span class="math inline">\(w_{i+1} \mapsto w_i\)</span>.
 </dd>
 <dd>
-<p>Suppose for some index <span class="math inline">\(i\)</span>, we
-have reductions <span class="math inline">\(w_i \mapsto w_{i-1}\)</span>
-and <span class="math inline">\(w_i \mapsto w_{i+1}\)</span>. If <span
+Suppose for some index <span class="math inline">\(i\)</span>, we have
+reductions <span class="math inline">\(w_i \mapsto w_{i-1}\)</span> and
+<span class="math inline">\(w_i \mapsto w_{i+1}\)</span>. If <span
 class="math inline">\(w_{i-1} = w_{i+1}\)</span>, then we can remove
 <span class="math inline">\(w_{i-1}\)</span> and <span
 class="math inline">\(w_i\)</span> to obtain a shorter transformation
@@ -517,10 +524,10 @@ class="math inline">\(z_i\)</span> such that <span
 class="math inline">\(w_{i-1}\mapsto z_i\)</span> and <span
 class="math inline">\(w_{i+1} \mapsto z_i\)</span>. Thus, by induction,
 we can modify our transformation sequence so that every reduction
-appears before every expansion.</p>
+appears before every expansion.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(z\)</span> be the shortest string in
+Let <span class="math inline">\(z\)</span> be the shortest string in
 this normalized sequence. Both <span class="math inline">\(x\)</span>
 and <span class="math inline">\(y\)</span> can be reduced to <span
 class="math inline">\(z\)</span> using only elementary reductions.
@@ -528,7 +535,7 @@ Because <span class="math inline">\(x\ne y\)</span>, either <span
 class="math inline">\(x \ne z\)</span> or <span
 class="math inline">\(y\ne z\)</span>; we conclude that at most one of
 <span class="math inline">\(x\)</span> and <span
-class="math inline">\(y\)</span> is reduced.</p>
+class="math inline">\(y\)</span> is reduced.
 </dd>
 <dt><strong>Lemma:</strong></dt>
 <dd>
@@ -579,10 +586,10 @@ finite number of elementary reductions and their inverses, at most one
 per obstacle.
 </dd>
 <dd>
-<p>Conversely, any elementary reduction of the signed crossing sequence
-can be modeled by a sequence of safe vertex moves, performed either
-directly on the original polygon or (more easily) on the canonical
-polygon with the same crossing sequence.</p>
+Conversely, any elementary reduction of the signed crossing sequence can
+be modeled by a sequence of safe vertex moves, performed either directly
+on the original polygon or (more easily) on the canonical polygon with
+the same crossing sequence.
 </dd>
 </dl>
 <p>We finally have all the ingredients of our homotopy-testing

@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -271,10 +278,9 @@ The lemma follows form this claim by induction on the quantity <span
 class="math inline">\(\sum_f (\deg(f)-3)\)</span>.
 </dd>
 <dd>
-<p>For ease of presentation, assume <span
-class="math inline">\(f\)</span> is bounded. Suppose <span
-class="math inline">\(\Sigma\)</span> contains an edge between <span
-class="math inline">\(w\)</span> and <span
+For ease of presentation, assume <span class="math inline">\(f\)</span>
+is bounded. Suppose <span class="math inline">\(\Sigma\)</span> contains
+an edge between <span class="math inline">\(w\)</span> and <span
 class="math inline">\(y\)</span>, necessarily outside <span
 class="math inline">\(f\)</span>. The vertices <span
 class="math inline">\(w\)</span> and <span
@@ -286,10 +292,10 @@ class="math inline">\(wy\)</span> to those paths creates two cycles.
 Without loss of generality, <span class="math inline">\(x\)</span> lies
 in the interior of the cycle <span class="math inline">\(C\)</span> that
 passes through <span class="math inline">\(z\)</span>; as shown in
-Figure 1.</p>
+Figure 1.
 </dd>
 <dd>
-<p>Now suppose for the sake of argument that <span
+Now suppose for the sake of argument that <span
 class="math inline">\(\Sigma\)</span> also contains an edge <span
 class="math inline">\(xz\)</span>, again necessarily outside <span
 class="math inline">\(f\)</span>. This edge passes through the exterior
@@ -299,7 +305,7 @@ interior of <span class="math inline">\(C\)</span> near <span
 class="math inline">\(x\)</span>. So the Jordan Curve Theorem implies
 that <span class="math inline">\(xz\)</span> intersects <span
 class="math inline">\(C\)</span>, contradicting the definition of
-embedding. <span class="math inline">\(\qquad\square\)</span></p>
+embedding. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <figure>
@@ -405,7 +411,7 @@ class="math inline">\(T\)</span> is clearly equivalent to any
 So assume otherwise.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(v\)</span> be any interior vertex of
+Let <span class="math inline">\(v\)</span> be any interior vertex of
 <span class="math inline">\(T\)</span> with degree at most <span
 class="math inline">\(5\)</span>. Deleting <span
 class="math inline">\(v\)</span> creates a face <span
@@ -431,7 +437,7 @@ class="math inline">\(\overline{v}\)</span> to every vertex of <span
 class="math inline">\(\overline{f}\)</span> yields a straight-line
 triangulation <span class="math inline">\(\overline{T}\)</span>
 equivalent to <span class="math inline">\(T\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <!-- ## Variations on a Theme
@@ -788,11 +794,11 @@ vertex has exactly one outgoing edge of each color, either leading to
 another interior vertex or the boundary vertex of that color.
 </dd>
 <dd>
-<p>Number the interior vertices by the order in which they are
-contracted to the green boundary vertex, as shown in the figures. Label
-the green boundary vertex <span class="math inline">\(0\)</span> and the
-other two boundary vertices <span class="math inline">\(\infty\)</span>.
-Call an edge <span class="math inline">\(v\mathord\to w\)</span>
+Number the interior vertices by the order in which they are contracted
+to the green boundary vertex, as shown in the figures. Label the green
+boundary vertex <span class="math inline">\(0\)</span> and the other two
+boundary vertices <span class="math inline">\(\infty\)</span>. Call an
+edge <span class="math inline">\(v\mathord\to w\)</span>
 <em>increasing</em> if the label of <span
 class="math inline">\(w\)</span> is larger than the label of <span
 class="math inline">\(w\)</span> and <em>decreasing</em> otherwise.
@@ -800,7 +806,7 @@ Every green edge is decreasing, and every red and blue edge is
 increasing. Thus, none of the red, green, or blue subgraphs contains a
 cycle; starting from any interior node, following edges of any fixed
 color leads to the outer vertex of that color. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>Hey, look, we have yet another proof of Euler’s formula!</p>
@@ -829,7 +835,7 @@ class="math inline">\(m+1\)</span> edges, and <span
 class="math inline">\(f+1\)</span> faces.
 </dd>
 <dd>
-<p>Consider any Schnyder wood of a simple planar triangulation <span
+Consider any Schnyder wood of a simple planar triangulation <span
 class="math inline">\(T\)</span> with <span
 class="math inline">\(n\)</span> vertices, <span
 class="math inline">\(m\)</span> edges, and <span
@@ -842,7 +848,7 @@ class="math inline">\(m = 3(n-3)+3 = 3n-6\)</span>. Finally, because
 every face is a triangle, we have <span class="math inline">\(2m = 3f =
 6n-12\)</span>, so <span class="math inline">\(f = 2n-4\)</span>. We
 conclude that <span class="math inline">\(n-m+f = n - (3n-6) + (2n-4) =
-2\)</span>. <span class="math inline">\(\qquad\square\)</span></p>
+2\)</span>. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="11.5" id="grid-embedding"><span
@@ -941,12 +947,12 @@ blue vertices might remain unchanged.) Part (b) now follows immediately;
 parts (a) and (c) follow from similar arguments.
 </dd>
 <dd>
-<p>Finally, part (d) follows by straightforward case analysis. Up to a
+Finally, part (d) follows by straightforward case analysis. Up to a
 choice of colors, there are only two cases to consider: either the edges
 of <span class="math inline">\(uvw\)</span> have distinct colors (and
 therefore define a directed cycle), or two of the three edges have the
 same color (so the edges do not define a directed cycle). <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 <dt><strong>Theorem:</strong></dt>
 <dd>
@@ -964,7 +970,7 @@ Schnyder coloring of <span class="math inline">\(T\)</span>, and thus an
 arbitrary Schnyder wood.
 </dd>
 <dd>
-<p>Assign each vertex <span class="math inline">\(v\)</span> of <span
+Assign each vertex <span class="math inline">\(v\)</span> of <span
 class="math inline">\(T\)</span> the integer coordinates <span
 class="math inline">\((g(v), b(v))\)</span>. Let <span
 class="math inline">\(uvw\)</span> be an arbitrary triangle whose
@@ -974,13 +980,13 @@ class="math inline">\(w\)</span> are respectively colored red, green,
 and blue by the Schnyder coloring. The orientation of the new embedding
 of <span class="math inline">\(uvw\)</span> is given by the sign of the
 determinant <span class="math display">\[
-\left|\begin{matrix}
-    1 &amp; g(u) &amp; b(u) \\
-    1 &amp; g(v) &amp; b(v) \\
-    1 &amp; g(w) &amp; b(w)
-\end{matrix}\right|
-~=~
-\big(g(v)-g(u)\big)\big(b(w)-b(u)\big) -
+  \left|\begin{matrix}
+      1 &amp; g(u) &amp; b(u) \\
+      1 &amp; g(v) &amp; b(v) \\
+      1 &amp; g(w) &amp; b(w)
+  \end{matrix}\right|
+  ~=~
+  \big(g(v)-g(u)\big)\big(b(w)-b(u)\big) -
 \big(g(w)-g(u)\big)\big(b(v)-b(u)\big).
 \]</span> The previous lemma implies that this expression is positive,
 which implies that the triangle is oriented counterclockwise. Because
@@ -992,7 +998,7 @@ the areas of the interior triangles would be strictly larger than the
 unsigned area of the outer triangle!) All vertex coordinates are
 integers between <span class="math inline">\(0\)</span> and <span
 class="math inline">\(n-2\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>The following figure shows the resulting embedding for our example

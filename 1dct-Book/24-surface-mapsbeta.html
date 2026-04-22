@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -554,8 +561,8 @@ class="math inline">\(\Sigma^*\)</span>.</p>
 class="math inline">\(\Sigma = (D, \textsf{rev}, \textsf{succ})\)</span>
 is obtained by replacing the successor permutation <span
 class="math inline">\(\textsf{succ}\)</span> with <span
-class="math inline">\(\textsf{succ}^* :=
-\textsf{rev}(\textsf{succ})\)</span>; that is, <span
+class="math inline">\(\textsf{succ}^*
+:=  \textsf{rev}(\textsf{succ})\)</span>; that is, <span
 class="math inline">\(\Sigma^* = (D, \textsf{rev},
 \textsf{rev}(\textsf{succ}))\)</span>. Thus, the darts in any
 <em>orientable</em> surface map <span
@@ -598,7 +605,7 @@ orientable surface maps</caption>
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">Primal <span
 class="math inline">\(\Sigma\)</span></th>
 <th style="text-align: center;">Dual <span
@@ -610,7 +617,7 @@ class="math inline">\(\Sigma^*\)</span></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">vertex <span
 class="math inline">\(v\)</span></td>
 <td style="text-align: center;">face <span
@@ -620,7 +627,7 @@ class="math inline">\(\textsf{head}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{left}(d^*)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">dart <span
 class="math inline">\(d\)</span></td>
 <td style="text-align: center;">dart <span
@@ -630,7 +637,7 @@ class="math inline">\(\textsf{tail}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{right}(d^*)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">edge <span
 class="math inline">\(e\)</span></td>
 <td style="text-align: center;">edge <span
@@ -640,7 +647,7 @@ class="math inline">\(\textsf{left}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{head}(d^*)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">face <span
 class="math inline">\(f\)</span></td>
 <td style="text-align: center;">vertex <span
@@ -650,7 +657,7 @@ class="math inline">\(\textsf{right}(d)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{tail}(d^*)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{succ}\)</span></td>
 <td style="text-align: center;"><span
@@ -658,7 +665,7 @@ class="math inline">\(\textsf{rev}\circ\textsf{succ}\)</span></td>
 <td style="text-align: center;">clockwise</td>
 <td style="text-align: center;">counterclockwise</td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{rev}\)</span></td>
 <td style="text-align: center;"><span
@@ -682,7 +689,7 @@ on a non-orientable surface is not another directed graph, but rather an
 <col style="width: 25%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th style="text-align: center;">Primal <span
 class="math inline">\(\Sigma\)</span></th>
 <th style="text-align: center;">Dual <span
@@ -694,7 +701,7 @@ class="math inline">\(\Sigma^*\)</span></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">vertex <span
 class="math inline">\(v\)</span></td>
 <td style="text-align: center;">face <span
@@ -704,7 +711,7 @@ class="math inline">\(a\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(c\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">blade <span
 class="math inline">\(\phi\)</span></td>
 <td style="text-align: center;">blade <span
@@ -714,7 +721,7 @@ class="math inline">\(b\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(b\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">dart <span
 class="math inline">\(d\)</span></td>
 <td style="text-align: center;">side <span
@@ -724,7 +731,7 @@ class="math inline">\(c\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(a\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">side <span
 class="math inline">\(\sigma\)</span></td>
 <td style="text-align: center;">dart <span
@@ -734,7 +741,7 @@ class="math inline">\(\textsf{vert}(\phi)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{face}(\phi^*)\)</span></td>
 </tr>
-<tr class="odd">
+<tr>
 <td style="text-align: center;">edge <span
 class="math inline">\(e\)</span></td>
 <td style="text-align: center;">edge <span
@@ -744,7 +751,7 @@ class="math inline">\(\textsf{face}(\phi)\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(\textsf{vert}(\phi^*)\)</span></td>
 </tr>
-<tr class="even">
+<tr>
 <td style="text-align: center;">face <span
 class="math inline">\(f\)</span></td>
 <td style="text-align: center;">vertex <span
@@ -889,7 +896,7 @@ alt="Mein Herr explains to Lady Muriel how to sew Fortunatus’ Purse." />
 <figcaption aria-hidden="true">Mein Herr explains to Lady Muriel how to
 sew Fortunatus’ Purse.</figcaption>
 </figure>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -907,6 +914,6 @@ think it’s both sufficiently evocative and sufficiently similar to
 “combinatorial map” (or just “map”). Yeah.<a href="#fnref2"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

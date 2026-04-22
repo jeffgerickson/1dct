@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -509,7 +516,7 @@ class="math inline">\(u\)</span>, and thus <span
 class="math inline">\(\mathit{pred}_j(v) = u\)</span>.
 </dd>
 <dd>
-<p>Now suppose <span class="math inline">\(u\mathord\to v\)</span> is
+Now suppose <span class="math inline">\(u\mathord\to v\)</span> is
 properly shared but not exposed. Let <span
 class="math inline">\(p\)</span> be the first vertex on <span
 class="math inline">\(\mathit{path}_i(v)\)</span> that is also in <span
@@ -527,7 +534,7 @@ class="math inline">\(T_j\)</span> contains the entire shortest path
 from <span class="math inline">\(p\)</span> to <span
 class="math inline">\(v\)</span>, and in particular, the edge <span
 class="math inline">\(u\mathord\to v\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>The converse of the previous lemma is not necessarily true; it is
@@ -792,7 +799,7 @@ class="math inline">\(s_k\)</span> in <span
 class="math inline">\(H’\)</span>.
 </dd>
 <dd>
-<p>First, because contraction preserves shortest paths, we can easily
+First, because contraction preserves shortest paths, we can easily
 verify that <span class="math inline">\(T’_i = T_i / u{\to}v\)</span>
 and <span class="math inline">\(T’_k = T_k / u{\to}v\)</span>. It
 follows that an edge in <span class="math inline">\(H\)</span> is shared
@@ -800,14 +807,13 @@ by <span class="math inline">\(T_i\)</span> and <span
 class="math inline">\(T_k\)</span> if and only if the corresponding edge
 in <span class="math inline">\(H’\)</span> is shared by <span
 class="math inline">\(T’_i\)</span> and <span
-class="math inline">\(T’_k\)</span>.</p>
+class="math inline">\(T’_k\)</span>.
 </dd>
 <dd>
-<p>Now consider any edge <span class="math inline">\(x{\to}y \in T_i
-\cap T_k\)</span> that is not <span
-class="math inline">\(u{\to}v\)</span>. We must have <span
-class="math inline">\(y\ne v\)</span>, because each vertex has only one
-predecessor in any shortest-path tree. Let <span
+Now consider any edge <span class="math inline">\(x{\to}y \in T_i \cap
+T_k\)</span> that is not <span class="math inline">\(u{\to}v\)</span>.
+We must have <span class="math inline">\(y\ne v\)</span>, because each
+vertex has only one predecessor in any shortest-path tree. Let <span
 class="math inline">\(w\)</span> be the first node on the shortest path
 from <span class="math inline">\(s_i\)</span> to <span
 class="math inline">\(x\)</span> in <span
@@ -817,7 +823,7 @@ class="math inline">\(x\)</span>, so the entire shortest path from <span
 class="math inline">\(w\)</span> to <span
 class="math inline">\(y\)</span> is shared by <span
 class="math inline">\(T_i\)</span> and <span
-class="math inline">\(T_k\)</span>. Consider three paths:</p>
+class="math inline">\(T_k\)</span>. Consider three paths:
 </dd>
 <dd>
 <ul>
@@ -841,8 +847,8 @@ class="math inline">\(w\)</span></li>
 </ul>
 </dd>
 <dd>
-<p>Then <span class="math inline">\(x{\to}y\)</span> is properly shared
-if and only if (the last edges of) <span
+Then <span class="math inline">\(x{\to}y\)</span> is properly shared if
+and only if (the last edges of) <span
 class="math inline">\(\alpha\)</span>, <span
 class="math inline">\(\beta\)</span>, and <span
 class="math inline">\(\gamma\)</span> are incident to <span
@@ -859,7 +865,7 @@ class="math inline">\(x{\to}y\)</span> (or <span
 class="math inline">\(u{\to}y\)</span> if <span
 class="math inline">\(x=v\)</span>) is properly shared in <span
 class="math inline">\(H’\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>The contraction sharing lemma implies by induction that every call to
@@ -909,7 +915,8 @@ conditions holds:
 <dd>
 <ul>
 <li><span class="math inline">\(\mathit{pred}_j(v) \ne
-\mathit{pred}_{j+1}(v)\)</span>.</li>
+\mathit{pred}_{j+1}(v)\)</span>.<br />
+</li>
 </ul>
 </dd>
 <dd>
@@ -922,14 +929,14 @@ class="math inline">\(\mathit{path}_{j+1}(u)\)</span> “wrap around”
 </ul>
 </dd>
 <dd>
-<p>The Disk-Tree Lemma implies that the first condition holds for at
-most <span class="math inline">\(\deg(v)\)</span> indices <span
+The Disk-Tree Lemma implies that the first condition holds for at most
+<span class="math inline">\(\deg(v)\)</span> indices <span
 class="math inline">\(j\)</span>. If the first condition never holds
 (that is, if <span class="math inline">\(\mathit{pred}_j(v)\)</span> is
 the same for index <span class="math inline">\(j\)</span>), then the
 second condition holds for exactly one index <span
 class="math inline">\(j\)</span>; otherwise the second condition never
-holds. <span class="math inline">\(\qquad\square\)</span></p>
+holds. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Lemma:</strong> <em>Each vertex <span
@@ -971,9 +978,8 @@ spent in each level of the recursion tree is <span
 class="math inline">\(O(S(n))\)</span>.
 </dd>
 <dd>
-<p>Finally, the recursion tree has <span class="math inline">\(O(\log
-h)\)</span> levels. <span
-class="math inline">\(\qquad\square\)</span></p>
+Finally, the recursion tree has <span class="math inline">\(O(\log
+h)\)</span> levels. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="16.7" id="references-9"><span
@@ -1009,7 +1015,7 @@ and Analysis of Data Structures for Dynamic Trees</em></a>.
 Ph.D. thesis, Dept. Comput. Sci., Princeton Univ., April 2006. Tech.
 Rep. TR-750-06.</p></li>
 </ol>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1059,6 +1065,6 @@ index in the filtered map <span class="math inline">\(H’\)</span> of
 each vertex of the input map <span class="math inline">\(H\)</span>.<a
 href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

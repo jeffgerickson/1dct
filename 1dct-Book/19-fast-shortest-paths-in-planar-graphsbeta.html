@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -274,31 +281,30 @@ class="math inline">\(s\)</span> to be a boundary vertex, so that it
 survives as a vertex in the dense-distance graph.
 </dd>
 <dd>
-<p>Next we compute the shortest-path distance from <span
+Next we compute the shortest-path distance from <span
 class="math inline">\(s\)</span> to every boundary vertex of the <span
 class="math inline">\(r\)</span>-division by running Dijkstra’s
 algorithm in the dense distance graph. If we implement Dijkstra’s
 algorithm using Fibonacci heaps, this step takes <span
 class="math inline">\(O(n’\log n’ + m’) = O((n/\sqrt{r})\log n +
-n)\)</span> time.</p>
+n)\)</span> time.
 </dd>
 <dd>
-<p>Finally, for each piece <span class="math inline">\(P\)</span>, we
+Finally, for each piece <span class="math inline">\(P\)</span>, we
 attach an artificial course <span class="math inline">\(s’\)</span> to
 each boundary vertex <span class="math inline">\(u\)</span> with an edge
 with length <span class="math inline">\(\textsf{dist}(s,u)\)</span>, and
 compute a shortest path tree in <span class="math inline">\(P\)</span>
 from <span class="math inline">\(s’\)</span> using Dijkstra’s algorithm.
 This step takes <span class="math inline">\(O(r\log r)\)</span> time per
-piece, or <span class="math inline">\(O(n\log r)\)</span> time
-overall.</p>
+piece, or <span class="math inline">\(O(n\log r)\)</span> time overall.
 </dd>
 <dd>
-<p>The overall running time of our algorithm is <span
+The overall running time of our algorithm is <span
 class="math inline">\(O(n\log r + (n/\sqrt{r})\log n)\)</span>. In
 particular, if we set <span class="math inline">\(r = O(\log^2
 n)\)</span>, the running time is <span class="math inline">\(O(n\log\log
-n)\)</span>. <span class="math inline">\(\qquad\square\)</span></p>
+n)\)</span>. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>Let me reiterate that this analysis assumes that we are using the
@@ -821,24 +827,24 @@ class="math inline">\(x\)</span> must cross; let <span
 class="math inline">\(z\)</span> be any vertex in the intersection of
 these two shortest paths. The triangle inequality implies <span
 class="math display">\[
-\begin{aligned}
-    \textsf{dist}(u, w) + \textsf{dist}(v, x)
-    &amp; =
-    (\textsf{dist}(u, z) + \textsf{dist}(z, w)) ~+~
-    (\textsf{dist}(v, z) + \textsf{dist}(z, x)) \\
-    &amp; =
-    (\textsf{dist}(u, z) + \textsf{dist}(z, x)) ~+~
-    (\textsf{dist}(v, z) + \textsf{dist}(z, w)) \\
-    &amp; \le
-    \hphantom{(\textsf{dist}(u, z) + {}}
-    \textsf{dist}(u, x)\; ~+~ \;\textsf{dist}(v, w)
-\end{aligned}
+  \begin{aligned}
+      \textsf{dist}(u, w) + \textsf{dist}(v, x)
+      &amp; =
+      (\textsf{dist}(u, z) + \textsf{dist}(z, w)) ~+~
+      (\textsf{dist}(v, z) + \textsf{dist}(z, x)) \\
+      &amp; =
+      (\textsf{dist}(u, z) + \textsf{dist}(z, x)) ~+~
+      (\textsf{dist}(v, z) + \textsf{dist}(z, w)) \\
+      &amp; \le
+      \hphantom{(\textsf{dist}(u, z) + {}}
+      \textsf{dist}(u, x)\; ~+~ \;\textsf{dist}(v, w)
+  \end{aligned}
 \]</span> (omitting subscript <span
 class="math inline">\(\Sigma\)</span>’s everywhere).
 </dd>
 <dd>
-<p>It follows that the Monge inequality <span class="math display">\[
-M[i, j] + M[i’, j’] \le M[i, j’] + M[i’, j];
+It follows that the Monge inequality <span class="math display">\[
+  M[i, j] + M[i’, j’] \le M[i, j’] + M[i’, j];
 \]</span> holds for any indices <span class="math inline">\(i, i’, j,
 j’\)</span> that appear in that cyclic order (possibly with ties) modulo
 <span class="math inline">\(k\)</span>. In particular, the Monge
@@ -848,7 +854,7 @@ class="math inline">\(M\)</span> on or below the main diagonal is Monge.
 Symmetrically, the portion of <span class="math inline">\(M\)</span> on
 or above the main diagonal is Monge. These two partial Monge matrices
 cover <span class="math inline">\(M\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p>Perhaps a better way to express this analysis is that the <span
@@ -1089,7 +1095,7 @@ class="header-section-number">19.11</span> Aptly Named Sir Not</h2>
 <li>Shortest paths in <span class="math inline">\(O(n)\)</span>
 time.</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1157,6 +1163,6 @@ class="math inline">\(v\in A\)</span>, and similarly for <span
 class="math inline">\(B\)</span>.<a href="#fnref9" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

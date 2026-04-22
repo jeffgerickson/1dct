@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -352,7 +359,7 @@ of <span class="math inline">\(\Sigma\)</span> at the center and other
 faces of <span class="math inline">\(\Sigma\)</span> at the leaves.
 </dd>
 <dd>
-<p>The dual subgraph <span class="math inline">\(C^* / e^*\)</span>
+The dual subgraph <span class="math inline">\(C^* / e^*\)</span>
 contains a cycle <span class="math inline">\(\gamma\)</span> of length
 <span class="math inline">\(2\)</span> that separates all vertices in
 <span class="math inline">\(U\)</span> from all vertices in <span
@@ -363,7 +370,7 @@ class="math inline">\(U\)</span> either contains every boundary vertex
 or none. Otherwise, <span class="math inline">\(\gamma\)</span>
 intersects <span class="math inline">\(B\)</span> exactly twice, so
 <span class="math inline">\(U\)</span> contains an interval of boundary
-vertices. <span class="math inline">\(\qquad\square\)</span></p>
+vertices. <span class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <figure>
@@ -855,7 +862,7 @@ implies that <span class="math inline">\(\sum_{f\in F}
 consider.
 </dd>
 <dd>
-<p>First, suppose <span class="math inline">\(\pi\)</span> and <span
+First, suppose <span class="math inline">\(\pi\)</span> and <span
 class="math inline">\(\pi’\)</span> do not cross. Then the closed walk
 <span class="math inline">\(\pi - \pi’\)</span> is a weakly simple
 closed curve, which implies that the non-zero winding numbers <span
@@ -866,10 +873,10 @@ class="math inline">\(\textsf{wind}(\pi-\pi’, f) = 0\)</span> for
 <em>every</em> face <span class="math inline">\(f\)</span>, which is
 only possible if <span class="math inline">\(\pi\)</span> and <span
 class="math inline">\(\pi’\)</span> use the same subset of edges. In
-other words, <span class="math inline">\(\pi = \pi’\)</span>.</p>
+other words, <span class="math inline">\(\pi = \pi’\)</span>.
 </dd>
 <dd>
-<p>Now suppose <span class="math inline">\(\pi\)</span> and <span
+Now suppose <span class="math inline">\(\pi\)</span> and <span
 class="math inline">\(\pi’\)</span> cross at some vertex <span
 class="math inline">\(x\)</span>. The prefixes <span
 class="math inline">\(\alpha = \pi[s, x]\)</span> and <span
@@ -883,7 +890,7 @@ paths. The inductive hypothesis now implies that <span
 class="math inline">\(\alpha = \alpha’\)</span> and <span
 class="math inline">\(\beta = \beta’\)</span>. Again, we conclude that
 <span class="math inline">\(\pi = \pi’\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong><em>[[We also need unique tensest darts!!]]</em></strong></p>
@@ -1007,7 +1014,7 @@ class="math inline">\(O(kn^{1+1/k})\)</span> preprocessing time and
 <span class="math inline">\(O(k\log\log n)\)</span> query time. [Long
 Pettie 2021]</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1017,6 +1024,6 @@ different weights, but for ease of exposition, I’ll stick to undirected
 graphs in this lecture.<a href="#fnref1" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

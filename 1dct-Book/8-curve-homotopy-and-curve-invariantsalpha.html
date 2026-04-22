@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -257,7 +264,7 @@ Let <span class="math inline">\(\ell\)</span> be the loop with the
 fewest faces in its interior, breaking ties arbitrarily.
 </dd>
 <dd>
-<p>We call any maximal subpath of <span
+We call any maximal subpath of <span
 class="math inline">\(\gamma\)</span> in the interior of <span
 class="math inline">\(\ell\)</span> a <em>strand</em>. There must be at
 least one strand, since otherwise <span
@@ -267,7 +274,7 @@ a <em>simple</em> path. Each strand in <span
 class="math inline">\(\ell\)</span> forms a convex spindle with some
 subpath of <span class="math inline">\(\ell\)</span>; thus, <span
 class="math inline">\(\gamma\)</span> contains at least one spindle. Any
-spindle with the fewest faces in its interior is irreducible.</p>
+spindle with the fewest faces in its interior is irreducible.
 </dd>
 </dl>
 <figure>
@@ -318,16 +325,16 @@ of strands would define a smaller spindle.)</li>
 </ul>
 </dd>
 <dd>
-<p>Now there are two cases to consider. If no pair of strands
-intersects, the faces at both vertices are triangles, each sharing
-<em>two</em> edges with <span class="math inline">\(\sigma\)</span>.
-Otherwise, imagine continuously sweeping a curve through the interior of
-<span class="math inline">\(\sigma\)</span> from one boundary subpath to
-the other, and let <span class="math inline">\(x\)</span> be the first
+Now there are two cases to consider. If no pair of strands intersects,
+the faces at both vertices are triangles, each sharing <em>two</em>
+edges with <span class="math inline">\(\sigma\)</span>. Otherwise,
+imagine continuously sweeping a curve through the interior of <span
+class="math inline">\(\sigma\)</span> from one boundary subpath to the
+other, and let <span class="math inline">\(x\)</span> be the first
 interior vertex that this curve sweeps over. The two strands that
 intersect at <span class="math inline">\(x\)</span> form a triangular
 face with one of the boundary curves of <span
-class="math inline">\(\sigma\)</span>.</p>
+class="math inline">\(\sigma\)</span>.
 </dd>
 </dl>
 <p>With these two lemmas in hand, we can now describe Steinitz’s
@@ -425,21 +432,20 @@ class="math inline">\(\textsf{wind}_0(\gamma)= \pm 1/2\)</span>, but
 this won’t be necessary.)
 </dd>
 <dd>
-<p>Any continuous deformation of the curve that does not change the
-number of vertices can only create and destroy happy and sad points in
-matched pairs. (Deforming the curve also deforms its derivative, and the
+Any continuous deformation of the curve that does not change the number
+of vertices can only create and destroy happy and sad points in matched
+pairs. (Deforming the curve also deforms its derivative, and the
 deformation of the derivative that avoids the origin can only create or
 destroy crossings with the positive <span
 class="math inline">\(x\)</span>-axis in matched positive-negative
 pairs. Think in terms of homotopy moves!) So rotation number is an
-<em>isotopy</em> invariant.</p>
+<em>isotopy</em> invariant.
 </dd>
 <dd>
-<p>Now we argue by induction over any sequence of homotopy moves that
-leads to a simple cycle. We assume the basepoint is far away from
-whatever move we’re analyzing, so <span
-class="math inline">\(\textsf{wind}_0(\gamma)\)</span> doesn’t
-change.</p>
+Now we argue by induction over any sequence of homotopy moves that leads
+to a simple cycle. We assume the basepoint is far away from whatever
+move we’re analyzing, so <span
+class="math inline">\(\textsf{wind}_0(\gamma)\)</span> doesn’t change.
 </dd>
 <dd>
 <ul>
@@ -466,8 +472,8 @@ formula changes.</li>
 </ul>
 </dd>
 <dd>
-<p>Finally, we observe that the formula is trivially correct when the
-curve is simple.</p>
+Finally, we observe that the formula is trivially correct when the curve
+is simple.
 </dd>
 </dl>
 <p><em>Would it be easier to argue by induction on the number of

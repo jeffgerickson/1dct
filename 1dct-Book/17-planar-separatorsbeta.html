@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -243,7 +250,7 @@ leaves with weight zero, we can assume without loss of generality that
 every non-leaf vertex has exactly two children.
 </dd>
 <dd>
-<p>For any vertex <span class="math inline">\(v\)</span>, let <span
+For any vertex <span class="math inline">\(v\)</span>, let <span
 class="math inline">\(W(v)\)</span> denote the total weight of <span
 class="math inline">\(v\)</span> and its descendants; for example, <span
 class="math inline">\(W(r) = W\)</span>. For any non-leaf vertex <span
@@ -251,25 +258,25 @@ class="math inline">\(v\)</span>, label its children <span
 class="math inline">\(\textsf{heft}(v)\)</span> and <span
 class="math inline">\(\textsf{lite}(v)\)</span> so that <span
 class="math inline">\(W(\textsf{heft}(v)) \ge
-W(\textsf{lite}(v))\)</span> (breaking ties arbitrarily).</p>
+W(\textsf{lite}(v))\)</span> (breaking ties arbitrarily).
 </dd>
 <dd>
-<p>Starting at the root <span class="math inline">\(r\)</span>, follow
+Starting at the root <span class="math inline">\(r\)</span>, follow
 pointers down to the first vertex <span class="math inline">\(x\)</span>
 such that <span class="math inline">\(W(\textsf{heft}(x)) \le
 W/4\)</span>. Then we immediately have <span class="math display">\[
-\begin{aligned}
-    W/4 &amp;&lt; W(x)
-\\      &amp;= W(\textsf{heft}(x)) + W(\textsf{lite}(x)) + w(x)
-\\      &amp;\le 2\cdot W(\textsf{heft}(x)) + w(x)
-\\      &amp;\le 3W/4.
-\end{aligned}
+  \begin{aligned}
+      W/4 &amp;&lt; W(x)
+  \\      &amp;= W(\textsf{heft}(x)) + W(\textsf{lite}(x)) + w(x)
+  \\      &amp;\le 2\cdot W(\textsf{heft}(x)) + w(x)
+  \\      &amp;\le 3W/4.
+  \end{aligned}
 \]</span> Let <span class="math inline">\(e\)</span> be the edge between
 <span class="math inline">\(x\)</span> and its parent. The two
 components of <span class="math inline">\(T\setminus e\)</span> have
 total weight <span class="math inline">\(W(x) \le 3W-4\)</span> and
 <span class="math inline">\(W - W(x) &lt; 3W/4\)</span>. <span
-class="math inline">\(\qquad\square\)</span>.</p>
+class="math inline">\(\qquad\square\)</span>.
 </dd>
 </dl>
 <p>It’s easy to see that the upper bounds on vertex degree and vertex
@@ -485,8 +492,8 @@ class="math inline">\(C_\ell\)</span> in at most two vertices</em></li>
 Part (a) follows directly from the definitions.
 </dd>
 <dd>
-<p>By construction <span class="math inline">\(C_\ell\)</span> consists
-of one or more simple cycles, any two of which share at most one vertex.
+By construction <span class="math inline">\(C_\ell\)</span> consists of
+one or more simple cycles, any two of which share at most one vertex.
 Let <span class="math inline">\(C\)</span> be the simple cycle in <span
 class="math inline">\(C_\ell\)</span> that contains <span
 class="math inline">\(r\)</span> in its interior. and let <span
@@ -505,15 +512,15 @@ the shortest path from <span class="math inline">\(u\)</span> to <span
 class="math inline">\(r\)</span> crosses <span
 class="math inline">\(C\)</span>, but this is impossible, because levels
 decrease monotonically along that path. We conclude that <span
-class="math inline">\(C_\ell = C\)</span>, proving part (b).</p>
+class="math inline">\(C_\ell = C\)</span>, proving part (b).
 </dd>
 <dd>
-<p>Part (c) follows immediately from part (a).</p>
+Part (c) follows immediately from part (a).
 </dd>
 <dd>
-<p>Finally, the vertices of <span
-class="math inline">\(\textsf{cycle}(T, xy)\)</span> lie on two shortest
-paths from <span class="math inline">\(r\)</span>, one to <span
+Finally, the vertices of <span class="math inline">\(\textsf{cycle}(T,
+xy)\)</span> lie on two shortest paths from <span
+class="math inline">\(r\)</span>, one to <span
 class="math inline">\(x\)</span> and the other to <span
 class="math inline">\(y\)</span>. Levels increase monotonically along
 any shortest path from <span class="math inline">\(r\)</span>. Thus, by
@@ -521,7 +528,7 @@ part (a), the shortest paths from <span class="math inline">\(r\)</span>
 to <span class="math inline">\(x\)</span> and <span
 class="math inline">\(y\)</span> each share at most one vertex with
 <span class="math inline">\(C_\ell\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <figure>
@@ -823,11 +830,14 @@ Math.</em> 9(1):129–150, 1996.</p></li>
 href="http://doi.org/10.1137/1.9781611973105.65">Multiway simple cycle
 separators and {I/O}-efficient algorithms for planar graphs</a>.
 <em>Proc. 24th Ann. ACM-SIAM Symp. Discrete Algorithms</em>, 901–918,
-2013. <!--
-1. Sergio Cabello. [Many distances in planar graphs](https://dl.acm.org/doi/10.5555/1109557.1109691). _Proc. 17th Ann. ACM-SIAM Symp. Discrete Algorithms_, 1213–1220, 2006.
-
-1. Sergio Cabello. [Many distances in planar graphs](https://10.1007/s00453-010-9459-0). _Algorithmica_ 62(1–2):361–381, 2010.
---></p></li>
+2013. &lt;!–</p></li>
+<li><p>Sergio Cabello. <a
+href="https://dl.acm.org/doi/10.5555/1109557.1109691">Many distances in
+planar graphs</a>. <em>Proc. 17th Ann. ACM-SIAM Symp. Discrete
+Algorithms</em>, 1213–1220, 2006.</p></li>
+<li><p>Sergio Cabello. <a href="https://10.1007/s00453-010-9459-0">Many
+distances in planar graphs</a>. <em>Algorithmica</em> 62(1–2):361–381,
+2010. –&gt;</p></li>
 <li><p>Jittat Fakcharoenphol and Satish Rao. <a
 href="https://doi.org/10.1016/j.jcss.2005.05.007">Planar graphs,
 negative weight edges, shortest paths, and near linear time</a>. <em>J.
@@ -885,7 +895,7 @@ class="header-section-number">17.8</span> Aptly Named Sir Not</h2>
 recursive <span class="math inline">\(r\)</span>-divisions) in <span
 class="math inline">\(O(n)\)</span> time.</li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -906,6 +916,6 @@ role="doc-backlink">↩︎</a></p></li>
 the two 2013 results.<a href="#fnref3" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

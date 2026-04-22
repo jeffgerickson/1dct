@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -526,14 +533,14 @@ class="math inline">\(\Sigma\setminus e\)</span>. Then for any dart
 <span class="math inline">\(d\)</span> in <span
 class="math inline">\(\Sigma\setminus e\)</span>, we have <span
 class="math display">\[
-(\textsf{succ}\setminus e)(d) = \begin{cases}
-    \textsf{succ}(\textsf{succ}(\textsf{succ}(d)))
-        &amp; \text{if $\textsf{succ}(d) \in e$ and
-                    $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
-    \textsf{succ}(\textsf{succ}(d))
-        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
-    \textsf{succ}(d) &amp; \text{otherwise.}
-\end{cases}
+  (\textsf{succ}\setminus e)(d) = \begin{cases}
+      \textsf{succ}(\textsf{succ}(\textsf{succ}(d)))
+          &amp; \text{if $\textsf{succ}(d) \in e$ and
+                      $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
+      \textsf{succ}(\textsf{succ}(d))
+          &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+      \textsf{succ}(d) &amp; \text{otherwise.}
+  \end{cases}
 \]</span> The first case occurs when <span
 class="math inline">\(e\)</span> is an empty loop based at the head of
 <span class="math inline">\(d\)</span>. See the figure below. In other
@@ -543,26 +550,24 @@ repeatedly follow successor pointers until we reach a dart that is not
 in the deleted edge <span class="math inline">\(e\)</span>.
 </dd>
 <dd>
-<p>It follows that the dual successor permutation changes as follows:
-<span class="math display">\[
-(\textsf{succ}^*\setminus e)(d) = \begin{cases}
-    \textsf{succ}^*(\textsf{succ}(\textsf{succ}(d)))
-        &amp; \text{if $\textsf{succ}(d) \in e$ and
-                    $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
-    \textsf{succ}^*(\textsf{succ}(d))
-        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
-    \textsf{succ}^*(d) &amp; \text{otherwise.}
-\end{cases}
-\]</span></p>
-</dd>
-</dl>
+It follows that the dual successor permutation changes as follows: <span
+class="math display">\[
+  (\textsf{succ}^*\setminus e)(d) = \begin{cases}
+      \textsf{succ}^*(\textsf{succ}(\textsf{succ}(d)))
+          &amp; \text{if $\textsf{succ}(d) \in e$ and
+                      $\textsf{succ}(\textsf{succ}(d)) \in e$,}\\
+      \textsf{succ}^*(\textsf{succ}(d))
+          &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+      \textsf{succ}^*(d) &amp; \text{otherwise.}
+  \end{cases}
+\]</span>
 <figure>
 <img src="Fig/delete-cases.png" style="width:45.0%"
 alt="Deleting an edge: Default case and empty loop" />
 <figcaption aria-hidden="true">Deleting an edge: Default case and empty
 loop</figcaption>
 </figure>
-<dl>
+</dd>
 <dt><strong>Contraction:</strong></dt>
 <dd>
 Suppose <span class="math inline">\(e\)</span> is not a loop. Then <span
@@ -577,14 +582,14 @@ class="math inline">\(\Sigma \mathbin/ e\)</span>. Then for any dart
 <span class="math inline">\(d\)</span> of <span
 class="math inline">\(\Sigma \mathbin/ e\)</span>, we have <span
 class="math display">\[
-(\textsf{succ}^*\mathbin/ e)(d) = \begin{cases}
-    \textsf{succ}^*(\textsf{succ}^*(\textsf{succ}^*(d)))
-        &amp; \text{if $\textsf{succ}^*(d) \in e$ and
-                    $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
-    \textsf{succ}^*(\textsf{succ}^*(d))
-        &amp; \text{if $\textsf{succ}^*(d) \in e$,}\\
-    \textsf{succ}^*(d) &amp; \text{otherwise.}
-\end{cases}
+  (\textsf{succ}^*\mathbin/ e)(d) = \begin{cases}
+      \textsf{succ}^*(\textsf{succ}^*(\textsf{succ}^*(d)))
+          &amp; \text{if $\textsf{succ}^*(d) \in e$ and
+                      $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
+      \textsf{succ}^*(\textsf{succ}^*(d))
+          &amp; \text{if $\textsf{succ}^*(d) \in e$,}\\
+      \textsf{succ}^*(d) &amp; \text{otherwise.}
+  \end{cases}
 \]</span> The first case occurs when one endpoint of <span
 class="math inline">\(e\)</span> has degree <span
 class="math inline">\(1\)</span> and the head of <span
@@ -597,17 +602,17 @@ successor pointers until we reach a dart that is not in the contracted
 edge <span class="math inline">\(e\)</span>.
 </dd>
 <dd>
-<p>It follows that the primal successor permutation changes as follows:
+It follows that the primal successor permutation changes as follows:
 <span class="math display">\[
-(\textsf{succ} \mathbin/ e)(d) = \begin{cases}
-    \textsf{succ}(\textsf{succ}^*(\textsf{succ}^*(d)))
-        &amp; \text{if $\textsf{succ}(d) \in e$ and
-                    $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
-    \textsf{succ}(\textsf{succ}^*(d))
-        &amp; \text{if $\textsf{succ}(d) \in e$,}\\
-    \textsf{succ}(d) &amp; \text{otherwise.}
-\end{cases}
-\]</span></p>
+  (\textsf{succ} \mathbin/ e)(d) = \begin{cases}
+      \textsf{succ}(\textsf{succ}^*(\textsf{succ}^*(d)))
+          &amp; \text{if $\textsf{succ}(d) \in e$ and
+                      $\textsf{succ}^*(\textsf{succ}^*(d)) \in e$,}\\
+      \textsf{succ}(\textsf{succ}^*(d))
+          &amp; \text{if $\textsf{succ}(d) \in e$,}\\
+      \textsf{succ}(d) &amp; \text{otherwise.}
+  \end{cases}
+\]</span>
 </dd>
 </dl>
 <figure>
@@ -697,7 +702,7 @@ class="math inline">\(H^*\)</span> is an edge cut in <span
 class="math inline">\(\Sigma^*\)</span>.
 </dd>
 <dd>
-<p>On the other hand, let <span class="math inline">\(H^*\)</span> is an
+On the other hand, let <span class="math inline">\(H^*\)</span> is an
 edge cut in <span class="math inline">\(\Sigma^*\)</span>. Then it is
 possible to color the vertices of <span
 class="math inline">\(\Sigma^*\)</span> black and white, so that <span
@@ -708,7 +713,7 @@ class="math inline">\(\Sigma\)</span> with one white shore and one black
 shore. Every vertex of <span class="math inline">\(\Sigma\)</span> is
 incident to an even number of such edges. We conclude that <span
 class="math inline">\(H\)</span> is an even subgraph of <span
-class="math inline">\(\Sigma\)</span>.</p>
+class="math inline">\(\Sigma\)</span>.
 </dd>
 <dt><strong>Corollary (cycle <span
 class="math inline">\(\leftrightharpoons\)</span> bond):</strong></dt>
@@ -724,9 +729,9 @@ A cycle is a minimal non-empty even subgraph; a bond is a minimal
 non-empty edge cut.
 </dd>
 <dd>
-<p>Equivalently, a cycle is a minimal subset of edges that cannot all be
+Equivalently, a cycle is a minimal subset of edges that cannot all be
 contracted, and a bond is a minimal subset of edges that cannot all be
-deleted.</p>
+deleted.
 </dd>
 <dt><strong>Corollary (spanning tree <span
 class="math inline">\(\leftrightharpoons\)</span> spanning
@@ -836,8 +841,8 @@ that <span class="math inline">\((n-1)-(m-1)+f = 2\)</span>.</li>
 </ul>
 </dd>
 <dd>
-<p>In all cases, we conclude that <span
-class="math inline">\(n-m+f=2\)</span>.</p>
+In all cases, we conclude that <span
+class="math inline">\(n-m+f=2\)</span>.
 </dd>
 <dt><strong>Proof (von Staudt 1847):</strong></dt>
 <dd>
@@ -1235,7 +1240,7 @@ figures</p></li>
 <li><p>Random (but not uniform!) rooted planar maps via random
 tree-onion figures</p></li>
 </ul>
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -1263,6 +1268,6 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 formula isn’t <em>Euler’s</em>.<a href="#fnref3" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>

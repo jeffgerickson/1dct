@@ -10,6 +10,9 @@
     div.sitenav { display: flex; flex-direction: row; flex-wrap: wrap; }
     span.navlink { flex: 1; }
     span.navlink-label { display: inline-block; min-width: 4em; }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     html {
       font-size: 18px;
       color: #1a1a1a;
@@ -65,6 +68,10 @@
     img {
       max-width: 100%;
     }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -108,8 +115,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -168,7 +175,7 @@
     }
   </style>
   
-  <script
+  <script defer=""
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
 </head>
@@ -356,7 +363,7 @@ class="math inline">\(T\cup L\)</span> that has even degree everywhere
 except the endpoints of <span class="math inline">\(e\)</span>.
 </dd>
 <dd>
-<p>Consider the fundamental domain <span class="math inline">\(\Delta =
+Consider the fundamental domain <span class="math inline">\(\Delta =
 \Sigma \mathbin{\backslash\!\!\backslash} (T\cup L)\)</span>. Every edge
 <span class="math inline">\(e \in C\)</span> appears in <span
 class="math inline">\(\Delta\)</span> as a boundary-to-boundary chord,
@@ -376,7 +383,7 @@ class="math inline">\(e\)</span> is homologous with <span
 class="math inline">\(\beta\oplus e\)</span>. Finally, every edge in
 <span class="math inline">\(\beta \oplus e\)</span> is an edge in the
 cut graph <span class="math inline">\(T\cup L\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Lemma:</strong> <em>Let <span
@@ -589,7 +596,7 @@ class="math inline">\(\textsf{cr}(\sigma, \gamma_i) =
 \textsf{cr}(\varnothing, \gamma_i) = 0\)</span>.
 </dd>
 <dd>
-<p>Suppose on the other hand that <span
+Suppose on the other hand that <span
 class="math inline">\(\sigma\)</span> is not a boundary cycle. Then by
 definition the sliced surface <span class="math inline">\(\Sigma
 \mathbin{\backslash\!\!\backslash} \sigma\)</span> is connected. Let
@@ -614,7 +621,7 @@ I} \textsf{cr}(\gamma_i, \sigma) = 1\)</span>, so we must have <span
 class="math inline">\(\textsf{cr}(\gamma_i, \sigma) = 1\)</span> for an
 odd number of indices <span class="math inline">\(i\in I\)</span>, and
 therefore for at least one such index. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <p><strong>Corollary:</strong> <em>Let <span
@@ -785,7 +792,7 @@ class="math inline">\(H\)</span> is a boundary subgraph if and only if
 <span class="math inline">\([H] = 0\)</span>.
 </dd>
 <dd>
-<p>Let <span class="math inline">\(f\)</span> be any face of <span
+Let <span class="math inline">\(f\)</span> be any face of <span
 class="math inline">\(\Sigma\)</span>, and let <span
 class="math inline">\(\lambda\)</span> be any cocycle in <span
 class="math inline">\(\Sigma\)</span>. The boundary of <span
@@ -797,26 +804,26 @@ vertex <span class="math inline">\(f^*\)</span>. It follows that <span
 class="math inline">\([\partial f] = 0\)</span> for every face <span
 class="math inline">\(f\)</span>. The Linearity Lemma implies that <span
 class="math inline">\([H] = 0\)</span> for every boundary subgraph <span
-class="math inline">\(H\)</span>.</p>
+class="math inline">\(H\)</span>.
 </dd>
 <dd>
-<p>Conversely, suppose <span class="math inline">\(H\)</span> is not
+Conversely, suppose <span class="math inline">\(H\)</span> is not
 null-homologous. Then we can write <span class="math display">\[
-H =
-\left(\bigoplus_{i\in I} \textsf{cycle}_T(\ell_i)\right)
-    \oplus
-\left(\bigoplus_{e\in H\cap C} \textsf{bdry}_T(e)\right)
+  H =
+  \left(\bigoplus_{i\in I} \textsf{cycle}_T(\ell_i)\right)
+      \oplus
+  \left(\bigoplus_{e\in H\cap C} \textsf{bdry}_T(e)\right)
 \]</span> for some nonempty subset <span
 class="math inline">\(I\subseteq\{1, 2, \dots, \bar{g}\}\)</span>. The
 Linearity and Basis lemmas imply that <span class="math display">\[
-[H]
-=
-\left(\bigoplus_{i\in I} [\textsf{cycle}_T(\ell_i)]\right)
+  [H]
+  =
+  \left(\bigoplus_{i\in I} [\textsf{cycle}_T(\ell_i)]\right)
 \]</span> and therefore <span class="math inline">\([H]_i = 1\)</span>
 if and only if <span class="math inline">\(i\in I\)</span>. Because
 <span class="math inline">\(I\)</span> is non-empty, <span
 class="math inline">\([H]\ne 0\)</span>. <span
-class="math inline">\(\qquad\square\)</span></p>
+class="math inline">\(\qquad\square\)</span>
 </dd>
 </dl>
 <h2 data-number="29.7" id="separating-cycles"><span
@@ -835,7 +842,7 @@ class="header-section-number">29.9</span> Aptly Named Sir</h2>
 <li>Pants decompositions (except possibly in passing)</li>
 </ul>
 <!-- see “shortest-noncontractible.tex” -->
-<aside id="footnotes" class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
@@ -847,6 +854,6 @@ class="math inline">\(i\)</span>th edge in <span
 class="math inline">\(L\)</span>.<a href="#fnref1" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
-</aside>
+</section>
 </body>
 </html>
